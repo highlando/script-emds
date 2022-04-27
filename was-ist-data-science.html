@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Was ist Data Science? | Einführung in die mathematische Datenanalyse</title>
+  <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Was ist Data Science? | Einführung in die mathematische Datenanalyse" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
+  <meta name="github-repo" content="highlando/script-emds" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Was ist Data Science? | Einführung in die mathematische Datenanalyse" />
+  
+  <meta name="twitter:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
+  
+
+<meta name="author" content="Jan Heiland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EMDS</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Vorwort</a></li>
+<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a><ul>
+<li class="chapter" data-level="1.1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#wie-passiert-die-datenanalyse"><i class="fa fa-check"></i><b>1.1</b> Wie passiert die Datenanalyse?</a></li>
+<li class="chapter" data-level="1.2" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#was-sind-daten"><i class="fa fa-check"></i><b>1.2</b> Was sind Daten?</a></li>
+<li class="chapter" data-level="1.3" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#beispiele"><i class="fa fa-check"></i><b>1.3</b> Beispiele</a></li>
+<li class="chapter" data-level="1.4" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#python"><i class="fa fa-check"></i><b>1.4</b> Python</a></li>
+<li class="chapter" data-level="1.5" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#aufgaben"><i class="fa fa-check"></i><b>1.5</b> Aufgaben</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Einführung in die mathematische Datenanalyse</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="was-ist-data-science" class="section level1 hasAnchor">
+<h1><span class="header-section-number">1</span> Was ist Data Science?<a href="was-ist-data-science.html#was-ist-data-science" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Data Science umfasst unter anderem folgende Aufgaben:</p>
+<ol style="list-style-type: decimal">
+<li><p>Strukturieren/Aufbereiten (Umgehen mit falschen, korrumpierten, fehlenden,
+unformatierten Daten)</p></li>
+<li><p>Data Exploration (Daten “verstehen”)</p></li>
+<li><p>Data Analysis (quantitative Analysen, Hypothesen aufstellen)</p></li>
+<li><p>Data Visualization (Hypothesen graphisch kommunizieren)</p></li>
+<li><p>Modelle erzeugen/validieren (Regeln/Muster erkennen, Vorhersagen treffen) – <em>das</em> ist Machine Learning aber es gibt auch viele andere Ansätze.</p></li>
+<li><p>Daten Reduktion</p></li>
+</ol>
+<div id="wie-passiert-die-datenanalyse" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.1</span> Wie passiert die Datenanalyse?<a href="was-ist-data-science.html#wie-passiert-die-datenanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Mit mathematischen Methoden aus den Bereichen der</p>
+<ul>
+<li>linearen Algebra (z.B. Matrizen, Basen, lineare Gleichungssysteme)</li>
+<li>Statistik (z.B. Mittelwerte, Korrelationen, Verteilungen)</li>
+<li>Analysis (Grenzwerte, Abschätzungen)</li>
+<li>…</li>
+</ul>
+<p>Dabei hilft Software, z.B.,</p>
+<ul>
+<li>Excel</li>
+<li><strong>Python</strong></li>
+<li>Matlab</li>
+<li>R</li>
+</ul>
+<p>bei der Berechnung, Automatisierung, Visualisierung.</p>
+<blockquote>
+<p>Python ist ein de-facto Standard in Data Science und Machine Learning.</p>
+</blockquote>
+</div>
+<div id="was-sind-daten" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.2</span> Was sind Daten?<a href="was-ist-data-science.html#was-sind-daten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wie sehen Daten aus?</p>
+<ul>
+<li><p>Numerisch reell, z.B. Temperatur</p></li>
+<li><p>Numerisch diskret, z.B. Anzahl</p></li>
+<li><p>Ordinal: Element einer festen Menge mit expliziter Ordnung, z.B.
+{neuwertig, mit Gebrauchsspuren, defekt}</p></li>
+<li><p>Binär: Eine von zwei Möglichkeiten, z.B. Wahr/Falsch oder aktiv/inaktiv</p></li>
+<li><p>Kategoriell: Element einer festen Menge ohne klare Ordnung, z.B.
+{Säugetier, Vogel, Fisch}</p></li>
+<li><p>sonstige strukturierte Daten, z.B. geographische Daten, Graphen</p></li>
+<li><p>reiner Text, z.B. Freitext in Restaurantbewertung</p></li>
+</ul>
+<p>Und allgemeine Eigenschaften. Sind die Daten</p>
+<ul>
+<li>strukturiert</li>
+<li>lückenhaft</li>
+<li>fehlerbehaftet (<em>verrauscht</em>)</li>
+<li>interpretierbar</li>
+<li>geordnet (oder nicht zu ordnen)</li>
+</ul>
+</div>
+<div id="beispiele" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.3</span> Beispiele<a href="was-ist-data-science.html#beispiele" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="tabellendaten-mietpreise" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.3.1</span> Tabellendaten – Mietpreise<a href="was-ist-data-science.html#tabellendaten-mietpreise" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="figure">
+<img src="bilder/dataframe.png" alt="image" />
+<p class="caption">image</p>
+</div>
+<p>Hier wären die Aufgaben von Data Science:</p>
+<ul>
+<li>Daten “verstehen”, Zusammenhänge zwischen
+Variablen aufdecken,</li>
+<li>visualisieren.</li>
+<li>Gegebenenfalls fehlende Einträge bei (z.B.) <code>kaltmiete</code> vorhersagen</li>
+</ul>
+<div class="figure">
+<embed src="bilder/dataframe_spalte.pdf" />
+<p class="caption">image</p>
+</div>
+<p>Datenexploration und -analyse für einzelne Variablen 1/3 Wir betrachten
+eine <em>numerische</em> Variable in einem rechteckigen Datensatz, also eine
+<em>Spalte</em> (z.B. <code>kaltmiete</code>). Wir bezeichnen den <span class="math inline">\(i\)</span>-ten Eintrag in
+dieser Spalte mit <span class="math inline">\(x_i\)</span>, wobei <span class="math inline">\(i=1,\ldots,N\)</span> (<span class="math inline">\(N\)</span> Anzahl der Zeilen).</p>
+<p>Folgende <em>Schätzer</em>/<em>Metriken</em> können dabei helfen, diese Spalte besser
+zu verstehen:</p>
+<ul>
+<li><p>Mittelwert <span class="math inline">\(\overline x= \frac1 N\sum_{i=1}^N x_i\)</span></p></li>
+<li><p>gewichteter Mittelwert
+<span class="math inline">\(\overline x_w = \frac{\sum_{i=1}^N w_i x_i}{\sum_{j=1}^N w_j}\)</span>,
+wobei <span class="math inline">\(w_i\)</span> das Gewicht des <span class="math inline">\(i\)</span>-ten Eintrages ist (z.B. eine andere
+Variable).</p></li>
+<li><p>Varianz: <span class="math inline">\(s_x^2 = \frac{1}{N-1} \sum_{i=1}^N (x_i-\overline x)^2\)</span></p></li>
+<li><p>Standardabweichung <span class="math inline">\(s = \sqrt{s_x^2}\)</span>.</p></li>
+<li><p>Median = <span class="math inline">\(\frac{315 + 400}{2} = 357.5\)</span>.</p></li>
+</ul>
+<p>Datenexploration und -analyse für mehrere Variablen Wir betrachten zwei
+Spalten <span class="math inline">\(x = (x_1,\ldots,x_N)\)</span> und <span class="math inline">\(y = (y_1,\ldots, y_N)\)</span>.<br />
+</p>
+<p><strong>Scatter Plot</strong></p>
+<p><embed src="bilder/dataframe_spalte3.pdf" style="width:27.0%" />
+<embed src="bilder/scatterplot.pdf" style="width:70.0%" /></p>
+<p>Datenexploration und -analyse für mehrere Variablen Wir betrachten zwei
+Spalten <span class="math inline">\(x = (x_1,\ldots,x_N)\)</span> und <span class="math inline">\(y = (y_1,\ldots, y_N)\)</span>.</p>
+<ul>
+<li><p>Kovarianz
+<span class="math inline">\(s_{xy} = \frac{1}{N-1}\sum_{i=1}^N (x_i - \overline x)(y_i - \overline y)\)</span></p></li>
+<li><p>Korrelation <span class="math inline">\(\rho_{xy} = \frac{s_{xy}}{s_x\cdot s_y} \in [-1,1]\)</span>.</p></li>
+<li><p><span class="math inline">\(\rho \approx 1\)</span>: Starke positive Korrelation, wenn <span class="math inline">\(x\)</span> groß ist,
+ist <span class="math inline">\(y\)</span> auch groß.</p></li>
+<li><p><span class="math inline">\(\rho \approx -1\)</span>: Starke negative Korrelation, wenn <span class="math inline">\(x\)</span> groß ist,
+ist <span class="math inline">\(y\)</span> klein</p></li>
+<li><p><span class="math inline">\(\rho \approx 0\)</span>: Wenig/keine Korrelation.</p></li>
+</ul>
+<div class="figure">
+<img src="bilder/Correlation_coefficient.png" alt="Von Kiatdd - Eigenes Werk, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=37108966" style="width:65.0%" />
+<p class="caption">Von Kiatdd - Eigenes Werk, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=37108966" class="uri">https://commons.wikimedia.org/w/index.php?curid=37108966</a></p>
+</div>
+</div>
+<div id="covid-19-daten" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.3.2</span> COVID-19 Daten<a href="was-ist-data-science.html#covid-19-daten" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vergleiche die Einführung in <em>Mathematik für Data Science 1</em> vom letzten Semester.</p>
+</div>
+<div id="netflix-prize" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.3.3</span> Netflix Prize<a href="was-ist-data-science.html#netflix-prize" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Hierbei geht es darum, ob aus bekannten Bewertungen von vielen verschiedenen Benutzern für viele verschiedene Filme abgeleitet werden kann, ob ein bestimmter Nutzer einen bestimmten Film mag (also positiv bewerten würde).</p>
+<p>Vergleiche auch <a href="https://en.wikipedia.org/wiki/Netflix_Prize">Wikipedia:Netflix_Prize</a></p>
+<p>Das (Trainings-)Daten bestehen über <code>480189</code> Benutzer, die für <code>17770</code> Filme insgesamt <code>100480507</code> Bewertungen als ganze Zahlen zwischen <code>1</code> und <code>5</code> verteilten.</p>
+<p>Ziel der Datenanalyse war es, für <code>2817131</code> “Paare” von Benutzern und Filmen, die Bewertung vorauszusagen. Neben der schieren Masse an Daten kamen noch Einschränkungen hinzu, die ein Mindestmaß an Qualität der Vorhersage sicherstellen sollten.</p>
+<p>Das Problem ließe sich wie folgt darstellen.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Benutzer \ Film</th>
+<th><code>1</code></th>
+<th><code>2</code></th>
+<th><code>...</code></th>
+<th><code>n</code></th>
+<th><code>...</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>1</code></td>
+<td>–</td>
+<td>3</td>
+<td><code>...</code></td>
+<td>5</td>
+<td><code>...</code></td>
+</tr>
+<tr class="even">
+<td><code>2</code></td>
+<td>3</td>
+<td>4</td>
+<td><code>...</code></td>
+<td>2</td>
+<td><code>...</code></td>
+</tr>
+<tr class="odd">
+<td><code>3</code></td>
+<td>1</td>
+<td>2</td>
+<td><code>...</code></td>
+<td><strong>?</strong></td>
+<td><code>...</code></td>
+</tr>
+<tr class="even">
+<td><code>...</code></td>
+<td>3</td>
+<td>4</td>
+<td><code>...</code></td>
+<td>–</td>
+<td><code>...</code></td>
+</tr>
+</tbody>
+</table>
+<p>Gegeben viele (aber bei weitem nicht alle) Einträge in einer riesigen Tabelle. Können wir aus den Zusammenhängen bestimmte fehlende Einträge (z.B. wie findet Nutzer <code>3</code> den Film <code>n</code>) herleiten?</p>
+<p>Die besten Lösungen für dieses Problem basieren durchweg auf <em>Machine Learning</em> Ansätzen.</p>
+</div>
+</div>
+<div id="python" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.4</span> Python<a href="was-ist-data-science.html#python" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Die Programmiersprache <code>python</code> wird uns durchs Semester begleiten. Einfach weil sie so wichtig ist für <em>Data Science</em> aber auch weil sie (meiner Meinung nach) einfach zu erlernen und zu benutzen ist.</p>
+</div>
+<div id="aufgaben" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.5</span> Aufgaben<a href="was-ist-data-science.html#aufgaben" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="a1-python" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.5.1</span> A1 – Python<a href="was-ist-data-science.html#a1-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Bringen sie ihr <code>python</code> zum Laufen, installieren sie <code>numpy</code>, <code>scipy</code> und <code>matplotlib</code> und führen sie das folgende script aus.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4">N <span class="op">=</span> <span class="dv">20</span></a>
+<a class="sourceLine" id="cb1-5" title="5">xmax <span class="op">=</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb1-6" title="6">xmin <span class="op">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8">xdata <span class="op">=</span> np.linspace(xmin, xmax, N)</a>
+<a class="sourceLine" id="cb1-9" title="9">ydata <span class="op">=</span> np.exp(xdata)</a>
+<a class="sourceLine" id="cb1-10" title="10"></a>
+<a class="sourceLine" id="cb1-11" title="11">plt.figure(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb1-12" title="12">plt.plot(xdata, ydata, <span class="st">&#39;.&#39;</span>)</a>
+<a class="sourceLine" id="cb1-13" title="13"></a>
+<a class="sourceLine" id="cb1-14" title="14">plt.figure(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb1-15" title="15">plt.semilogy(xdata, ydata, <span class="st">&#39;.&#39;</span>)</a>
+<a class="sourceLine" id="cb1-16" title="16">plt.show()</a></code></pre></div>
+</div>
+<div id="a2-einheitsmatrix" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.5.2</span> A2 – Einheitsmatrix<a href="was-ist-data-science.html#a2-einheitsmatrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Schreiben sie ein script, dass die <code>5x5</code> Einheitsmatrix auf 3 verschiedene Arten erzeugt. (Eine Art könnte die eingebaute <code>numpy</code> Funktion <code>eye</code> sein).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3">idfive <span class="op">=</span> np.eye(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="bu">print</span>(idfive)</a></code></pre></div>
+<p>Hinweis: schauen sie sich mal an wie <code>numpy</code>’s <code>arrays</code> funktionieren.</p>
+</div>
+<div id="matrizen-multiplikation-und-potenz" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.5.3</span> 3 – Matrizen Multiplikation und Potenz<a href="was-ist-data-science.html#matrizen-multiplikation-und-potenz" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Schreiben sie ein script, das die Übungsaufgabe aus der Vorlesung (potenzieren der Matrizen <span class="math inline">\(M_i\)</span>, <span class="math inline">\(i=1,2,3,4\)</span>) löst. Zum Beispiel mit</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb3-2" title="2">mone <span class="op">=</span> np.array([[<span class="fl">0.9</span>, <span class="fl">0.9</span>], [<span class="fl">0.9</span>, <span class="fl">0.9</span>]])</a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4">mone_ptwo <span class="op">=</span> mone <span class="op">@</span> mone</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="bu">print</span>(mone_ptwo)</a>
+<a class="sourceLine" id="cb3-6" title="6"></a>
+<a class="sourceLine" id="cb3-7" title="7">mone_pfour <span class="op">=</span> mone_ptwo <span class="op">@</span> mone_ptwo</a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="bu">print</span>(mone_pfour)</a></code></pre></div>
+<p>Oder so:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb4-2" title="2">mone <span class="op">=</span> np.array([[<span class="fl">0.9</span>, <span class="fl">0.9</span>], [<span class="fl">0.9</span>, <span class="fl">0.9</span>]])</a>
+<a class="sourceLine" id="cb4-3" title="3">mone_p <span class="op">=</span> np.eye(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">16</span>):</a>
+<a class="sourceLine" id="cb4-6" title="6">    mone_p <span class="op">=</span> mone_p <span class="op">@</span> mone</a>
+<a class="sourceLine" id="cb4-7" title="7">    <span class="cf">if</span> k <span class="op">==</span> <span class="dv">1</span> <span class="kw">or</span> k <span class="op">==</span> <span class="dv">3</span> <span class="kw">or</span> k <span class="op">==</span> <span class="dv">15</span>:</a>
+<a class="sourceLine" id="cb4-8" title="8">        <span class="bu">print</span>(<span class="st">&#39;k=&#39;</span>, k<span class="op">+</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb4-9" title="9">        <span class="bu">print</span>(mone_p)</a></code></pre></div>
+<p>Achtung:</p>
+<ul>
+<li>bei Matrizen kann auch <code>*</code> benutzt werden – das ist aber nicht die richtige Matrizenmultiplikation (sondern die Multiplikation eintragsweise)</li>
+<li>Moegliche Realisierung der Matrizenmultiplikation
+<ul>
+<li><code>np.dot(A, B)</code> – die klassische Methode</li>
+<li><code>A.dot(B)</code> – das selbe (manchmal besser, wenn <code>A</code> etwas allgemeiner ist (zum Beispiel eine <code>scipy.sparse</code> matrix)</li>
+<li><code>A @ B</code> – convenience Notation</li>
+</ul></li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

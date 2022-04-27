@@ -1,0 +1,12 @@
+was-ist-data-science
+wie-passiert-die-datenanalyse
+was-sind-daten
+beispiele
+tabellendaten-mietpreise
+covid-19-daten
+netflix-prize
+python
+aufgaben
+a1-python
+a2-einheitsmatrix
+matrizen-multiplikation-und-potenz

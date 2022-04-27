@@ -46,6 +46,7 @@ jobs:
         run: |
           Rscript -e 'bookdown::render_book("index.md", "bookdown::pdf_book", quiet=TRUE)'
           Rscript -e 'bookdown::render_book("index.md", "bookdown::gitbook", quiet=TRUE)'
+          touch docs/.nojekyll
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:

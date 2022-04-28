@@ -207,7 +207,7 @@ unformatierten Daten)</p></li>
 <li><p>sonstige strukturierte Daten, z.B. geographische Daten, Graphen</p></li>
 <li><p>reiner Text, z.B. Freitext in Restaurantbewertung</p></li>
 </ul>
-<p>Und allgemeine Eigenschaften. Sind die Daten</p>
+<p>Außerdem können wir noch allgemeine Eigenschaften (Qualitätsmerkmale) von Daten unterscheiden</p>
 <ul>
 <li>strukturiert</li>
 <li>lückenhaft</li>
@@ -221,8 +221,8 @@ unformatierten Daten)</p></li>
 <div id="tabellendaten-mietpreise" class="section level3 hasAnchor">
 <h3><span class="header-section-number">1.3.1</span> Tabellendaten – Mietpreise<a href="was-ist-data-science.html#tabellendaten-mietpreise" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="figure">
-<img src="bilder/dataframe.png" alt="image" />
-<p class="caption">image</p>
+<img src="bilder/dataframe.png" alt="Abbildung: Tabelle von Wohnungsangeboten" />
+<p class="caption">Abbildung: Tabelle von Wohnungsangeboten</p>
 </div>
 <p>Hier wären die Aufgaben von Data Science:</p>
 <ul>
@@ -232,8 +232,8 @@ Variablen aufdecken,</li>
 <li>Gegebenenfalls fehlende Einträge bei (z.B.) <code>kaltmiete</code> vorhersagen</li>
 </ul>
 <div class="figure">
-<embed src="bilder/dataframe_spalte.pdf" />
-<p class="caption">image</p>
+<img src="bilder/dataframe_spalte.png" alt="Abbildung: Eine Spalte der Tabelle" />
+<p class="caption">Abbildung: Eine Spalte der Tabelle</p>
 </div>
 <p>Datenexploration und -analyse für einzelne Variablen 1/3 Wir betrachten
 eine <em>numerische</em> Variable in einem rechteckigen Datensatz, also eine
@@ -254,9 +254,9 @@ Variable).</p></li>
 <p>Datenexploration und -analyse für mehrere Variablen Wir betrachten zwei
 Spalten <span class="math inline">\(x = (x_1,\ldots,x_N)\)</span> und <span class="math inline">\(y = (y_1,\ldots, y_N)\)</span>.<br />
 </p>
-<p><strong>Scatter Plot</strong></p>
-<p><embed src="bilder/dataframe_spalte3.pdf" style="width:27.0%" />
-<embed src="bilder/scatterplot.pdf" style="width:70.0%" /></p>
+<p>Das Verteilung von zwei Variablen läßt sich im sogenannte <strong>Scatter Plot</strong> visualisieren.</p>
+<p><img src="bilder/dataframe_spalte3.png" alt="Kaltmiete versus Wohnfläche" style="width:27.0%" />
+<img src="bilder/scatterplot.png" alt="als Scatterplot" style="width:70.0%" /></p>
 <p>Datenexploration und -analyse für mehrere Variablen Wir betrachten zwei
 Spalten <span class="math inline">\(x = (x_1,\ldots,x_N)\)</span> und <span class="math inline">\(y = (y_1,\ldots, y_N)\)</span>.</p>
 <ul>
@@ -288,50 +288,50 @@ ist <span class="math inline">\(y\)</span> klein</p></li>
 <table>
 <thead>
 <tr class="header">
-<th>Benutzer \ Film</th>
-<th><code>1</code></th>
-<th><code>2</code></th>
-<th><code>...</code></th>
-<th><code>n</code></th>
-<th><code>...</code></th>
+<th align="center">Benutzer \ Film</th>
+<th align="center"><code>F1</code></th>
+<th align="center"><code>F2</code></th>
+<th align="center"><code>...</code></th>
+<th align="center"><code>Fn</code></th>
+<th align="center"><code>...</code></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>1</code></td>
-<td>–</td>
-<td>3</td>
-<td><code>...</code></td>
-<td>5</td>
-<td><code>...</code></td>
+<td align="center"><code>B1</code></td>
+<td align="center">–</td>
+<td align="center">3</td>
+<td align="center"><code>...</code></td>
+<td align="center">5</td>
+<td align="center"><code>...</code></td>
 </tr>
 <tr class="even">
-<td><code>2</code></td>
-<td>3</td>
-<td>4</td>
-<td><code>...</code></td>
-<td>2</td>
-<td><code>...</code></td>
+<td align="center"><code>B2</code></td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center"><code>...</code></td>
+<td align="center">2</td>
+<td align="center"><code>...</code></td>
 </tr>
 <tr class="odd">
-<td><code>3</code></td>
-<td>1</td>
-<td>2</td>
-<td><code>...</code></td>
-<td><strong>?</strong></td>
-<td><code>...</code></td>
+<td align="center"><code>B3</code></td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center"><code>...</code></td>
+<td align="center"><strong>?</strong></td>
+<td align="center"><code>...</code></td>
 </tr>
 <tr class="even">
-<td><code>...</code></td>
-<td>3</td>
-<td>4</td>
-<td><code>...</code></td>
-<td>–</td>
-<td><code>...</code></td>
+<td align="center"><code>...</code></td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center"><code>...</code></td>
+<td align="center">–</td>
+<td align="center"><code>...</code></td>
 </tr>
 </tbody>
 </table>
-<p>Gegeben viele (aber bei weitem nicht alle) Einträge in einer riesigen Tabelle. Können wir aus den Zusammenhängen bestimmte fehlende Einträge (z.B. wie findet Nutzer <code>3</code> den Film <code>n</code>) herleiten?</p>
+<p>Gegeben viele (aber bei weitem nicht alle) Einträge in einer riesigen Tabelle. Können wir aus den Zusammenhängen bestimmte fehlende Einträge (z.B. wie findet Nutzer <code>B3</code> den Film <code>Fn</code>) herleiten?</p>
 <p>Die besten Lösungen für dieses Problem basieren durchweg auf <em>Machine Learning</em> Ansätzen.</p>
 </div>
 </div>
@@ -341,8 +341,8 @@ ist <span class="math inline">\(y\)</span> klein</p></li>
 </div>
 <div id="aufgaben" class="section level2 hasAnchor">
 <h2><span class="header-section-number">1.5</span> Aufgaben<a href="was-ist-data-science.html#aufgaben" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="a1-python" class="section level3 hasAnchor">
-<h3><span class="header-section-number">1.5.1</span> A1 – Python<a href="was-ist-data-science.html#a1-python" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="python-1" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.5.1</span> Python<a href="was-ist-data-science.html#python-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Bringen sie ihr <code>python</code> zum Laufen, installieren sie <code>numpy</code>, <code>scipy</code> und <code>matplotlib</code> und führen sie das folgende script aus.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
@@ -361,8 +361,8 @@ ist <span class="math inline">\(y\)</span> klein</p></li>
 <a class="sourceLine" id="cb1-15" title="15">plt.semilogy(xdata, ydata, <span class="st">&#39;.&#39;</span>)</a>
 <a class="sourceLine" id="cb1-16" title="16">plt.show()</a></code></pre></div>
 </div>
-<div id="a2-einheitsmatrix" class="section level3 hasAnchor">
-<h3><span class="header-section-number">1.5.2</span> A2 – Einheitsmatrix<a href="was-ist-data-science.html#a2-einheitsmatrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="einheitsmatrix" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.5.2</span> Einheitsmatrix<a href="was-ist-data-science.html#einheitsmatrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Schreiben sie ein script, dass die <code>5x5</code> Einheitsmatrix auf 3 verschiedene Arten erzeugt. (Eine Art könnte die eingebaute <code>numpy</code> Funktion <code>eye</code> sein).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
 <a class="sourceLine" id="cb2-2" title="2"></a>
@@ -371,7 +371,7 @@ ist <span class="math inline">\(y\)</span> klein</p></li>
 <p>Hinweis: schauen sie sich mal an wie <code>numpy</code>’s <code>arrays</code> funktionieren.</p>
 </div>
 <div id="matrizen-multiplikation-und-potenz" class="section level3 hasAnchor">
-<h3><span class="header-section-number">1.5.3</span> 3 – Matrizen Multiplikation und Potenz<a href="was-ist-data-science.html#matrizen-multiplikation-und-potenz" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">1.5.3</span> Matrizen Multiplikation und Potenz<a href="was-ist-data-science.html#matrizen-multiplikation-und-potenz" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Schreiben sie ein script, das die Übungsaufgabe aus der Vorlesung (potenzieren der Matrizen <span class="math inline">\(M_i\)</span>, <span class="math inline">\(i=1,2,3,4\)</span>) löst. Zum Beispiel mit</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
 <a class="sourceLine" id="cb3-2" title="2">mone <span class="op">=</span> np.array([[<span class="fl">0.9</span>, <span class="fl">0.9</span>], [<span class="fl">0.9</span>, <span class="fl">0.9</span>]])</a>
@@ -453,7 +453,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["EMDS.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

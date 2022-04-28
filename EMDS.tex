@@ -1,5 +1,6 @@
 \PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 %
 \documentclass[]{book}
 \usepackage{lmodern}
@@ -27,11 +28,16 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 }
+\usepackage{xcolor}
 \usepackage{hyperref}
 \hypersetup{
             pdftitle={Einführung in die mathematische Datenanalyse},
             pdfauthor={Jan Heiland},
-            pdfborder={0 0 0},
+            colorlinks=true,
+            linkcolor=Maroon,
+            filecolor=Maroon,
+            citecolor=Blue,
+            urlcolor=purple,
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 \usepackage{color}
@@ -109,17 +115,16 @@
 \bibliographystyle{plainnat}
 
 \title{Einführung in die mathematische Datenanalyse}
-\providecommand{\subtitle}[1]{}
-\subtitle{Vorlesung 1}
 \author{Jan Heiland}
 \providecommand{\institute}[1]{}
 \institute{FAU Erlangen-Nürnberg}
-\date{\texttt{r\ Sys.Date()}}
+\date{FAU Erlangen-Nürnberg -- Sommersemester 2022}
 
 \begin{document}
 \maketitle
 
 {
+\hypersetup{linkcolor=}
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
@@ -214,7 +219,7 @@ Wie sehen Daten aus?
   reiner Text, z.B. Freitext in Restaurantbewertung
 \end{itemize}
 
-Und allgemeine Eigenschaften. Sind die Daten
+Außerdem können wir noch allgemeine Eigenschaften (Qualitätsmerkmale) von Daten unterscheiden
 
 \begin{itemize}
 \tightlist
@@ -239,7 +244,7 @@ Und allgemeine Eigenschaften. Sind die Daten
 \begin{figure}
 \centering
 \includegraphics{bilder/dataframe.png}
-\caption{image}
+\caption{Abbildung: Tabelle von Wohnungsangeboten}
 \end{figure}
 
 Hier wären die Aufgaben von Data Science:
@@ -257,8 +262,8 @@ Hier wären die Aufgaben von Data Science:
 
 \begin{figure}
 \centering
-\includegraphics{bilder/dataframe_spalte.pdf}
-\caption{image}
+\includegraphics{bilder/dataframe_spalte.png}
+\caption{Abbildung: Eine Spalte der Tabelle}
 \end{figure}
 
 Datenexploration und -analyse für einzelne Variablen 1/3 Wir betrachten
@@ -288,10 +293,10 @@ zu verstehen:
 Datenexploration und -analyse für mehrere Variablen Wir betrachten zwei
 Spalten \(x = (x_1,\ldots,x_N)\) und \(y = (y_1,\ldots, y_N)\).\\
 
-\textbf{Scatter Plot}
+Das Verteilung von zwei Variablen läßt sich im sogenannte \textbf{Scatter Plot} visualisieren.
 
-\includegraphics[width=0.27\textwidth,height=\textheight]{bilder/dataframe_spalte3.pdf}
-\includegraphics[width=0.7\textwidth,height=\textheight]{bilder/scatterplot.pdf}
+\includegraphics[width=0.27\textwidth,height=\textheight]{bilder/dataframe_spalte3.png}
+\includegraphics[width=0.7\textwidth,height=\textheight]{bilder/scatterplot.png}
 
 Datenexploration und -analyse für mehrere Variablen Wir betrachten zwei
 Spalten \(x = (x_1,\ldots,x_N)\) und \(y = (y_1,\ldots, y_N)\).
@@ -336,19 +341,19 @@ Ziel der Datenanalyse war es, für \texttt{2817131} ``Paare'' von Benutzern und 
 
 Das Problem ließe sich wie folgt darstellen.
 
-\begin{longtable}[]{@{}llllll@{}}
+\begin{longtable}[]{@{}cccccc@{}}
 \toprule
-Benutzer \textbackslash{} Film & \texttt{1} & \texttt{2} & \texttt{...} & \texttt{n} & \texttt{...}\tabularnewline
+Benutzer \textbackslash{} Film & \texttt{F1} & \texttt{F2} & \texttt{...} & \texttt{Fn} & \texttt{...}\tabularnewline
 \midrule
 \endhead
-\texttt{1} & -- & 3 & \texttt{...} & 5 & \texttt{...}\tabularnewline
-\texttt{2} & 3 & 4 & \texttt{...} & 2 & \texttt{...}\tabularnewline
-\texttt{3} & 1 & 2 & \texttt{...} & \textbf{?} & \texttt{...}\tabularnewline
+\texttt{B1} & -- & 3 & \texttt{...} & 5 & \texttt{...}\tabularnewline
+\texttt{B2} & 3 & 4 & \texttt{...} & 2 & \texttt{...}\tabularnewline
+\texttt{B3} & 1 & 2 & \texttt{...} & \textbf{?} & \texttt{...}\tabularnewline
 \texttt{...} & 3 & 4 & \texttt{...} & -- & \texttt{...}\tabularnewline
 \bottomrule
 \end{longtable}
 
-Gegeben viele (aber bei weitem nicht alle) Einträge in einer riesigen Tabelle. Können wir aus den Zusammenhängen bestimmte fehlende Einträge (z.B. wie findet Nutzer \texttt{3} den Film \texttt{n}) herleiten?
+Gegeben viele (aber bei weitem nicht alle) Einträge in einer riesigen Tabelle. Können wir aus den Zusammenhängen bestimmte fehlende Einträge (z.B. wie findet Nutzer \texttt{B3} den Film \texttt{Fn}) herleiten?
 
 Die besten Lösungen für dieses Problem basieren durchweg auf \emph{Machine Learning} Ansätzen.
 
@@ -360,8 +365,8 @@ Die Programmiersprache \texttt{python} wird uns durchs Semester begleiten. Einfa
 \hypertarget{aufgaben}{%
 \section{Aufgaben}\label{aufgaben}}
 
-\hypertarget{a1-python}{%
-\subsection{A1 -- Python}\label{a1-python}}
+\hypertarget{python-1}{%
+\subsection{Python}\label{python-1}}
 
 Bringen sie ihr \texttt{python} zum Laufen, installieren sie \texttt{numpy}, \texttt{scipy} und \texttt{matplotlib} und führen sie das folgende script aus.
 
@@ -386,8 +391,8 @@ Bringen sie ihr \texttt{python} zum Laufen, installieren sie \texttt{numpy}, \te
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{a2-einheitsmatrix}{%
-\subsection{A2 -- Einheitsmatrix}\label{a2-einheitsmatrix}}
+\hypertarget{einheitsmatrix}{%
+\subsection{Einheitsmatrix}\label{einheitsmatrix}}
 
 Schreiben sie ein script, dass die \texttt{5x5} Einheitsmatrix auf 3 verschiedene Arten erzeugt. (Eine Art könnte die eingebaute \texttt{numpy} Funktion \texttt{eye} sein).
 
@@ -403,7 +408,7 @@ Schreiben sie ein script, dass die \texttt{5x5} Einheitsmatrix auf 3 verschieden
 Hinweis: schauen sie sich mal an wie \texttt{numpy}'s \texttt{arrays} funktionieren.
 
 \hypertarget{matrizen-multiplikation-und-potenz}{%
-\subsection{3 -- Matrizen Multiplikation und Potenz}\label{matrizen-multiplikation-und-potenz}}
+\subsection{Matrizen Multiplikation und Potenz}\label{matrizen-multiplikation-und-potenz}}
 
 Schreiben sie ein script, das die Übungsaufgabe aus der Vorlesung (potenzieren der Matrizen \(M_i\), \(i=1,2,3,4\)) löst. Zum Beispiel mit
 

@@ -7,6 +7,6 @@ covid-19-daten
 netflix-prize
 python
 aufgaben
-a1-python
-a2-einheitsmatrix
+python-1
+einheitsmatrix
 matrizen-multiplikation-und-potenz

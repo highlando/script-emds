@@ -1,4 +1,4 @@
-book_filename: "Einführung in die mathematische Datenanalyse"
+book_filename: "EMDS"
 # chapter_name: "Chapter "
 repo: https://github.com/highlando/script-emds
 output_dir: docs

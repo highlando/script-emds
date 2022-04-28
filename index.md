@@ -1,8 +1,8 @@
 --- 
 title: "Einf&uuml;hrung in die mathematische Datenanalyse"
 author: "Jan Heiland"
-institute: FAU Erlangen-N&uuml;rnberg
-date: "`r Sys.Date()`"
+date: "FAU Erlangen-N&uuml;rnberg -- Sommersemester 2022"
+institute: "FAU Erlangen-N&uuml;rnberg"
 site: bookdown::bookdown_site
 documentclass: book
 github-repo: highlando/script-emds

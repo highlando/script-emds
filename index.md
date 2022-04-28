@@ -8,6 +8,7 @@ documentclass: book
 github-repo: highlando/script-emds
 url: 'https\://www.janheiland.de/script-emds/'
 description: "Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022"
+urlcolor: purple
 ---
 
 # Vorwort {-}

@@ -3,6 +3,7 @@ book_filename: "EMDS"
 repo: https://github.com/highlando/script-emds
 output_dir: docs
 rmd_files: ["index.md",
-            "vl_01.md"]
+            "vl_01.md",
+            "vl_02.md"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

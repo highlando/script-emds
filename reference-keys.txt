@@ -10,3 +10,9 @@ aufgaben
 python-1
 einheitsmatrix
 matrizen-multiplikation-und-potenz
+lineare-regression
+rauschen-und-fitting
+ansätze-für-lineare-regression
+fehlerfunktional-und-berechnung-der-approximierenden
+lineare-regression-1
+sec:owo:mathematische-konzepte

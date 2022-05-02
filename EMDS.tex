@@ -461,4 +461,315 @@ Achtung:
   \end{itemize}
 \end{itemize}
 
+\hypertarget{lineare-regression}{%
+\chapter{Lineare Regression}\label{lineare-regression}}
+
+Ein wesentlicher Aspekt von \emph{Data Science} ist die Analyse oder das
+Verstehen von Daten. Allgemein gesagt, es wird versucht, aus den Daten
+heraus Aussagen über Trends oder Eigenschaften des Phänomens zu treffen,
+mit welchem die Daten im Zusammenhang stehen.
+
+Wir kommen nochmal auf das Beispiel aus der Einführungswoche zurück, werfen eine bereits geschärften Blick darauf und gehen das mit verbesserten mathematischen Methoden an.
+
+Gegeben seien die Fallzahlen aus der CoVID Pandemie 2020 für Bayern für den Oktober 2020.
+
+\hypertarget{tab:covid-cases}{}
+\begin{longtable}[]{@{}llllllllllll@{}}
+\caption{Anzahl der SARS-CoV-2 Neuinfektionen in Bayern im Oktober 2020.}\tabularnewline
+\toprule
+Tag & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Tag & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\tabularnewline
+\midrule
+\endhead
+Fälle & 352 & 347 & 308 & 151 & 360 & 498 & 664 & 686 & 740 & 418 & 320\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}lllllllllll@{}}
+\toprule
+Tag & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & 21\tabularnewline
+\midrule
+\endhead
+Fälle & 681 & 691 & 1154 & 1284 & 127 & 984 & 573 & 1078 & 1462 & 2239\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}lllllllllll@{}}
+\toprule
+Tag & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29 & 30 & 31\tabularnewline
+\midrule
+\endhead
+Fälle & 2236 & 2119 & 1663 & 1413 & 2283 & 2717 & 3113 & 2972 & 3136 & 2615\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{figure}
+\hypertarget{fig:cases}{%
+\centering
+\includegraphics{bilder/02-cases.png}
+\caption{Fallzahlen von Sars-CoV-2 in Bayern im Oktober
+2020}\label{fig:cases}
+}
+\end{figure}
+
+Wieder stellen wir uns die Frage ob wir \textbf{in den Daten einen funktionalen
+Zusammenhang} feststellen können. Also ob wir die Datenpaare
+
+\begin{quote}
+(Tag \(x\), Infektionen am Tag \(x\))
+\end{quote}
+
+die wir als
+
+\begin{quote}
+(\(x_i\), \(y_i\))
+\end{quote}
+
+über eine Funktion \(f\) und die Paare
+
+\begin{quote}
+(\(x\), \(f(x)\))
+\end{quote}
+
+beschreiben (im Sinne von gut darstellen oder approximieren) können.
+
+\hypertarget{rauschen-und-fitting}{%
+\section{Rauschen und Fitting}\label{rauschen-und-fitting}}
+
+Beim obigen Beispiel (und ganz generell bei Daten) ist davon auszugehen, dass die Daten \textbf{verrauscht} sind, also einem Trend folgen oder in einem funktionalen Zusammenhang stehen aber zufällige Abweichungen oder Fehler enthalten.
+
+Unter diesem Gesichtspunkt ist eine Funktion, die
+
+\begin{quote}
+\(f(x_i)=y_i\)
+\end{quote}
+
+nicht zielführend. (Wir wollen Trends und größere Zusammenhänge erkennen und nicht kleine Fehler nachzeichnen.) Das zu strenge Anpassen an möglicherweise verrauschte Daten wird \textbf{overfitting} genannt.
+
+Vielmehr werden wir nach einer Funktion \(f\) suchen, die die Daten näherungsweise nachstellt:
+
+\begin{quote}
+\(f(x_i)\approx y_i\)
+\end{quote}
+
+Hierbei passen jetzt auch Funktionen, die vielleicht einfach zu handhaben sind aber die Daten kaum noch repräsentieren. Jan spricht von \textbf{underfitting}.
+
+Eine gute Approximation besteht im Kompromiss von \emph{nah an den Daten} aber mit wenig \emph{overfitting}.
+
+\hypertarget{ansuxe4tze-fuxfcr-lineare-regression}{%
+\section{Ansätze für lineare Regression}\label{ansuxe4tze-fuxfcr-lineare-regression}}
+
+Um eine solche Funktion \(f\) zu finden, trifft Jan als erstes ein paar
+Modellannahmen. Modellannahmen legen fest, wie das \(f\) im Allgemeinen
+aussehen soll und versuchen dabei
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  die Bestimmung von \(f\) zu ermöglichen
+\item
+  zu garantieren, dass \(f\) auch die gewollten Aussagen liefert
+\item
+  und sicherzustellen, dass \(f\) zum Problem passt.
+\end{enumerate}
+
+Jan bemerke, dass die ersten beiden Annahmen im Spannungsverhältnis zur
+dritten stehen.
+
+\textbf{Lineare Regression} besteht darin, dass die Funktion als Linearkombination
+
+\begin{equation*}
+f(x) = \sum_{i=1}^N w_i b_i(x)
+\end{equation*}
+
+von Basisfunktionen geschrieben wird und dann die \emph{Koeffizienten} \(w_i\) so bestimmt werden, dass \(f\) die Daten bestmöglich annähert.
+
+\begin{quote}
+Jan bemerke, dass \emph{bestmöglich} wieder \emph{overfitting} bedeuten kann aber auch, bei schlechter Wahl der Basis, wenig aussagekräftig sein kann. Der gute Kompromiss liegt also jetzt in der Wahl der passenden Basisfunktionen und deren Anzahl. (Mehr Basisfunktionen bedeutet möglicherweise bessere Approximation aber auch die Gefahr von \emph{overfitting}.)
+\end{quote}
+
+Typische Wahlen für die Basis \(\{b_1, b_2, \dotsc, b_N\}\) sind
+
+\begin{itemize}
+\tightlist
+\item
+  Polynome: \(\{1, x, x^2, \dotsc, x^{N-1}\}\) -- für \(N=2\) ist der Ansatz \emph{eine Gerade}
+\item
+  Trigonometrische Funktionen: \(\{1, \cos(x), \sin(x), \cos(2x), \sin(2x), \dotsc\}\)
+\item
+  Splines -- Polynome, die abschnittsweise definiert werden
+\item
+  Wavelets -- Verallgemeinerungen von trigonometrischen Funktionen
+\end{itemize}
+
+\hypertarget{fehlerfunktional-und-berechnung-der-approximierenden}{%
+\section{Fehlerfunktional und Berechnung der Approximierenden}\label{fehlerfunktional-und-berechnung-der-approximierenden}}
+
+Wir setzen nun also an
+\begin{equation*}
+f_w(x) = \sum_{i=1}^Nw_i b_i (x)
+\end{equation*}
+und wollen damit \(y_i \approx f_w(x_i)\) \emph{bestmöglich} erreichen (indem wir die Koeffizienten \((w_1, \dotsc, w_N)\) \emph{optimal} wählen. Bestmöglich und optimal spezifizieren wir über den Mittelwert der Abweichungen in der Approximation über alle Datenpunkte
+\begin{equation*}
+\frac{1}{N}
+\end{equation*}
+
+In unserem Falle, wollen wir annehmen, dass \(f\) eine lineare Funktion
+(vielleicht auch noch als \emph{Gerade} bekannt)
+\[f(x) = \theta_1 + \theta_2 x\] ist. Damit können wir sagen, dass
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \(f\) einigermassen einfach zu bestimmen ist (wir brauchen nur zwei
+  Parameter \(\theta_1\) und \(\theta_2\))
+\item
+  wenn wir an Trends interessiert sind, sind lineare Funktionen eine
+  gute Wahl
+\item
+  allerdings sind Prozesse meistens nichtlinear.
+\end{enumerate}
+
+Vor allem haben wir sicher oft gehört, dass die Virusausbreitung gerne
+exponentiell verläuft, also zum Beispiel durch eine Funktion
+\[g(x) = k_1 2^{k_2x}\] beschrieben werden sollte. Hier ist \(k_1\) ein
+Skalierungsfaktor und \(k_2\) ein Parameter, der die Wachstumsrate
+bestimmt.
+
+In der Tat scheint die Annäherung der Datenpunkte aus Abbildung durch
+eine Gerade nicht zielführend.
+
+\begin{quote}
+Allerdings sind exponentielle Zusammenhänge auf einer logarithmischen
+Skala linear.
+\end{quote}
+
+Deshalb schauen wir uns die Daten über den Logarithmus (zur Basis \(2\))
+der Infektionszahlen an
+
+\begin{quote}
+(Tag \(x\), \(\log_2\)(Infektionen am Tag \(x\)))
+\end{quote}
+
+Im Bild der Daten () kann Jan erkennen, dass eine Gerade vielleicht
+(abgesehen von einigen Werten) ganz gut reinpassen könnte.
+
+\hypertarget{lineare-regression-1}{%
+\section{Lineare Regression}\label{lineare-regression-1}}
+
+Die Methode der \emph{linearen Regression} besteht aus dem Anpassen einer
+linearen Funktion (einer \emph{Geraden} im 2-dimensionalen Raum) an eine
+Datenwolke. Aus den unendlich vielen Möglichkeiten die Funktion zu
+definieren, wird die gewählt, die im Mittel den kleinsten Fehler
+zwischen den Datenpunkten und der Funktionsbeschreibung erzeugt.
+
+Für unser Beispiel der CoVID-19 Zahlen, können wir \emph{ad hoc} die
+Parameter \(\theta_1\) und \(\theta_2\) bestimmen. Wenn es soweit ist,
+werden wir die zugrundeliegenden mathematischen Konzepte und allgemein
+gültige Formeln zur Lösung kennenlernen.
+
+Konkret gehen wir davon aus, dass wir \(N\) Datenpunkte
+\[(x_j,h_j), \quad j=1,2,3,\dotsc,N\] haben wobei \(x_j\) die Variable ist
+und \(h_j\) das Merkmal dazu. In unserem Beispiel ist \(N=31\) (so viele
+Tage hat der Oktober 2020), \(x_{10}=10\) wäre der 10. Oktober und
+\(h_{10}\) der Logarithmus der Anzahl der am 10. Oktober registrierten
+Fälle.
+
+Und durch diese Datenpunkte wollen wir nun bestmöglich eine Gerade der
+Form \[h(x)=\theta_1 + \theta_2 x\] legen. Bestmöglich bedeutet, dass
+der Fehler über alle Datenpunkte gemittelt möglichst klein sein soll.
+Dafür definieren wir zunächst den Fehler im Datenpunkt \(x_j\) als
+\[e_j:= \frac 12 (h(x_j)-h_j)^2 = \frac 12 (\theta_1+\theta_2x_j -f_j)^2\]
+wobei das Quadrat (u.a.) sicherstellt, dass alle Fehler positiv sind und
+das ``\(\frac 12\)'' einfach ranmultipliziert wird um nachher beim Ableiten
+einen Faktor zu sparen.
+
+Und der gesammelte Fehler ist dann gegeben durch die Fehlerfunktion \(e\)
+als die Summer aller Fehler:
+\[e=e_1+e_2+\dotsc+e_N = \sum_{j=1}^N e_j = \frac 12\sum_{j=1}^N  (\theta_1+\theta_2x_j -f_j)^2\]
+
+Jan kann erkennen, dass die Funktion \(e\) für verschiedene
+\((\theta_1, \theta_2)\) verschiedene Werte annimmt und dass ein minimaler
+Wert von \(e\) einen minimalen Fehler in der Approximation der Daten durch
+\(h(x)=\theta_1+\theta_2 x\) bedeutet.
+
+Und wie finden wir die Minimalstelle von \(e\) beziehungsweise die
+optimalen \((\theta_1,\theta_2)\)? Fast wie in der Schule:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  die Funktion \(e\) ableiten,
+\item
+  eine Nullstelle der Ableitung finden.
+\end{enumerate}
+
+Dafür müssen wir erstmal verstehen, dass die Funktion eine Funktion von
+2 Variablen ist (und dass das ein grosses Thema der Vorlesung werden
+wird).
+
+Fürs erste sei gesagt, dass Jan die Variablen \((\theta_1, \theta_2)\)
+separat betrachten kann und danach ableiten und null setzen. Also nach
+der Summen-- und der Kettenregel: \[\begin{aligned}
+\frac{d}{d\theta_1} e(\theta_1, \theta_2) &= \frac 12 \sum_{j=1}^N  \frac{d}{d\theta_1} (\theta_1+\theta_2x_j -f_j)^2 = \frac 12 \sum_{j=1}^N 2(\theta_1+\theta_2x_j -f_j) \\
+&= \sum_{j=1}^N (\theta_1+\theta_2x_j -f_j)\end{aligned}\] und
+\[\begin{aligned}
+\frac{d}{d\theta_2} e(\theta_1, \theta_2) &= \frac 12 \sum_{j=1}^N  \frac{d}{d\theta_2} (\theta_1+\theta_2x_j -f_j)^2 = \frac 12 \sum_{j=1}^N 2(\theta_1+\theta_2x_j -f_j)x_j \\
+&= \sum_{j=1}^N (\theta_1+\theta_2x_j -f_j)x_j\end{aligned}\] abgeleitet
+sodass das Nullsetzen \[\begin{aligned}
+0&= \sum_{j=1}^N (\theta_1+\theta_2x_j -f_j) \\
+0&= \sum_{j=1}^N (\theta_1+\theta_2x_j -f_j)x_j\end{aligned}\] uns zwei
+Gleichungen ergibt, die (in aller Regel) die zwei unbekannten Parameter
+\(\theta_1\) und \(\theta_2\) (eindeutig) bestimmen.
+
+Mit den konkreten Zahlen von oben gerechnet (und auf 2 Nachkommastellen
+gekürzt) identifizieren wir \[\theta_1^*=7.88, \quad \theta_2^*=0.12\]
+als die optimale Wahl und damit \[h^*(x) = 7.88 + 0.12x\] als die beste
+Gerade; Jan vergleiche Abbildung
+\protect\hyperlink{fig:logtwo-cases-fitted}{3}.
+
+Natürlich können wir mit \[y = 2^{\log_2(y)}\] auch das \emph{logarithmieren}
+wieder rückgängig und auch die Ausgleichsgerade auf die lineare (nicht
+\emph{logarithmische}) Datenskalierung transformieren
+\[g(x) = 2^{\theta_1 + \theta_2 x} = 2^{\theta_1}\cdot 2^{\theta_2 x}\]
+was uns mit den Parametern von oben die optimale Ausgleichskurve als
+\[g^*(x) = 2^{7.88 + 0.12x} = 2^{7.88}\cdot 2^{0.12 x}=236.16\cdot 2^{0.12 x}\]
+ergibt (dargestellt in Abbildung
+\protect\hyperlink{fig:cases-fitted}{4}).
+
+\begin{figure}
+\hypertarget{fig:cases-fitted}{%
+\centering
+\includegraphics{bilder/02-cases-fitted.png}
+\caption{SARS-CoV-2 Fälle in Bayern im Oktober 2020 und die mittels linearer
+Regression auf der logarithmischen Skala bestimmte
+Ausgleichskurve}\label{fig:cases-fitted}
+}
+\end{figure}
+
+\hypertarget{sec:owo:mathematische-konzepte}{%
+\section{Mathematische Konzepte in der Linearen Regression}\label{sec:owo:mathematische-konzepte}}
+
+In diesem Beispiel haben wir schon einige Konzepte und Methoden benutzt,
+die wir im Laufe der Vorlesung in allen Details kennenlernen werden.
+
+Neben der grundlegenden Technik der \emph{linearen Regression} zur
+Datenanalyse werden wir uns eingehend mit
+
+\begin{itemize}
+\item
+  Elementarfunktionen (wie hier der Logarithmus und die
+  Exponentialfunktion, aber auch trigonometrische Funktionen und
+  weitere),
+\item
+  Differentiation und Integration von Funktionen und
+\item
+  dem Lösen linearer Gleichungssysteme
+\end{itemize}
+
+beschäftigen.
+
 \end{document}

@@ -464,6 +464,16 @@ Achtung:
 \hypertarget{lineare-regression}{%
 \chapter{Lineare Regression}\label{lineare-regression}}
 
+Auch bekannt als
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{lineare Ausgleichsrechnung} oder
+\item
+  \emph{Methode der kleinsten Quadrate}.
+\end{itemize}
+
 Ein wesentlicher Aspekt von \emph{Data Science} ist die Analyse oder das
 Verstehen von Daten. Allgemein gesagt, es wird versucht, aus den Daten
 heraus Aussagen über Trends oder Eigenschaften des Phänomens zu treffen,
@@ -582,7 +592,7 @@ dritten stehen.
 \textbf{Lineare Regression} besteht darin, dass die Funktion als Linearkombination
 
 \begin{equation*}
-f(x) = \sum_{i=1}^N w_i b_i(x)
+f_w(x) = \sum_{j=1}^n w_j b_j(x)
 \end{equation*}
 
 von Basisfunktionen geschrieben wird und dann die \emph{Koeffizienten} \(w_i\) so bestimmt werden, dass \(f\) die Daten bestmöglich annähert.
@@ -591,7 +601,7 @@ von Basisfunktionen geschrieben wird und dann die \emph{Koeffizienten} \(w_i\) s
 Jan bemerke, dass \emph{bestmöglich} wieder \emph{overfitting} bedeuten kann aber auch, bei schlechter Wahl der Basis, wenig aussagekräftig sein kann. Der gute Kompromiss liegt also jetzt in der Wahl der passenden Basisfunktionen und deren Anzahl. (Mehr Basisfunktionen bedeutet möglicherweise bessere Approximation aber auch die Gefahr von \emph{overfitting}.)
 \end{quote}
 
-Typische Wahlen für die Basis \(\{b_1, b_2, \dotsc, b_N\}\) sind
+Typische Wahlen für die Basis \(\{b_1, b_2, \dotsc, b_n\}\) sind
 
 \begin{itemize}
 \tightlist
@@ -605,171 +615,170 @@ Typische Wahlen für die Basis \(\{b_1, b_2, \dotsc, b_N\}\) sind
   Wavelets -- Verallgemeinerungen von trigonometrischen Funktionen
 \end{itemize}
 
-\hypertarget{fehlerfunktional-und-berechnung-der-approximierenden}{%
-\section{Fehlerfunktional und Berechnung der Approximierenden}\label{fehlerfunktional-und-berechnung-der-approximierenden}}
+\hypertarget{fehlerfunktional-und-minimierung}{%
+\section{Fehlerfunktional und Minimierung}\label{fehlerfunktional-und-minimierung}}
 
 Wir setzen nun also an
 \begin{equation*}
-f_w(x) = \sum_{i=1}^Nw_i b_i (x)
+f_w(x) = \sum_{j=1}^nw_j b_j (x)
 \end{equation*}
-und wollen damit \(y_i \approx f_w(x_i)\) \emph{bestmöglich} erreichen (indem wir die Koeffizienten \((w_1, \dotsc, w_N)\) \emph{optimal} wählen. Bestmöglich und optimal spezifizieren wir über den Mittelwert der Abweichungen in der Approximation über alle Datenpunkte
+und wollen damit \(y_i \approx f_w(x_i)\) \emph{bestmöglich} erreichen (indem wir die Koeffizienten \((w_1, \dotsc, w_N)\) \emph{optimal} wählen. Bestmöglich und optimal spezifizieren wir über den Mittelwert der quadratischen Abweichungen in der Approximation über alle Datenpunkte
 \begin{equation*}
-\frac{1}{N}
+\frac{1}{N}\sum_{i=1}^N (y_i - f_w(x_i))^2
 \end{equation*}
 
-In unserem Falle, wollen wir annehmen, dass \(f\) eine lineare Funktion
-(vielleicht auch noch als \emph{Gerade} bekannt)
-\[f(x) = \theta_1 + \theta_2 x\] ist. Damit können wir sagen, dass
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \(f\) einigermassen einfach zu bestimmen ist (wir brauchen nur zwei
-  Parameter \(\theta_1\) und \(\theta_2\))
-\item
-  wenn wir an Trends interessiert sind, sind lineare Funktionen eine
-  gute Wahl
-\item
-  allerdings sind Prozesse meistens nichtlinear.
-\end{enumerate}
-
-Vor allem haben wir sicher oft gehört, dass die Virusausbreitung gerne
-exponentiell verläuft, also zum Beispiel durch eine Funktion
-\[g(x) = k_1 2^{k_2x}\] beschrieben werden sollte. Hier ist \(k_1\) ein
-Skalierungsfaktor und \(k_2\) ein Parameter, der die Wachstumsrate
-bestimmt.
-
-In der Tat scheint die Annäherung der Datenpunkte aus Abbildung durch
-eine Gerade nicht zielführend.
-
-\begin{quote}
-Allerdings sind exponentielle Zusammenhänge auf einer logarithmischen
-Skala linear.
-\end{quote}
-
-Deshalb schauen wir uns die Daten über den Logarithmus (zur Basis \(2\))
-der Infektionszahlen an
-
-\begin{quote}
-(Tag \(x\), \(\log_2\)(Infektionen am Tag \(x\)))
-\end{quote}
-
-Im Bild der Daten () kann Jan erkennen, dass eine Gerade vielleicht
-(abgesehen von einigen Werten) ganz gut reinpassen könnte.
-
-\hypertarget{lineare-regression-1}{%
-\section{Lineare Regression}\label{lineare-regression-1}}
-
-Die Methode der \emph{linearen Regression} besteht aus dem Anpassen einer
-linearen Funktion (einer \emph{Geraden} im 2-dimensionalen Raum) an eine
-Datenwolke. Aus den unendlich vielen Möglichkeiten die Funktion zu
-definieren, wird die gewählt, die im Mittel den kleinsten Fehler
-zwischen den Datenpunkten und der Funktionsbeschreibung erzeugt.
-
-Für unser Beispiel der CoVID-19 Zahlen, können wir \emph{ad hoc} die
-Parameter \(\theta_1\) und \(\theta_2\) bestimmen. Wenn es soweit ist,
-werden wir die zugrundeliegenden mathematischen Konzepte und allgemein
-gültige Formeln zur Lösung kennenlernen.
-
-Konkret gehen wir davon aus, dass wir \(N\) Datenpunkte
-\[(x_j,h_j), \quad j=1,2,3,\dotsc,N\] haben wobei \(x_j\) die Variable ist
-und \(h_j\) das Merkmal dazu. In unserem Beispiel ist \(N=31\) (so viele
-Tage hat der Oktober 2020), \(x_{10}=10\) wäre der 10. Oktober und
-\(h_{10}\) der Logarithmus der Anzahl der am 10. Oktober registrierten
-Fälle.
-
-Und durch diese Datenpunkte wollen wir nun bestmöglich eine Gerade der
-Form \[h(x)=\theta_1 + \theta_2 x\] legen. Bestmöglich bedeutet, dass
-der Fehler über alle Datenpunkte gemittelt möglichst klein sein soll.
-Dafür definieren wir zunächst den Fehler im Datenpunkt \(x_j\) als
-\[e_j:= \frac 12 (h(x_j)-h_j)^2 = \frac 12 (\theta_1+\theta_2x_j -f_j)^2\]
-wobei das Quadrat (u.a.) sicherstellt, dass alle Fehler positiv sind und
-das ``\(\frac 12\)'' einfach ranmultipliziert wird um nachher beim Ableiten
-einen Faktor zu sparen.
-
-Und der gesammelte Fehler ist dann gegeben durch die Fehlerfunktion \(e\)
-als die Summer aller Fehler:
-\[e=e_1+e_2+\dotsc+e_N = \sum_{j=1}^N e_j = \frac 12\sum_{j=1}^N  (\theta_1+\theta_2x_j -f_j)^2\]
-
-Jan kann erkennen, dass die Funktion \(e\) für verschiedene
-\((\theta_1, \theta_2)\) verschiedene Werte annimmt und dass ein minimaler
-Wert von \(e\) einen minimalen Fehler in der Approximation der Daten durch
-\(h(x)=\theta_1+\theta_2 x\) bedeutet.
-
-Und wie finden wir die Minimalstelle von \(e\) beziehungsweise die
-optimalen \((\theta_1,\theta_2)\)? Fast wie in der Schule:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  die Funktion \(e\) ableiten,
-\item
-  eine Nullstelle der Ableitung finden.
-\end{enumerate}
-
-Dafür müssen wir erstmal verstehen, dass die Funktion eine Funktion von
-2 Variablen ist (und dass das ein grosses Thema der Vorlesung werden
-wird).
-
-Fürs erste sei gesagt, dass Jan die Variablen \((\theta_1, \theta_2)\)
-separat betrachten kann und danach ableiten und null setzen. Also nach
-der Summen-- und der Kettenregel: \[\begin{aligned}
-\frac{d}{d\theta_1} e(\theta_1, \theta_2) &= \frac 12 \sum_{j=1}^N  \frac{d}{d\theta_1} (\theta_1+\theta_2x_j -f_j)^2 = \frac 12 \sum_{j=1}^N 2(\theta_1+\theta_2x_j -f_j) \\
-&= \sum_{j=1}^N (\theta_1+\theta_2x_j -f_j)\end{aligned}\] und
-\[\begin{aligned}
-\frac{d}{d\theta_2} e(\theta_1, \theta_2) &= \frac 12 \sum_{j=1}^N  \frac{d}{d\theta_2} (\theta_1+\theta_2x_j -f_j)^2 = \frac 12 \sum_{j=1}^N 2(\theta_1+\theta_2x_j -f_j)x_j \\
-&= \sum_{j=1}^N (\theta_1+\theta_2x_j -f_j)x_j\end{aligned}\] abgeleitet
-sodass das Nullsetzen \[\begin{aligned}
-0&= \sum_{j=1}^N (\theta_1+\theta_2x_j -f_j) \\
-0&= \sum_{j=1}^N (\theta_1+\theta_2x_j -f_j)x_j\end{aligned}\] uns zwei
-Gleichungen ergibt, die (in aller Regel) die zwei unbekannten Parameter
-\(\theta_1\) und \(\theta_2\) (eindeutig) bestimmen.
-
-Mit den konkreten Zahlen von oben gerechnet (und auf 2 Nachkommastellen
-gekürzt) identifizieren wir \[\theta_1^*=7.88, \quad \theta_2^*=0.12\]
-als die optimale Wahl und damit \[h^*(x) = 7.88 + 0.12x\] als die beste
-Gerade; Jan vergleiche Abbildung
-\protect\hyperlink{fig:logtwo-cases-fitted}{3}.
-
-Natürlich können wir mit \[y = 2^{\log_2(y)}\] auch das \emph{logarithmieren}
-wieder rückgängig und auch die Ausgleichsgerade auf die lineare (nicht
-\emph{logarithmische}) Datenskalierung transformieren
-\[g(x) = 2^{\theta_1 + \theta_2 x} = 2^{\theta_1}\cdot 2^{\theta_2 x}\]
-was uns mit den Parametern von oben die optimale Ausgleichskurve als
-\[g^*(x) = 2^{7.88 + 0.12x} = 2^{7.88}\cdot 2^{0.12 x}=236.16\cdot 2^{0.12 x}\]
-ergibt (dargestellt in Abbildung
-\protect\hyperlink{fig:cases-fitted}{4}).
-
-\begin{figure}
-\hypertarget{fig:cases-fitted}{%
-\centering
-\includegraphics{bilder/02-cases-fitted.png}
-\caption{SARS-CoV-2 Fälle in Bayern im Oktober 2020 und die mittels linearer
-Regression auf der logarithmischen Skala bestimmte
-Ausgleichskurve}\label{fig:cases-fitted}
-}
-\end{figure}
-
-\hypertarget{sec:owo:mathematische-konzepte}{%
-\section{Mathematische Konzepte in der Linearen Regression}\label{sec:owo:mathematische-konzepte}}
-
-In diesem Beispiel haben wir schon einige Konzepte und Methoden benutzt,
-die wir im Laufe der Vorlesung in allen Details kennenlernen werden.
-
-Neben der grundlegenden Technik der \emph{linearen Regression} zur
-Datenanalyse werden wir uns eingehend mit
+Ein paar Bemerkungen
 
 \begin{itemize}
+\tightlist
 \item
-  Elementarfunktionen (wie hier der Logarithmus und die
-  Exponentialfunktion, aber auch trigonometrische Funktionen und
-  weitere),
+  jetzt müssen wir die \(w_i\)'s bestimmen so dass dieser Fehlerterm minimal wird
 \item
-  Differentiation und Integration von Funktionen und
+  das optimale \(w\) ist unabhängig von einer Skalierung des Fehlerterms
 \item
-  dem Lösen linearer Gleichungssysteme
+  des wegen schreiben wir gerne einfach \(\frac 12 \sum_{i=1}^N (y_i - f_w(x_i))^2\) als das Zielfunktional, das es zu minimieren gilt.
 \end{itemize}
 
-beschäftigen.
+Wie finden wir jetzt die \(w_i\)'s? Zunächst gilt, dass
+\begin{equation*}
+f_w(x_i) = \sum_{i=j}^n w_j b_j(x_i) = 
+\begin{bmatrix}
+b_1(x_i) & b_2(x_i) & \dots & b_n(x_i)
+\end{bmatrix}
+\begin{bmatrix}
+w_1 \\ w_2 \\ \vdots \\ w_n
+\end{bmatrix}
+\end{equation*}
+
+und wenn wir alle \(f_w(x_i)\), \(i=1,\dotsc,N\) übereinander in einen Vektor schreiben, dass
+
+\begin{equation*}
+f_w(\mathbf x) := 
+\begin{bmatrix}
+f_w(x_1) \\ \vdots \\ f_w(x_N)
+\end{bmatrix}
+=
+\begin{bmatrix}
+b_1(x_1) & \dots & b_n(x_1) \\
+\vdots & \ddots & \vdots \\
+b_1(x_N) & \dots & b_n(x_N)
+\end{bmatrix}
+\begin{bmatrix}
+w_1 \\ \vdots \\ w_n
+\end{bmatrix}
+=: \Phi(\mathbf x) w
+\end{equation*}
+
+Damit, mit \(\mathbf y\) als den Vektor aller \(y_i\)'s, und mit der Definition der Vektornorm, können wir unser Minimierungsproblem schreiben als
+\begin{equation*}
+\frac 12  \sum_{i=1}^N (y_i - f_w(x_i))^2 = \frac 12 \| \mathbf y - \Phi (\mathbf x) w\|^2 \to \min.
+\end{equation*}
+
+Wir bemerken, dass
+
+\begin{itemize}
+\tightlist
+\item
+  das Fehlerfunktional immer größer und bestenfalls gleich 0 ist
+\item
+  falls das lineare Gleichungssystem \(\Phi (\mathbf x)w = \mathbf y\) eine Lösung hat \(w\), ist das auch eine Lösung unserer Minimierung
+\item
+  im typischen Falle aber ist allerdings \(N\gg n\) und das System überbestimmt (\(n=N\) würde ein overfitting bedeuten\ldots{}) sodass wir keine Lösung erwarten können.
+\item
+  Das Minimierungsproblems selbst hat allerdings immer eine Lösung.
+\end{itemize}
+
+\hypertarget{berechnung-der-bestluxf6sung}{%
+\section{Berechnung der Bestlösung}\label{berechnung-der-bestluxf6sung}}
+
+Wir suchen also ein Minimum der Funktion
+\begin{equation*}
+\begin{split}
+w \mapsto \frac 12 \|\mathbf y - \Phi(\mathbf x) \|^2 &= \frac 12 (\mathbf y - \Phi(\mathbf x)w)^T(\mathbf y - \Phi(\mathbf x)w)  \\ 
+&= \frac 12 [\mathbf y^T\mathbf y -y^T \Phi(\mathbf x)w - w^T \Phi(\mathbf x)^T\mathbf y  + w^T \Phi(\mathbf x)^T\Phi(\mathbf x)w] \\
+&= \frac 12 [\mathbf y^T\mathbf y -2 w^T \Phi(\mathbf x)^T\mathbf y  + w^T \Phi(\mathbf x)^T\Phi(\mathbf x)w] 
+\end{split}
+\end{equation*}
+wobei wir die Definition der Norm \(\|v\|^2 = v^Tv\) und die Eigenschaft, dass für die skalare Größe \(w^T \Phi(\mathbf x)^T\mathbf y = (w^T \Phi(\mathbf x)^T\mathbf y)^T = \mathbf y^T \Phi(\mathbf x)w\) gilt, ausgenutzt haben.
+
+Wären \(w\) und \(y\) keine Vektoren sondern einfach reelle Zahlen, wäre das hier eine Parabelgleichung \(aw^2 + bw + c\) mit \(a>0\), die immer eine Minimalstelle hat.
+
+Tatsächlich gilt hier alles ganz analog. Insbesondere ist \(\Phi(\mathbf x)^T\Phi(\mathbf x)\) in der Regel ``größer 0'' (was heißt das wohl bei quadratischen Matrizen?). Und mittels ``Nullsetzen'' der ersten Ableitung können wir das Minimum bestimmen. In diesem Fall ist die erste Ableitung (nach \(w\))
+\begin{equation*}
+\nabla_w (\frac 12 \|\mathbf y - \Phi(\mathbf x) \|^2) = \Phi(\mathbf x)^T\Phi(\mathbf x)w - \Phi(\mathbf x)^T\mathbf y,
+\end{equation*}
+(den \emph{Gradienten} \(\nabla_w\) als Ableitung von Funktionen mit mehreren Veränderlichen werden wir noch genauer behandeln)
+was uns als Lösung, die Lösung des linearen Gleichungssystems
+\begin{equation*}
+\Phi(\mathbf x)^T\Phi(\mathbf x)w = \Phi(\mathbf x)^T\mathbf y
+\end{equation*}
+definiert.
+
+Letzte Frage: Wann hat dieses Gleichungssystems eine eindeutige Lösung? Mit \(N>n\) (also \(\Phi(\mathbf x)\) hat mehr Zeilen als Spalten) gelten die Äquivalenzen:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\Phi(\mathbf x)^T\Phi(\mathbf x)w = \Phi(\mathbf x)^T\mathbf y\) hat eine eindeutige Lösung
+\item
+  die Matrix \(\Phi(\mathbf x)^T\Phi(\mathbf x)\) ist regulär
+\item
+  die Spalten von \(\Phi(\mathbf x)\) sind linear unabhängig
+\item
+  die Vektoren \(b_i(\mathbf x)\) sind linear unabhängig.
+\end{itemize}
+
+Praktischerweise tritt genau diese Situation im Allgemeinen ein.
+
+\begin{itemize}
+\tightlist
+\item
+  \(N>n\) (mehr Datenpunkte als Parameter)
+\item
+  \(b_i\)'s werden als \emph{linear unabhängige} (im Sinne von Funktionenräumen) gewählt (was die lineare unabhängigket der \(b_i(\mathbf x)\) impliziert.
+\end{itemize}
+
+\hypertarget{beispiel}{%
+\section{Beispiel}\label{beispiel}}
+
+Unsere Covid-Zahlen mit einer geraden angenähert:
+
+\begin{itemize}
+\tightlist
+\item
+  \(f_w(x) = w_1 + w_2 x\) -- das heißt \(n=2\) und Basisfunktionen \(b_1(x)\equiv 1\) und \(b_2(x) = x\)
+\item
+  \(\mathbf x = (1,2,3, \dots, 31)\) -- die Tage im Februar, das heißt \(N=31\)
+\item
+  \(\mathbf y = (352, 347, \dots, 2615)\) -- die Fallzahlen
+\end{itemize}
+
+Wir bekommen
+
+\begin{equation*}
+\Phi(\mathbf x) = 
+\begin{bmatrix}
+1 & 1 \\ 1 & 2 \\ 1 & 3 \\ \vdots \\ 1 & 31
+\end{bmatrix}
+\end{equation*}
+(die Spalten sind linear unabhängig) und müssen ``nur'' das 2x2 System
+\[
+\begin{bmatrix}
+1 & 1 \\ 1 & 2 \\ 1 & 3 \\ \vdots \\ 1 & 31
+\end{bmatrix}^T
+\begin{bmatrix}
+1 & 1 \\ 1 & 2 \\ 1 & 3 \\ \vdots \\ 1 & 31
+\end{bmatrix}
+\begin{bmatrix}
+w_1 \\ w_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 1 \\ 1 & 2 \\ 1 & 3 \\ \vdots \\ 1 & 31
+\end{bmatrix}^T \mathbf y
+\]
+lösen um die Approximation \(f_w\) zu bestimmen.
+
+Und noch als letzte Bemerkung. Egal wie die Basisfunktionen \(b_i\) gewählt werden, die Parameterabhängigkeit von \(w\) ist immer linear. Deswegen der Name \textbf{lineare Ausgleichsrechnung}.
 
 \end{document}

@@ -437,7 +437,7 @@ definiert.</p>
 </div>
 <div id="beispiel" class="section level2 hasAnchor">
 <h2><span class="header-section-number">2.5</span> Beispiel<a href="lineare-regression.html#beispiel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Unsere Covid-Zahlen mit einer geraden angenähert:</p>
+<p>Unsere Covid-Zahlen “mit einer Geraden angenähert”:</p>
 <ul>
 <li><span class="math inline">\(f_w(x) = w_1 + w_2 x\)</span> – das heißt <span class="math inline">\(n=2\)</span> und Basisfunktionen <span class="math inline">\(b_1(x)\equiv 1\)</span> und <span class="math inline">\(b_2(x) = x\)</span></li>
 <li><span class="math inline">\(\mathbf x = (1,2,3, \dots, 31)\)</span> – die Tage im Februar, das heißt <span class="math inline">\(N=31\)</span></li>
@@ -453,8 +453,8 @@ definiert.</p>
 (die Spalten sind linear unabhängig) und müssen “nur” das 2x2 System
 <span class="math display">\[
 \begin{bmatrix}
-1 &amp; 1 \\ 1 &amp; 2 \\ 1 &amp; 3 \\ \vdots \\ 1 &amp; 31
-\end{bmatrix}^T
+1 &amp; 1 &amp; 1 &amp; \hdots &amp; 1 \\ 1 &amp; 2 &amp; 3 &amp; \hdots &amp; 31
+\end{bmatrix}
 \begin{bmatrix}
 1 &amp; 1 \\ 1 &amp; 2 \\ 1 &amp; 3 \\ \vdots \\ 1 &amp; 31
 \end{bmatrix}
@@ -463,8 +463,11 @@ w_1 \\ w_2
 \end{bmatrix}
 =
 \begin{bmatrix}
-1 &amp; 1 \\ 1 &amp; 2 \\ 1 &amp; 3 \\ \vdots \\ 1 &amp; 31
-\end{bmatrix}^T \mathbf y
+1 &amp; 1 &amp; 1 &amp; \hdots &amp; 1 \\ 1 &amp; 2 &amp; 3 &amp; \hdots &amp; 31
+\end{bmatrix} 
+\begin{bmatrix}
+352 \\  347 \\ 308 \\ \vdots \\ 2615
+\end{bmatrix} 
 \]</span>
 lösen um die Approximation <span class="math inline">\(f_w\)</span> zu bestimmen.</p>
 <p>Und noch als letzte Bemerkung. Egal wie die Basisfunktionen <span class="math inline">\(b_i\)</span> gewählt werden, die Parameterabhängigkeit von <span class="math inline">\(w\)</span> ist immer linear. Deswegen der Name <strong>lineare Ausgleichsrechnung</strong>.</p>

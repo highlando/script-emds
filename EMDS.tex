@@ -741,7 +741,7 @@ Praktischerweise tritt genau diese Situation im Allgemeinen ein.
 \hypertarget{beispiel}{%
 \section{Beispiel}\label{beispiel}}
 
-Unsere Covid-Zahlen mit einer geraden angenähert:
+Unsere Covid-Zahlen ``mit einer Geraden angenähert'':
 
 \begin{itemize}
 \tightlist
@@ -764,8 +764,8 @@ Wir bekommen
 (die Spalten sind linear unabhängig) und müssen ``nur'' das 2x2 System
 \[
 \begin{bmatrix}
-1 & 1 \\ 1 & 2 \\ 1 & 3 \\ \vdots \\ 1 & 31
-\end{bmatrix}^T
+1 & 1 & 1 & \hdots & 1 \\ 1 & 2 & 3 & \hdots & 31
+\end{bmatrix}
 \begin{bmatrix}
 1 & 1 \\ 1 & 2 \\ 1 & 3 \\ \vdots \\ 1 & 31
 \end{bmatrix}
@@ -774,8 +774,11 @@ w_1 \\ w_2
 \end{bmatrix}
 =
 \begin{bmatrix}
-1 & 1 \\ 1 & 2 \\ 1 & 3 \\ \vdots \\ 1 & 31
-\end{bmatrix}^T \mathbf y
+1 & 1 & 1 & \hdots & 1 \\ 1 & 2 & 3 & \hdots & 31
+\end{bmatrix} 
+\begin{bmatrix}
+352 \\  347 \\ 308 \\ \vdots \\ 2615
+\end{bmatrix} 
 \]
 lösen um die Approximation \(f_w\) zu bestimmen.
 

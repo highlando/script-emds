@@ -309,12 +309,12 @@ Zusammenhang</strong> feststellen können. Also ob wir die Datenpaare</p>
 <blockquote>
 <p><span class="math inline">\(f(x_i)=y_i\)</span></p>
 </blockquote>
-<p>nicht zielführend. (Wir wollen Trends und größere Zusammenhänge erkennen und nicht kleine Fehler nachzeichnen.) Das zu strenge Anpassen an möglicherweise verrauschte Daten wird <strong>overfitting</strong> genannt.</p>
+<p>erzwingt nicht zielführend. (Wir wollen Trends und größere Zusammenhänge erkennen und nicht kleine Fehler nachzeichnen.) Das zu strenge Anpassen an möglicherweise verrauschte Daten wird <strong>overfitting</strong> genannt.</p>
 <p>Vielmehr werden wir nach einer Funktion <span class="math inline">\(f\)</span> suchen, die die Daten näherungsweise nachstellt:</p>
 <blockquote>
 <p><span class="math inline">\(f(x_i)\approx y_i\)</span></p>
 </blockquote>
-<p>Hierbei passen jetzt auch Funktionen, die vielleicht einfach zu handhaben sind aber die Daten kaum noch repräsentieren. Jan spricht von <strong>underfitting</strong>.</p>
+<p>Hierbei passen jetzt allerdings auch Funktionen, die vielleicht einfach zu handhaben sind aber die Daten kaum noch repräsentieren. Jan spricht von <strong>underfitting</strong>.</p>
 <p>Eine gute Approximation besteht im Kompromiss von <em>nah an den Daten</em> aber mit wenig <em>overfitting</em>.</p>
 </div>
 <div id="ansätze-für-lineare-regression" class="section level2 hasAnchor">
@@ -339,7 +339,7 @@ f_w(x) = \sum_{j=1}^n w_j b_j(x)
 </blockquote>
 <p>Typische Wahlen für die Basis <span class="math inline">\(\{b_1, b_2, \dotsc, b_n\}\)</span> sind</p>
 <ul>
-<li>Polynome: <span class="math inline">\(\{1, x, x^2, \dotsc, x^{N-1}\}\)</span> – für <span class="math inline">\(N=2\)</span> ist der Ansatz <em>eine Gerade</em></li>
+<li>Polynome: <span class="math inline">\(\{1, x, x^2, \dotsc, x^{n-1}\}\)</span> – für <span class="math inline">\(n=2\)</span> ist der Ansatz <em>eine Gerade</em></li>
 <li>Trigonometrische Funktionen: <span class="math inline">\(\{1, \cos(x), \sin(x), \cos(2x), \sin(2x), \dotsc\}\)</span></li>
 <li>Splines – Polynome, die abschnittsweise definiert werden</li>
 <li>Wavelets – Verallgemeinerungen von trigonometrischen Funktionen</li>
@@ -351,7 +351,7 @@ f_w(x) = \sum_{j=1}^n w_j b_j(x)
 <span class="math display">\[\begin{equation*}
 f_w(x) = \sum_{j=1}^nw_j b_j (x)
 \end{equation*}\]</span>
-und wollen damit <span class="math inline">\(y_i \approx f_w(x_i)\)</span> <em>bestmöglich</em> erreichen (indem wir die Koeffizienten <span class="math inline">\((w_1, \dotsc, w_N)\)</span> <em>optimal</em> wählen. Bestmöglich und optimal spezifizieren wir über den Mittelwert der quadratischen Abweichungen in der Approximation über alle Datenpunkte
+und wollen damit <span class="math inline">\(y_i \approx f_w(x_i)\)</span> <em>bestmöglich</em> erreichen (indem wir die Koeffizienten <span class="math inline">\((w_1, \dotsc, w_n)\)</span> <em>optimal</em> wählen. Bestmöglich und optimal spezifizieren wir über den Mittelwert der quadratischen Abweichungen in der Approximation über alle Datenpunkte
 <span class="math display">\[\begin{equation*}
 \frac{1}{N}\sum_{i=1}^N (y_i - f_w(x_i))^2
 \end{equation*}\]</span></p>
@@ -395,23 +395,23 @@ w_1 \\ \vdots \\ w_n
 <p>Wir bemerken, dass</p>
 <ul>
 <li>das Fehlerfunktional immer größer und bestenfalls gleich 0 ist</li>
-<li>falls das lineare Gleichungssystem <span class="math inline">\(\Phi (\mathbf x)w = \mathbf y\)</span> eine Lösung hat <span class="math inline">\(w\)</span>, ist das auch eine Lösung unserer Minimierung</li>
-<li>im typischen Falle aber ist allerdings <span class="math inline">\(N\gg n\)</span> und das System überbestimmt (<span class="math inline">\(n=N\)</span> würde ein overfitting bedeuten…) sodass wir keine Lösung erwarten können.</li>
+<li>falls das lineare Gleichungssystem <span class="math inline">\(\Phi (\mathbf x)w = \mathbf y\)</span> eine Lösung <span class="math inline">\(w\)</span> hat, ist das auch eine Lösung unserer Minimierung</li>
+<li>im typischen Falle aber ist allerdings <span class="math inline">\(N\gg n\)</span> und das System überbestimmt (<span class="math inline">\(n=N\)</span> würde ein overfitting bedeuten…) sodass wir keine Lösung des linearen Gleichungssystems erwarten können.</li>
 <li>Das Minimierungsproblems selbst hat allerdings immer eine Lösung.</li>
 </ul>
 </div>
 <div id="berechnung-der-bestlösung" class="section level2 hasAnchor">
 <h2><span class="header-section-number">2.4</span> Berechnung der Bestlösung<a href="lineare-regression.html#berechnung-der-bestlösung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Wir suchen also ein Minimum der Funktion
+<p>Wir suchen also ein Minimum der Funktion (mit <span class="math inline">\(\Phi\)</span>, <span class="math inline">\(\mathbf x\)</span>, <span class="math inline">\(\mathbf y\)</span> gegeben)
 <span class="math display">\[\begin{equation*}
 \begin{split}
-w \mapsto \frac 12 \|\mathbf y - \Phi(\mathbf x) \|^2 &amp;= \frac 12 (\mathbf y - \Phi(\mathbf x)w)^T(\mathbf y - \Phi(\mathbf x)w)  \\ 
-&amp;= \frac 12 [\mathbf y^T\mathbf y -y^T \Phi(\mathbf x)w - w^T \Phi(\mathbf x)^T\mathbf y  + w^T \Phi(\mathbf x)^T\Phi(\mathbf x)w] \\
+w \mapsto \frac 12 \|\mathbf y - \Phi(\mathbf x)w \|^2 &amp;= \frac 12 (\mathbf y - \Phi(\mathbf x)w)^T(\mathbf y - \Phi(\mathbf x)w)  \\ 
+&amp;= \frac 12 [\mathbf y^T\mathbf y - \mathbf y^T \Phi(\mathbf x)w - w^T \Phi(\mathbf x)^T\mathbf y  + w^T \Phi(\mathbf x)^T\Phi(\mathbf x)w] \\
 &amp;= \frac 12 [\mathbf y^T\mathbf y -2 w^T \Phi(\mathbf x)^T\mathbf y  + w^T \Phi(\mathbf x)^T\Phi(\mathbf x)w] 
 \end{split}
 \end{equation*}\]</span>
-wobei wir die Definition der Norm <span class="math inline">\(\|v\|^2 = v^Tv\)</span> und die Eigenschaft, dass für die skalare Größe <span class="math inline">\(w^T \Phi(\mathbf x)^T\mathbf y = (w^T \Phi(\mathbf x)^T\mathbf y)^T = \mathbf y^T \Phi(\mathbf x)w\)</span> gilt, ausgenutzt haben.</p>
-<p>Wären <span class="math inline">\(w\)</span> und <span class="math inline">\(y\)</span> keine Vektoren sondern einfach reelle Zahlen, wäre das hier eine Parabelgleichung <span class="math inline">\(aw^2 + bw + c\)</span> mit <span class="math inline">\(a&gt;0\)</span>, die immer eine Minimalstelle hat.</p>
+wobei wir die Definition der Norm <span class="math inline">\(\|v\|^2 = v^Tv\)</span> und die Eigenschaft, dass für die skalare Größe <span class="math inline">\(w^T \Phi(\mathbf x)^T\mathbf y = [w^T \Phi(\mathbf x)^T\mathbf y]^T = \mathbf y^T \Phi(\mathbf x)w\)</span> gilt, ausgenutzt haben.</p>
+<p>Wären <span class="math inline">\(w\)</span> und <span class="math inline">\(\mathbf y\)</span> keine Vektoren sondern einfach reelle Zahlen, wäre das hier eine Parabelgleichung <span class="math inline">\(aw^2 + bw + c\)</span> mit <span class="math inline">\(a&gt;0\)</span>, die immer eine Minimalstelle hat.</p>
 <p>Tatsächlich gilt hier alles ganz analog. Insbesondere ist <span class="math inline">\(\Phi(\mathbf x)^T\Phi(\mathbf x)\)</span> in der Regel “größer 0” (was heißt das wohl bei quadratischen Matrizen?). Und mittels “Nullsetzen” der ersten Ableitung können wir das Minimum bestimmen. In diesem Fall ist die erste Ableitung (nach <span class="math inline">\(w\)</span>)
 <span class="math display">\[\begin{equation*}
 \nabla_w (\frac 12 \|\mathbf y - \Phi(\mathbf x) \|^2) = \Phi(\mathbf x)^T\Phi(\mathbf x)w - \Phi(\mathbf x)^T\mathbf y,
@@ -432,7 +432,7 @@ definiert.</p>
 <p>Praktischerweise tritt genau diese Situation im Allgemeinen ein.</p>
 <ul>
 <li><span class="math inline">\(N&gt;n\)</span> (mehr Datenpunkte als Parameter)</li>
-<li><span class="math inline">\(b_i\)</span>’s werden als <em>linear unabhängige</em> (im Sinne von Funktionenräumen) gewählt (was die lineare unabhängigket der <span class="math inline">\(b_i(\mathbf x)\)</span> impliziert.</li>
+<li><span class="math inline">\(b_i\)</span>’s werden als <em>linear unabhängig</em> (im Sinne ihres Funktionenraums) gewählt, was die lineare unabhängigket der <span class="math inline">\(b_i(\mathbf x)\)</span> impliziert.</li>
 </ul>
 </div>
 <div id="beispiel" class="section level2 hasAnchor">

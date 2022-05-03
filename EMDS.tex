@@ -557,7 +557,7 @@ Unter diesem Gesichtspunkt ist eine Funktion, die
 \(f(x_i)=y_i\)
 \end{quote}
 
-nicht zielführend. (Wir wollen Trends und größere Zusammenhänge erkennen und nicht kleine Fehler nachzeichnen.) Das zu strenge Anpassen an möglicherweise verrauschte Daten wird \textbf{overfitting} genannt.
+erzwingt nicht zielführend. (Wir wollen Trends und größere Zusammenhänge erkennen und nicht kleine Fehler nachzeichnen.) Das zu strenge Anpassen an möglicherweise verrauschte Daten wird \textbf{overfitting} genannt.
 
 Vielmehr werden wir nach einer Funktion \(f\) suchen, die die Daten näherungsweise nachstellt:
 
@@ -565,7 +565,7 @@ Vielmehr werden wir nach einer Funktion \(f\) suchen, die die Daten näherungswe
 \(f(x_i)\approx y_i\)
 \end{quote}
 
-Hierbei passen jetzt auch Funktionen, die vielleicht einfach zu handhaben sind aber die Daten kaum noch repräsentieren. Jan spricht von \textbf{underfitting}.
+Hierbei passen jetzt allerdings auch Funktionen, die vielleicht einfach zu handhaben sind aber die Daten kaum noch repräsentieren. Jan spricht von \textbf{underfitting}.
 
 Eine gute Approximation besteht im Kompromiss von \emph{nah an den Daten} aber mit wenig \emph{overfitting}.
 
@@ -606,7 +606,7 @@ Typische Wahlen für die Basis \(\{b_1, b_2, \dotsc, b_n\}\) sind
 \begin{itemize}
 \tightlist
 \item
-  Polynome: \(\{1, x, x^2, \dotsc, x^{N-1}\}\) -- für \(N=2\) ist der Ansatz \emph{eine Gerade}
+  Polynome: \(\{1, x, x^2, \dotsc, x^{n-1}\}\) -- für \(n=2\) ist der Ansatz \emph{eine Gerade}
 \item
   Trigonometrische Funktionen: \(\{1, \cos(x), \sin(x), \cos(2x), \sin(2x), \dotsc\}\)
 \item
@@ -622,7 +622,7 @@ Wir setzen nun also an
 \begin{equation*}
 f_w(x) = \sum_{j=1}^nw_j b_j (x)
 \end{equation*}
-und wollen damit \(y_i \approx f_w(x_i)\) \emph{bestmöglich} erreichen (indem wir die Koeffizienten \((w_1, \dotsc, w_N)\) \emph{optimal} wählen. Bestmöglich und optimal spezifizieren wir über den Mittelwert der quadratischen Abweichungen in der Approximation über alle Datenpunkte
+und wollen damit \(y_i \approx f_w(x_i)\) \emph{bestmöglich} erreichen (indem wir die Koeffizienten \((w_1, \dotsc, w_n)\) \emph{optimal} wählen. Bestmöglich und optimal spezifizieren wir über den Mittelwert der quadratischen Abweichungen in der Approximation über alle Datenpunkte
 \begin{equation*}
 \frac{1}{N}\sum_{i=1}^N (y_i - f_w(x_i))^2
 \end{equation*}
@@ -681,9 +681,9 @@ Wir bemerken, dass
 \item
   das Fehlerfunktional immer größer und bestenfalls gleich 0 ist
 \item
-  falls das lineare Gleichungssystem \(\Phi (\mathbf x)w = \mathbf y\) eine Lösung hat \(w\), ist das auch eine Lösung unserer Minimierung
+  falls das lineare Gleichungssystem \(\Phi (\mathbf x)w = \mathbf y\) eine Lösung \(w\) hat, ist das auch eine Lösung unserer Minimierung
 \item
-  im typischen Falle aber ist allerdings \(N\gg n\) und das System überbestimmt (\(n=N\) würde ein overfitting bedeuten\ldots{}) sodass wir keine Lösung erwarten können.
+  im typischen Falle aber ist allerdings \(N\gg n\) und das System überbestimmt (\(n=N\) würde ein overfitting bedeuten\ldots{}) sodass wir keine Lösung des linearen Gleichungssystems erwarten können.
 \item
   Das Minimierungsproblems selbst hat allerdings immer eine Lösung.
 \end{itemize}
@@ -691,17 +691,17 @@ Wir bemerken, dass
 \hypertarget{berechnung-der-bestluxf6sung}{%
 \section{Berechnung der Bestlösung}\label{berechnung-der-bestluxf6sung}}
 
-Wir suchen also ein Minimum der Funktion
+Wir suchen also ein Minimum der Funktion (mit \(\Phi\), \(\mathbf x\), \(\mathbf y\) gegeben)
 \begin{equation*}
 \begin{split}
-w \mapsto \frac 12 \|\mathbf y - \Phi(\mathbf x) \|^2 &= \frac 12 (\mathbf y - \Phi(\mathbf x)w)^T(\mathbf y - \Phi(\mathbf x)w)  \\ 
-&= \frac 12 [\mathbf y^T\mathbf y -y^T \Phi(\mathbf x)w - w^T \Phi(\mathbf x)^T\mathbf y  + w^T \Phi(\mathbf x)^T\Phi(\mathbf x)w] \\
+w \mapsto \frac 12 \|\mathbf y - \Phi(\mathbf x)w \|^2 &= \frac 12 (\mathbf y - \Phi(\mathbf x)w)^T(\mathbf y - \Phi(\mathbf x)w)  \\ 
+&= \frac 12 [\mathbf y^T\mathbf y - \mathbf y^T \Phi(\mathbf x)w - w^T \Phi(\mathbf x)^T\mathbf y  + w^T \Phi(\mathbf x)^T\Phi(\mathbf x)w] \\
 &= \frac 12 [\mathbf y^T\mathbf y -2 w^T \Phi(\mathbf x)^T\mathbf y  + w^T \Phi(\mathbf x)^T\Phi(\mathbf x)w] 
 \end{split}
 \end{equation*}
-wobei wir die Definition der Norm \(\|v\|^2 = v^Tv\) und die Eigenschaft, dass für die skalare Größe \(w^T \Phi(\mathbf x)^T\mathbf y = (w^T \Phi(\mathbf x)^T\mathbf y)^T = \mathbf y^T \Phi(\mathbf x)w\) gilt, ausgenutzt haben.
+wobei wir die Definition der Norm \(\|v\|^2 = v^Tv\) und die Eigenschaft, dass für die skalare Größe \(w^T \Phi(\mathbf x)^T\mathbf y = [w^T \Phi(\mathbf x)^T\mathbf y]^T = \mathbf y^T \Phi(\mathbf x)w\) gilt, ausgenutzt haben.
 
-Wären \(w\) und \(y\) keine Vektoren sondern einfach reelle Zahlen, wäre das hier eine Parabelgleichung \(aw^2 + bw + c\) mit \(a>0\), die immer eine Minimalstelle hat.
+Wären \(w\) und \(\mathbf y\) keine Vektoren sondern einfach reelle Zahlen, wäre das hier eine Parabelgleichung \(aw^2 + bw + c\) mit \(a>0\), die immer eine Minimalstelle hat.
 
 Tatsächlich gilt hier alles ganz analog. Insbesondere ist \(\Phi(\mathbf x)^T\Phi(\mathbf x)\) in der Regel ``größer 0'' (was heißt das wohl bei quadratischen Matrizen?). Und mittels ``Nullsetzen'' der ersten Ableitung können wir das Minimum bestimmen. In diesem Fall ist die erste Ableitung (nach \(w\))
 \begin{equation*}
@@ -735,7 +735,7 @@ Praktischerweise tritt genau diese Situation im Allgemeinen ein.
 \item
   \(N>n\) (mehr Datenpunkte als Parameter)
 \item
-  \(b_i\)'s werden als \emph{linear unabhängige} (im Sinne von Funktionenräumen) gewählt (was die lineare unabhängigket der \(b_i(\mathbf x)\) impliziert.
+  \(b_i\)'s werden als \emph{linear unabhängig} (im Sinne ihres Funktionenraums) gewählt, was die lineare unabhängigket der \(b_i(\mathbf x)\) impliziert.
 \end{itemize}
 
 \hypertarget{beispiel}{%

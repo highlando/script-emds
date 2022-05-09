@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Einführung in die mathematische Datenanalyse</title>
+  <title>3 Matrix-Zerlegungen | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Einführung in die mathematische Datenanalyse" />
+  <meta property="og:title" content="3 Matrix-Zerlegungen | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="github-repo" content="highlando/script-emds" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Einführung in die mathematische Datenanalyse" />
+  <meta name="twitter:title" content="3 Matrix-Zerlegungen | Einführung in die mathematische Datenanalyse" />
   
   <meta name="twitter:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="lineare-regression.html"/>
 
-<link rel="next" href="was-ist-data-science.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -171,24 +171,104 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Einführung in die mathematische Datenanalyse</h1>
-<p class="author"><em>Jan Heiland</em></p>
-<p class="date"><em>FAU Erlangen-Nürnberg – Sommersemester 2022</em></p>
+<div id="matrix-zerlegungen" class="section level1 hasAnchor">
+<h1><span class="header-section-number">3</span> Matrix-Zerlegungen<a href="matrix-zerlegungen.html#matrix-zerlegungen" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Die Lösung <span class="math inline">\(w\)</span> des Problems der <em>linearen Ausgleichsrechnung</em> war entweder als Lösung eines Optimierungsproblems
+<span class="math display">\[\begin{equation*}
+\min_{w} \| Aw - y \|^2
+\end{equation*}\]</span>
+oder als Lösung des linearen Gleichungssystems
+<span class="math display">\[\begin{equation*}
+A^TAw=y
+\end{equation*}\]</span>
+gegeben. Hierbei steht nun <span class="math inline">\(A\in \mathbb R^{N\times n}\)</span> für die Matrix <span class="math inline">\(\Phi(\mathbf x)\)</span> der Daten und Basisfunktionen. Wir hatten uns überlegt, dass in den meisten Fällen</p>
+<ul>
+<li>die Matrix mehr Zeilen als Spalten hat (<span class="math inline">\(N&gt;n\)</span>) und</li>
+<li>die Spalten linear unabhängig sind.</li>
+</ul>
+<div id="qr-zerlegung" class="section level2 hasAnchor">
+<h2><span class="header-section-number">3.1</span> QR Zerlegung<a href="matrix-zerlegungen.html#qr-zerlegung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wir betrachten nochmal das Optimierungsproblem <span class="math inline">\(\min_{w} \| Aw - y \|^2\)</span>. Gäbe es eine Lösung des Systems <span class="math inline">\(Aw=y\)</span>, wäre das sofort eine Lösung des Optimierungsproblems. Da <span class="math inline">\(A\)</span> aber mehr Zeilen als Spalten hat, ist das System <span class="math inline">\(Aw=y\)</span> überbestimmt und eine Lösung in der Regel nicht gegeben.</p>
+<p>Die Überlegung ist nun, die Gleichung <span class="math inline">\(Aw=y\)</span> <em>so gut wie möglich</em> zu erfüllen, indem wir die relevanten Gleichungen indentifizieren und wenigstens diese lösen. Ein systematischer (und wie wir später sehen werden auch zum Optimierungsproblem passender) Zugang bietet die QR Zerlegung.</p>
+<div class="theorem">
+<p><span id="thm:qr" class="theorem"><strong>Theorem 3.1  (QR Zerlegung) </strong></span>Sei <span class="math inline">\(A\mathbb R^{m\times n}\)</span>, <span class="math inline">\(m&gt;n\)</span>. Dann existiert eine orthonormale Matrix <span class="math inline">\(Q\in \mathbb R^{m\times m}\)</span> und eine obere Dreiecksmatrix <span class="math inline">\(\hat R\in \mathbb R^{n\times n}\)</span> derart dass
+<span class="math display">\[\begin{equation*}
+A = QR =: Q 
+\begin{bmatrix}
+\hat R \\ 0
+\end{bmatrix}.
+\end{equation*}\]</span>
+Hat <span class="math inline">\(A\)</span> vollen (Spalten)Rang, dann ist <span class="math inline">\(\hat R\)</span> invertierbar.</p>
 </div>
-<div id="vorwort" class="section level1 unnumbered hasAnchor">
-<h1>Vorwort<a href="index.html#vorwort" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Das ist ein Aufschrieb.</p>
-<p>Korrekturen und Wünsche immer gerne als <em>issues</em> oder <em>pull requests</em> ans <a href="https://github.com/highlando/script-emds">github-repo</a>.</p>
+<p>Hier heißt <em>orthonormale Matrix</em> <span class="math inline">\(Q\)</span>, dass die Spalten von <span class="math inline">\(Q\)</span> paarweise orthogonal sind. Insbesondere gilt
+<span class="math display">\[\begin{equation*}
+Q^T Q = I.
+\end{equation*}\]</span></p>
+<p>Für unser zu lösendes Problem ergibt sich dadurch die Umformung
+<span class="math display">\[\begin{equation*}
+Aw = y \quad \Leftrightarrow \quad QRw=y \quad \Leftrightarrow \quad Q^TQRw=Q^T y 
+ \quad \Leftrightarrow \quad  Rw = Q^Ty
+\end{equation*}\]</span>
+oder auch
+<span class="math display">\[\begin{equation*}
+\begin{bmatrix}
+\hat R \\ 0
+\end{bmatrix}w 
+=
+Q^Ty
+=
+\begin{bmatrix}
+Q_1^T \\ Q_2^T
+\end{bmatrix}
+y
+\end{equation*}\]</span>
+(wobei wir die <span class="math inline">\(Q_1\in \mathbb R^{m\times n}\)</span> die Matrix der ersten <span class="math inline">\(n\)</span> Spalten von <span class="math inline">\(Q\)</span> ist)
+und als <em>Kompromiss</em> der Vorschlag, das Teilsystem
+<span class="math display">\[\begin{equation*}
+\hat R w = Q_1^Ty
+\end{equation*}\]</span>
+nach <span class="math inline">\(w\)</span> zu lösen und in Kauf zu nehmen, dass der Rest, nämlich das <span class="math inline">\(Q_2^Ty\)</span>, nicht notwendigerweise gleich null ist.</p>
+<p>Wir halten zunächst mal fest, dass</p>
+<ul>
+<li>Obwohl <span class="math inline">\(Q\)</span> eine reguläre Matrix ist, bedarf der Übergang von <span class="math inline">\(Aw=y\)</span> zu <span class="math inline">\(Q^TAw=Q^Ty\)</span> einer genaueren Analyse.</li>
+<li>Wir bemerken, dass für eine hypothetische komplette Lösung <span class="math inline">\(Aw-y\)</span>, diese Transformation keine Rolle spielt.</li>
+<li>Für die Kompromisslösung jedoch schon, weil beispielsweise verschiedene Konstruktionen eines invertierbaren Teils, verschiedene Residuen bedeuten und somit Optimalität im Sinne von <span class="math inline">\(\min_w \|Aw-y\|^2\)</span> nicht garantiert ist.</li>
+</ul>
+<p>Allerdings, wie Sie als Übungsaufgabe nachweisen werden, löst dieser Ansatz tatsächlich das Optimierungsproblem.</p>
+</div>
+<div id="aufgaben-1" class="section level2 hasAnchor">
+<h2><span class="header-section-number">3.2</span> Aufgaben<a href="matrix-zerlegungen.html#aufgaben-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="t-norm-und-orthogonale-transformation" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.2.1</span> (T) Norm und Orthogonale Transformation<a href="matrix-zerlegungen.html#t-norm-und-orthogonale-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sei <span class="math inline">\(Q\in \mathbb R^{n\times n}\)</span> eine orthogonale Matrix und sei <span class="math inline">\(y\in \mathbb R^{n}\)</span>. Zeigen Sie, dass
+<span class="math display">\[\begin{equation*}
+\|y\|^2 = \|Qy \|^2
+\end{equation*}\]</span>
+gilt.</p>
+</div>
+<div id="t-qr-zerlegung-und-kleinstes-quadrate-problem" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.2.2</span> (T) QR Zerlegung und Kleinstes Quadrate Problem<a href="matrix-zerlegungen.html#t-qr-zerlegung-und-kleinstes-quadrate-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sei <span class="math inline">\(A\in \mathbb R^{m,n}\)</span>, <span class="math inline">\(m&gt;n\)</span>, <span class="math inline">\(A\)</span> hat vollen Rank und sei
+<span class="math display">\[\begin{equation*}
+\begin{bmatrix}
+Q_1 &amp; Q_2
+\end{bmatrix}
+\begin{bmatrix}
+\hat R \\ 0
+\end{bmatrix} = A
+\end{equation*}\]</span>
+eine QR-Zerlegung von <span class="math inline">\(A\)</span>. Zeigen sie, dass die Lösung</p>
 
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="lineare-regression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="was-ist-data-science.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

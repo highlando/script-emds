@@ -120,6 +120,23 @@
 \institute{FAU Erlangen-Nürnberg}
 \date{FAU Erlangen-Nürnberg -- Sommersemester 2022}
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{conjecture}{Conjecture}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[chapter]
+\theoremstyle{definition}
+\newtheorem{hypothesis}{Hypothesis}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -783,5 +800,114 @@ w_1 \\ w_2
 lösen um die Approximation \(f_w\) zu bestimmen.
 
 Und noch als letzte Bemerkung. Egal wie die Basisfunktionen \(b_i\) gewählt werden, die Parameterabhängigkeit von \(w\) ist immer linear. Deswegen der Name \textbf{lineare Ausgleichsrechnung}.
+
+\hypertarget{matrix-zerlegungen}{%
+\chapter{Matrix-Zerlegungen}\label{matrix-zerlegungen}}
+
+Die Lösung \(w\) des Problems der \emph{linearen Ausgleichsrechnung} war entweder als Lösung eines Optimierungsproblems
+\begin{equation*}
+\min_{w} \| Aw - y \|^2
+\end{equation*}
+oder als Lösung des linearen Gleichungssystems
+\begin{equation*}
+A^TAw=y
+\end{equation*}
+gegeben. Hierbei steht nun \(A\in \mathbb R^{N\times n}\) für die Matrix \(\Phi(\mathbf x)\) der Daten und Basisfunktionen. Wir hatten uns überlegt, dass in den meisten Fällen
+
+\begin{itemize}
+\tightlist
+\item
+  die Matrix mehr Zeilen als Spalten hat (\(N>n\)) und
+\item
+  die Spalten linear unabhängig sind.
+\end{itemize}
+
+\hypertarget{qr-zerlegung}{%
+\section{QR Zerlegung}\label{qr-zerlegung}}
+
+Wir betrachten nochmal das Optimierungsproblem \(\min_{w} \| Aw - y \|^2\). Gäbe es eine Lösung des Systems \(Aw=y\), wäre das sofort eine Lösung des Optimierungsproblems. Da \(A\) aber mehr Zeilen als Spalten hat, ist das System \(Aw=y\) überbestimmt und eine Lösung in der Regel nicht gegeben.
+
+Die Überlegung ist nun, die Gleichung \(Aw=y\) \emph{so gut wie möglich} zu erfüllen, indem wir die relevanten Gleichungen indentifizieren und wenigstens diese lösen. Ein systematischer (und wie wir später sehen werden auch zum Optimierungsproblem passender) Zugang bietet die QR Zerlegung.
+
+\begin{theorem}[QR Zerlegung]
+\protect\hypertarget{thm:qr}{}\label{thm:qr}Sei \(A\mathbb R^{m\times n}\), \(m>n\). Dann existiert eine orthonormale Matrix \(Q\in \mathbb R^{m\times m}\) und eine obere Dreiecksmatrix \(\hat R\in \mathbb R^{n\times n}\) derart dass
+\begin{equation*}
+A = QR =: Q 
+\begin{bmatrix}
+\hat R \\ 0
+\end{bmatrix}.
+\end{equation*}
+Hat \(A\) vollen (Spalten)Rang, dann ist \(\hat R\) invertierbar.
+\end{theorem}
+
+Hier heißt \emph{orthonormale Matrix} \(Q\), dass die Spalten von \(Q\) paarweise orthogonal sind. Insbesondere gilt
+\begin{equation*}
+Q^T Q = I.
+\end{equation*}
+
+Für unser zu lösendes Problem ergibt sich dadurch die Umformung
+\begin{equation*}
+Aw = y \quad \Leftrightarrow \quad QRw=y \quad \Leftrightarrow \quad Q^TQRw=Q^T y 
+ \quad \Leftrightarrow \quad  Rw = Q^Ty
+\end{equation*}
+oder auch
+\begin{equation*}
+\begin{bmatrix}
+\hat R \\ 0
+\end{bmatrix}w 
+=
+Q^Ty
+=
+\begin{bmatrix}
+Q_1^T \\ Q_2^T
+\end{bmatrix}
+y
+\end{equation*}
+(wobei wir die \(Q_1\in \mathbb R^{m\times n}\) die Matrix der ersten \(n\) Spalten von \(Q\) ist)
+und als \emph{Kompromiss} der Vorschlag, das Teilsystem
+\begin{equation*}
+\hat R w = Q_1^Ty
+\end{equation*}
+nach \(w\) zu lösen und in Kauf zu nehmen, dass der Rest, nämlich das \(Q_2^Ty\), nicht notwendigerweise gleich null ist.
+
+Wir halten zunächst mal fest, dass
+
+\begin{itemize}
+\tightlist
+\item
+  Obwohl \(Q\) eine reguläre Matrix ist, bedarf der Übergang von \(Aw=y\) zu \(Q^TAw=Q^Ty\) einer genaueren Analyse.
+\item
+  Wir bemerken, dass für eine hypothetische komplette Lösung \(Aw-y\), diese Transformation keine Rolle spielt.
+\item
+  Für die Kompromisslösung jedoch schon, weil beispielsweise verschiedene Konstruktionen eines invertierbaren Teils, verschiedene Residuen bedeuten und somit Optimalität im Sinne von \(\min_w \|Aw-y\|^2\) nicht garantiert ist.
+\end{itemize}
+
+Allerdings, wie Sie als Übungsaufgabe nachweisen werden, löst dieser Ansatz tatsächlich das Optimierungsproblem.
+
+\hypertarget{aufgaben-1}{%
+\section{Aufgaben}\label{aufgaben-1}}
+
+\hypertarget{t-norm-und-orthogonale-transformation}{%
+\subsection{(T) Norm und Orthogonale Transformation}\label{t-norm-und-orthogonale-transformation}}
+
+Sei \(Q\in \mathbb R^{n\times n}\) eine orthogonale Matrix und sei \(y\in \mathbb R^{n}\). Zeigen Sie, dass
+\begin{equation*}
+\|y\|^2 = \|Qy \|^2
+\end{equation*}
+gilt.
+
+\hypertarget{t-qr-zerlegung-und-kleinstes-quadrate-problem}{%
+\subsection{(T) QR Zerlegung und Kleinstes Quadrate Problem}\label{t-qr-zerlegung-und-kleinstes-quadrate-problem}}
+
+Sei \(A\in \mathbb R^{m,n}\), \(m>n\), \(A\) hat vollen Rank und sei
+\begin{equation*}
+\begin{bmatrix}
+Q_1 & Q_2
+\end{bmatrix}
+\begin{bmatrix}
+\hat R \\ 0
+\end{bmatrix} = A
+\end{equation*}
+eine QR-Zerlegung von \(A\). Zeigen sie, dass die Lösung
 
 \end{document}

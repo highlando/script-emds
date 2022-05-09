@@ -1,3 +1,4 @@
+thm:qr
 was-ist-data-science
 wie-passiert-die-datenanalyse
 was-sind-daten
@@ -16,3 +17,8 @@ ansätze-für-lineare-regression
 fehlerfunktional-und-minimierung
 berechnung-der-bestlösung
 beispiel
+matrix-zerlegungen
+qr-zerlegung
+aufgaben-1
+t-norm-und-orthogonale-transformation
+t-qr-zerlegung-und-kleinstes-quadrate-problem

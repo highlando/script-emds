@@ -1,4 +1,5 @@
 thm:qr
+thm:svd
 was-ist-data-science
 wie-passiert-die-datenanalyse
 was-sind-daten
@@ -19,6 +20,12 @@ berechnung-der-bestlösung
 beispiel
 matrix-zerlegungen
 qr-zerlegung
+singulärwertzerlegung
 aufgaben-1
-t-norm-und-orthogonale-transformation
-t-qr-zerlegung-und-kleinstes-quadrate-problem
+norm-und-orthogonale-transformation-t
+qr-zerlegung-und-kleinstes-quadrate-problem-t
+eigenwerte-symmetrischer-matrizen-t
+singulärwertzerlegung-und-eigenwerte-t
+python-laden-und-speichern-von-arrays
+lineare-regression-für-covid-daten-p
+truncated-svd

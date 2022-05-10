@@ -884,11 +884,139 @@ Wir halten zunächst mal fest, dass
 
 Allerdings, wie Sie als Übungsaufgabe nachweisen werden, löst dieser Ansatz tatsächlich das Optimierungsproblem.
 
+\hypertarget{singuluxe4rwertzerlegung}{%
+\section{Singulärwertzerlegung}\label{singuluxe4rwertzerlegung}}
+
+Eine weitere Matrix Zerlegung, die eng mit der Lösung von Optimierungsproblemen oder überbestimmten Gleichungssystemen zusammenhängt ist die \emph{Singulärwertzerlegung} (SVD -- von english: \emph{Singular Value Decomposition}).
+
+\begin{theorem}[Singulärwertzerlegung]
+\protect\hypertarget{thm:svd}{}\label{thm:svd}Sei \(A\in \mathbb C^{m\times n}\), \(m\geq n\). Dann existieren orthogonale Matrizen \(U \in \mathbb C^{m\times m}\) und \(V\in \mathbb C^{n\times n}\) und eine Matrix \(\Sigma \in \mathbb R^{m\times n}\) der Form
+\begin{equation*}
+\Sigma = 
+\begin{bmatrix}
+\sigma_1 & 0 & \dots & 0\\
+0 & \sigma_2 &\ddots & \vdots\\
+0 & \ddots & \ddots &0\\
+  0 & \dots&0 & \sigma_n \\
+  0 & 0 & \dots & 0 \\
+  \vdots & \ddots &  & \vdots\\
+  0 & 0 & \dots & 0
+\end{bmatrix}
+\end{equation*}
+mit reellen sogenannten \emph{Singulärwerten}
+\begin{equation*}
+\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_n \geq 0
+\end{equation*}
+sodass gilt
+\begin{equation*}
+A = U \Sigma V^*
+\end{equation*}
+wobei gilt \(V^* = \overline{V^T}\) (transponiert und komplex konjugiert).
+\end{theorem}
+
+Ein paar Bemerkungen.
+
+\begin{itemize}
+\tightlist
+\item
+  Ist \(A\) reell, können auch \(U\) und \(V\) reell gewählt werden.
+\item
+  Die Annahme \(m \geq n\) war nur nötig um für die Matrix \(\Sigma\) keine Fallunterscheidung zu machen. (Für \(m\leq n\) ``steht der Nullblock rechts von den Singulärwerten''). Insbesondere gilt \(A^* = V\Sigma U^*\) ist eine SVD von \(A^*\).
+\item
+  Eine Illustration der Zerlegung ist in Abbildung \ref{SVD} zu sehen.
+\end{itemize}
+
+Wir machen einige Überlegungen im Hinblick auf große Matrizen. Sei dazu \(m>n\), \(A\in \mathbb C^{m\times n}\) und \(A=U\Sigma V^*\) eine SVD wie in Theorem @ref\{thm:SVD\}. Sei nun
+\begin{equation*}
+U = \begin{bmatrix}
+U_1 & U_2
+\end{bmatrix}
+% = \begin{bmatrix} V_1^* & V_2^*
+\end{equation*}
+partitioniert sodass \(U_1\) die ersten \(n\) Spalten von \(U\) enthält.
+
+Dann gilt (nach der Matrix-Multiplikations Regel \emph{Zeile mal Spalte} die Teile \(U_2\) und \(V_2\) immer mit dem Nullblock in \(\Sigma\) multipliziert werden) dass
+\begin{equation*}
+A = U\Sigma V = 
+\begin{bmatrix}
+U_1 & U_2
+\end{bmatrix}
+\begin{bmatrix}
+\hat \Sigma \\ 0
+\end{bmatrix}
+V^*
+% \begin{bmatrix} V_1^* \\ V_2^* \end{bmatrix}
+=
+U_1 
+\hat \Sigma
+V^*
+% \begin{bmatrix} V_1^* \\ V_2^* \end{bmatrix}
+\end{equation*}
+Es genügt also nur die ersten \(m\) Spalten von \(U\) zu berechnen. Das ist die sogenannte \textbf{slim SVD}.
+
+Hat, darüberhinaus, die Matrix \(A\) keinen vollen Rang, also \(\operatorname{Rg}(A) = r < n\), dann:
+
+\begin{itemize}
+\tightlist
+\item
+  ist \(\sigma_i=0\), für alle \(i=r+1, \dotsc, n\), (wir erinnern uns, dass die Singulärwerte nach Größe sortiert sind)
+\item
+  die Matrix \(\hat \Sigma\) hat \(n-r\) Nullzeilen
+\item
+  für die Zerlegung sind nur die ersten \(r\) Spalten von \(U\) und \(V\) relevant -- die sogenannte \textbf{Kompakte SVD}.
+\end{itemize}
+
+In der Datenapproximation ist außerdem die \textbf{truncated SVD} von Interesse. Dazu sei \(\hat r<r\) ein beliebig gewählter Index. Dann werden alle Singulärwerte, \(\sigma_i=0\), für alle \(i=\hat r+1, \dotsc, n\), abgeschnitten -- das heißt null gesetzt und die entsprechende \emph{kompakte SVD} berechnet.
+
+Hier gilt nun nicht mehr die Gleichheit in der Zerlegung. Vielmehr gilt
+\begin{equation*}
+A \approx A_{\hat r}
+\end{equation*}
+wobei \(A_{\hat r}\) aus der \emph{truncated SVD} von \(A\) erzeugt wurde. Allerdings ist diese Approximation von \(A\) durch optimal in dem Sinne, dass es keine Matrix vom Rang \(\hat r \geq r=\operatorname{Rg}(A)\) gibt, die \(A\) (in der \emph{induzierten} euklidischen Norm\footnote{Auf Matriznormen kommen wir noch in der Vorlesung zu sprechen.}) besser approximiert. Es gilt
+\begin{equation*}
+\min_{B\in \mathbb C^{m\times n}, \operatorname{Rg}(B)=\hat r} \|A-B\|_2 = \|A-A_{\hat r}\|_2 = \sigma_{\hat r + 1};
+\end{equation*}
+vgl. Bollhoefer/Mehrmann Satz 14.15.
+
+Zum Abschluss noch der Zusammenhang zum Optimierungsproblem. Ist \(A=U\Sigma V^*\) ``SV-zerlegt'', dann gilt
+\begin{equation*}
+A^*Aw = V\Sigma^*U^*U\Sigma V^*w = V\hat \Sigma^2 V^* 
+\end{equation*}
+und damit
+\begin{equation*}
+A^*Aw = A^*y \quad \Leftrightarrow \quad V\hat \Sigma^2 V^*  = V\Sigma^*U^*y \quad \Leftrightarrow \quad w = V(\Sigma^+)^*U^*y
+\end{equation*}
+wobei
+\begin{equation*}
+\Sigma^+ = \begin{bmatrix}
+\hat \Sigma^{-1} \\ 0_{m-n \times n}
+\end{bmatrix}
+\end{equation*}
+aus \(\Sigma \hat \Sigma^{-1}\hat \Sigma^{-1}\) herrührt.
+
+\textbf{Bemerkung}: \(\Sigma^+\) kann auch definiert werden, wenn \(\hat \Sigma\) nicht invertierbar ist (weil manche Diagonaleinträge null sind). Dann wird \(\hat \Sigma^+\) betrachtet, bei welcher nur die \(\sigma_i>0\) invertiert werden und die anderen \(\sigma_i=0\) belassen werden. Das definiert eine sogenannte \emph{verallgemeinerte Inverse} und löst auch das Optimierungsproblem falls \(A\) keinen vollen Rang hat.
+
+\begin{figure}
+\hypertarget{SVD}{%
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{bilder/03-412px-Singular_value_decomposition_visualisation.svg.png}
+\caption{Illustration der SVD. Bitte beachten der \(*\) bedeutet hier transponiert und komplex konjugiert. By Cmglee - Own work, CC BY-SA 4.0, \url{https://commons.wikimedia.org/w/index.php?curid=67853297}}\label{SVD}
+}
+\end{figure}
+
 \hypertarget{aufgaben-1}{%
 \section{Aufgaben}\label{aufgaben-1}}
 
-\hypertarget{t-norm-und-orthogonale-transformation}{%
-\subsection{(T) Norm und Orthogonale Transformation}\label{t-norm-und-orthogonale-transformation}}
+\begin{enumerate}
+\def\labelenumi{(\Alph{enumi})}
+\setcounter{enumi}{19}
+\tightlist
+\item
+  heißt theoretische Aufgabe, (P) heißt programmieren.
+\end{enumerate}
+
+\hypertarget{norm-und-orthogonale-transformation-t}{%
+\subsection{Norm und Orthogonale Transformation (T)}\label{norm-und-orthogonale-transformation-t}}
 
 Sei \(Q\in \mathbb R^{n\times n}\) eine orthogonale Matrix und sei \(y\in \mathbb R^{n}\). Zeigen Sie, dass
 \begin{equation*}
@@ -896,8 +1024,8 @@ Sei \(Q\in \mathbb R^{n\times n}\) eine orthogonale Matrix und sei \(y\in \mathb
 \end{equation*}
 gilt.
 
-\hypertarget{t-qr-zerlegung-und-kleinstes-quadrate-problem}{%
-\subsection{(T) QR Zerlegung und Kleinstes Quadrate Problem}\label{t-qr-zerlegung-und-kleinstes-quadrate-problem}}
+\hypertarget{qr-zerlegung-und-kleinstes-quadrate-problem-t}{%
+\subsection{QR Zerlegung und Kleinstes Quadrate Problem (T)}\label{qr-zerlegung-und-kleinstes-quadrate-problem-t}}
 
 Sei \(A\in \mathbb R^{m,n}\), \(m>n\), \(A\) hat vollen Rank und sei
 \begin{equation*}
@@ -908,6 +1036,36 @@ Q_1 & Q_2
 \hat R \\ 0
 \end{bmatrix} = A
 \end{equation*}
-eine QR-Zerlegung von \(A\). Zeigen sie, dass die Lösung
+eine QR-Zerlegung von \(A\). Zeigen sie, dass die Lösung von
+\begin{equation*}
+\hat R w = Q_1^T y
+\end{equation*}
+ein kritischer Punkt (d.h. der Gradient \(\nabla_w\) verschwindet) von
+\begin{equation*}
+w \mapsto \| Aw - y \|^2
+\end{equation*}
+ist. \textbf{Hinweis}: Die Formel für den Gradienten wurde in der Vorlesung 02 hergeleitet.
+
+\hypertarget{eigenwerte-symmetrischer-matrizen-t}{%
+\subsection{Eigenwerte Symmetrischer Matrizen (T)}\label{eigenwerte-symmetrischer-matrizen-t}}
+
+Zeigen Sie, dass Eigenwerte symmetrischer reeller Matrizen \(A\in \mathbb R^{n\times n}\) immer reell sind.
+
+\hypertarget{singuluxe4rwertzerlegung-und-eigenwerte-t}{%
+\subsection{Singulärwertzerlegung und Eigenwerte (T)}\label{singuluxe4rwertzerlegung-und-eigenwerte-t}}
+
+Zeigen Sie, dass die Singulärwerte einer Matrix \(A\in \mathbb R^{m\times n}\), \(m>n\), genau die Eigenwerte der Matrix \(A^TA\) sind und in welcher Beziehung sie mit den Eigenwerten von \(AA^T\) stehen. \textbf{Hinweis}: hier ist ``\(m>n\)'' wichtig.
+
+\hypertarget{python-laden-und-speichern-von-arrays}{%
+\subsection{Python -- Laden und Speichern von Arrays}\label{python-laden-und-speichern-von-arrays}}
+
+\hypertarget{lineare-regression-fuxfcr-covid-daten-p}{%
+\subsection{Lineare Regression für Covid Daten (P)}\label{lineare-regression-fuxfcr-covid-daten-p}}
+
+\hypertarget{truncated-svd}{%
+\subsection{Truncated SVD}\label{truncated-svd}}
+
+SVs plotten
+Formel verifizieren
 
 \end{document}

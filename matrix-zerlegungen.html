@@ -149,7 +149,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a><ul>
 <li class="chapter" data-level="3.1" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#qr-zerlegung"><i class="fa fa-check"></i><b>3.1</b> QR Zerlegung</a></li>
-<li class="chapter" data-level="3.2" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#aufgaben-1"><i class="fa fa-check"></i><b>3.2</b> Aufgaben</a></li>
+<li class="chapter" data-level="3.2" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#singulärwertzerlegung"><i class="fa fa-check"></i><b>3.2</b> Singulärwertzerlegung</a></li>
+<li class="chapter" data-level="3.3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#aufgaben-1"><i class="fa fa-check"></i><b>3.3</b> Aufgaben</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -236,18 +237,117 @@ nach <span class="math inline">\(w\)</span> zu lösen und in Kauf zu nehmen, das
 </ul>
 <p>Allerdings, wie Sie als Übungsaufgabe nachweisen werden, löst dieser Ansatz tatsächlich das Optimierungsproblem.</p>
 </div>
+<div id="singulärwertzerlegung" class="section level2 hasAnchor">
+<h2><span class="header-section-number">3.2</span> Singulärwertzerlegung<a href="matrix-zerlegungen.html#singulärwertzerlegung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Eine weitere Matrix Zerlegung, die eng mit der Lösung von Optimierungsproblemen oder überbestimmten Gleichungssystemen zusammenhängt ist die <em>Singulärwertzerlegung</em> (SVD – von english: <em>Singular Value Decomposition</em>).</p>
+<div class="theorem">
+<p><span id="thm:svd" class="theorem"><strong>Theorem 3.2  (Singulärwertzerlegung) </strong></span>Sei <span class="math inline">\(A\in \mathbb C^{m\times n}\)</span>, <span class="math inline">\(m\geq n\)</span>. Dann existieren orthogonale Matrizen <span class="math inline">\(U \in \mathbb C^{m\times m}\)</span> und <span class="math inline">\(V\in \mathbb C^{n\times n}\)</span> und eine Matrix <span class="math inline">\(\Sigma \in \mathbb R^{m\times n}\)</span> der Form
+<span class="math display">\[\begin{equation*}
+\Sigma = 
+\begin{bmatrix}
+\sigma_1 &amp; 0 &amp; \dots &amp; 0\\
+0 &amp; \sigma_2 &amp;\ddots &amp; \vdots\\
+0 &amp; \ddots &amp; \ddots &amp;0\\
+  0 &amp; \dots&amp;0 &amp; \sigma_n \\
+  0 &amp; 0 &amp; \dots &amp; 0 \\
+  \vdots &amp; \ddots &amp;  &amp; \vdots\\
+  0 &amp; 0 &amp; \dots &amp; 0
+\end{bmatrix}
+\end{equation*}\]</span>
+mit reellen sogenannten <em>Singulärwerten</em>
+<span class="math display">\[\begin{equation*}
+\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_n \geq 0
+\end{equation*}\]</span>
+sodass gilt
+<span class="math display">\[\begin{equation*}
+A = U \Sigma V^*
+\end{equation*}\]</span>
+wobei gilt <span class="math inline">\(V^* = \overline{V^T}\)</span> (transponiert und komplex konjugiert).</p>
+</div>
+<p>Ein paar Bemerkungen.</p>
+<ul>
+<li>Ist <span class="math inline">\(A\)</span> reell, können auch <span class="math inline">\(U\)</span> und <span class="math inline">\(V\)</span> reell gewählt werden.</li>
+<li>Die Annahme <span class="math inline">\(m \geq n\)</span> war nur nötig um für die Matrix <span class="math inline">\(\Sigma\)</span> keine Fallunterscheidung zu machen. (Für <span class="math inline">\(m\leq n\)</span> “steht der Nullblock rechts von den Singulärwerten”). Insbesondere gilt <span class="math inline">\(A^* = V\Sigma U^*\)</span> ist eine SVD von <span class="math inline">\(A^*\)</span>.</li>
+<li>Eine Illustration der Zerlegung ist in Abbildung <a href="matrix-zerlegungen.html#SVD"><strong>??</strong></a> zu sehen.</li>
+</ul>
+<p>Wir machen einige Überlegungen im Hinblick auf große Matrizen. Sei dazu <span class="math inline">\(m&gt;n\)</span>, <span class="math inline">\(A\in \mathbb C^{m\times n}\)</span> und <span class="math inline">\(A=U\Sigma V^*\)</span> eine SVD wie in Theorem @ref{thm:SVD}. Sei nun
+<span class="math display">\[\begin{equation*}
+U = \begin{bmatrix}
+U_1 &amp; U_2
+\end{bmatrix}
+% = \begin{bmatrix} V_1^* &amp; V_2^*
+\end{equation*}\]</span>
+partitioniert sodass <span class="math inline">\(U_1\)</span> die ersten <span class="math inline">\(n\)</span> Spalten von <span class="math inline">\(U\)</span> enthält.</p>
+<p>Dann gilt (nach der Matrix-Multiplikations Regel <em>Zeile mal Spalte</em> die Teile <span class="math inline">\(U_2\)</span> und <span class="math inline">\(V_2\)</span> immer mit dem Nullblock in <span class="math inline">\(\Sigma\)</span> multipliziert werden) dass
+<span class="math display">\[\begin{equation*}
+A = U\Sigma V = 
+\begin{bmatrix}
+U_1 &amp; U_2
+\end{bmatrix}
+\begin{bmatrix}
+\hat \Sigma \\ 0
+\end{bmatrix}
+V^*
+% \begin{bmatrix} V_1^* \\ V_2^* \end{bmatrix}
+=
+U_1 
+\hat \Sigma
+V^*
+% \begin{bmatrix} V_1^* \\ V_2^* \end{bmatrix}
+\end{equation*}\]</span>
+Es genügt also nur die ersten <span class="math inline">\(m\)</span> Spalten von <span class="math inline">\(U\)</span> zu berechnen. Das ist die sogenannte <strong>slim SVD</strong>.</p>
+<p>Hat, darüberhinaus, die Matrix <span class="math inline">\(A\)</span> keinen vollen Rang, also <span class="math inline">\(\operatorname{Rg}(A) = r &lt; n\)</span>, dann:</p>
+<ul>
+<li>ist <span class="math inline">\(\sigma_i=0\)</span>, für alle <span class="math inline">\(i=r+1, \dotsc, n\)</span>, (wir erinnern uns, dass die Singulärwerte nach Größe sortiert sind)</li>
+<li>die Matrix <span class="math inline">\(\hat \Sigma\)</span> hat <span class="math inline">\(n-r\)</span> Nullzeilen</li>
+<li>für die Zerlegung sind nur die ersten <span class="math inline">\(r\)</span> Spalten von <span class="math inline">\(U\)</span> und <span class="math inline">\(V\)</span> relevant – die sogenannte <strong>Kompakte SVD</strong>.</li>
+</ul>
+<p>In der Datenapproximation ist außerdem die <strong>truncated SVD</strong> von Interesse. Dazu sei <span class="math inline">\(\hat r&lt;r\)</span> ein beliebig gewählter Index. Dann werden alle Singulärwerte, <span class="math inline">\(\sigma_i=0\)</span>, für alle <span class="math inline">\(i=\hat r+1, \dotsc, n\)</span>, abgeschnitten – das heißt null gesetzt und die entsprechende <em>kompakte SVD</em> berechnet.</p>
+<p>Hier gilt nun nicht mehr die Gleichheit in der Zerlegung. Vielmehr gilt
+<span class="math display">\[\begin{equation*}
+A \approx A_{\hat r}
+\end{equation*}\]</span>
+wobei <span class="math inline">\(A_{\hat r}\)</span> aus der <em>truncated SVD</em> von <span class="math inline">\(A\)</span> erzeugt wurde. Allerdings ist diese Approximation von <span class="math inline">\(A\)</span> durch optimal in dem Sinne, dass es keine Matrix vom Rang <span class="math inline">\(\hat r \geq r=\operatorname{Rg}(A)\)</span> gibt, die <span class="math inline">\(A\)</span> (in der <em>induzierten</em> euklidischen Norm<a href="matrix-zerlegungen.html#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>) besser approximiert. Es gilt
+<span class="math display">\[\begin{equation*}
+\min_{B\in \mathbb C^{m\times n}, \operatorname{Rg}(B)=\hat r} \|A-B\|_2 = \|A-A_{\hat r}\|_2 = \sigma_{\hat r + 1};
+\end{equation*}\]</span>
+vgl. Bollhoefer/Mehrmann Satz 14.15.</p>
+<p>Zum Abschluss noch der Zusammenhang zum Optimierungsproblem. Ist <span class="math inline">\(A=U\Sigma V^*\)</span> “SV-zerlegt”, dann gilt
+<span class="math display">\[\begin{equation*}
+A^*Aw = V\Sigma^*U^*U\Sigma V^*w = V\hat \Sigma^2 V^* 
+\end{equation*}\]</span>
+und damit
+<span class="math display">\[\begin{equation*}
+A^*Aw = A^*y \quad \Leftrightarrow \quad V\hat \Sigma^2 V^*  = V\Sigma^*U^*y \quad \Leftrightarrow \quad w = V(\Sigma^+)^*U^*y
+\end{equation*}\]</span>
+wobei
+<span class="math display">\[\begin{equation*}
+\Sigma^+ = \begin{bmatrix}
+\hat \Sigma^{-1} \\ 0_{m-n \times n}
+\end{bmatrix}
+\end{equation*}\]</span>
+aus <span class="math inline">\(\Sigma \hat \Sigma^{-1}\hat \Sigma^{-1}\)</span> herrührt.</p>
+<p><strong>Bemerkung</strong>: <span class="math inline">\(\Sigma^+\)</span> kann auch definiert werden, wenn <span class="math inline">\(\hat \Sigma\)</span> nicht invertierbar ist (weil manche Diagonaleinträge null sind). Dann wird <span class="math inline">\(\hat \Sigma^+\)</span> betrachtet, bei welcher nur die <span class="math inline">\(\sigma_i&gt;0\)</span> invertiert werden und die anderen <span class="math inline">\(\sigma_i=0\)</span> belassen werden. Das definiert eine sogenannte <em>verallgemeinerte Inverse</em> und löst auch das Optimierungsproblem falls <span class="math inline">\(A\)</span> keinen vollen Rang hat.</p>
+<div class="figure">
+<img src="bilder/03-412px-Singular_value_decomposition_visualisation.svg.png" alt="Illustration der SVD. Bitte beachten der * bedeutet hier transponiert und komplex konjugiert. By Cmglee - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=67853297" id="SVD" style="width:50.0%" />
+<p class="caption">Illustration der SVD. Bitte beachten der <span class="math inline">\(*\)</span> bedeutet hier transponiert und komplex konjugiert. By Cmglee - Own work, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=67853297" class="uri">https://commons.wikimedia.org/w/index.php?curid=67853297</a></p>
+</div>
+</div>
 <div id="aufgaben-1" class="section level2 hasAnchor">
-<h2><span class="header-section-number">3.2</span> Aufgaben<a href="matrix-zerlegungen.html#aufgaben-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="t-norm-und-orthogonale-transformation" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.1</span> (T) Norm und Orthogonale Transformation<a href="matrix-zerlegungen.html#t-norm-und-orthogonale-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h2><span class="header-section-number">3.3</span> Aufgaben<a href="matrix-zerlegungen.html#aufgaben-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol start="20" style="list-style-type: upper-alpha">
+<li>heißt theoretische Aufgabe, (P) heißt programmieren.</li>
+</ol>
+<div id="norm-und-orthogonale-transformation-t" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.3.1</span> Norm und Orthogonale Transformation (T)<a href="matrix-zerlegungen.html#norm-und-orthogonale-transformation-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sei <span class="math inline">\(Q\in \mathbb R^{n\times n}\)</span> eine orthogonale Matrix und sei <span class="math inline">\(y\in \mathbb R^{n}\)</span>. Zeigen Sie, dass
 <span class="math display">\[\begin{equation*}
 \|y\|^2 = \|Qy \|^2
 \end{equation*}\]</span>
 gilt.</p>
 </div>
-<div id="t-qr-zerlegung-und-kleinstes-quadrate-problem" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.2</span> (T) QR Zerlegung und Kleinstes Quadrate Problem<a href="matrix-zerlegungen.html#t-qr-zerlegung-und-kleinstes-quadrate-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="qr-zerlegung-und-kleinstes-quadrate-problem-t" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.3.2</span> QR Zerlegung und Kleinstes Quadrate Problem (T)<a href="matrix-zerlegungen.html#qr-zerlegung-und-kleinstes-quadrate-problem-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sei <span class="math inline">\(A\in \mathbb R^{m,n}\)</span>, <span class="math inline">\(m&gt;n\)</span>, <span class="math inline">\(A\)</span> hat vollen Rank und sei
 <span class="math display">\[\begin{equation*}
 \begin{bmatrix}
@@ -257,10 +357,49 @@ Q_1 &amp; Q_2
 \hat R \\ 0
 \end{bmatrix} = A
 \end{equation*}\]</span>
-eine QR-Zerlegung von <span class="math inline">\(A\)</span>. Zeigen sie, dass die Lösung</p>
+eine QR-Zerlegung von <span class="math inline">\(A\)</span>. Zeigen sie, dass die Lösung von
+<span class="math display">\[\begin{equation*}
+\hat R w = Q_1^T y
+\end{equation*}\]</span>
+ein kritischer Punkt (d.h. der Gradient <span class="math inline">\(\nabla_w\)</span> verschwindet) von
+<span class="math display">\[\begin{equation*}
+w \mapsto \| Aw - y \|^2
+\end{equation*}\]</span>
+ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorlesung 02 hergeleitet.</p>
+</div>
+<div id="eigenwerte-symmetrischer-matrizen-t" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.3.3</span> Eigenwerte Symmetrischer Matrizen (T)<a href="matrix-zerlegungen.html#eigenwerte-symmetrischer-matrizen-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Zeigen Sie, dass Eigenwerte symmetrischer reeller Matrizen <span class="math inline">\(A\in \mathbb R^{n\times n}\)</span> immer reell sind.</p>
+</div>
+<div id="singulärwertzerlegung-und-eigenwerte-t" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.3.4</span> Singulärwertzerlegung und Eigenwerte (T)<a href="matrix-zerlegungen.html#singulärwertzerlegung-und-eigenwerte-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Zeigen Sie, dass die Singulärwerte einer Matrix <span class="math inline">\(A\in \mathbb R^{m\times n}\)</span>, <span class="math inline">\(m&gt;n\)</span>, genau die Eigenwerte der Matrix <span class="math inline">\(A^TA\)</span> sind und in welcher Beziehung sie mit den Eigenwerten von <span class="math inline">\(AA^T\)</span> stehen. <strong>Hinweis</strong>: hier ist “<span class="math inline">\(m&gt;n\)</span>” wichtig.</p>
+</div>
+<div id="python-laden-und-speichern-von-arrays" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.3.5</span> Python – Laden und Speichern von Arrays<a href="matrix-zerlegungen.html#python-laden-und-speichern-von-arrays" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="lineare-regression-für-covid-daten-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.3.6</span> Lineare Regression für Covid Daten (P)<a href="matrix-zerlegungen.html#lineare-regression-für-covid-daten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="truncated-svd" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.3.7</span> Truncated SVD<a href="matrix-zerlegungen.html#truncated-svd" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>SVs plotten
+Formel verifizieren</p>
 
 </div>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Auf Matriznormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Auf Matriznormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 

@@ -23,6 +23,7 @@ qr-zerlegung
 singulärwertzerlegung
 aufgaben-1
 norm-und-orthogonale-transformation-t
+kleinste-quadrate-und-mittelwert
 qr-zerlegung-und-kleinstes-quadrate-problem-t
 eigenwerte-symmetrischer-matrizen-t
 singulärwertzerlegung-und-eigenwerte-t

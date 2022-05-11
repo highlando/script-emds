@@ -192,7 +192,7 @@ gegeben. Hierbei steht nun <span class="math inline">\(A\in \mathbb R^{N\times n
 <p>Wir betrachten nochmal das Optimierungsproblem <span class="math inline">\(\min_{w} \| Aw - y \|^2\)</span>. Gäbe es eine Lösung des Systems <span class="math inline">\(Aw=y\)</span>, wäre das sofort eine Lösung des Optimierungsproblems. Da <span class="math inline">\(A\)</span> aber mehr Zeilen als Spalten hat, ist das System <span class="math inline">\(Aw=y\)</span> überbestimmt und eine Lösung in der Regel nicht gegeben.</p>
 <p>Die Überlegung ist nun, die Gleichung <span class="math inline">\(Aw=y\)</span> <em>so gut wie möglich</em> zu erfüllen, indem wir die relevanten Gleichungen indentifizieren und wenigstens diese lösen. Ein systematischer (und wie wir später sehen werden auch zum Optimierungsproblem passender) Zugang bietet die QR Zerlegung.</p>
 <div class="theorem">
-<p><span id="thm:qr" class="theorem"><strong>Theorem 3.1  (QR Zerlegung) </strong></span>Sei <span class="math inline">\(A\mathbb R^{m\times n}\)</span>, <span class="math inline">\(m&gt;n\)</span>. Dann existiert eine orthonormale Matrix <span class="math inline">\(Q\in \mathbb R^{m\times m}\)</span> und eine obere Dreiecksmatrix <span class="math inline">\(\hat R\in \mathbb R^{n\times n}\)</span> derart dass
+<p><span id="thm:qr" class="theorem"><strong>Theorem 3.1  (QR Zerlegung) </strong></span>Sei <span class="math inline">\(A\in \mathbb R^{m\times n}\)</span>, <span class="math inline">\(m&gt;n\)</span>. Dann existiert eine orthonormale Matrix <span class="math inline">\(Q\in \mathbb R^{m\times m}\)</span> und eine obere Dreiecksmatrix <span class="math inline">\(\hat R\in \mathbb R^{n\times n}\)</span> derart dass
 <span class="math display">\[\begin{equation*}
 A = QR =: Q 
 \begin{bmatrix}
@@ -335,9 +335,7 @@ aus <span class="math inline">\(\Sigma \hat \Sigma^{-1}\hat \Sigma^{-1}\)</span>
 </div>
 <div id="aufgaben-1" class="section level2 hasAnchor">
 <h2><span class="header-section-number">3.3</span> Aufgaben<a href="matrix-zerlegungen.html#aufgaben-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ol start="20" style="list-style-type: upper-alpha">
-<li>heißt theoretische Aufgabe, (P) heißt programmieren.</li>
-</ol>
+<p>Erklärung: (T) heißt theoretische Aufgabe, (P) heißt programmieren.</p>
 <div id="norm-und-orthogonale-transformation-t" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.1</span> Norm und Orthogonale Transformation (T)<a href="matrix-zerlegungen.html#norm-und-orthogonale-transformation-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sei <span class="math inline">\(Q\in \mathbb R^{n\times n}\)</span> eine orthogonale Matrix und sei <span class="math inline">\(y\in \mathbb R^{n}\)</span>. Zeigen Sie, dass
@@ -352,7 +350,7 @@ gilt.</p>
 <span class="math display">\[\begin{equation*}
 (x_i, y_i), \quad i=1,2,\dotsc,N,
 \end{equation*}\]</span>
-mittels einer konstanten Funktion <span class="math inline">\(f(x)=w_1\)</span> auf <span class="math inline">\(w_1\)</span> als den Mittelwert von <span class="math inline">\(y_i\)</span> führt.</p>
+mittels einer konstanten Funktion <span class="math inline">\(f(x)=w_1\)</span> auf <span class="math inline">\(w_1\)</span> auf den Mittelwert der <span class="math inline">\(y_i\)</span> führt.</p>
 </div>
 <div id="qr-zerlegung-und-kleinstes-quadrate-problem-t" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.3</span> QR Zerlegung und Kleinstes Quadrate Problem (T)<a href="matrix-zerlegungen.html#qr-zerlegung-und-kleinstes-quadrate-problem-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -413,11 +411,13 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
 </div>
 <div id="lineare-regression-für-covid-daten-p" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.7</span> Lineare Regression für Covid Daten (P)<a href="matrix-zerlegungen.html#lineare-regression-für-covid-daten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Führen sie auf den Covid-daten eine lineare Regression zum Fitten
-* einer konstanten Funktion <span class="math inline">\(f(x)=c\)</span>
-* einer linearen Funktion <span class="math inline">\(f(x) = ax+b\)</span>
-* einer quadratischen Funktion <span class="math inline">\(f(x) = w_1 + w_2 x + w_3x^2\)</span>
-durch. Berechnen Sie die mittlere quadratische Abweichung <span class="math inline">\(\frac{1}{N}\sum_{i=1}^N\|y_i - f(x_i)\|^2\)</span> für alle Fälle und plotten Sie die Daten zusammen mit der aus der Regression erhaltenen Funktion. Beispielsweise so:</p>
+<p>Führen sie auf den Covid-daten eine lineare Regression zum Fitten</p>
+<ul>
+<li>einer konstanten Funktion <span class="math inline">\(f(x)=c\)</span></li>
+<li>einer linearen Funktion <span class="math inline">\(f(x) = ax+b\)</span></li>
+<li>einer quadratischen Funktion <span class="math inline">\(f(x) = w_1 + w_2 x + w_3x^2\)</span></li>
+</ul>
+<p>durch. Berechnen Sie die mittlere quadratische Abweichung <span class="math inline">\(\frac{1}{N}\sum_{i=1}^N\|y_i - f(x_i)\|^2\)</span> für alle drei Approximationen und plotten Sie die Covid-Daten zusammen mit der aus der Regression erhaltenen Funktion. Beispielsweise so:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
 <a class="sourceLine" id="cb6-3" title="3"></a>
@@ -477,16 +477,25 @@ durch. Berechnen Sie die mittlere quadratische Abweichung <span class="math inli
 <a class="sourceLine" id="cb6-57" title="57">plt.plot(cvdata[<span class="dv">0</span>, :], const_approx, <span class="st">&#39;-&#39;</span>, label<span class="op">=</span><span class="st">&#39;constant fit&#39;</span>)</a>
 <a class="sourceLine" id="cb6-58" title="58">plt.legend()</a>
 <a class="sourceLine" id="cb6-59" title="59">plt.show()</a></code></pre></div>
+<p><strong>Hinweise</strong>:</p>
+<ul>
+<li><code>liste = [f(x) for x in iterable]</code> ist sehr bequem um Vektoren von Funktionswerten zu erzeugen aber nicht sehr <em>pythonesque</em> (und auch im Zweifel nicht effizient). Besser ist es Funktionen zu schreiben, die <em>vektorisiert</em> sind. Zum Beispiel können die meisten <em>built-in</em> Funktionen wie <code>np.exp</code> ein <code>array</code> als Eingang direkt in ein <code>array</code> der Funktionswerte umsetzen.</li>
+<li><em>Eine Funktion, die eine Funktion erzeugt</em> finde ich sehr hilfreich für viele Anwendungen (ist aber manchmal nicht so gut nachvollziehbar).</li>
+</ul>
 </div>
-<div id="truncated-svd-p" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.3.8</span> Truncated SVD (P)<a href="matrix-zerlegungen.html#truncated-svd-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Berechnen und plotten sie die Singulärwerte einer <span class="math inline">\(1000\times 100\)</span> Matrix mit zufälligen Einträgen und die einer Matrix mit “echten” Daten (hier Simulationsdaten einer Stroemungssimulation)<a href="matrix-zerlegungen.html#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Berechnen sie den Fehler der <em>truncated SVD</em> <span class="math inline">\(\|A-A_{\hat r}\|\)</span> für <span class="math inline">\(\hat r = 10, 20, 40\)</span> für beide Matrizen (und vergleichen sie mit der gegebenen Formel).</p>
+<div id="truncated-svd-pt" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.3.8</span> Truncated SVD (P+T)<a href="matrix-zerlegungen.html#truncated-svd-pt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>(P)</strong> Berechnen und plotten sie die Singulärwerte einer <span class="math inline">\(4000\times 1000\)</span> Matrix mit zufälligen Einträgen und die einer Matrix mit “echten” Daten (hier Simulationsdaten einer Stroemungssimulation)<a href="matrix-zerlegungen.html#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Berechnen sie den Fehler der <em>truncated SVD</em> <span class="math inline">\(\|A-A_{\hat r}\|\)</span> für <span class="math inline">\(\hat r = 10, 20, 40\)</span> für beide Matrizen.</li>
+<li><strong>(T)</strong> Was lässt sich bezüglich einer Kompression der Daten mittels SVD für die beiden Matrizen sagen. (Vergleichen sie die plots der Singulärwerte und beziehen sie sich auf die gegebene Formel für die Differenz).</li>
+<li><strong>(P+T)</strong> Für die “echten” Daten: Speichern sie die Faktoren der bei <span class="math inline">\(\hat r\)</span> abgeschnittenen SVD und vergleichen Sie den Speicherbedarf der Faktoren und der eigentlichen Matrix.</li>
+</ol>
 <p>Beispielcode:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="im">import</span> scipy.linalg <span class="im">as</span> spla</a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
 <a class="sourceLine" id="cb7-4" title="4"></a>
-<a class="sourceLine" id="cb7-5" title="5">randmat <span class="op">=</span> np.random.randn(<span class="dv">1000</span>, <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb7-5" title="5">randmat <span class="op">=</span> np.random.randn(<span class="dv">4000</span>, <span class="dv">1000</span>)</a>
 <a class="sourceLine" id="cb7-6" title="6"></a>
 <a class="sourceLine" id="cb7-7" title="7">rndU, rndS, rndV <span class="op">=</span> spla.svd(randmat)</a>
 <a class="sourceLine" id="cb7-8" title="8"></a>
@@ -512,6 +521,11 @@ durch. Berechnen Sie die mittlere quadratische Abweichung <span class="math inli
 <a class="sourceLine" id="cb7-28" title="28"></a>
 <a class="sourceLine" id="cb7-29" title="29">plt.legend()</a>
 <a class="sourceLine" id="cb7-30" title="30">plt.show()</a></code></pre></div>
+<p><strong>Hinweise</strong>:</p>
+<ul>
+<li>Es gibt viele verschiedene Normen für Vektoren und Matrizen. Sie dürfen einfach mit <code>np.linalg.norm</code> arbeiten. Gerne aber mal in die Dokumentation schauen <em>welche</em> Norm berechnet wird.</li>
+<li>Die (T) Abschnitte hier bitte mit den anderen (T) Aufgaben oder als Bildschirmausgabe im Programm.</li>
+</ul>
 
 </div>
 </div>
@@ -520,14 +534,14 @@ durch. Berechnen Sie die mittlere quadratische Abweichung <span class="math inli
 <hr />
 <ol>
 <li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>wird noch online bereitgestellt<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a href="">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 <div class="footnotes">
 <hr />
 <ol start="1">
 <li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>wird noch online bereitgestellt<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a href="">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>

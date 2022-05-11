@@ -830,7 +830,7 @@ Wir betrachten nochmal das Optimierungsproblem \(\min_{w} \| Aw - y \|^2\). Gäb
 Die Überlegung ist nun, die Gleichung \(Aw=y\) \emph{so gut wie möglich} zu erfüllen, indem wir die relevanten Gleichungen indentifizieren und wenigstens diese lösen. Ein systematischer (und wie wir später sehen werden auch zum Optimierungsproblem passender) Zugang bietet die QR Zerlegung.
 
 \begin{theorem}[QR Zerlegung]
-\protect\hypertarget{thm:qr}{}\label{thm:qr}Sei \(A\mathbb R^{m\times n}\), \(m>n\). Dann existiert eine orthonormale Matrix \(Q\in \mathbb R^{m\times m}\) und eine obere Dreiecksmatrix \(\hat R\in \mathbb R^{n\times n}\) derart dass
+\protect\hypertarget{thm:qr}{}\label{thm:qr}Sei \(A\in \mathbb R^{m\times n}\), \(m>n\). Dann existiert eine orthonormale Matrix \(Q\in \mathbb R^{m\times m}\) und eine obere Dreiecksmatrix \(\hat R\in \mathbb R^{n\times n}\) derart dass
 \begin{equation*}
 A = QR =: Q 
 \begin{bmatrix}
@@ -1007,13 +1007,7 @@ aus \(\Sigma \hat \Sigma^{-1}\hat \Sigma^{-1}\) herrührt.
 \hypertarget{aufgaben-1}{%
 \section{Aufgaben}\label{aufgaben-1}}
 
-\begin{enumerate}
-\def\labelenumi{(\Alph{enumi})}
-\setcounter{enumi}{19}
-\tightlist
-\item
-  heißt theoretische Aufgabe, (P) heißt programmieren.
-\end{enumerate}
+Erklärung: (T) heißt theoretische Aufgabe, (P) heißt programmieren.
 
 \hypertarget{norm-und-orthogonale-transformation-t}{%
 \subsection{Norm und Orthogonale Transformation (T)}\label{norm-und-orthogonale-transformation-t}}
@@ -1031,7 +1025,7 @@ Zeigen sie, dass der \emph{kleinste Quadrate} Ansatz zur Approximation einer Dat
 \begin{equation*}
 (x_i, y_i), \quad i=1,2,\dotsc,N,
 \end{equation*}
-mittels einer konstanten Funktion \(f(x)=w_1\) auf \(w_1\) als den Mittelwert von \(y_i\) führt.
+mittels einer konstanten Funktion \(f(x)=w_1\) auf \(w_1\) auf den Mittelwert der \(y_i\) führt.
 
 \hypertarget{qr-zerlegung-und-kleinstes-quadrate-problem-t}{%
 \subsection{QR Zerlegung und Kleinstes Quadrate Problem (T)}\label{qr-zerlegung-und-kleinstes-quadrate-problem-t}}
@@ -1103,10 +1097,18 @@ Speichern sie die Covid-Daten aus obiger Tabelle zur späteren Verwendung als ei
 \subsection{Lineare Regression für Covid Daten (P)}\label{lineare-regression-fuxfcr-covid-daten-p}}
 
 Führen sie auf den Covid-daten eine lineare Regression zum Fitten
-* einer konstanten Funktion \(f(x)=c\)
-* einer linearen Funktion \(f(x) = ax+b\)
-* einer quadratischen Funktion \(f(x) = w_1 + w_2 x + w_3x^2\)
-durch. Berechnen Sie die mittlere quadratische Abweichung \(\frac{1}{N}\sum_{i=1}^N\|y_i - f(x_i)\|^2\) für alle Fälle und plotten Sie die Daten zusammen mit der aus der Regression erhaltenen Funktion. Beispielsweise so:
+
+\begin{itemize}
+\tightlist
+\item
+  einer konstanten Funktion \(f(x)=c\)
+\item
+  einer linearen Funktion \(f(x) = ax+b\)
+\item
+  einer quadratischen Funktion \(f(x) = w_1 + w_2 x + w_3x^2\)
+\end{itemize}
+
+durch. Berechnen Sie die mittlere quadratische Abweichung \(\frac{1}{N}\sum_{i=1}^N\|y_i - f(x_i)\|^2\) für alle drei Approximationen und plotten Sie die Covid-Daten zusammen mit der aus der Regression erhaltenen Funktion. Beispielsweise so:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1172,10 +1174,29 @@ durch. Berechnen Sie die mittlere quadratische Abweichung \(\frac{1}{N}\sum_{i=1
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{truncated-svd-p}{%
-\subsection{Truncated SVD (P)}\label{truncated-svd-p}}
+\textbf{Hinweise}:
 
-Berechnen und plotten sie die Singulärwerte einer \(1000\times 100\) Matrix mit zufälligen Einträgen und die einer Matrix mit ``echten'' Daten (hier Simulationsdaten einer Stroemungssimulation)\footnote{wird noch online bereitgestellt}. Berechnen sie den Fehler der \emph{truncated SVD} \(\|A-A_{\hat r}\|\) für \(\hat r = 10, 20, 40\) für beide Matrizen (und vergleichen sie mit der gegebenen Formel).
+\begin{itemize}
+\tightlist
+\item
+  \texttt{liste\ =\ {[}f(x)\ for\ x\ in\ iterable{]}} ist sehr bequem um Vektoren von Funktionswerten zu erzeugen aber nicht sehr \emph{pythonesque} (und auch im Zweifel nicht effizient). Besser ist es Funktionen zu schreiben, die \emph{vektorisiert} sind. Zum Beispiel können die meisten \emph{built-in} Funktionen wie \texttt{np.exp} ein \texttt{array} als Eingang direkt in ein \texttt{array} der Funktionswerte umsetzen.
+\item
+  \emph{Eine Funktion, die eine Funktion erzeugt} finde ich sehr hilfreich für viele Anwendungen (ist aber manchmal nicht so gut nachvollziehbar).
+\end{itemize}
+
+\hypertarget{truncated-svd-pt}{%
+\subsection{Truncated SVD (P+T)}\label{truncated-svd-pt}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{(P)} Berechnen und plotten sie die Singulärwerte einer \(4000\times 1000\) Matrix mit zufälligen Einträgen und die einer Matrix mit ``echten'' Daten (hier Simulationsdaten einer Stroemungssimulation)\footnote{\href{}{Download bitte hier} -- Achtung das sind 370MB}. Berechnen sie den Fehler der \emph{truncated SVD} \(\|A-A_{\hat r}\|\) für \(\hat r = 10, 20, 40\) für beide Matrizen.
+\item
+  \textbf{(T)} Was lässt sich bezüglich einer Kompression der Daten mittels SVD für die beiden Matrizen sagen. (Vergleichen sie die plots der Singulärwerte und beziehen sie sich auf die gegebene Formel für die Differenz).
+\item
+  \textbf{(P+T)} Für die ``echten'' Daten: Speichern sie die Faktoren der bei \(\hat r\) abgeschnittenen SVD und vergleichen Sie den Speicherbedarf der Faktoren und der eigentlichen Matrix.
+\end{enumerate}
 
 Beispielcode:
 
@@ -1185,7 +1206,7 @@ Beispielcode:
 \ImportTok{import}\NormalTok{ scipy.linalg }\ImportTok{as}\NormalTok{ spla}
 \ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
 
-\NormalTok{randmat }\OperatorTok{=}\NormalTok{ np.random.randn(}\DecValTok{1000}\NormalTok{, }\DecValTok{100}\NormalTok{)}
+\NormalTok{randmat }\OperatorTok{=}\NormalTok{ np.random.randn(}\DecValTok{4000}\NormalTok{, }\DecValTok{1000}\NormalTok{)}
 
 \NormalTok{rndU, rndS, rndV }\OperatorTok{=}\NormalTok{ spla.svd(randmat)}
 
@@ -1213,5 +1234,15 @@ Beispielcode:
 \NormalTok{plt.show()}
 \end{Highlighting}
 \end{Shaded}
+
+\textbf{Hinweise}:
+
+\begin{itemize}
+\tightlist
+\item
+  Es gibt viele verschiedene Normen für Vektoren und Matrizen. Sie dürfen einfach mit \texttt{np.linalg.norm} arbeiten. Gerne aber mal in die Dokumentation schauen \emph{welche} Norm berechnet wird.
+\item
+  Die (T) Abschnitte hier bitte mit den anderen (T) Aufgaben oder als Bildschirmausgabe im Programm.
+\end{itemize}
 
 \end{document}

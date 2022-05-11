@@ -972,7 +972,7 @@ Hier gilt nun nicht mehr die Gleichheit in der Zerlegung. Vielmehr gilt
 \begin{equation*}
 A \approx A_{\hat r}
 \end{equation*}
-wobei \(A_{\hat r}\) aus der \emph{truncated SVD} von \(A\) erzeugt wurde. Allerdings ist diese Approximation von \(A\) durch optimal in dem Sinne, dass es keine Matrix vom Rang \(\hat r \geq r=\operatorname{Rg}(A)\) gibt, die \(A\) (in der \emph{induzierten} euklidischen Norm\footnote{Auf Matriznormen kommen wir noch in der Vorlesung zu sprechen.}) besser approximiert. Es gilt
+wobei \(A_{\hat r}\) aus der \emph{truncated SVD} von \(A\) erzeugt wurde. Allerdings ist diese Approximation von \(A\) durch optimal in dem Sinne, dass es keine Matrix vom Rang \(\hat r \geq r=\operatorname{Rg}(A)\) gibt, die \(A\) (in der \emph{induzierten} euklidischen Norm\footnote{Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.}) besser approximiert. Es gilt
 \begin{equation*}
 \min_{B\in \mathbb C^{m\times n}, \operatorname{Rg}(B)=\hat r} \|A-B\|_2 = \|A-A_{\hat r}\|_2 = \sigma_{\hat r + 1};
 \end{equation*}
@@ -1063,18 +1063,155 @@ Zeigen Sie, dass Eigenwerte symmetrischer reeller Matrizen \(A\in \mathbb R^{n\t
 \hypertarget{singuluxe4rwertzerlegung-und-eigenwerte-t}{%
 \subsection{Singulärwertzerlegung und Eigenwerte (T)}\label{singuluxe4rwertzerlegung-und-eigenwerte-t}}
 
-Zeigen Sie, dass die Singulärwerte einer Matrix \(A\in \mathbb R^{m\times n}\), \(m>n\), genau die Eigenwerte der Matrix \(A^TA\) sind und in welcher Beziehung sie mit den Eigenwerten von \(AA^T\) stehen. \textbf{Hinweis}: hier ist ``\(m>n\)'' wichtig.
+Zeigen Sie, dass die quadrierten Singulärwerte einer Matrix \(A\in \mathbb R^{m\times n}\), \(m>n\), genau die Eigenwerte der Matrix \(A^TA\) sind und in welcher Beziehung sie mit den Eigenwerten von \(AA^T\) stehen. \textbf{Hinweis}: hier ist ``\(m>n\)'' wichtig.
 
 \hypertarget{python-laden-und-speichern-von-arrays}{%
 \subsection{Python -- Laden und Speichern von Arrays}\label{python-laden-und-speichern-von-arrays}}
 
+Speichern sie die Covid-Daten aus obiger Tabelle zur späteren Verwendung als ein \texttt{numpy.array}. Beispielsweise so:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\NormalTok{days }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{11}\NormalTok{,}
+        \DecValTok{12}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{15}\NormalTok{,  }\DecValTok{16}\NormalTok{, }\DecValTok{17}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{19}\NormalTok{,  }\DecValTok{20}\NormalTok{,   }\DecValTok{21}\NormalTok{,}
+        \DecValTok{22}\NormalTok{,  }\DecValTok{23}\NormalTok{,  }\DecValTok{24}\NormalTok{,   }\DecValTok{25}\NormalTok{,    }\DecValTok{26}\NormalTok{, }\DecValTok{27}\NormalTok{,  }\DecValTok{28}\NormalTok{,   }\DecValTok{29}\NormalTok{,    }\DecValTok{30}\NormalTok{,     }\DecValTok{31}\NormalTok{]}
+\NormalTok{case }\OperatorTok{=}\NormalTok{ [}\DecValTok{352}\NormalTok{, }\DecValTok{347}\NormalTok{, }\DecValTok{308}\NormalTok{, }\DecValTok{151}\NormalTok{, }\DecValTok{360}\NormalTok{, }\DecValTok{498}\NormalTok{, }\DecValTok{664}\NormalTok{, }\DecValTok{686}\NormalTok{, }\DecValTok{740}\NormalTok{, }\DecValTok{418}\NormalTok{, }\DecValTok{320}\NormalTok{,}
+        \DecValTok{681}\NormalTok{, }\DecValTok{691}\NormalTok{, }\DecValTok{1154}\NormalTok{, }\DecValTok{1284}\NormalTok{,  }\DecValTok{127}\NormalTok{, }\DecValTok{984}\NormalTok{, }\DecValTok{573}\NormalTok{, }\DecValTok{1078}\NormalTok{,  }\DecValTok{1462}\NormalTok{,   }\DecValTok{2239}\NormalTok{,}
+        \DecValTok{2236}\NormalTok{,  }\DecValTok{2119}\NormalTok{,  }\DecValTok{1663}\NormalTok{,   }\DecValTok{1413}\NormalTok{,    }\DecValTok{2283}\NormalTok{,}
+        \DecValTok{2717}\NormalTok{,  }\DecValTok{3113}\NormalTok{,   }\DecValTok{2972}\NormalTok{,    }\DecValTok{3136}\NormalTok{,    }\DecValTok{2615}\NormalTok{]}
+
+\NormalTok{data }\OperatorTok{=}\NormalTok{ np.vstack([days, case])}
+\BuiltInTok{print}\NormalTok{(}\StringTok{'Shape of data: '}\NormalTok{, data.shape)}
+
+\NormalTok{datafilestr }\OperatorTok{=} \StringTok{'coviddata.npy'}
+\NormalTok{np.save(datafilestr, data)}
+
+\NormalTok{lddata }\OperatorTok{=}\NormalTok{ np.load(datafilestr)}
+
+\NormalTok{plt.figure(}\DecValTok{1}\NormalTok{)}
+\NormalTok{plt.plot(lddata[}\DecValTok{0}\NormalTok{, :], lddata[}\DecValTok{1}\NormalTok{, :], }\StringTok{'s'}\NormalTok{, label}\OperatorTok{=}\StringTok{'Cases/Day'}\NormalTok{)}
+\NormalTok{plt.title(}\StringTok{'Covid Faelle in Bayern im Oktober 2020'}\NormalTok{)}
+\NormalTok{plt.legend()}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{lineare-regression-fuxfcr-covid-daten-p}{%
 \subsection{Lineare Regression für Covid Daten (P)}\label{lineare-regression-fuxfcr-covid-daten-p}}
 
-\hypertarget{truncated-svd}{%
-\subsection{Truncated SVD}\label{truncated-svd}}
+Führen sie auf den Covid-daten eine lineare Regression zum Fitten
+* einer konstanten Funktion \(f(x)=c\)
+* einer linearen Funktion \(f(x) = ax+b\)
+* einer quadratischen Funktion \(f(x) = w_1 + w_2 x + w_3x^2\)
+durch. Berechnen Sie die mittlere quadratische Abweichung \(\frac{1}{N}\sum_{i=1}^N\|y_i - f(x_i)\|^2\) für alle Fälle und plotten Sie die Daten zusammen mit der aus der Regression erhaltenen Funktion. Beispielsweise so:
 
-SVs plotten
-Formel verifizieren
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\NormalTok{datafilestr }\OperatorTok{=} \StringTok{'coviddata.npy'}
+\NormalTok{cvdata }\OperatorTok{=}\NormalTok{ np.load(datafilestr)}
+
+\CommentTok{# ## Definieren der Basis Funktion(en)}
+
+
+\KeywordTok{def}\NormalTok{ b_zero(x):}
+    \CommentTok{''' eine konstante Funktion '''}
+    \ControlFlowTok{return} \FloatTok{1.}
+
+
+\NormalTok{ybf }\OperatorTok{=}\NormalTok{ cvdata[}\DecValTok{1}\NormalTok{, :]  }\CommentTok{# die y-werte}
+\NormalTok{xbf }\OperatorTok{=}\NormalTok{ cvdata[}\DecValTok{0}\NormalTok{, :]  }\CommentTok{# die x-werte}
+
+\NormalTok{N }\OperatorTok{=}\NormalTok{ xbf.size   }\CommentTok{# Anzahl Datenpunkte}
+\NormalTok{ybf }\OperatorTok{=}\NormalTok{ ybf.reshape((N, }\DecValTok{1}\NormalTok{))  }\CommentTok{# reshape als Spaltenvektor}
+
+\NormalTok{bzx }\OperatorTok{=}\NormalTok{ [b_zero(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ xbf]  }\CommentTok{# eine Liste mit Funktionswerten}
+\NormalTok{bzx }\OperatorTok{=}\NormalTok{ np.array(bzx).reshape((N, }\DecValTok{1}\NormalTok{))  }\CommentTok{# ein Spalten Vektor}
+
+\NormalTok{Phix }\OperatorTok{=}\NormalTok{ bzx  }\CommentTok{# hier nur eine Spalte}
+
+\CommentTok{# Das LGS AtA w = At y}
+\NormalTok{rhs }\OperatorTok{=}\NormalTok{ Phix.T }\OperatorTok{@}\NormalTok{ ybf}
+\NormalTok{AtA }\OperatorTok{=}\NormalTok{ Phix.T }\OperatorTok{@}\NormalTok{ Phix}
+
+\CommentTok{# ACHTUNG: das hier geht nur weil AtA keine Matrix ist in diesem Fall}
+\NormalTok{w }\OperatorTok{=} \FloatTok{1.}\OperatorTok{/}\NormalTok{AtA }\OperatorTok{*}\NormalTok{ rhs}
+\CommentTok{# ACHTUNG: das hier ging nur weil AtA keine Matrix ist in diesem Fall}
+
+
+\KeywordTok{def}\NormalTok{ get_regfunc(weights, basfunlist}\OperatorTok{=}\NormalTok{[]):}
+    \CommentTok{''' Eine Funktion, die eine Funktion erzeugt}
+
+\CommentTok{    Eingang: die Gewichte, eine Liste von Basisfunktionen}
+\CommentTok{    Ausgang: die entsprechende Funktion `f = w_1b_1 + ... `}
+\CommentTok{    '''}
+    \KeywordTok{def}\NormalTok{ regfunc(x):}
+\NormalTok{        fval }\OperatorTok{=} \DecValTok{0}
+        \ControlFlowTok{for}\NormalTok{ kkk, basfun }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(basfunlist):}
+\NormalTok{            fval }\OperatorTok{=}\NormalTok{ fval }\OperatorTok{+}\NormalTok{ weights[kkk]}\OperatorTok{*}\NormalTok{basfun(x)}
+        \ControlFlowTok{return}\NormalTok{ fval}
+
+    \ControlFlowTok{return}\NormalTok{ regfunc}
+
+
+\NormalTok{const_regfunc }\OperatorTok{=}\NormalTok{ get_regfunc([w], [b_zero])}
+
+\NormalTok{const_approx }\OperatorTok{=}\NormalTok{ [const_regfunc(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ xbf]}
+\NormalTok{const_approx }\OperatorTok{=}\NormalTok{ np.array(const_approx).reshape((N, }\DecValTok{1}\NormalTok{))}
+
+\NormalTok{plt.figure(}\DecValTok{1}\NormalTok{)}
+\NormalTok{plt.plot(cvdata[}\DecValTok{0}\NormalTok{, :], cvdata[}\DecValTok{1}\NormalTok{, :], }\StringTok{'s'}\NormalTok{, label}\OperatorTok{=}\StringTok{'Cases/Day'}\NormalTok{)}
+\NormalTok{plt.plot(cvdata[}\DecValTok{0}\NormalTok{, :], const_approx, }\StringTok{'-'}\NormalTok{, label}\OperatorTok{=}\StringTok{'constant fit'}\NormalTok{)}
+\NormalTok{plt.legend()}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{truncated-svd-p}{%
+\subsection{Truncated SVD (P)}\label{truncated-svd-p}}
+
+Berechnen und plotten sie die Singulärwerte einer \(1000\times 100\) Matrix mit zufälligen Einträgen und die einer Matrix mit ``echten'' Daten (hier Simulationsdaten einer Stroemungssimulation)\footnote{wird noch online bereitgestellt}. Berechnen sie den Fehler der \emph{truncated SVD} \(\|A-A_{\hat r}\|\) für \(\hat r = 10, 20, 40\) für beide Matrizen (und vergleichen sie mit der gegebenen Formel).
+
+Beispielcode:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ scipy.linalg }\ImportTok{as}\NormalTok{ spla}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\NormalTok{randmat }\OperatorTok{=}\NormalTok{ np.random.randn(}\DecValTok{1000}\NormalTok{, }\DecValTok{100}\NormalTok{)}
+
+\NormalTok{rndU, rndS, rndV }\OperatorTok{=}\NormalTok{ spla.svd(randmat)}
+
+\BuiltInTok{print}\NormalTok{(}\StringTok{'U-dims: '}\NormalTok{, rndU.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{'V-dims: '}\NormalTok{, rndV.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{'S-dims: '}\NormalTok{, rndS.shape)}
+
+\NormalTok{plt.figure(}\DecValTok{1}\NormalTok{)}
+\NormalTok{plt.semilogy(rndS, }\StringTok{'.'}\NormalTok{, label}\OperatorTok{=}\StringTok{'Singulaerwerte (random Matrix)'}\NormalTok{)}
+
+\NormalTok{realdatamat }\OperatorTok{=}\NormalTok{ np.load(}\StringTok{'velfielddata.npy'}\NormalTok{)}
+
+\CommentTok{# # Das hier ist eine aufwaendige Operation}
+\NormalTok{rlU, rlS, rlV }\OperatorTok{=}\NormalTok{ spla.svd(realdatamat, full_matrices}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+\CommentTok{# # auf keinen Fall `full_matrices=False` vergessen}
+
+\BuiltInTok{print}\NormalTok{(}\StringTok{'U-dims: '}\NormalTok{, rlU.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{'V-dims: '}\NormalTok{, rlV.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{'S-dims: '}\NormalTok{, rlS.shape)}
+
+\NormalTok{plt.figure(}\DecValTok{1}\NormalTok{)}
+\NormalTok{plt.semilogy(rlS, }\StringTok{'.'}\NormalTok{, label}\OperatorTok{=}\StringTok{'Singulaerwerte (Daten Matrix)'}\NormalTok{)}
+
+\NormalTok{plt.legend()}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
 
 \end{document}

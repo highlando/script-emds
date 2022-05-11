@@ -381,18 +381,137 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
 </div>
 <div id="singulärwertzerlegung-und-eigenwerte-t" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.5</span> Singulärwertzerlegung und Eigenwerte (T)<a href="matrix-zerlegungen.html#singulärwertzerlegung-und-eigenwerte-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Zeigen Sie, dass die Singulärwerte einer Matrix <span class="math inline">\(A\in \mathbb R^{m\times n}\)</span>, <span class="math inline">\(m&gt;n\)</span>, genau die Eigenwerte der Matrix <span class="math inline">\(A^TA\)</span> sind und in welcher Beziehung sie mit den Eigenwerten von <span class="math inline">\(AA^T\)</span> stehen. <strong>Hinweis</strong>: hier ist “<span class="math inline">\(m&gt;n\)</span>” wichtig.</p>
+<p>Zeigen Sie, dass die quadrierten Singulärwerte einer Matrix <span class="math inline">\(A\in \mathbb R^{m\times n}\)</span>, <span class="math inline">\(m&gt;n\)</span>, genau die Eigenwerte der Matrix <span class="math inline">\(A^TA\)</span> sind und in welcher Beziehung sie mit den Eigenwerten von <span class="math inline">\(AA^T\)</span> stehen. <strong>Hinweis</strong>: hier ist “<span class="math inline">\(m&gt;n\)</span>” wichtig.</p>
 </div>
 <div id="python-laden-und-speichern-von-arrays" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.6</span> Python – Laden und Speichern von Arrays<a href="matrix-zerlegungen.html#python-laden-und-speichern-von-arrays" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Speichern sie die Covid-Daten aus obiger Tabelle zur späteren Verwendung als ein <code>numpy.array</code>. Beispielsweise so:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4">days <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>,</a>
+<a class="sourceLine" id="cb5-5" title="5">        <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">15</span>,  <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>,  <span class="dv">20</span>,   <span class="dv">21</span>,</a>
+<a class="sourceLine" id="cb5-6" title="6">        <span class="dv">22</span>,  <span class="dv">23</span>,  <span class="dv">24</span>,   <span class="dv">25</span>,    <span class="dv">26</span>, <span class="dv">27</span>,  <span class="dv">28</span>,   <span class="dv">29</span>,    <span class="dv">30</span>,     <span class="dv">31</span>]</a>
+<a class="sourceLine" id="cb5-7" title="7">case <span class="op">=</span> [<span class="dv">352</span>, <span class="dv">347</span>, <span class="dv">308</span>, <span class="dv">151</span>, <span class="dv">360</span>, <span class="dv">498</span>, <span class="dv">664</span>, <span class="dv">686</span>, <span class="dv">740</span>, <span class="dv">418</span>, <span class="dv">320</span>,</a>
+<a class="sourceLine" id="cb5-8" title="8">        <span class="dv">681</span>, <span class="dv">691</span>, <span class="dv">1154</span>, <span class="dv">1284</span>,  <span class="dv">127</span>, <span class="dv">984</span>, <span class="dv">573</span>, <span class="dv">1078</span>,  <span class="dv">1462</span>,   <span class="dv">2239</span>,</a>
+<a class="sourceLine" id="cb5-9" title="9">        <span class="dv">2236</span>,  <span class="dv">2119</span>,  <span class="dv">1663</span>,   <span class="dv">1413</span>,    <span class="dv">2283</span>,</a>
+<a class="sourceLine" id="cb5-10" title="10">        <span class="dv">2717</span>,  <span class="dv">3113</span>,   <span class="dv">2972</span>,    <span class="dv">3136</span>,    <span class="dv">2615</span>]</a>
+<a class="sourceLine" id="cb5-11" title="11"></a>
+<a class="sourceLine" id="cb5-12" title="12">data <span class="op">=</span> np.vstack([days, case])</a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="bu">print</span>(<span class="st">&#39;Shape of data: &#39;</span>, data.shape)</a>
+<a class="sourceLine" id="cb5-14" title="14"></a>
+<a class="sourceLine" id="cb5-15" title="15">datafilestr <span class="op">=</span> <span class="st">&#39;coviddata.npy&#39;</span></a>
+<a class="sourceLine" id="cb5-16" title="16">np.save(datafilestr, data)</a>
+<a class="sourceLine" id="cb5-17" title="17"></a>
+<a class="sourceLine" id="cb5-18" title="18">lddata <span class="op">=</span> np.load(datafilestr)</a>
+<a class="sourceLine" id="cb5-19" title="19"></a>
+<a class="sourceLine" id="cb5-20" title="20">plt.figure(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb5-21" title="21">plt.plot(lddata[<span class="dv">0</span>, :], lddata[<span class="dv">1</span>, :], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;Cases/Day&#39;</span>)</a>
+<a class="sourceLine" id="cb5-22" title="22">plt.title(<span class="st">&#39;Covid Faelle in Bayern im Oktober 2020&#39;</span>)</a>
+<a class="sourceLine" id="cb5-23" title="23">plt.legend()</a>
+<a class="sourceLine" id="cb5-24" title="24">plt.show()</a></code></pre></div>
 </div>
 <div id="lineare-regression-für-covid-daten-p" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.7</span> Lineare Regression für Covid Daten (P)<a href="matrix-zerlegungen.html#lineare-regression-für-covid-daten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Führen sie auf den Covid-daten eine lineare Regression zum Fitten
+* einer konstanten Funktion <span class="math inline">\(f(x)=c\)</span>
+* einer linearen Funktion <span class="math inline">\(f(x) = ax+b\)</span>
+* einer quadratischen Funktion <span class="math inline">\(f(x) = w_1 + w_2 x + w_3x^2\)</span>
+durch. Berechnen Sie die mittlere quadratische Abweichung <span class="math inline">\(\frac{1}{N}\sum_{i=1}^N\|y_i - f(x_i)\|^2\)</span> für alle Fälle und plotten Sie die Daten zusammen mit der aus der Regression erhaltenen Funktion. Beispielsweise so:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4">datafilestr <span class="op">=</span> <span class="st">&#39;coviddata.npy&#39;</span></a>
+<a class="sourceLine" id="cb6-5" title="5">cvdata <span class="op">=</span> np.load(datafilestr)</a>
+<a class="sourceLine" id="cb6-6" title="6"></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co"># ## Definieren der Basis Funktion(en)</span></a>
+<a class="sourceLine" id="cb6-8" title="8"></a>
+<a class="sourceLine" id="cb6-9" title="9"></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="kw">def</span> b_zero(x):</a>
+<a class="sourceLine" id="cb6-11" title="11">    <span class="co">&#39;&#39;&#39; eine konstante Funktion &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb6-12" title="12">    <span class="cf">return</span> <span class="fl">1.</span></a>
+<a class="sourceLine" id="cb6-13" title="13"></a>
+<a class="sourceLine" id="cb6-14" title="14"></a>
+<a class="sourceLine" id="cb6-15" title="15">ybf <span class="op">=</span> cvdata[<span class="dv">1</span>, :]  <span class="co"># die y-werte</span></a>
+<a class="sourceLine" id="cb6-16" title="16">xbf <span class="op">=</span> cvdata[<span class="dv">0</span>, :]  <span class="co"># die x-werte</span></a>
+<a class="sourceLine" id="cb6-17" title="17"></a>
+<a class="sourceLine" id="cb6-18" title="18">N <span class="op">=</span> xbf.size   <span class="co"># Anzahl Datenpunkte</span></a>
+<a class="sourceLine" id="cb6-19" title="19">ybf <span class="op">=</span> ybf.reshape((N, <span class="dv">1</span>))  <span class="co"># reshape als Spaltenvektor</span></a>
+<a class="sourceLine" id="cb6-20" title="20"></a>
+<a class="sourceLine" id="cb6-21" title="21">bzx <span class="op">=</span> [b_zero(x) <span class="cf">for</span> x <span class="kw">in</span> xbf]  <span class="co"># eine Liste mit Funktionswerten</span></a>
+<a class="sourceLine" id="cb6-22" title="22">bzx <span class="op">=</span> np.array(bzx).reshape((N, <span class="dv">1</span>))  <span class="co"># ein Spalten Vektor</span></a>
+<a class="sourceLine" id="cb6-23" title="23"></a>
+<a class="sourceLine" id="cb6-24" title="24">Phix <span class="op">=</span> bzx  <span class="co"># hier nur eine Spalte</span></a>
+<a class="sourceLine" id="cb6-25" title="25"></a>
+<a class="sourceLine" id="cb6-26" title="26"><span class="co"># Das LGS AtA w = At y</span></a>
+<a class="sourceLine" id="cb6-27" title="27">rhs <span class="op">=</span> Phix.T <span class="op">@</span> ybf</a>
+<a class="sourceLine" id="cb6-28" title="28">AtA <span class="op">=</span> Phix.T <span class="op">@</span> Phix</a>
+<a class="sourceLine" id="cb6-29" title="29"></a>
+<a class="sourceLine" id="cb6-30" title="30"><span class="co"># ACHTUNG: das hier geht nur weil AtA keine Matrix ist in diesem Fall</span></a>
+<a class="sourceLine" id="cb6-31" title="31">w <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>AtA <span class="op">*</span> rhs</a>
+<a class="sourceLine" id="cb6-32" title="32"><span class="co"># ACHTUNG: das hier ging nur weil AtA keine Matrix ist in diesem Fall</span></a>
+<a class="sourceLine" id="cb6-33" title="33"></a>
+<a class="sourceLine" id="cb6-34" title="34"></a>
+<a class="sourceLine" id="cb6-35" title="35"><span class="kw">def</span> get_regfunc(weights, basfunlist<span class="op">=</span>[]):</a>
+<a class="sourceLine" id="cb6-36" title="36">    <span class="co">&#39;&#39;&#39; Eine Funktion, die eine Funktion erzeugt</span></a>
+<a class="sourceLine" id="cb6-37" title="37"></a>
+<a class="sourceLine" id="cb6-38" title="38"><span class="co">    Eingang: die Gewichte, eine Liste von Basisfunktionen</span></a>
+<a class="sourceLine" id="cb6-39" title="39"><span class="co">    Ausgang: die entsprechende Funktion `f = w_1b_1 + ... `</span></a>
+<a class="sourceLine" id="cb6-40" title="40"><span class="co">    &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb6-41" title="41">    <span class="kw">def</span> regfunc(x):</a>
+<a class="sourceLine" id="cb6-42" title="42">        fval <span class="op">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb6-43" title="43">        <span class="cf">for</span> kkk, basfun <span class="kw">in</span> <span class="bu">enumerate</span>(basfunlist):</a>
+<a class="sourceLine" id="cb6-44" title="44">            fval <span class="op">=</span> fval <span class="op">+</span> weights[kkk]<span class="op">*</span>basfun(x)</a>
+<a class="sourceLine" id="cb6-45" title="45">        <span class="cf">return</span> fval</a>
+<a class="sourceLine" id="cb6-46" title="46"></a>
+<a class="sourceLine" id="cb6-47" title="47">    <span class="cf">return</span> regfunc</a>
+<a class="sourceLine" id="cb6-48" title="48"></a>
+<a class="sourceLine" id="cb6-49" title="49"></a>
+<a class="sourceLine" id="cb6-50" title="50">const_regfunc <span class="op">=</span> get_regfunc([w], [b_zero])</a>
+<a class="sourceLine" id="cb6-51" title="51"></a>
+<a class="sourceLine" id="cb6-52" title="52">const_approx <span class="op">=</span> [const_regfunc(x) <span class="cf">for</span> x <span class="kw">in</span> xbf]</a>
+<a class="sourceLine" id="cb6-53" title="53">const_approx <span class="op">=</span> np.array(const_approx).reshape((N, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb6-54" title="54"></a>
+<a class="sourceLine" id="cb6-55" title="55">plt.figure(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb6-56" title="56">plt.plot(cvdata[<span class="dv">0</span>, :], cvdata[<span class="dv">1</span>, :], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;Cases/Day&#39;</span>)</a>
+<a class="sourceLine" id="cb6-57" title="57">plt.plot(cvdata[<span class="dv">0</span>, :], const_approx, <span class="st">&#39;-&#39;</span>, label<span class="op">=</span><span class="st">&#39;constant fit&#39;</span>)</a>
+<a class="sourceLine" id="cb6-58" title="58">plt.legend()</a>
+<a class="sourceLine" id="cb6-59" title="59">plt.show()</a></code></pre></div>
 </div>
-<div id="truncated-svd" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.3.8</span> Truncated SVD<a href="matrix-zerlegungen.html#truncated-svd" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>SVs plotten
-Formel verifizieren</p>
+<div id="truncated-svd-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">3.3.8</span> Truncated SVD (P)<a href="matrix-zerlegungen.html#truncated-svd-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Berechnen und plotten sie die Singulärwerte einer <span class="math inline">\(1000\times 100\)</span> Matrix mit zufälligen Einträgen und die einer Matrix mit “echten” Daten (hier Simulationsdaten einer Stroemungssimulation)<a href="matrix-zerlegungen.html#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Berechnen sie den Fehler der <em>truncated SVD</em> <span class="math inline">\(\|A-A_{\hat r}\|\)</span> für <span class="math inline">\(\hat r = 10, 20, 40\)</span> für beide Matrizen (und vergleichen sie mit der gegebenen Formel).</p>
+<p>Beispielcode:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="im">import</span> scipy.linalg <span class="im">as</span> spla</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb7-4" title="4"></a>
+<a class="sourceLine" id="cb7-5" title="5">randmat <span class="op">=</span> np.random.randn(<span class="dv">1000</span>, <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7">rndU, rndS, rndV <span class="op">=</span> spla.svd(randmat)</a>
+<a class="sourceLine" id="cb7-8" title="8"></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="bu">print</span>(<span class="st">&#39;U-dims: &#39;</span>, rndU.shape)</a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="bu">print</span>(<span class="st">&#39;V-dims: &#39;</span>, rndV.shape)</a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="bu">print</span>(<span class="st">&#39;S-dims: &#39;</span>, rndS.shape)</a>
+<a class="sourceLine" id="cb7-12" title="12"></a>
+<a class="sourceLine" id="cb7-13" title="13">plt.figure(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb7-14" title="14">plt.semilogy(rndS, <span class="st">&#39;.&#39;</span>, label<span class="op">=</span><span class="st">&#39;Singulaerwerte (random Matrix)&#39;</span>)</a>
+<a class="sourceLine" id="cb7-15" title="15"></a>
+<a class="sourceLine" id="cb7-16" title="16">realdatamat <span class="op">=</span> np.load(<span class="st">&#39;velfielddata.npy&#39;</span>)</a>
+<a class="sourceLine" id="cb7-17" title="17"></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co"># # Das hier ist eine aufwaendige Operation</span></a>
+<a class="sourceLine" id="cb7-19" title="19">rlU, rlS, rlV <span class="op">=</span> spla.svd(realdatamat, full_matrices<span class="op">=</span><span class="va">False</span>)</a>
+<a class="sourceLine" id="cb7-20" title="20"><span class="co"># # auf keinen Fall `full_matrices=False` vergessen</span></a>
+<a class="sourceLine" id="cb7-21" title="21"></a>
+<a class="sourceLine" id="cb7-22" title="22"><span class="bu">print</span>(<span class="st">&#39;U-dims: &#39;</span>, rlU.shape)</a>
+<a class="sourceLine" id="cb7-23" title="23"><span class="bu">print</span>(<span class="st">&#39;V-dims: &#39;</span>, rlV.shape)</a>
+<a class="sourceLine" id="cb7-24" title="24"><span class="bu">print</span>(<span class="st">&#39;S-dims: &#39;</span>, rlS.shape)</a>
+<a class="sourceLine" id="cb7-25" title="25"></a>
+<a class="sourceLine" id="cb7-26" title="26">plt.figure(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb7-27" title="27">plt.semilogy(rlS, <span class="st">&#39;.&#39;</span>, label<span class="op">=</span><span class="st">&#39;Singulaerwerte (Daten Matrix)&#39;</span>)</a>
+<a class="sourceLine" id="cb7-28" title="28"></a>
+<a class="sourceLine" id="cb7-29" title="29">plt.legend()</a>
+<a class="sourceLine" id="cb7-30" title="30">plt.show()</a></code></pre></div>
 
 </div>
 </div>
@@ -400,13 +519,15 @@ Formel verifizieren</p>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Auf Matriznormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>wird noch online bereitgestellt<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 <div class="footnotes">
 <hr />
 <ol start="1">
-<li id="fn1"><p>Auf Matriznormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>wird noch online bereitgestellt<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>

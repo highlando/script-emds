@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Einführung in die mathematische Datenanalyse</title>
+  <title>4 Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Einführung in die mathematische Datenanalyse" />
+  <meta property="og:title" content="4 Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="github-repo" content="highlando/script-emds" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Einführung in die mathematische Datenanalyse" />
+  <meta name="twitter:title" content="4 Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse" />
   
   <meta name="twitter:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="matrix-zerlegungen.html"/>
 
-<link rel="next" href="was-ist-data-science.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -177,24 +177,121 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Einführung in die mathematische Datenanalyse</h1>
-<p class="author"><em>Jan Heiland</em></p>
-<p class="date"><em>FAU Erlangen-Nürnberg – Sommersemester 2022</em></p>
+<div id="hauptkomponentenanalyse" class="section level1 hasAnchor">
+<h1><span class="header-section-number">4</span> Hauptkomponentenanalyse<a href="hauptkomponentenanalyse.html#hauptkomponentenanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Während in den vorherigen Kapiteln der Versuch war, einen funktionalen Zusammenhang in Daten zu bekommen, geht es jetzt darum, statistische Eigenschaften aus Daten zu extrahieren. Wir werden sehen, dass das auch nur ein anderer Blickwinkel auf das gleiche Problem <em>Wie können wir die Daten verstehen?</em> ist und auch die SVD wieder treffen.</p>
+<p>Wir nehmen noch einmal die Covid-Daten her, vergessen kurz, dass es sich um eine Zeitreihe handelt und betrachten sie als Datenpunkte <span class="math inline">\((x_i, y_i)\)</span>, <span class="math inline">\(i=1,\dotsc,N\)</span>, im zweidimensionalen Raum mit Koordinaten <span class="math inline">\(x\)</span> und <span class="math inline">\(y\)</span>.</p>
+<p>Als erstes werden die Daten <strong>zentriert</strong> indem in jeder Komponente der Mittelwert
+<span class="math display">\[\begin{equation*}
+x_c = \frac 1N \sum_{i=1}^N x_i,
+\quad
+y_c = \frac 1N \sum_{i=1}^N y_i.
+\end{equation*}\]</span>
+abgezogen wird, also die Daten durch <span class="math inline">\((x_i-\bar x,\, y_i-\bar y)\)</span> ersetzt werden.</p>
+<div class="figure">
+<img src="bilder/04-covid-cntrd.png" alt="Fallzahlen von Sars-CoV-2 in Bayern im Oktober 2020 – zentriert" id="fig:cases-cntrd" style="width:65.0%" />
+<p class="caption">Fallzahlen von Sars-CoV-2 in Bayern im Oktober
+2020 – zentriert</p>
 </div>
-<div id="vorwort" class="section level1 unnumbered hasAnchor">
-<h1>Vorwort<a href="index.html#vorwort" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Das ist ein Aufschrieb.</p>
-<p>Korrekturen und Wünsche immer gerne als <em>issues</em> oder <em>pull requests</em> ans <a href="https://github.com/highlando/script-emds">github-repo</a>.</p>
+<div id="variationskoeffizienten" class="section level2 hasAnchor">
+<h2><span class="header-section-number">4.1</span> Variationskoeffizienten<a href="hauptkomponentenanalyse.html#variationskoeffizienten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Als nächstes kann Jan sich fragen, wie gut die Daten durch ihren Mittelwert beschrieben werden und die Varianzen berechnen, die für zentrierte Daten so aussehen</p>
+<p><span class="math display">\[\begin{equation*}
+s_x^2 = \frac {1}{N-1} \sum_{i=1}^N x_i^2,
+\quad
+s_y^2 = \frac {1}{N-1} \sum_{i=1}^N y_i^2.
+\end{equation*}\]</span></p>
+<p>Im gegebenen Fall bekommen wir
+<span class="math display">\[\begin{equation*}
+s_x^2 = 2480
+\quad
+s_y^2 \approx  28029755.
+\end{equation*}\]</span>
+Da der grosse Unterschied eventuell durch die verschiedene Skalierung der Daten herrührt berechnen wir besser die Variationskoeffizienten mittels
+<span class="math display">\[\begin{equation*}
+\operatorname {VarK}(x) = \frac{\sqrt{s_x^2} }{x_c} \approx 3.11
+\quad
+\operatorname {VarK}(y) = \frac{\sqrt{s_y^2} }{y_c} \approx 4.16
+\end{equation*}\]</span></p>
+<p>und schließen daraus, dass in <span class="math inline">\(y\)</span> Richtung <em>viel passiert</em> und in <span class="math inline">\(x\)</span> Richtung <em>nicht ganz so viel</em>. Das ist jeder Hinsicht nicht befriedigend, wir können weder</p>
+<ul>
+<li>Redundanzen ausmachen (eine Dimension der Daten vielleicht weniger wichtig?) noch</li>
+<li>dominierende Richtungen feststellen (obwohl dem Bild nach so eine offenbar existiert)</li>
+</ul>
+<p>und müssen konstatieren, dass die Repräsentation der Daten im <span class="math inline">\((x,y)\)</span> Koordinatensystem nicht optimal ist.</p>
+<p>Die Frage ist also, ob es ein Koordinatensystem gibt, dass die Daten besser darstellt.</p>
+<div id="rem-coors" class="JHSAYS">
+<p>Ein Koordinatensystem ist nichts anderes als eine Basis. Und die Koordinaten eines Datenpunktes sind die Komponenten des entsprechenden Vektors in dieser Basis. Typischerweise sind Koordinatensysteme orthogonal (das heißt eine Orthogonalbasis) und häufig noch orientiert (die Basisvektoren haben eine bestimmte Reihenfolge und eine bestimmte Richtung).</p>
+</div>
+</div>
+<div id="koordinatenwechsel" class="section level2 hasAnchor">
+<h2><span class="header-section-number">4.2</span> Koordinatenwechsel<a href="hauptkomponentenanalyse.html#koordinatenwechsel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sei nun also <span class="math inline">\(\{b_1,b_2\}\subset \mathbb R^{2}\)</span> eine orthogonale Basis.</p>
+<div id="rem-ortho-bas" class="JHSAYS">
+<p>Wie allgemein gebräuchlich, sagen wir <em>orthogonal</em>, meinen aber <em>orthonormal</em>. In jedem Falle soll gelten
+<span class="math display">\[\begin{equation*}
+b_1^T b_1=1, \quad b_2^Tb_2=1, \quad b_1^Tb_2 = b_2^Tb_1 = 0.
+\end{equation*}\]</span></p>
+</div>
+<p>Wir können also alle Datenpunkte
+<span class="math inline">\(\mathbf x_i = \begin{bmatrix} x_i \\ y_i \end{bmatrix}\)</span>
+in der neuen Basis darstellen mit eindeutig bestimmten Koeffizienten <span class="math inline">\(\alpha_{i1}\)</span> und <span class="math inline">\(\alpha_{i2}\)</span> mittels
+<span class="math display">\[\begin{equation*}
+\mathbf x_i = \alpha_{i1}b_1 + \alpha_{i2}b_2.
+\end{equation*}\]</span>
+Für orthogonale Basen sind die Koeffizienten durch <em>testen</em> mit dem Basisvektor einfach zu berechnen:
+<span class="math display">\[\begin{align*}
+b_1^T\mathbb x_i = b_1^T(\alpha_{i1}b_1 + \alpha_{i2}b_2) = \alpha_{i1}b_1^Tb_1 + \alpha_{i2}b_1^Tb_2 = \alpha_{i1}\cdot 1 + \alpha_{i2} \cdot 0 = \alpha_{i1},\\
+b_2^T\mathbb x_i = b_2^T(\alpha_{i1}b_1 + \alpha_{i2}b_2) = \alpha_{i1}b_1^Tb_2 + \alpha_{i2}b_2^Tb_2 = \alpha_{i1}\cdot 0 + \alpha_{i2}\cdot 0 = \alpha_{i2}.
+\end{align*}\]</span>
+Es gilt also
+<span class="math display">\[\begin{equation*}
+\alpha_{i1} = b_1^T\mathbb x = b_1^T\begin{bmatrix}
+x_i \\ y_i
+\end{bmatrix}, \quad
+\alpha_{i2} = b_2^T\mathbb x = b_2^T\begin{bmatrix}
+x_i \\ y_i
+\end{bmatrix}.
+\end{equation*}\]</span></p>
+<p>Damit, können wir jeden Datenpunkt <span class="math inline">\(\mathbf x_i=(x_i, y_i)\)</span> in den neuen Koordinaten <span class="math inline">\((\alpha_{i1}, \alpha_{i2})\)</span> ausdrücken.</p>
+<p>Zunächst halten wir fest, dass auch in den neuen Koordinaten die Daten zentriert sind. Es gilt nämlich, dass
+<span class="math display">\[\begin{equation*}
+\frac 1N \sum_{i=1}^N \alpha_{ji}=\frac 1N \sum_{i=1}^N b_j^T\mathbb x_i 
+=\frac 1N b_j^T \sum_{i=1}^N \begin{bmatrix} x_i \\ y_i \end{bmatrix}
+=\frac 1N b_j^T \begin{bmatrix} \sum_{i=1}^N x_i \\ \sum_{i=1}^N y_i \end{bmatrix}
+=b_j^T \begin{bmatrix} \frac 1N \sum_{i=1}^N x_i \\ \frac 1N \sum_{i=1}^N y_i \end{bmatrix}
+=b_j^T \begin{bmatrix} 0 \\ 0 \end{bmatrix} = 0,
+\end{equation*}\]</span>
+für <span class="math inline">\(j=1,2\)</span>.</p>
+<p>Desweiteren gilt wegen der Orthogonalität von <span class="math inline">\(B=[b_1~b_2]\in \mathbb R^{2\times 2}\)</span>, dass
+<span class="math display">\[\begin{equation*}
+x_{i}^2 + y_{i}^2 = \|\mathbb x_i\|^2 = \|B^T\mathbb x_i\|^2 
+= \|\begin{bmatrix} b_1^T \\ b_2^T \end{bmatrix} \mathbb x_i\|^2
+= \|\begin{bmatrix} b_1^T\mathbb x \\ b_2^T\mathbb x \end{bmatrix}\|^2
+= \|\begin{bmatrix} \alpha_{i1} \\ \alpha_{i2} \end{bmatrix}\|^2
+= \alpha_{i1}^2 + \alpha_{i2}^2
+\end{equation*}\]</span>
+woraus wir folgern, dass in jedem orthogonalen Koordinaten System, die Summe der beiden Varianzen die gleiche ist:
+<span class="math display">\[\begin{equation*}
+s_x^2 + s_y^2 = \frac{1}{N-1}\sum_{i=1}^N(x_i^2 + y_i^2) = \frac{1}{N-1}\sum_{i=1}^N(\alpha_{i1}^2 + \alpha_{i2}^2) =: s_1^2 + s_2^2.
+\end{equation*}\]</span></p>
 
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="matrix-zerlegungen.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="was-ist-data-science.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

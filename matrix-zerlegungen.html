@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="lineare-regression.html"/>
-
+<link rel="next" href="hauptkomponentenanalyse.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -117,6 +117,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -151,6 +152,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#qr-zerlegung"><i class="fa fa-check"></i><b>3.1</b> QR Zerlegung</a></li>
 <li class="chapter" data-level="3.2" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#singulärwertzerlegung"><i class="fa fa-check"></i><b>3.2</b> Singulärwertzerlegung</a></li>
 <li class="chapter" data-level="3.3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#aufgaben-1"><i class="fa fa-check"></i><b>3.3</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
+<li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -307,7 +312,7 @@ Es genügt also nur die ersten <span class="math inline">\(m\)</span> Spalten vo
 <span class="math display">\[\begin{equation*}
 A \approx A_{\hat r}
 \end{equation*}\]</span>
-wobei <span class="math inline">\(A_{\hat r}\)</span> aus der <em>truncated SVD</em> von <span class="math inline">\(A\)</span> erzeugt wurde. Allerdings ist diese Approximation von <span class="math inline">\(A\)</span> durch optimal in dem Sinne, dass es keine Matrix vom Rang <span class="math inline">\(\hat r \geq r=\operatorname{Rg}(A)\)</span> gibt, die <span class="math inline">\(A\)</span> (in der <em>induzierten</em> euklidischen Norm<a href="matrix-zerlegungen.html#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>) besser approximiert. Es gilt
+wobei <span class="math inline">\(A_{\hat r}\)</span> aus der <em>truncated SVD</em> von <span class="math inline">\(A\)</span> erzeugt wurde. Allerdings ist diese Approximation von <span class="math inline">\(A\)</span> durch optimal in dem Sinne, dass es keine Matrix vom Rang <span class="math inline">\(\hat r \geq r=\operatorname{Rg}(A)\)</span> gibt, die <span class="math inline">\(A\)</span> (in der <em>induzierten</em> euklidischen Norm<a href="hauptkomponentenanalyse.html#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>) besser approximiert. Es gilt
 <span class="math display">\[\begin{equation*}
 \min_{B\in \mathbb C^{m\times n}, \operatorname{Rg}(B)=\hat r} \|A-B\|_2 = \|A-A_{\hat r}\|_2 = \sigma_{\hat r + 1};
 \end{equation*}\]</span>
@@ -486,7 +491,7 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
 <div id="truncated-svd-pt" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.8</span> Truncated SVD (P+T)<a href="matrix-zerlegungen.html#truncated-svd-pt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
-<li><strong>(P)</strong> Berechnen und plotten sie die Singulärwerte einer <span class="math inline">\(4000\times 1000\)</span> Matrix mit zufälligen Einträgen und die einer Matrix mit “echten” Daten (hier Simulationsdaten einer Stroemungssimulation)<a href="matrix-zerlegungen.html#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Berechnen sie den Fehler der <em>truncated SVD</em> <span class="math inline">\(\|A-A_{\hat r}\|\)</span> für <span class="math inline">\(\hat r = 10, 20, 40\)</span> für beide Matrizen.</li>
+<li><strong>(P)</strong> Berechnen und plotten sie die Singulärwerte einer <span class="math inline">\(4000\times 1000\)</span> Matrix mit zufälligen Einträgen und die einer Matrix mit “echten” Daten (hier Simulationsdaten einer Stroemungssimulation)<a href="hauptkomponentenanalyse.html#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Berechnen sie den Fehler der <em>truncated SVD</em> <span class="math inline">\(\|A-A_{\hat r}\|\)</span> für <span class="math inline">\(\hat r = 10, 20, 40\)</span> für beide Matrizen.</li>
 <li><strong>(T)</strong> Was lässt sich bezüglich einer Kompression der Daten mittels SVD für die beiden Matrizen sagen. (Vergleichen sie die plots der Singulärwerte und beziehen sie sich auf die gegebene Formel für die Differenz).</li>
 <li><strong>(P+T)</strong> Für die “echten” Daten: Speichern sie die Faktoren der bei <span class="math inline">\(\hat r=40\)</span> abgeschnittenen SVD und vergleichen Sie den Speicherbedarf der Faktoren und der eigentlichen Matrix.</li>
 </ol>
@@ -532,13 +537,6 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
 </div>
 <div class="footnotes">
 <hr />
-<ol>
-<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
-</ol>
-</div>
-<div class="footnotes">
-<hr />
 <ol start="1">
 <li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
 <li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
@@ -549,8 +547,8 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
           </div>
         </div>
       </div>
-<a href="lineare-regression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="lineare-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hauptkomponentenanalyse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

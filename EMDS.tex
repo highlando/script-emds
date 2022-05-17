@@ -111,8 +111,9 @@
 \def\fps@figure{htbp}
 \makeatother
 
-\usepackage[]{natbib}
-\bibliographystyle{plainnat}
+\usepackage{xcolor}
+\definecolor{jhsc}{HTML}{1f57c7}
+\newenvironment {JHSAYS} [0] {\begin{quote}\color{jhsc}} {\end{quote}}
 
 \title{Einführung in die mathematische Datenanalyse}
 \author{Jan Heiland}
@@ -1244,5 +1245,133 @@ Beispielcode:
 \item
   Die (T) Abschnitte hier bitte mit den anderen (T) Aufgaben oder als Bildschirmausgabe im Programm.
 \end{itemize}
+
+\hypertarget{hauptkomponentenanalyse}{%
+\chapter{Hauptkomponentenanalyse}\label{hauptkomponentenanalyse}}
+
+Während in den vorherigen Kapiteln der Versuch war, einen funktionalen Zusammenhang in Daten zu bekommen, geht es jetzt darum, statistische Eigenschaften aus Daten zu extrahieren. Wir werden sehen, dass das auch nur ein anderer Blickwinkel auf das gleiche Problem \emph{Wie können wir die Daten verstehen?} ist und auch die SVD wieder treffen.
+
+Wir nehmen noch einmal die Covid-Daten her, vergessen kurz, dass es sich um eine Zeitreihe handelt und betrachten sie als Datenpunkte \((x_i, y_i)\), \(i=1,\dotsc,N\), im zweidimensionalen Raum mit Koordinaten \(x\) und \(y\).
+
+Als erstes werden die Daten \textbf{zentriert} indem in jeder Komponente der Mittelwert
+\begin{equation*}
+x_c = \frac 1N \sum_{i=1}^N x_i,
+\quad
+y_c = \frac 1N \sum_{i=1}^N y_i.
+\end{equation*}
+abgezogen wird, also die Daten durch \((x_i-\bar x,\, y_i-\bar y)\) ersetzt werden.
+
+\begin{figure}
+\hypertarget{fig:cases-cntrd}{%
+\centering
+\includegraphics[width=0.65\textwidth,height=\textheight]{bilder/04-covid-cntrd.png}
+\caption{Fallzahlen von Sars-CoV-2 in Bayern im Oktober
+2020 -- zentriert}\label{fig:cases-cntrd}
+}
+\end{figure}
+
+\hypertarget{variationskoeffizienten}{%
+\section{Variationskoeffizienten}\label{variationskoeffizienten}}
+
+Als nächstes kann Jan sich fragen, wie gut die Daten durch ihren Mittelwert beschrieben werden und die Varianzen berechnen, die für zentrierte Daten so aussehen
+
+\begin{equation*}
+s_x^2 = \frac {1}{N-1} \sum_{i=1}^N x_i^2,
+\quad
+s_y^2 = \frac {1}{N-1} \sum_{i=1}^N y_i^2.
+\end{equation*}
+
+Im gegebenen Fall bekommen wir
+\begin{equation*}
+s_x^2 = 2480
+\quad
+s_y^2 \approx  28029755.
+\end{equation*}
+Da der grosse Unterschied eventuell durch die verschiedene Skalierung der Daten herrührt berechnen wir besser die Variationskoeffizienten mittels
+\begin{equation*}
+\operatorname {VarK}(x) = \frac{\sqrt{s_x^2} }{x_c} \approx 3.11
+\quad
+\operatorname {VarK}(y) = \frac{\sqrt{s_y^2} }{y_c} \approx 4.16
+\end{equation*}
+
+und schließen daraus, dass in \(y\) Richtung \emph{viel passiert} und in \(x\) Richtung \emph{nicht ganz so viel}. Das ist jeder Hinsicht nicht befriedigend, wir können weder
+
+\begin{itemize}
+\tightlist
+\item
+  Redundanzen ausmachen (eine Dimension der Daten vielleicht weniger wichtig?) noch
+\item
+  dominierende Richtungen feststellen (obwohl dem Bild nach so eine offenbar existiert)
+\end{itemize}
+
+und müssen konstatieren, dass die Repräsentation der Daten im \((x,y)\) Koordinatensystem nicht optimal ist.
+
+Die Frage ist also, ob es ein Koordinatensystem gibt, dass die Daten besser darstellt.
+
+\leavevmode\hypertarget{rem-coors}{}%
+\begin{JHSAYS}
+Ein Koordinatensystem ist nichts anderes als eine Basis. Und die Koordinaten eines Datenpunktes sind die Komponenten des entsprechenden Vektors in dieser Basis. Typischerweise sind Koordinatensysteme orthogonal (das heißt eine Orthogonalbasis) und häufig noch orientiert (die Basisvektoren haben eine bestimmte Reihenfolge und eine bestimmte Richtung).
+
+\end{JHSAYS}
+
+\hypertarget{koordinatenwechsel}{%
+\section{Koordinatenwechsel}\label{koordinatenwechsel}}
+
+Sei nun also \(\{b_1,b_2\}\subset \mathbb R^{2}\) eine orthogonale Basis.
+
+\leavevmode\hypertarget{rem-ortho-bas}{}%
+\begin{JHSAYS}
+Wie allgemein gebräuchlich, sagen wir \emph{orthogonal}, meinen aber \emph{orthonormal}. In jedem Falle soll gelten
+\begin{equation*}
+b_1^T b_1=1, \quad b_2^Tb_2=1, \quad b_1^Tb_2 = b_2^Tb_1 = 0.
+\end{equation*}
+
+\end{JHSAYS}
+
+Wir können also alle Datenpunkte
+\(\mathbf x_i = \begin{bmatrix} x_i \\ y_i \end{bmatrix}\)
+in der neuen Basis darstellen mit eindeutig bestimmten Koeffizienten \(\alpha_{i1}\) und \(\alpha_{i2}\) mittels
+\begin{equation*}
+\mathbf x_i = \alpha_{i1}b_1 + \alpha_{i2}b_2.
+\end{equation*}
+Für orthogonale Basen sind die Koeffizienten durch \emph{testen} mit dem Basisvektor einfach zu berechnen:
+\begin{align*}
+b_1^T\mathbb x_i = b_1^T(\alpha_{i1}b_1 + \alpha_{i2}b_2) = \alpha_{i1}b_1^Tb_1 + \alpha_{i2}b_1^Tb_2 = \alpha_{i1}\cdot 1 + \alpha_{i2} \cdot 0 = \alpha_{i1},\\
+b_2^T\mathbb x_i = b_2^T(\alpha_{i1}b_1 + \alpha_{i2}b_2) = \alpha_{i1}b_1^Tb_2 + \alpha_{i2}b_2^Tb_2 = \alpha_{i1}\cdot 0 + \alpha_{i2}\cdot 0 = \alpha_{i2}.
+\end{align*}
+Es gilt also
+\begin{equation*}
+\alpha_{i1} = b_1^T\mathbb x = b_1^T\begin{bmatrix}
+x_i \\ y_i
+\end{bmatrix}, \quad
+\alpha_{i2} = b_2^T\mathbb x = b_2^T\begin{bmatrix}
+x_i \\ y_i
+\end{bmatrix}.
+\end{equation*}
+
+Damit, können wir jeden Datenpunkt \(\mathbf x_i=(x_i, y_i)\) in den neuen Koordinaten \((\alpha_{i1}, \alpha_{i2})\) ausdrücken.
+
+Zunächst halten wir fest, dass auch in den neuen Koordinaten die Daten zentriert sind. Es gilt nämlich, dass
+\begin{equation*}
+\frac 1N \sum_{i=1}^N \alpha_{ji}=\frac 1N \sum_{i=1}^N b_j^T\mathbb x_i 
+=\frac 1N b_j^T \sum_{i=1}^N \begin{bmatrix} x_i \\ y_i \end{bmatrix}
+=\frac 1N b_j^T \begin{bmatrix} \sum_{i=1}^N x_i \\ \sum_{i=1}^N y_i \end{bmatrix}
+=b_j^T \begin{bmatrix} \frac 1N \sum_{i=1}^N x_i \\ \frac 1N \sum_{i=1}^N y_i \end{bmatrix}
+=b_j^T \begin{bmatrix} 0 \\ 0 \end{bmatrix} = 0,
+\end{equation*}
+für \(j=1,2\).
+
+Desweiteren gilt wegen der Orthogonalität von \(B=[b_1~b_2]\in \mathbb R^{2\times 2}\), dass
+\begin{equation*}
+x_{i}^2 + y_{i}^2 = \|\mathbb x_i\|^2 = \|B^T\mathbb x_i\|^2 
+= \|\begin{bmatrix} b_1^T \\ b_2^T \end{bmatrix} \mathbb x_i\|^2
+= \|\begin{bmatrix} b_1^T\mathbb x \\ b_2^T\mathbb x \end{bmatrix}\|^2
+= \|\begin{bmatrix} \alpha_{i1} \\ \alpha_{i2} \end{bmatrix}\|^2
+= \alpha_{i1}^2 + \alpha_{i2}^2
+\end{equation*}
+woraus wir folgern, dass in jedem orthogonalen Koordinaten System, die Summe der beiden Varianzen die gleiche ist:
+\begin{equation*}
+s_x^2 + s_y^2 = \frac{1}{N-1}\sum_{i=1}^N(x_i^2 + y_i^2) = \frac{1}{N-1}\sum_{i=1}^N(\alpha_{i1}^2 + \alpha_{i2}^2) =: s_1^2 + s_2^2.
+\end{equation*}
 
 \end{document}

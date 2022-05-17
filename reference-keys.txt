@@ -30,3 +30,6 @@ singulärwertzerlegung-und-eigenwerte-t
 python-laden-und-speichern-von-arrays
 lineare-regression-für-covid-daten-p
 truncated-svd-pt
+hauptkomponentenanalyse
+variationskoeffizienten
+koordinatenwechsel

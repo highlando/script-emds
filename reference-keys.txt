@@ -33,3 +33,4 @@ truncated-svd-pt
 hauptkomponentenanalyse
 variationskoeffizienten
 koordinatenwechsel
+maximierung-der-varianz-in-haupt-achsenrichtung

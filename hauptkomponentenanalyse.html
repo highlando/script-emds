@@ -156,6 +156,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
+<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#maximierung-der-varianz-in-haupt-achsenrichtung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -180,6 +181,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="hauptkomponentenanalyse" class="section level1 hasAnchor">
 <h1><span class="header-section-number">4</span> Hauptkomponentenanalyse<a href="hauptkomponentenanalyse.html#hauptkomponentenanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Während in den vorherigen Kapiteln der Versuch war, einen funktionalen Zusammenhang in Daten zu bekommen, geht es jetzt darum, statistische Eigenschaften aus Daten zu extrahieren. Wir werden sehen, dass das auch nur ein anderer Blickwinkel auf das gleiche Problem <em>Wie können wir die Daten verstehen?</em> ist und auch die SVD wieder treffen.</p>
+<p>Weil ich den Ansatz gerne <em>ad hoc</em> also am Problem entlang motivieren und einführen will, vorweg schon mal die bevorstehenden Schritte</p>
+<ol style="list-style-type: decimal">
+<li>Zentrierung/Skalierung der Daten</li>
+<li>Berechnung der Varianzen im Standard Koordinatensystem</li>
+<li>Überlegung, dass Daten in einem anderen Koordinatensystem eventuell besser dargestellt werden im Sinne</li>
+<li>Berechnung eines optimalen Koordinatenvektors mittels SVD.</li>
+</ol>
 <p>Wir nehmen noch einmal die Covid-Daten her, vergessen kurz, dass es sich um eine Zeitreihe handelt und betrachten sie als Datenpunkte <span class="math inline">\((x_i, y_i)\)</span>, <span class="math inline">\(i=1,\dotsc,N\)</span>, im zweidimensionalen Raum mit Koordinaten <span class="math inline">\(x\)</span> und <span class="math inline">\(y\)</span>.</p>
 <p>Als erstes werden die Daten <strong>zentriert</strong> indem in jeder Komponente der Mittelwert
 <span class="math display">\[\begin{equation*}
@@ -187,7 +195,8 @@ x_c = \frac 1N \sum_{i=1}^N x_i,
 \quad
 y_c = \frac 1N \sum_{i=1}^N y_i.
 \end{equation*}\]</span>
-abgezogen wird, also die Daten durch <span class="math inline">\((x_i-\bar x,\, y_i-\bar y)\)</span> ersetzt werden.</p>
+abgezogen wird und dann noch mit dem inversen des Mittelwerts skaliert.</p>
+<p>Also, die Daten werden durch <span class="math inline">\((\frac{x_i-\bar x}{\bar x},\, \frac{y_i-\bar y}{\bar y})\)</span> ersetzt.</p>
 <div class="figure">
 <img src="bilder/04-covid-cntrd.png" alt="Fallzahlen von Sars-CoV-2 in Bayern im Oktober 2020 – zentriert" id="fig:cases-cntrd" style="width:65.0%" />
 <p class="caption">Fallzahlen von Sars-CoV-2 in Bayern im Oktober
@@ -203,17 +212,17 @@ s_y^2 = \frac {1}{N-1} \sum_{i=1}^N y_i^2.
 \end{equation*}\]</span></p>
 <p>Im gegebenen Fall bekommen wir
 <span class="math display">\[\begin{equation*}
-s_x^2 = 2480
+s_x^2 \approx 0.32
 \quad
-s_y^2 \approx  28029755.
+s_y^2 \approx  0.57
 \end{equation*}\]</span>
-Da der grosse Unterschied eventuell durch die verschiedene Skalierung der Daten herrührt berechnen wir besser die Variationskoeffizienten mittels
-<span class="math display">\[\begin{equation*}
-\operatorname {VarK}(x) = \frac{\sqrt{s_x^2} }{x_c} \approx 3.11
+<!--Da der grosse Unterschied eventuell durch die verschiedene Skalierung der Daten herr&uuml;hrt berechnen wir besser die Variationskoeffizienten mittels
+\begin{equation*}
+\operatorname {VarK}(x) = \frac{\sqrt{s_x^2} }{x_c} \approx 0.56
 \quad
-\operatorname {VarK}(y) = \frac{\sqrt{s_y^2} }{y_c} \approx 4.16
-\end{equation*}\]</span></p>
-<p>und schließen daraus, dass in <span class="math inline">\(y\)</span> Richtung <em>viel passiert</em> und in <span class="math inline">\(x\)</span> Richtung <em>nicht ganz so viel</em>. Das ist jeder Hinsicht nicht befriedigend, wir können weder</p>
+\operatorname {VarK}(y) = \frac{\sqrt{s_y^2} }{y_c} \approx 0.76
+\end{equation*}-->
+und schließen daraus, dass in <span class="math inline">\(y\)</span> Richtung <em>viel passiert</em> und in <span class="math inline">\(x\)</span> Richtung <em>nicht ganz so viel</em>. Das ist jeder Hinsicht nicht befriedigend, wir können weder</p>
 <ul>
 <li>Redundanzen ausmachen (eine Dimension der Daten vielleicht weniger wichtig?) noch</li>
 <li>dominierende Richtungen feststellen (obwohl dem Bild nach so eine offenbar existiert)</li>
@@ -271,10 +280,108 @@ x_{i}^2 + y_{i}^2 = \|\mathbb x_i\|^2 = \|B^T\mathbb x_i\|^2
 = \|\begin{bmatrix} \alpha_{i1} \\ \alpha_{i2} \end{bmatrix}\|^2
 = \alpha_{i1}^2 + \alpha_{i2}^2
 \end{equation*}\]</span>
-woraus wir folgern, dass in jedem orthogonalen Koordinaten System, die Summe der beiden Varianzen die gleiche ist:
+woraus wir folgern, dass in jedem orthogonalen Koordinatensystem, die Summe der beiden Varianzen die gleiche ist:
 <span class="math display">\[\begin{equation*}
 s_x^2 + s_y^2 = \frac{1}{N-1}\sum_{i=1}^N(x_i^2 + y_i^2) = \frac{1}{N-1}\sum_{i=1}^N(\alpha_{i1}^2 + \alpha_{i2}^2) =: s_1^2 + s_2^2.
 \end{equation*}\]</span></p>
+<p>Das bedeutet, dass durch die Wahl des Koordinatensystems die Varianz als Summe nicht verändert wird. Allerdings können wir das System so wählen, dass eine der Varianzen in Achsenrichtung maximal wird (und die übrige(n) entsprechend klein).</p>
+<p>Analog gilt für den eigentlichen Mittelwert der (nichtzentrierten) Daten, dass die Norm gleich bleibt. In der Tat, für die <em>neuen</em> Koordinaten des Mittelwerts gilt in der Norm
+<span class="math display">\[\begin{equation*}
+\|
+\begin{bmatrix}
+\alpha_{c1} \\ \alpha_{c2}
+\end{bmatrix}
+\|
+=
+\|
+B^T
+\begin{bmatrix}
+x_c \\ y_c
+\end{bmatrix}
+\|
+=
+\|
+\begin{bmatrix}
+x_c \\ y_c
+\end{bmatrix}
+\|.
+\end{equation*}\]</span></p>
+</div>
+<div id="maximierung-der-varianz-in-haupt-achsenrichtung" class="section level2 hasAnchor">
+<h2><span class="header-section-number">4.3</span> Maximierung der Varianz in (Haupt)-Achsenrichtung<a href="hauptkomponentenanalyse.html#maximierung-der-varianz-in-haupt-achsenrichtung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wir wollen nun also <span class="math inline">\(b_1\in \mathbb R^{2}\)</span>, mit <span class="math inline">\(\|b_1\|=1\)</span> so wählen, dass
+<span class="math display">\[\begin{equation*}
+s_1^2 = \frac{1}{N-1}\sum_{i=1}^n \alpha_{i1}^2
+\end{equation*}\]</span>
+maximal wird. Mit der Matrix <span class="math inline">\(\mathbf X\)</span> aller Daten
+<span class="math display">\[\begin{equation*}
+\mathbf X = \begin{bmatrix}
+x_1 &amp; y_1 \\ x_2 &amp; y_2 \\ \vdots &amp; \vdots \\ x_N &amp; x_N
+\end{bmatrix} = 
+\begin{bmatrix}
+\mathbf x_1^T\\ \mathbf x_2^T  \\  \vdots \\ \mathbf x_N^T
+\end{bmatrix} 
+\in \mathbb R^{N\times 2}
+\end{equation*}\]</span>
+können wir die Varianz in <span class="math inline">\(b_1\)</span>-Richtung kompakt schreiben als
+<span class="math display">\[\begin{equation*}
+s_1^2 = \frac{1}{N-1}\sum_{i=1}^n \alpha_{i1}^2
+= \frac{1}{N-1}\sum_{i=1}^n (b_1^T\mathbf x_i)^2
+= \frac{1}{N-1}\sum_{i=1}^n (\mathbf x_i^Tb_1)^2
+= \frac{1}{N-1}\| \mathbf X b_1 \|^2
+\end{equation*}\]</span>
+Wir sind also ein weiteres mal bei einem Optimierungsproblem (diesmal mit Nebenbedingung) angelangt:
+<span class="math display">\[\begin{equation*}
+\max_{b\in \mathbb R^{2},\, \|b\|=1} \|\mathbf X b\|^2
+\end{equation*}\]</span>
+Die Lösung dieses Problems ist mit <span class="math inline">\(b=v_1\)</span> gegeben, wobei <span class="math inline">\(v_1\)</span> der erste (rechte) Singulärvektor von <span class="math inline">\(\mathbf X\)</span> ist:
+<span class="math display">\[\begin{equation*}
+\mathbf X = U \Sigma V^T = U \Sigma \begin{bmatrix}
+v_1^T \\ v_2^T
+\end{bmatrix}.
+\end{equation*}\]</span>
+Und damit rechnen wir auch direkt nach, dass im neuen Koordinatensystem <span class="math inline">\(\{b_1, b_2\}=\{v_1, v_2\}\)</span> die Varianzen <span class="math inline">\(s_1^2\)</span> und <span class="math inline">\(s_2^2\)</span> (bis auf einen Faktor von <span class="math inline">\(\frac{1}{N-1}\)</span>) genau die quadrierten Singulärwerte von <span class="math inline">\(\mathbf X\)</span> sind:
+<span class="math display">\[\begin{align*}
+(N-1)s_1^2 
+= \|\mathbf X v_1 \|^2 = \|U \Sigma \begin{bmatrix} v_1^T \\ v_2^T \end{bmatrix}v_1\|^2
+= \|\Sigma \begin{bmatrix} v_1^Tv_1 \\ v_2^T v_1\end{bmatrix}\|^2
+=  \|\Sigma \begin{bmatrix} 1 \\  0\end{bmatrix}\|^2
+=\sigma_1^2,\\
+(N-1)s_2^2 
+= \|\mathbf X v_2 \|^2 = \|U \Sigma \begin{bmatrix} v_1^T \\ v_2^T \end{bmatrix}v_2\|^2
+= \|\Sigma \begin{bmatrix} v_1^Tv_2 \\ v_2^T v_2\end{bmatrix}\|^2
+=  \|\Sigma \begin{bmatrix} 0 \\  1\end{bmatrix}\|^2
+=\sigma_2^2
+\end{align*}\]</span></p>
+<p>Für unser Covid Beispiel ergibt sich
+<span class="math display">\[\begin{equation*}
+V^T \approx
+\begin{bmatrix}
+0.5848 &amp;  0.8111 \\
+0.8111 &amp; -0.5848
+\end{bmatrix}
+\end{equation*}\]</span>
+also
+<span class="math display">\[\begin{equation*}
+b_1 = v_1 = \begin{bmatrix}
+0.5848 \\  0.8111 
+\end{bmatrix}
+\quad
+b_2 = v_2 = \begin{bmatrix}
+0.8111 \\ -0.5848
+\end{bmatrix}
+\end{equation*}\]</span>
+als neue Koordinatenrichtungen mit
+<span class="math display">\[\begin{equation*}
+s_1^2 \approx 0.85, \quad s_2^2 \approx 0.04,
+\end{equation*}\]</span>
+was bereits eine deutliche Dominanz der <span class="math inline">\(v_1\)</span>-Richtung – genannt  zeigt.</p>
+<p>Im Hinblick auf die nächste Vorlesung, in der wir Anwendungen und Eigenschaften der PCA untersuchen werden, noch ein Plot der Daten mit der <span class="math inline">\(v_1\)</span>-Richtung als Linie eingezeichnet.</p>
+<div class="figure">
+<img src="bilder/04-covid-cntrd-HA.png" alt="Fallzahlen von Sars-CoV-2 in Bayern im Oktober 2020 – zentriert/skaliert/Hauptachse" id="fig:cases-cntrd-HA" style="width:65.0%" />
+<p class="caption">Fallzahlen von Sars-CoV-2 in Bayern im Oktober
+2020 – zentriert/skaliert/Hauptachse</p>
+</div>
 
 </div>
 </div>

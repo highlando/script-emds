@@ -6,5 +6,6 @@ imap ,rr \mathbb R^{}
 
 imap mbx \mathbb x
 imap mby \mathbb y
+imap smn \sum_{i=1}^N
 
 map ,m <esc>:w<CR>:!./mkdc.sh<CR>

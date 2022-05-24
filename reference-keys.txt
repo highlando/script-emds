@@ -40,9 +40,13 @@ darstellung
 korrelationen-und-die-kovarianzmatrix
 hauptachsentransformation
 rekonstruktion
+reduktion-der-daten
+am-beispiel-der-iris-daten
 aufgaben-2
 covarianzen
 iris-datensatz-targets-plotten
 iris-datensatz-2d-plots
+kovarianz
+hauptachsentransformation-1
 kovarianzmatrix-t
 gesamtvarianz-t

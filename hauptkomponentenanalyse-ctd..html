@@ -164,7 +164,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#korrelationen-und-die-kovarianzmatrix"><i class="fa fa-check"></i><b>5.3</b> Korrelationen und die Kovarianzmatrix</a></li>
 <li class="chapter" data-level="5.4" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation"><i class="fa fa-check"></i><b>5.4</b> Hauptachsentransformation</a></li>
 <li class="chapter" data-level="5.5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#rekonstruktion"><i class="fa fa-check"></i><b>5.5</b> Rekonstruktion</a></li>
-<li class="chapter" data-level="5.6" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.6</b> Aufgaben</a></li>
+<li class="chapter" data-level="5.6" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#reduktion-der-daten"><i class="fa fa-check"></i><b>5.6</b> Reduktion der Daten</a></li>
+<li class="chapter" data-level="5.7" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-iris-daten"><i class="fa fa-check"></i><b>5.7</b> Am Beispiel der Iris Daten</a></li>
+<li class="chapter" data-level="5.8" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.8</b> Aufgaben</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -205,7 +207,7 @@ Da wir außerdem ermittelt hatten, dass die Summe der Varianz unabhüngig vom Ko
 <h2><span class="header-section-number">5.2</span> Darstellung<a href="hauptkomponentenanalyse-ctd..html#darstellung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In höheren Dimensionen ist schon die graphische Darstellung der Daten ein Problem. Wir können aber alle möglichen 2er Kombinationen der Daten in 2D plots visualisieren.</p>
 <div class="figure">
-<img src="bilder/05-all-pairs.png" alt="Iris Datenset 2D plots" id="fig:05-iris-allpairs" style="width:65.0%" />
+<img src="bilder/05-all-pairs.png" alt="Iris Datenset 2D plots" id="fig:05-iris-allpairs" style="width:75.0%" />
 <p class="caption">Iris Datenset 2D plots</p>
 </div>
 <p>Ein Blick auf die Diagonale zeigt schon, dass manche Merkmale besser geeignet als andere sind, um die Spezies zu unterscheiden, allerdings keine der Zweierkombinationen eine Eindeutige Diskriminierung erlaubt.</p>
@@ -275,53 +277,102 @@ Die letzte Formel wird vielleicht klarer, wenn Jan sich überlegt, dass für ein
 \tilde{\tilde{ {\mathbf{X}}}}_j=(\alpha_j v_1)^T = \alpha_j v_1^T = (v_1^T {\mathbf{X}}_j^T) v_1^T  = {\mathbf{X}}_j  v_1 v_1^T
 \end{equation*}\]</span>
 gegeben ist.</p>
-<p>Damit</p>
+<p>Damit können wir mit
+<span class="math display">\[\begin{equation*}
+{\mathbf{X}}- \tilde{\tilde {{\mathbf{X}}}} = {\mathbf{X}}(I-v_1v_1^T)
+\end{equation*}\]</span>
+den Teil der Daten betrachten, der durch die Richtung <span class="math inline">\(v_1\)</span> nicht abgebildet wird (sozusagen den noch verbleibenden Teil). Jan kann nachrechnen, dass wiederum <span class="math inline">\(U\)</span> und <span class="math inline">\(V\)</span> die Singulärvektoren von <span class="math inline">\({\mathbf{X}}-\tilde{\tilde {{\mathbf{X}}}}\)</span> bilden, mit jetzt <span class="math inline">\(v_2\)</span> als Richtung mit dem größten (verbleibenden) Singulärwert.</p>
+<p>Das heißt, dass der <span class="math inline">\(k\)</span>-te Singulärvektor die <span class="math inline">\(k\)</span>-te Hauptrichtung bildet.</p>
+</div>
+<div id="reduktion-der-daten" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.6</span> Reduktion der Daten<a href="hauptkomponentenanalyse-ctd..html#reduktion-der-daten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ist die Datenmatrix mit linear abhängigen Spalten besetzt, äußert sich das in <span class="math inline">\(\sigma_k = 0\)</span> für ein <span class="math inline">\(k&lt;n\)</span> (und alle noch folgenden Singulärwerte). Jan rechnet nach, dass dann
+<span class="math display">\[\begin{equation*}
+{\mathbf{X}}= {\mathbf{X}}V_{k-1}V_{k-1}^T
+\end{equation*}\]</span>
+wobei <span class="math inline">\(V_{k-1}\)</span> die Matrix der <span class="math inline">\(k-1\)</span> führenden Singulärvektoren ist und das entsprechende
+<span class="math display">\[\begin{equation*}
+\tilde {\mathbf{X}}= {\mathbf{X}}V_{k-1}
+\end{equation*}\]</span>
+alle Informationen des Datensatzes in kleinerer Dimension parametrisiert.</p>
+<p>In der Praxis sind schon allein durch Messfehler exakte lineare Abhängigkeiten sowiedurch die näherungsweise Bestimmung auf dem Computer das Auftreten von <span class="math inline">\(\sigma_k =0\)</span> quasi ausgeschlossen. Stattdessen werden Schwellwerte definiert, unterhalb derer die SVD abgeschnitten wird.</p>
+<p>Wie oben, werden dann die Daten <span class="math inline">\(\tilde {\mathbf{X}}={\mathbf{X}}V_{\hat k}\)</span> in den (reduzierten) Koordinaten der Hauptachsen betrachtet sowie die Rekonstruktion <span class="math inline">\(\hat {\mathbf{X}}= {\mathbf{X}}V_{\hat k}V_{\hat k}^T\)</span>, wobei der <span class="math inline">\(V_{\hat k}\)</span> die Matrix der <span class="math inline">\(\hat k\)</span> führenden Singulärvektoren sind (mit Singulärwerten überhalb des Schwellwertes).</p>
+</div>
+<div id="am-beispiel-der-iris-daten" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.7</span> Am Beispiel der Iris Daten<a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-iris-daten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wir stellen die Daten noch einmal zentriert dar:</p>
+<div class="figure">
+<img src="bilder/05-all-pairs-cntrd.png" alt="Iris Daten Zentriert" id="fig:05-iris-allpairs-cntrd" style="width:75.0%" />
+<p class="caption">Iris Daten Zentriert</p>
+</div>
+<p>Für die Kovarianzmatrix der Iris Daten erhalten wir:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1">Covariance matrix: </a>
+<a class="sourceLine" id="cb8-2" title="2">[[ <span class="fl">0.6857</span> <span class="fl">-0.0424</span>  <span class="fl">1.2743</span>  <span class="fl">0.5163</span>]</a>
+<a class="sourceLine" id="cb8-3" title="3"> [<span class="op">-</span><span class="fl">0.0424</span>  <span class="fl">0.19</span>   <span class="fl">-0.3297</span> <span class="fl">-0.1216</span>]</a>
+<a class="sourceLine" id="cb8-4" title="4"> [ <span class="fl">1.2743</span> <span class="fl">-0.3297</span>  <span class="fl">3.1163</span>  <span class="fl">1.2956</span>]</a>
+<a class="sourceLine" id="cb8-5" title="5"> [ <span class="fl">0.5163</span> <span class="fl">-0.1216</span>  <span class="fl">1.2956</span>  <span class="fl">0.581</span> ]]</a></code></pre></div>
+<p>Für die Singulärwerte:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" title="1">In: U, S, Vh <span class="op">=</span> np.linalg.svd(data, full_matrices<span class="op">=</span><span class="va">False</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3">In: <span class="bu">print</span>(S)</a>
+<a class="sourceLine" id="cb9-4" title="4">Out: [<span class="fl">25.1</span>     <span class="fl">6.0131</span>  <span class="fl">3.4137</span>  <span class="fl">1.8845</span>]</a></code></pre></div>
+<p>Zwar ist hier kein Singulärwert nah an der Null, allerdings beträgt der Unterschied zwischen dem größten und dem kleinsten schon eine 10er Potenz, was auf eine starke Dominanz der ersten Hauptachsen hinweist.</p>
+<p>In der Tat, plotten wir die Daten in den Koordinaten der Hauptachsen (also <span class="math inline">\(\tilde {\mathbf{X}}\)</span>), zeigen Bilder der <span class="math inline">\(v_1\)</span> oder <span class="math inline">\(v_2\)</span>-Koordinaten klare Tendenzen in den Daten, während die Plots der übrigen Richtungen wie eine zufällige Punktwolke aussieht, vgl. Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-iris-allpairs-pcs"><strong>??</strong></a>.</p>
+<div class="figure">
+<img src="bilder/05-all-pairs-pcs.png" alt="Iris Datenset 2D plots in Hauptachsenkoordinaten" id="fig:05-iris-allpairs-pcs" style="width:75.0%" />
+<p class="caption">Iris Datenset 2D plots in Hauptachsenkoordinaten</p>
+</div>
+<p>Als letztes plotten wir noch <span class="math inline">\(\hat {{\mathbf{X}}}\)</span> für <span class="math inline">\(\hat k =2\)</span>. Das heißt wir reduzieren die Daten auf die <span class="math inline">\(v_1\)</span> und <span class="math inline">\(v_2\)</span>-Richtungen und betrachten die Rekonstruktion. Im Plot sehen wir, dass in gewissen Teilen die Daten gut rekonstruiert werden. Allerdings, hat <span class="math inline">\(\hat{{\mathbf{X}}}\)</span> nur Rang <span class="math inline">\(\operatorname{Rk} \hat {{\mathbf{X}}}=2\)</span> (warum?), sodass in den Plots notwendigerweise direkte lineare Abhängigkeiten offenbar werden.</p>
+<div class="figure">
+<img src="bilder/05-all-pairs-k2-rec.png" alt="Iris Datenset – rekonstruiert von \hat k =2 Hauptachsenkoordinaten" id="fig:05-iris-allpairs-k2-rec" style="width:75.0%" />
+<p class="caption">Iris Datenset – rekonstruiert von <span class="math inline">\(\hat k =2\)</span> Hauptachsenkoordinaten</p>
+</div>
 </div>
 <div id="aufgaben-2" class="section level2 hasAnchor">
-<h2><span class="header-section-number">5.6</span> Aufgaben<a href="hauptkomponentenanalyse-ctd..html#aufgaben-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">5.8</span> Aufgaben<a href="hauptkomponentenanalyse-ctd..html#aufgaben-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="covarianzen" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.6.1</span> Covarianzen<a href="hauptkomponentenanalyse-ctd..html#covarianzen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.8.1</span> Covarianzen<a href="hauptkomponentenanalyse-ctd..html#covarianzen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Erzeugen Sie für <code>N</code> aus <code>Nl = [10, 100, 1000]</code> zufällige Vektoren <code>x</code> und <code>y</code> der Länge <code>N</code> und berechnen Sie jeweils die Covarianzmatrix für den Datensatz <code>X = [x, x, x*y, y]</code>. Interpretieren sie die Ergebnisse.</p>
 </div>
 <div id="iris-datensatz-targets-plotten" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.6.2</span> Iris Datensatz – Targets Plotten<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-targets-plotten" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.8.2</span> Iris Datensatz – Targets Plotten<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-targets-plotten" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Laden Sie die <a href="bilder/iris-data.json">Iris Datensatz</a> (hier als <code>json</code> file bereitgestellt) und plotten sie <code>petal width</code> versus <code>sepal length</code> für die drei Spezies <code>setosa</code>, <code>versicolor</code>, <code>virginica</code> in drei separaten Grafiken.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1"><span class="im">import</span> json</a>
-<a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb8-5" title="5"></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;iris-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
-<a class="sourceLine" id="cb8-7" title="7">    datadict <span class="op">=</span> json.load(f)</a>
-<a class="sourceLine" id="cb8-8" title="8"></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="bu">print</span>(datadict.keys())</a>
-<a class="sourceLine" id="cb8-10" title="10"></a>
-<a class="sourceLine" id="cb8-11" title="11">data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</a>
-<a class="sourceLine" id="cb8-12" title="12">target <span class="op">=</span> np.array(datadict[<span class="st">&#39;target&#39;</span>])</a>
-<a class="sourceLine" id="cb8-13" title="13">feature_names <span class="op">=</span> datadict[<span class="st">&#39;feature_names&#39;</span>]</a>
-<a class="sourceLine" id="cb8-14" title="14">target_names <span class="op">=</span> datadict[<span class="st">&#39;target_names&#39;</span>]</a>
-<a class="sourceLine" id="cb8-15" title="15"></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="bu">print</span>(<span class="st">&#39;target names: &#39;</span>, target_names)</a>
-<a class="sourceLine" id="cb8-17" title="17"><span class="bu">print</span>(<span class="st">&#39;feature names: &#39;</span>, feature_names)</a>
-<a class="sourceLine" id="cb8-18" title="18"></a>
-<a class="sourceLine" id="cb8-19" title="19">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb8-20" title="20"></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="co"># # Ein Vektor der aus dem Target Vektor das target 0 raussucht</span></a>
-<a class="sourceLine" id="cb8-22" title="22">trgtidx_z <span class="op">=</span> (target <span class="op">==</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb8-23" title="23"><span class="co"># # Wird gleich benutzt um die Daten nach diesem target zu filtern</span></a>
-<a class="sourceLine" id="cb8-24" title="24"></a>
-<a class="sourceLine" id="cb8-25" title="25">target_z_daten <span class="op">=</span> data[trgtidx_z, :]</a>
-<a class="sourceLine" id="cb8-26" title="26"></a>
-<a class="sourceLine" id="cb8-27" title="27">axs[<span class="dv">0</span>].plot(target_z_daten[:, <span class="dv">3</span>], target_z_daten[:, <span class="dv">0</span>],</a>
-<a class="sourceLine" id="cb8-28" title="28">            <span class="st">&#39;o&#39;</span>, label<span class="op">=</span>target_names[<span class="dv">0</span>])</a>
-<a class="sourceLine" id="cb8-29" title="29"></a>
-<a class="sourceLine" id="cb8-30" title="30">axs[<span class="dv">0</span>].legend()</a>
-<a class="sourceLine" id="cb8-31" title="31">axs[<span class="dv">0</span>].set_xlabel(feature_names[<span class="dv">3</span>])</a>
-<a class="sourceLine" id="cb8-32" title="32">axs[<span class="dv">0</span>].set_ylabel(feature_names[<span class="dv">0</span>])</a>
-<a class="sourceLine" id="cb8-33" title="33">axs[<span class="dv">0</span>].set_title(target_names[<span class="dv">0</span>])</a>
-<a class="sourceLine" id="cb8-34" title="34"></a>
-<a class="sourceLine" id="cb8-35" title="35">plt.tight_layout()</a>
-<a class="sourceLine" id="cb8-36" title="36">plt.show()</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1"><span class="im">import</span> json</a>
+<a class="sourceLine" id="cb10-2" title="2"></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;iris-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
+<a class="sourceLine" id="cb10-7" title="7">    datadict <span class="op">=</span> json.load(f)</a>
+<a class="sourceLine" id="cb10-8" title="8"></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="bu">print</span>(datadict.keys())</a>
+<a class="sourceLine" id="cb10-10" title="10"></a>
+<a class="sourceLine" id="cb10-11" title="11">data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</a>
+<a class="sourceLine" id="cb10-12" title="12">target <span class="op">=</span> np.array(datadict[<span class="st">&#39;target&#39;</span>])</a>
+<a class="sourceLine" id="cb10-13" title="13">feature_names <span class="op">=</span> datadict[<span class="st">&#39;feature_names&#39;</span>]</a>
+<a class="sourceLine" id="cb10-14" title="14">target_names <span class="op">=</span> datadict[<span class="st">&#39;target_names&#39;</span>]</a>
+<a class="sourceLine" id="cb10-15" title="15"></a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="bu">print</span>(<span class="st">&#39;target names: &#39;</span>, target_names)</a>
+<a class="sourceLine" id="cb10-17" title="17"><span class="bu">print</span>(<span class="st">&#39;feature names: &#39;</span>, feature_names)</a>
+<a class="sourceLine" id="cb10-18" title="18"></a>
+<a class="sourceLine" id="cb10-19" title="19">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb10-20" title="20"></a>
+<a class="sourceLine" id="cb10-21" title="21"><span class="co"># # Ein Vektor der aus dem Target Vektor das target 0 raussucht</span></a>
+<a class="sourceLine" id="cb10-22" title="22">trgtidx_z <span class="op">=</span> (target <span class="op">==</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb10-23" title="23"><span class="co"># # Wird gleich benutzt um die Daten nach diesem target zu filtern</span></a>
+<a class="sourceLine" id="cb10-24" title="24"></a>
+<a class="sourceLine" id="cb10-25" title="25">target_z_daten <span class="op">=</span> data[trgtidx_z, :]</a>
+<a class="sourceLine" id="cb10-26" title="26"></a>
+<a class="sourceLine" id="cb10-27" title="27">axs[<span class="dv">0</span>].plot(target_z_daten[:, <span class="dv">3</span>], target_z_daten[:, <span class="dv">0</span>],</a>
+<a class="sourceLine" id="cb10-28" title="28">            <span class="st">&#39;o&#39;</span>, label<span class="op">=</span>target_names[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb10-29" title="29"></a>
+<a class="sourceLine" id="cb10-30" title="30">axs[<span class="dv">0</span>].legend()</a>
+<a class="sourceLine" id="cb10-31" title="31">axs[<span class="dv">0</span>].set_xlabel(feature_names[<span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb10-32" title="32">axs[<span class="dv">0</span>].set_ylabel(feature_names[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb10-33" title="33">axs[<span class="dv">0</span>].set_title(target_names[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb10-34" title="34"></a>
+<a class="sourceLine" id="cb10-35" title="35">plt.tight_layout()</a>
+<a class="sourceLine" id="cb10-36" title="36">plt.show()</a></code></pre></div>
 <p>Hier wurden die <code>python</code> Datentypen</p>
 <ul>
 <li><em>list</em> – z.B. <code>datenpunkte = [1, 2, 3]</code></li>
@@ -336,22 +387,30 @@ gegeben ist.</p>
 </ul>
 </div>
 <div id="iris-datensatz-2d-plots" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.6.3</span> Iris Datensatz – 2D plots<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-2d-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.8.3</span> Iris Datensatz – 2D plots<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-2d-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Erzeugen sie Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-iris-allpairs"><strong>??</strong></a> zum Beispiel über ein <code>4x4</code> Feld von subplots</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" title="1">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">4</span>, ncols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" title="1">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">4</span>, ncols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</a></code></pre></div>
 <p>erzeugen, in das sie mittels</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1">axs[zeile, spalte].plot(xdaten, ydaten, <span class="st">&#39;o&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1">axs[zeile, spalte].plot(xdaten, ydaten, <span class="st">&#39;o&#39;</span>)</a></code></pre></div>
 <p>die plots fuer die einzelnen targets “eintragen” koennen. Bitte die Achsen beschriften (die <code>legend</code> ist nicht unbedingt notwendig).</p>
 </div>
+<div id="kovarianz" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.8.4</span> Kovarianz<a href="hauptkomponentenanalyse-ctd..html#kovarianz" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Zentrieren Sie den Datensatz (zum Beispiel unter Verwendung der <code>numpy.mean</code> Funktion) und berechnen Sie die Kovarianzmatrix.</p>
+</div>
+<div id="hauptachsentransformation-1" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.8.5</span> Hauptachsentransformation<a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung.</p>
+</div>
 <div id="kovarianzmatrix-t" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.6.4</span> Kovarianzmatrix (T)<a href="hauptkomponentenanalyse-ctd..html#kovarianzmatrix-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.8.6</span> Kovarianzmatrix (T)<a href="hauptkomponentenanalyse-ctd..html#kovarianzmatrix-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Zeigen sie, dass f"ur zentrierte Datens"atze <span class="math inline">\({\mathbf{X}}\in \mathbb R^{N\times n}\)</span> gilt, dass
 <span class="math display">\[\begin{equation*}
 \operatorname{Cov}(X) = \frac{1}{N-1}{\mathbf{X}}^T{\mathbf{X}}.
 \end{equation*}\]</span></p>
 </div>
 <div id="gesamtvarianz-t" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.6.5</span> Gesamtvarianz (T)<a href="hauptkomponentenanalyse-ctd..html#gesamtvarianz-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.8.7</span> Gesamtvarianz (T)<a href="hauptkomponentenanalyse-ctd..html#gesamtvarianz-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Zeigen sie, dass auch für <span class="math inline">\(n&gt;2\)</span> die Summe der Varianzen in orthogonalen Achsenrichtungen unabhängig von der Wahl des Koordinatensystems sind. (Vergleiche Kapitel 4.2 Koordinatenwechsel)</p>
 
 </div>

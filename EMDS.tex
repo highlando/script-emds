@@ -1529,7 +1529,7 @@ In höheren Dimensionen ist schon die graphische Darstellung der Daten ein Probl
 \begin{figure}
 \hypertarget{fig:05-iris-allpairs}{%
 \centering
-\includegraphics[width=0.65\textwidth,height=\textheight]{bilder/05-all-pairs.png}
+\includegraphics[width=0.75\textwidth,height=\textheight]{bilder/05-all-pairs.png}
 \caption{Iris Datenset 2D plots}\label{fig:05-iris-allpairs}
 }
 \end{figure}
@@ -1609,7 +1609,88 @@ Die letzte Formel wird vielleicht klarer, wenn Jan sich überlegt, dass für ein
 \end{equation*}
 gegeben ist.
 
-Damit
+Damit können wir mit
+\begin{equation*}
+{\mathbf{X}}- \tilde{\tilde {{\mathbf{X}}}} = {\mathbf{X}}(I-v_1v_1^T)
+\end{equation*}
+den Teil der Daten betrachten, der durch die Richtung \(v_1\) nicht abgebildet wird (sozusagen den noch verbleibenden Teil). Jan kann nachrechnen, dass wiederum \(U\) und \(V\) die Singulärvektoren von \({\mathbf{X}}-\tilde{\tilde {{\mathbf{X}}}}\) bilden, mit jetzt \(v_2\) als Richtung mit dem größten (verbleibenden) Singulärwert.
+
+Das heißt, dass der \(k\)-te Singulärvektor die \(k\)-te Hauptrichtung bildet.
+
+\hypertarget{reduktion-der-daten}{%
+\section{Reduktion der Daten}\label{reduktion-der-daten}}
+
+Ist die Datenmatrix mit linear abhängigen Spalten besetzt, äußert sich das in \(\sigma_k = 0\) für ein \(k<n\) (und alle noch folgenden Singulärwerte). Jan rechnet nach, dass dann
+\begin{equation*}
+{\mathbf{X}}= {\mathbf{X}}V_{k-1}V_{k-1}^T
+\end{equation*}
+wobei \(V_{k-1}\) die Matrix der \(k-1\) führenden Singulärvektoren ist und das entsprechende
+\begin{equation*}
+\tilde {\mathbf{X}}= {\mathbf{X}}V_{k-1}
+\end{equation*}
+alle Informationen des Datensatzes in kleinerer Dimension parametrisiert.
+
+In der Praxis sind schon allein durch Messfehler exakte lineare Abhängigkeiten sowiedurch die näherungsweise Bestimmung auf dem Computer das Auftreten von \(\sigma_k =0\) quasi ausgeschlossen. Stattdessen werden Schwellwerte definiert, unterhalb derer die SVD abgeschnitten wird.
+
+Wie oben, werden dann die Daten \(\tilde {\mathbf{X}}={\mathbf{X}}V_{\hat k}\) in den (reduzierten) Koordinaten der Hauptachsen betrachtet sowie die Rekonstruktion \(\hat {\mathbf{X}}= {\mathbf{X}}V_{\hat k}V_{\hat k}^T\), wobei der \(V_{\hat k}\) die Matrix der \(\hat k\) führenden Singulärvektoren sind (mit Singulärwerten überhalb des Schwellwertes).
+
+\hypertarget{am-beispiel-der-iris-daten}{%
+\section{Am Beispiel der Iris Daten}\label{am-beispiel-der-iris-daten}}
+
+Wir stellen die Daten noch einmal zentriert dar:
+
+\begin{figure}
+\hypertarget{fig:05-iris-allpairs-cntrd}{%
+\centering
+\includegraphics[width=0.75\textwidth,height=\textheight]{bilder/05-all-pairs-cntrd.png}
+\caption{Iris Daten Zentriert}\label{fig:05-iris-allpairs-cntrd}
+}
+\end{figure}
+
+Für die Kovarianzmatrix der Iris Daten erhalten wir:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Covariance matrix: }
+\NormalTok{[[ }\FloatTok{0.6857} \FloatTok{-0.0424}  \FloatTok{1.2743}  \FloatTok{0.5163}\NormalTok{]}
+\NormalTok{ [}\OperatorTok{-}\FloatTok{0.0424}  \FloatTok{0.19}   \FloatTok{-0.3297} \FloatTok{-0.1216}\NormalTok{]}
+\NormalTok{ [ }\FloatTok{1.2743} \FloatTok{-0.3297}  \FloatTok{3.1163}  \FloatTok{1.2956}\NormalTok{]}
+\NormalTok{ [ }\FloatTok{0.5163} \FloatTok{-0.1216}  \FloatTok{1.2956}  \FloatTok{0.581}\NormalTok{ ]]}
+\end{Highlighting}
+\end{Shaded}
+
+Für die Singulärwerte:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{In: U, S, Vh }\OperatorTok{=}\NormalTok{ np.linalg.svd(data, full_matrices}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+
+\NormalTok{In: }\BuiltInTok{print}\NormalTok{(S)}
+\NormalTok{Out: [}\FloatTok{25.1}     \FloatTok{6.0131}  \FloatTok{3.4137}  \FloatTok{1.8845}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Zwar ist hier kein Singulärwert nah an der Null, allerdings beträgt der Unterschied zwischen dem größten und dem kleinsten schon eine 10er Potenz, was auf eine starke Dominanz der ersten Hauptachsen hinweist.
+
+In der Tat, plotten wir die Daten in den Koordinaten der Hauptachsen (also \(\tilde {\mathbf{X}}\)), zeigen Bilder der \(v_1\) oder \(v_2\)-Koordinaten klare Tendenzen in den Daten, während die Plots der übrigen Richtungen wie eine zufällige Punktwolke aussieht, vgl. Abbildung \ref{fig:05-iris-allpairs-pcs}.
+
+\begin{figure}
+\hypertarget{fig:05-iris-allpairs-pcs}{%
+\centering
+\includegraphics[width=0.75\textwidth,height=\textheight]{bilder/05-all-pairs-pcs.png}
+\caption{Iris Datenset 2D plots in Hauptachsenkoordinaten}\label{fig:05-iris-allpairs-pcs}
+}
+\end{figure}
+
+Als letztes plotten wir noch \(\hat {{\mathbf{X}}}\) für \(\hat k =2\). Das heißt wir reduzieren die Daten auf die \(v_1\) und \(v_2\)-Richtungen und betrachten die Rekonstruktion. Im Plot sehen wir, dass in gewissen Teilen die Daten gut rekonstruiert werden. Allerdings, hat \(\hat{{\mathbf{X}}}\) nur Rang \(\operatorname{Rk} \hat {{\mathbf{X}}}=2\) (warum?), sodass in den Plots notwendigerweise direkte lineare Abhängigkeiten offenbar werden.
+
+\begin{figure}
+\hypertarget{fig:05-iris-allpairs-k2-rec}{%
+\centering
+\includegraphics[width=0.75\textwidth,height=\textheight]{bilder/05-all-pairs-k2-rec.png}
+\caption{Iris Datenset -- rekonstruiert von \(\hat k =2\) Hauptachsenkoordinaten}\label{fig:05-iris-allpairs-k2-rec}
+}
+\end{figure}
 
 \hypertarget{aufgaben-2}{%
 \section{Aufgaben}\label{aufgaben-2}}
@@ -1709,6 +1790,16 @@ erzeugen, in das sie mittels
 \end{Shaded}
 
 die plots fuer die einzelnen targets ``eintragen'' koennen. Bitte die Achsen beschriften (die \texttt{legend} ist nicht unbedingt notwendig).
+
+\hypertarget{kovarianz}{%
+\subsection{Kovarianz}\label{kovarianz}}
+
+Zentrieren Sie den Datensatz (zum Beispiel unter Verwendung der \texttt{numpy.mean} Funktion) und berechnen Sie die Kovarianzmatrix.
+
+\hypertarget{hauptachsentransformation-1}{%
+\subsection{Hauptachsentransformation}\label{hauptachsentransformation-1}}
+
+Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung.
 
 \hypertarget{kovarianzmatrix-t}{%
 \subsection{Kovarianzmatrix (T)}\label{kovarianzmatrix-t}}

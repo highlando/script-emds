@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Hauptkomponentenanalyse Ctd. | Einführung in die mathematische Datenanalyse</title>
+  <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Hauptkomponentenanalyse Ctd. | Einführung in die mathematische Datenanalyse" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
+  <meta name="github-repo" content="highlando/script-emds" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Hauptkomponentenanalyse Ctd. | Einführung in die mathematische Datenanalyse" />
+  
+  <meta name="twitter:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
+  
+
+<meta name="author" content="Jan Heiland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="hauptkomponentenanalyse.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EMDS</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Vorwort</a></li>
+<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a><ul>
+<li class="chapter" data-level="1.1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#wie-passiert-die-datenanalyse"><i class="fa fa-check"></i><b>1.1</b> Wie passiert die Datenanalyse?</a></li>
+<li class="chapter" data-level="1.2" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#was-sind-daten"><i class="fa fa-check"></i><b>1.2</b> Was sind Daten?</a></li>
+<li class="chapter" data-level="1.3" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#beispiele-01-tabellendaten"><i class="fa fa-check"></i><b>1.3</b> Beispiele {#01-tabellendaten}</a></li>
+<li class="chapter" data-level="1.4" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#python"><i class="fa fa-check"></i><b>1.4</b> Python</a></li>
+<li class="chapter" data-level="1.5" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#aufgaben"><i class="fa fa-check"></i><b>1.5</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="lineare-regression.html"><a href="lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
+<li class="chapter" data-level="2.1" data-path="lineare-regression.html"><a href="lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
+<li class="chapter" data-level="2.2" data-path="lineare-regression.html"><a href="lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
+<li class="chapter" data-level="2.3" data-path="lineare-regression.html"><a href="lineare-regression.html#fehlerfunktional-und-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
+<li class="chapter" data-level="2.4" data-path="lineare-regression.html"><a href="lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
+<li class="chapter" data-level="2.5" data-path="lineare-regression.html"><a href="lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a><ul>
+<li class="chapter" data-level="3.1" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#qr-zerlegung"><i class="fa fa-check"></i><b>3.1</b> QR Zerlegung</a></li>
+<li class="chapter" data-level="3.2" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#singulärwertzerlegung"><i class="fa fa-check"></i><b>3.2</b> Singulärwertzerlegung</a></li>
+<li class="chapter" data-level="3.3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#aufgaben-1"><i class="fa fa-check"></i><b>3.3</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
+<li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
+<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#maximierung-der-varianz-in-haupt-achsenrichtung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
+<li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-iris-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der IRIS Datensatz</a></li>
+<li class="chapter" data-level="5.2" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#darstellung"><i class="fa fa-check"></i><b>5.2</b> Darstellung</a></li>
+<li class="chapter" data-level="5.3" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#korrelationen-und-die-kovarianzmatrix"><i class="fa fa-check"></i><b>5.3</b> Korrelationen und die Kovarianzmatrix</a></li>
+<li class="chapter" data-level="5.4" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation"><i class="fa fa-check"></i><b>5.4</b> Hauptachsentransformation</a></li>
+<li class="chapter" data-level="5.5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#rekonstruktion"><i class="fa fa-check"></i><b>5.5</b> Rekonstruktion</a></li>
+<li class="chapter" data-level="5.6" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.6</b> Aufgaben</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Einführung in die mathematische Datenanalyse</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="hauptkomponentenanalyse-ctd." class="section level1 hasAnchor">
+<h1><span class="header-section-number">5</span> Hauptkomponentenanalyse Ctd.<a href="hauptkomponentenanalyse-ctd..html#hauptkomponentenanalyse-ctd." class="anchor-section" aria-label="Anchor link to header"></a></h1>
+
+<p>Im vorherigen Kapitel hatten wir einen zweidimensionalen Datensatz betrachtet und dafür die Richtung bestimmt, in der die Varianz maximal wird.
+Da wir außerdem ermittelt hatten, dass die Summe der Varianz unabhüngig vom Koordinatensystem ist (es muss nur ein orthogonales sein) bedeutete das gleichzeitig, dass die verbleibende Richtung die Richtung der minimalen Varianz war.</p>
+<p>Jetzt wollen wir einen Datensatz mit mehr Merkmalen betrachten und sehen, wie die algorithmische Herangehensweise zum Verständnis beiträgt.</p>
+<div id="der-iris-datensatz" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.1</span> Der IRIS Datensatz<a href="hauptkomponentenanalyse-ctd..html#der-iris-datensatz" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Die Grundlage ist der <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set"><em>Iris Datensatz</em></a>, der ein gern genommene Grundlage für die Illustration der Datenanalyse ist. Die Daten wurden von einem Statistiker und Biologen erhoben und beinhalten 4 verschiedene Merkmale (engl. <em>features</em>) von einer Stichprobe von insgesamt 150 Schwertlilien die 3 verschiedenen Klassen zugeordnet werden können oder sollen (Fachbegriff hier: <em>targets</em>). Im Beispiel werden die Klassen mit <code>0, 1, 2</code> codiert und beschreiben die Unterarten <code>setosa</code>, <code>versicolor</code> und <code>virginica</code> der Schwertlilien. Die Merkmale sind gemessene Länge und Breite des Kelchblattes (hier <em>sepal</em>) und des Kronblattes (hier <em>petal</em>).</p>
+<p>Wir stellen uns 2-3 Fragen:</p>
+<ol style="list-style-type: decimal">
+<li>Würden eventuell 3 (oder sogar nur 2) Dimensionen reichen um den Datensatz zu beschreiben?</li>
+<li>Können wir aus den Merkmalen (<em>features</em>) die Klasse (<em>target</em>) erkennen und wie machen wir gegebenenfalls die Zuordnung?</li>
+</ol>
+</div>
+<div id="darstellung" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.2</span> Darstellung<a href="hauptkomponentenanalyse-ctd..html#darstellung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In höheren Dimensionen ist schon die graphische Darstellung der Daten ein Problem. Wir können aber alle möglichen 2er Kombinationen der Daten in 2D plots visualisieren.</p>
+<div class="figure">
+<img src="bilder/05-all-pairs.png" alt="Iris Datenset 2D plots" id="fig:05-iris-allpairs" style="width:65.0%" />
+<p class="caption">Iris Datenset 2D plots</p>
+</div>
+<p>Ein Blick auf die Diagonale zeigt schon, dass manche Merkmale besser geeignet als andere sind, um die Spezies zu unterscheiden, allerdings keine der Zweierkombinationen eine Eindeutige Diskriminierung erlaubt.</p>
+</div>
+<div id="korrelationen-und-die-kovarianzmatrix" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.3</span> Korrelationen und die Kovarianzmatrix<a href="hauptkomponentenanalyse-ctd..html#korrelationen-und-die-kovarianzmatrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Als nächstes suchen wir nach Korrelationen in den Daten in dem wir für alle Merkmalpaare die Korrelationen ausrechnen. Dafür berechnen wir die sogenannte <em>Kovarianzmatrix</em>
+<span class="math display">\[\begin{equation*}
+\operatorname{Cov}(\mathbf X) = \begin{bmatrix}
+\rho_{{\mathbf{x} _ i \mathbf{x} _ j}}
+\end{bmatrix}_{i,j=1,\dots n} \in \mathbb R^{n\times n}
+\end{equation*}\]</span>
+wobei <span class="math inline">\(n\)</span> die Dimension der Daten ist und wobei
+<span class="math display">\[\begin{equation*}
+s_{{\mathbf{x} _ i \mathbf{x} _ j}} = \frac{1}{N-1} \sum_{k=1}^N (x_{ik}-\overline{{\mathbf{x} _ i}})(x_{jk}-\overline{{\mathbf{x} _ j}} ).
+\end{equation*}\]</span>
+<!-- \begin{equation*}
+\rho_{\bxixj} = \frac{s_{\bxixj}}{\sqrt{s_{\bxi\,\bxi}}\sqrt{s_{\bxj\,\bxj}}}
+\end{equation*} -->
+die Kovarianzen sind, die wir auch schon in der ersten Vorlesung kennengelernt haben.</p>
+<p>Ist <span class="math inline">\(\mathbf X\in \mathbb R^{N\times n}\)</span> die Matrix mit den Datenvektoren <span class="math inline">\({\mathbf{x} _ i}\in \mathbb R^{n}\)</span> als Spalten <strong>und ist der Datensatz zentriert</strong> so erhalten wir die Kovarianzmatrix als
+<span class="math display">\[\begin{equation*}
+\operatorname{Cov}({\mathbf{X}}) = \frac{1}{N-1}{\mathbf{X}}^T {\mathbf{X}}
+\end{equation*}\]</span></p>
+<p>Wir bemerken, dass auf der Hauptdiagonalen die Varianzen in Koordinatenrichtung stehen und in den Zeilen oder Spalten ein Mass daf"ur, wie bspw. <span class="math inline">\({\mathbf{x} _ i}\)</span> und <span class="math inline">\({\mathbf{x} _ j}\)</span> korreliert sind. Große Zahlen bedeuten eine große Varianz oder eine starke Korrelation und umgekehrt. F"ur die Datenanalyse k"onnen wir <span class="math inline">\(\operatorname{Cov}({\mathbf{X}})\)</span> wie folgt heranziehen.</p>
+</div>
+<div id="hauptachsentransformation" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.4</span> Hauptachsentransformation<a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wie im vorherigen Kapitel hergeleitet, bedeutet ein Koordinatenwechsel die Multiplikation der Datenmatrix <span class="math inline">\({\mathbf{X}}\in \mathbb R^{N\times n}\)</span> mit einer orthogonalen
+Matrix <span class="math inline">\(V\in \mathbb R^{n\times n}\)</span>:
+<span class="math display">\[\begin{equation*}
+\tilde {\mathbf{X}}= {\mathbf{X}}V,
+\end{equation*}\]</span>
+wobei <span class="math inline">\(\tilde {\mathbf{X}}\)</span> die Daten in den neuen Koordinaten sind (die Basisvektoren sind dann die Zeilenvektoren von <span class="math inline">\(V\)</span>). Wir wollen nun eine Basis finden, in der</p>
+<ul>
+<li><span class="math inline">\(\operatorname{Cov}(X)\)</span> eine Diagonalmatrix ist — damit wären alle Richtungen in den Daten <em>unkorreliert</em> und könnten <em>unabhängig</em> voneinander betrachtet werden<a href="hauptkomponentenanalyse-ctd..html#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> – und in der</li>
+<li>die neuen Varianzen nach Größe geordnet sind gleichzeitig die verfügbare Varianz maximal in wenigen Richtungen konzentrieren.</li>
+</ul>
+<p>Nachden den Überlegungen im vorherigen Kapitel ist die erste Hauptrichtung durch den ersten rechten Singulärvektor <span class="math inline">\(v_1\in \mathbb R^{n}\)</span> der (<em>ökonomischen</em>) Singulärwertzerlegung
+<span class="math display">\[\begin{equation*}
+{\mathbf{X}}= U\Sigma V^* = 
+\begin{bmatrix}
+u_1 &amp; u_2 &amp; \dots &amp; u_n
+\end{bmatrix}
+\begin{bmatrix}
+\sigma_1 \\ &amp;\sigma_2 \\ &amp;&amp;\ddots \\ &amp;&amp;&amp;\sigma_n
+\end{bmatrix}
+\begin{bmatrix}
+v_1^* \\ v_2 ^* \\ \vdots \\ v_n^*
+\end{bmatrix}
+\end{equation*}\]</span>
+von <span class="math inline">\(\mathbf X\in \mathbb R^{N\times n}\)</span> gegeben. Die zugehörigen Koeffizenten berechnen wir mittels
+<span class="math display">\[\begin{equation*}
+\tilde {\mathbf{X}}= {\mathbf{X}}v_1.
+\end{equation*}\]</span></p>
+</div>
+<div id="rekonstruktion" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.5</span> Rekonstruktion<a href="hauptkomponentenanalyse-ctd..html#rekonstruktion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Um zu plausibilisieren, dass die weiteren Hauptachsen durch die weiteren (rechten) Singulärvektoren gegeben sind, betrachten wir erst die <em>Rekonstruktion</em>
+also die Darstellung im Ausgangskoordinatensystem (mit den messbaren oder interpretierbaren Features) die durch
+<span class="math display">\[\begin{equation*}
+\tilde {\tilde {\mathbf{X}}} = {\mathbf{X}}v_1v_1^T
+\end{equation*}\]</span>
+gegeben ist.
+Die letzte Formel wird vielleicht klarer, wenn Jan sich überlegt, dass für einen Datenpunkt <span class="math inline">\({\mathbf{X}}_j=\begin{bmatrix} x_{1j} &amp;x_{2j} &amp; \dots&amp; x_{nj}\end{bmatrix}\)</span> (also die <span class="math inline">\(j\)</span>-te Zeile von <span class="math inline">\({\mathbf{X}}\)</span>), der Koeffizient für <span class="math inline">\(v_1\)</span> gegeben ist durch <span class="math inline">\(\alpha_j=v_1^T{\mathbf{X}}_j^T\)</span> und die Darstellung im Vektorraum durch
+<span class="math display">\[\begin{equation*}
+\tilde{\tilde{ {\mathbf{X}}}}_j=(\alpha_j v_1)^T = \alpha_j v_1^T = (v_1^T {\mathbf{X}}_j^T) v_1^T  = {\mathbf{X}}_j  v_1 v_1^T
+\end{equation*}\]</span>
+gegeben ist.</p>
+<p>Damit</p>
+</div>
+<div id="aufgaben-2" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.6</span> Aufgaben<a href="hauptkomponentenanalyse-ctd..html#aufgaben-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="covarianzen" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.6.1</span> Covarianzen<a href="hauptkomponentenanalyse-ctd..html#covarianzen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Erzeugen Sie für <code>N</code> aus <code>Nl = [10, 100, 1000]</code> zufällige Vektoren <code>x</code> und <code>y</code> der Länge <code>N</code> und berechnen Sie jeweils die Covarianzmatrix für den Datensatz <code>X = [x, x, x*y, y]</code>. Interpretieren sie die Ergebnisse.</p>
+</div>
+<div id="iris-datensatz-targets-plotten" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.6.2</span> Iris Datensatz – Targets Plotten<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-targets-plotten" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Laden Sie die <a href="bilder/iris-data.json">Iris Datensatz</a> (hier als <code>json</code> file bereitgestellt) und plotten sie <code>petal width</code> versus <code>sepal length</code> für die drei Spezies <code>setosa</code>, <code>versicolor</code>, <code>virginica</code> in drei separaten Grafiken.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1"><span class="im">import</span> json</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb8-5" title="5"></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;iris-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
+<a class="sourceLine" id="cb8-7" title="7">    datadict <span class="op">=</span> json.load(f)</a>
+<a class="sourceLine" id="cb8-8" title="8"></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="bu">print</span>(datadict.keys())</a>
+<a class="sourceLine" id="cb8-10" title="10"></a>
+<a class="sourceLine" id="cb8-11" title="11">data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</a>
+<a class="sourceLine" id="cb8-12" title="12">target <span class="op">=</span> np.array(datadict[<span class="st">&#39;target&#39;</span>])</a>
+<a class="sourceLine" id="cb8-13" title="13">feature_names <span class="op">=</span> datadict[<span class="st">&#39;feature_names&#39;</span>]</a>
+<a class="sourceLine" id="cb8-14" title="14">target_names <span class="op">=</span> datadict[<span class="st">&#39;target_names&#39;</span>]</a>
+<a class="sourceLine" id="cb8-15" title="15"></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="bu">print</span>(<span class="st">&#39;target names: &#39;</span>, target_names)</a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="bu">print</span>(<span class="st">&#39;feature names: &#39;</span>, feature_names)</a>
+<a class="sourceLine" id="cb8-18" title="18"></a>
+<a class="sourceLine" id="cb8-19" title="19">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb8-20" title="20"></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co"># # Ein Vektor der aus dem Target Vektor das target 0 raussucht</span></a>
+<a class="sourceLine" id="cb8-22" title="22">trgtidx_z <span class="op">=</span> (target <span class="op">==</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb8-23" title="23"><span class="co"># # Wird gleich benutzt um die Daten nach diesem target zu filtern</span></a>
+<a class="sourceLine" id="cb8-24" title="24"></a>
+<a class="sourceLine" id="cb8-25" title="25">target_z_daten <span class="op">=</span> data[trgtidx_z, :]</a>
+<a class="sourceLine" id="cb8-26" title="26"></a>
+<a class="sourceLine" id="cb8-27" title="27">axs[<span class="dv">0</span>].plot(target_z_daten[:, <span class="dv">3</span>], target_z_daten[:, <span class="dv">0</span>],</a>
+<a class="sourceLine" id="cb8-28" title="28">            <span class="st">&#39;o&#39;</span>, label<span class="op">=</span>target_names[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb8-29" title="29"></a>
+<a class="sourceLine" id="cb8-30" title="30">axs[<span class="dv">0</span>].legend()</a>
+<a class="sourceLine" id="cb8-31" title="31">axs[<span class="dv">0</span>].set_xlabel(feature_names[<span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb8-32" title="32">axs[<span class="dv">0</span>].set_ylabel(feature_names[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb8-33" title="33">axs[<span class="dv">0</span>].set_title(target_names[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb8-34" title="34"></a>
+<a class="sourceLine" id="cb8-35" title="35">plt.tight_layout()</a>
+<a class="sourceLine" id="cb8-36" title="36">plt.show()</a></code></pre></div>
+<p>Hier wurden die <code>python</code> Datentypen</p>
+<ul>
+<li><em>list</em> – z.B. <code>datenpunkte = [1, 2, 3]</code></li>
+<li><em>array</em> – z.B. <code>datenmatrix = np.array(datenpunkte)</code></li>
+<li><em>dictionary</em> – z.B. <code>datadict = {'data': datenpunkte}</code></li>
+</ul>
+<p>verwendet, die alle für verschiedene Zwecke gerne benutzt werden. Z.B.</p>
+<ul>
+<li>Liste – als eine Sammlung von (möglicherweise total unterschiedlichen) Objekten, über die iteriert werden kann und die einfach zu erweitern ist</li>
+<li><code>arrays</code> – Matrix/Vektor von Daten eines Typs, mit denen <em>gerechnet</em> werden kann</li>
+<li><code>dictionaries</code> – ein <em>Lookup table</em>. Objekte können über einen Namen addressiert werden. Ich nehme sie gerne um Daten mit ihrem Namen zum Beispiel als <code>json</code> file zu speichern.</li>
+</ul>
+</div>
+<div id="iris-datensatz-2d-plots" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.6.3</span> Iris Datensatz – 2D plots<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-2d-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Erzeugen sie Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-iris-allpairs"><strong>??</strong></a> zum Beispiel über ein <code>4x4</code> Feld von subplots</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" title="1">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">4</span>, ncols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</a></code></pre></div>
+<p>erzeugen, in das sie mittels</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1">axs[zeile, spalte].plot(xdaten, ydaten, <span class="st">&#39;o&#39;</span>)</a></code></pre></div>
+<p>die plots fuer die einzelnen targets “eintragen” koennen. Bitte die Achsen beschriften (die <code>legend</code> ist nicht unbedingt notwendig).</p>
+</div>
+<div id="kovarianzmatrix-t" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.6.4</span> Kovarianzmatrix (T)<a href="hauptkomponentenanalyse-ctd..html#kovarianzmatrix-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Zeigen sie, dass f"ur zentrierte Datens"atze <span class="math inline">\({\mathbf{X}}\in \mathbb R^{N\times n}\)</span> gilt, dass
+<span class="math display">\[\begin{equation*}
+\operatorname{Cov}(X) = \frac{1}{N-1}{\mathbf{X}}^T{\mathbf{X}}.
+\end{equation*}\]</span></p>
+</div>
+<div id="gesamtvarianz-t" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.6.5</span> Gesamtvarianz (T)<a href="hauptkomponentenanalyse-ctd..html#gesamtvarianz-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Zeigen sie, dass auch für <span class="math inline">\(n&gt;2\)</span> die Summe der Varianzen in orthogonalen Achsenrichtungen unabhängig von der Wahl des Koordinatensystems sind. (Vergleiche Kapitel 4.2 Koordinatenwechsel)</p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>wir dürfen aber nicht vergessen, dass Daten tüpischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den <em>features</em> gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens<a href="hauptkomponentenanalyse-ctd..html#fnref3" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>wir dürfen aber nicht vergessen, dass Daten tüpischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den <em>features</em> gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens<a href="hauptkomponentenanalyse-ctd..html#fnref3" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="hauptkomponentenanalyse.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["EMDS.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

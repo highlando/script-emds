@@ -3,7 +3,7 @@ thm:svd
 was-ist-data-science
 wie-passiert-die-datenanalyse
 was-sind-daten
-beispiele
+beispiele-01-tabellendaten
 tabellendaten-mietpreise
 covid-19-daten
 netflix-prize
@@ -34,3 +34,15 @@ hauptkomponentenanalyse
 variationskoeffizienten
 koordinatenwechsel
 maximierung-der-varianz-in-haupt-achsenrichtung
+hauptkomponentenanalyse-ctd.
+der-iris-datensatz
+darstellung
+korrelationen-und-die-kovarianzmatrix
+hauptachsentransformation
+rekonstruktion
+aufgaben-2
+covarianzen
+iris-datensatz-targets-plotten
+iris-datensatz-2d-plots
+kovarianzmatrix-t
+gesamtvarianz-t

@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="matrix-zerlegungen.html"/>
-
+<link rel="next" href="hauptkomponentenanalyse-ctd..html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -137,7 +137,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a><ul>
 <li class="chapter" data-level="1.1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#wie-passiert-die-datenanalyse"><i class="fa fa-check"></i><b>1.1</b> Wie passiert die Datenanalyse?</a></li>
 <li class="chapter" data-level="1.2" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#was-sind-daten"><i class="fa fa-check"></i><b>1.2</b> Was sind Daten?</a></li>
-<li class="chapter" data-level="1.3" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#beispiele"><i class="fa fa-check"></i><b>1.3</b> Beispiele</a></li>
+<li class="chapter" data-level="1.3" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#beispiele-01-tabellendaten"><i class="fa fa-check"></i><b>1.3</b> Beispiele {#01-tabellendaten}</a></li>
 <li class="chapter" data-level="1.4" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#python"><i class="fa fa-check"></i><b>1.4</b> Python</a></li>
 <li class="chapter" data-level="1.5" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#aufgaben"><i class="fa fa-check"></i><b>1.5</b> Aufgaben</a></li>
 </ul></li>
@@ -157,6 +157,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
 <li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#maximierung-der-varianz-in-haupt-achsenrichtung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
+<li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-iris-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der IRIS Datensatz</a></li>
+<li class="chapter" data-level="5.2" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#darstellung"><i class="fa fa-check"></i><b>5.2</b> Darstellung</a></li>
+<li class="chapter" data-level="5.3" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#korrelationen-und-die-kovarianzmatrix"><i class="fa fa-check"></i><b>5.3</b> Korrelationen und die Kovarianzmatrix</a></li>
+<li class="chapter" data-level="5.4" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation"><i class="fa fa-check"></i><b>5.4</b> Hauptachsentransformation</a></li>
+<li class="chapter" data-level="5.5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#rekonstruktion"><i class="fa fa-check"></i><b>5.5</b> Rekonstruktion</a></li>
+<li class="chapter" data-level="5.6" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.6</b> Aufgaben</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -316,7 +324,7 @@ s_1^2 = \frac{1}{N-1}\sum_{i=1}^n \alpha_{i1}^2
 maximal wird. Mit der Matrix <span class="math inline">\(\mathbf X\)</span> aller Daten
 <span class="math display">\[\begin{equation*}
 \mathbf X = \begin{bmatrix}
-x_1 &amp; y_1 \\ x_2 &amp; y_2 \\ \vdots &amp; \vdots \\ x_N &amp; x_N
+x_1 &amp; y_1 \\ x_2 &amp; y_2 \\ \vdots &amp; \vdots \\ x_N &amp; y_N
 \end{bmatrix} = 
 \begin{bmatrix}
 \mathbf x_1^T\\ \mathbf x_2^T  \\  \vdots \\ \mathbf x_N^T
@@ -375,7 +383,7 @@ als neue Koordinatenrichtungen mit
 <span class="math display">\[\begin{equation*}
 s_1^2 \approx 0.85, \quad s_2^2 \approx 0.04,
 \end{equation*}\]</span>
-was bereits eine deutliche Dominanz der <span class="math inline">\(v_1\)</span>-Richtung – genannt  zeigt.</p>
+was bereits eine deutliche Dominanz der <span class="math inline">\(v_1\)</span>-Richtung – genannt  – zeigt.</p>
 <p>Im Hinblick auf die nächste Vorlesung, in der wir Anwendungen und Eigenschaften der PCA untersuchen werden, noch ein Plot der Daten mit der <span class="math inline">\(v_1\)</span>-Richtung als Linie eingezeichnet.</p>
 <div class="figure">
 <img src="bilder/04-covid-cntrd-HA.png" alt="Fallzahlen von Sars-CoV-2 in Bayern im Oktober 2020 – zentriert/skaliert/Hauptachse" id="fig:cases-cntrd-HA" style="width:65.0%" />
@@ -385,20 +393,13 @@ was bereits eine deutliche Dominanz der <span class="math inline">\(v_1\)</span>
 
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
-</ol>
-</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="matrix-zerlegungen.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="matrix-zerlegungen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hauptkomponentenanalyse-ctd..html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

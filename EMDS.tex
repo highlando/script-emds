@@ -253,8 +253,8 @@ Außerdem können wir noch allgemeine Eigenschaften (Qualitätsmerkmale) von Dat
   geordnet (oder nicht zu ordnen)
 \end{itemize}
 
-\hypertarget{beispiele}{%
-\section{Beispiele}\label{beispiele}}
+\hypertarget{beispiele-01-tabellendaten}{%
+\section{Beispiele \{\#01-tabellendaten\}}\label{beispiele-01-tabellendaten}}
 
 \hypertarget{tabellendaten-mietpreise}{%
 \subsection{Tabellendaten -- Mietpreise}\label{tabellendaten-mietpreise}}
@@ -1418,7 +1418,7 @@ s_1^2 = \frac{1}{N-1}\sum_{i=1}^n \alpha_{i1}^2
 maximal wird. Mit der Matrix \(\mathbf X\) aller Daten
 \begin{equation*}
 \mathbf X = \begin{bmatrix}
-x_1 & y_1 \\ x_2 & y_2 \\ \vdots & \vdots \\ x_N & x_N
+x_1 & y_1 \\ x_2 & y_2 \\ \vdots & \vdots \\ x_N & y_N
 \end{bmatrix} = 
 \begin{bmatrix}
 \mathbf x_1^T\\ \mathbf x_2^T  \\  \vdots \\ \mathbf x_N^T
@@ -1478,7 +1478,7 @@ als neue Koordinatenrichtungen mit
 \begin{equation*}
 s_1^2 \approx 0.85, \quad s_2^2 \approx 0.04,
 \end{equation*}
-was bereits eine deutliche Dominanz der \(v_1\)-Richtung -- genannt \emph{Hauptachse} zeigt.
+was bereits eine deutliche Dominanz der \(v_1\)-Richtung -- genannt \emph{Hauptachse} -- zeigt.
 
 Im Hinblick auf die nächste Vorlesung, in der wir Anwendungen und Eigenschaften der PCA untersuchen werden, noch ein Plot der Daten mit der \(v_1\)-Richtung als Linie eingezeichnet.
 
@@ -1490,5 +1490,237 @@ Im Hinblick auf die nächste Vorlesung, in der wir Anwendungen und Eigenschaften
 2020 -- zentriert/skaliert/Hauptachse}\label{fig:cases-cntrd-HA}
 }
 \end{figure}
+
+\hypertarget{hauptkomponentenanalyse-ctd.}{%
+\chapter{Hauptkomponentenanalyse Ctd.}\label{hauptkomponentenanalyse-ctd.}}
+
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\bX}{{\mathbf{X}}}
+\newcommand{\bxi}{{\mathbf{x} _ i}}
+\newcommand{\bxj}{{\mathbf{x} _ j}}
+\newcommand{\bxixj}{{\mathbf{x} _ i \mathbf{x} _ j}}
+
+Im vorherigen Kapitel hatten wir einen zweidimensionalen Datensatz betrachtet und dafür die Richtung bestimmt, in der die Varianz maximal wird.
+Da wir außerdem ermittelt hatten, dass die Summe der Varianz unabhüngig vom Koordinatensystem ist (es muss nur ein orthogonales sein) bedeutete das gleichzeitig, dass die verbleibende Richtung die Richtung der minimalen Varianz war.
+
+Jetzt wollen wir einen Datensatz mit mehr Merkmalen betrachten und sehen, wie die algorithmische Herangehensweise zum Verständnis beiträgt.
+
+\hypertarget{der-iris-datensatz}{%
+\section{Der IRIS Datensatz}\label{der-iris-datensatz}}
+
+Die Grundlage ist der \href{https://en.wikipedia.org/wiki/Iris_flower_data_set}{\emph{Iris Datensatz}}, der ein gern genommene Grundlage für die Illustration der Datenanalyse ist. Die Daten wurden von einem Statistiker und Biologen erhoben und beinhalten 4 verschiedene Merkmale (engl. \emph{features}) von einer Stichprobe von insgesamt 150 Schwertlilien die 3 verschiedenen Klassen zugeordnet werden können oder sollen (Fachbegriff hier: \emph{targets}). Im Beispiel werden die Klassen mit \texttt{0,\ 1,\ 2} codiert und beschreiben die Unterarten \texttt{setosa}, \texttt{versicolor} und \texttt{virginica} der Schwertlilien. Die Merkmale sind gemessene Länge und Breite des Kelchblattes (hier \emph{sepal}) und des Kronblattes (hier \emph{petal}).
+
+Wir stellen uns 2-3 Fragen:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Würden eventuell 3 (oder sogar nur 2) Dimensionen reichen um den Datensatz zu beschreiben?
+\item
+  Können wir aus den Merkmalen (\emph{features}) die Klasse (\emph{target}) erkennen und wie machen wir gegebenenfalls die Zuordnung?
+\end{enumerate}
+
+\hypertarget{darstellung}{%
+\section{Darstellung}\label{darstellung}}
+
+In höheren Dimensionen ist schon die graphische Darstellung der Daten ein Problem. Wir können aber alle möglichen 2er Kombinationen der Daten in 2D plots visualisieren.
+
+\begin{figure}
+\hypertarget{fig:05-iris-allpairs}{%
+\centering
+\includegraphics[width=0.65\textwidth,height=\textheight]{bilder/05-all-pairs.png}
+\caption{Iris Datenset 2D plots}\label{fig:05-iris-allpairs}
+}
+\end{figure}
+
+Ein Blick auf die Diagonale zeigt schon, dass manche Merkmale besser geeignet als andere sind, um die Spezies zu unterscheiden, allerdings keine der Zweierkombinationen eine Eindeutige Diskriminierung erlaubt.
+
+\hypertarget{korrelationen-und-die-kovarianzmatrix}{%
+\section{Korrelationen und die Kovarianzmatrix}\label{korrelationen-und-die-kovarianzmatrix}}
+
+Als nächstes suchen wir nach Korrelationen in den Daten in dem wir für alle Merkmalpaare die Korrelationen ausrechnen. Dafür berechnen wir die sogenannte \emph{Kovarianzmatrix}
+\begin{equation*}
+\operatorname{Cov}(\mathbf X) = \begin{bmatrix}
+\rho_{{\mathbf{x} _ i \mathbf{x} _ j}}
+\end{bmatrix}_{i,j=1,\dots n} \in \mathbb R^{n\times n}
+\end{equation*}
+wobei \(n\) die Dimension der Daten ist und wobei
+\begin{equation*}
+s_{{\mathbf{x} _ i \mathbf{x} _ j}} = \frac{1}{N-1} \sum_{k=1}^N (x_{ik}-\overline{{\mathbf{x} _ i}})(x_{jk}-\overline{{\mathbf{x} _ j}} ).
+\end{equation*}
+die Kovarianzen sind, die wir auch schon in der ersten Vorlesung kennengelernt haben.
+
+Ist \(\mathbf X\in \mathbb R^{N\times n}\) die Matrix mit den Datenvektoren \({\mathbf{x} _ i}\in \mathbb R^{n}\) als Spalten \textbf{und ist der Datensatz zentriert} so erhalten wir die Kovarianzmatrix als
+\begin{equation*}
+\operatorname{Cov}({\mathbf{X}}) = \frac{1}{N-1}{\mathbf{X}}^T {\mathbf{X}}
+\end{equation*}
+
+Wir bemerken, dass auf der Hauptdiagonalen die Varianzen in Koordinatenrichtung stehen und in den Zeilen oder Spalten ein Mass daf"ur, wie bspw. \({\mathbf{x} _ i}\) und \({\mathbf{x} _ j}\) korreliert sind. Große Zahlen bedeuten eine große Varianz oder eine starke Korrelation und umgekehrt. F"ur die Datenanalyse k"onnen wir \(\operatorname{Cov}({\mathbf{X}})\) wie folgt heranziehen.
+
+\hypertarget{hauptachsentransformation}{%
+\section{Hauptachsentransformation}\label{hauptachsentransformation}}
+
+Wie im vorherigen Kapitel hergeleitet, bedeutet ein Koordinatenwechsel die Multiplikation der Datenmatrix \({\mathbf{X}}\in \mathbb R^{N\times n}\) mit einer orthogonalen
+Matrix \(V\in \mathbb R^{n\times n}\):
+\begin{equation*}
+\tilde {\mathbf{X}}= {\mathbf{X}}V,
+\end{equation*}
+wobei \(\tilde {\mathbf{X}}\) die Daten in den neuen Koordinaten sind (die Basisvektoren sind dann die Zeilenvektoren von \(V\)). Wir wollen nun eine Basis finden, in der
+
+\begin{itemize}
+\tightlist
+\item
+  \(\operatorname{Cov}(X)\) eine Diagonalmatrix ist --- damit wären alle Richtungen in den Daten \emph{unkorreliert} und könnten \emph{unabhängig} voneinander betrachtet werden\footnote{wir dürfen aber nicht vergessen, dass Daten tüpischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den \emph{features} gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens} -- und in der
+\item
+  die neuen Varianzen nach Größe geordnet sind gleichzeitig die verfügbare Varianz maximal in wenigen Richtungen konzentrieren.
+\end{itemize}
+
+Nachden den Überlegungen im vorherigen Kapitel ist die erste Hauptrichtung durch den ersten rechten Singulärvektor \(v_1\in \mathbb R^{n}\) der (\emph{ökonomischen}) Singulärwertzerlegung
+\begin{equation*}
+{\mathbf{X}}= U\Sigma V^* = 
+\begin{bmatrix}
+u_1 & u_2 & \dots & u_n
+\end{bmatrix}
+\begin{bmatrix}
+\sigma_1 \\ &\sigma_2 \\ &&\ddots \\ &&&\sigma_n
+\end{bmatrix}
+\begin{bmatrix}
+v_1^* \\ v_2 ^* \\ \vdots \\ v_n^*
+\end{bmatrix}
+\end{equation*}
+von \(\mathbf X\in \mathbb R^{N\times n}\) gegeben. Die zugehörigen Koeffizenten berechnen wir mittels
+\begin{equation*}
+\tilde {\mathbf{X}}= {\mathbf{X}}v_1.
+\end{equation*}
+
+\hypertarget{rekonstruktion}{%
+\section{Rekonstruktion}\label{rekonstruktion}}
+
+Um zu plausibilisieren, dass die weiteren Hauptachsen durch die weiteren (rechten) Singulärvektoren gegeben sind, betrachten wir erst die \emph{Rekonstruktion}
+also die Darstellung im Ausgangskoordinatensystem (mit den messbaren oder interpretierbaren Features) die durch
+\begin{equation*}
+\tilde {\tilde {\mathbf{X}}} = {\mathbf{X}}v_1v_1^T
+\end{equation*}
+gegeben ist.
+Die letzte Formel wird vielleicht klarer, wenn Jan sich überlegt, dass für einen Datenpunkt \({\mathbf{X}}_j=\begin{bmatrix} x_{1j} &x_{2j} & \dots& x_{nj}\end{bmatrix}\) (also die \(j\)-te Zeile von \({\mathbf{X}}\)), der Koeffizient für \(v_1\) gegeben ist durch \(\alpha_j=v_1^T{\mathbf{X}}_j^T\) und die Darstellung im Vektorraum durch
+\begin{equation*}
+\tilde{\tilde{ {\mathbf{X}}}}_j=(\alpha_j v_1)^T = \alpha_j v_1^T = (v_1^T {\mathbf{X}}_j^T) v_1^T  = {\mathbf{X}}_j  v_1 v_1^T
+\end{equation*}
+gegeben ist.
+
+Damit
+
+\hypertarget{aufgaben-2}{%
+\section{Aufgaben}\label{aufgaben-2}}
+
+\hypertarget{covarianzen}{%
+\subsection{Covarianzen}\label{covarianzen}}
+
+Erzeugen Sie für \texttt{N} aus \texttt{Nl\ =\ {[}10,\ 100,\ 1000{]}} zufällige Vektoren \texttt{x} und \texttt{y} der Länge \texttt{N} und berechnen Sie jeweils die Covarianzmatrix für den Datensatz \texttt{X\ =\ {[}x,\ x,\ x*y,\ y{]}}. Interpretieren sie die Ergebnisse.
+
+\hypertarget{iris-datensatz-targets-plotten}{%
+\subsection{Iris Datensatz -- Targets Plotten}\label{iris-datensatz-targets-plotten}}
+
+Laden Sie die \href{bilder/iris-data.json}{Iris Datensatz} (hier als \texttt{json} file bereitgestellt) und plotten sie \texttt{petal\ width} versus \texttt{sepal\ length} für die drei Spezies \texttt{setosa}, \texttt{versicolor}, \texttt{virginica} in drei separaten Grafiken.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ json}
+
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'iris-data.json'}\NormalTok{, }\StringTok{'r'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
+\NormalTok{    datadict }\OperatorTok{=}\NormalTok{ json.load(f)}
+
+\BuiltInTok{print}\NormalTok{(datadict.keys())}
+
+\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'data'}\NormalTok{])}
+\NormalTok{target }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'target'}\NormalTok{])}
+\NormalTok{feature_names }\OperatorTok{=}\NormalTok{ datadict[}\StringTok{'feature_names'}\NormalTok{]}
+\NormalTok{target_names }\OperatorTok{=}\NormalTok{ datadict[}\StringTok{'target_names'}\NormalTok{]}
+
+\BuiltInTok{print}\NormalTok{(}\StringTok{'target names: '}\NormalTok{, target_names)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{'feature names: '}\NormalTok{, feature_names)}
+
+\NormalTok{fig, axs }\OperatorTok{=}\NormalTok{ plt.subplots(nrows}\OperatorTok{=}\DecValTok{1}\NormalTok{, ncols}\OperatorTok{=}\DecValTok{3}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+
+\CommentTok{# # Ein Vektor der aus dem Target Vektor das target 0 raussucht}
+\NormalTok{trgtidx_z }\OperatorTok{=}\NormalTok{ (target }\OperatorTok{==} \DecValTok{0}\NormalTok{)}
+\CommentTok{# # Wird gleich benutzt um die Daten nach diesem target zu filtern}
+
+\NormalTok{target_z_daten }\OperatorTok{=}\NormalTok{ data[trgtidx_z, :]}
+
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].plot(target_z_daten[:, }\DecValTok{3}\NormalTok{], target_z_daten[:, }\DecValTok{0}\NormalTok{],}
+            \StringTok{'o'}\NormalTok{, label}\OperatorTok{=}\NormalTok{target_names[}\DecValTok{0}\NormalTok{])}
+
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].legend()}
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].set_xlabel(feature_names[}\DecValTok{3}\NormalTok{])}
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].set_ylabel(feature_names[}\DecValTok{0}\NormalTok{])}
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].set_title(target_names[}\DecValTok{0}\NormalTok{])}
+
+\NormalTok{plt.tight_layout()}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+Hier wurden die \texttt{python} Datentypen
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{list} -- z.B. \texttt{datenpunkte\ =\ {[}1,\ 2,\ 3{]}}
+\item
+  \emph{array} -- z.B. \texttt{datenmatrix\ =\ np.array(datenpunkte)}
+\item
+  \emph{dictionary} -- z.B. \texttt{datadict\ =\ \{\textquotesingle{}data\textquotesingle{}:\ datenpunkte\}}
+\end{itemize}
+
+verwendet, die alle für verschiedene Zwecke gerne benutzt werden. Z.B.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste -- als eine Sammlung von (möglicherweise total unterschiedlichen) Objekten, über die iteriert werden kann und die einfach zu erweitern ist
+\item
+  \texttt{arrays} -- Matrix/Vektor von Daten eines Typs, mit denen \emph{gerechnet} werden kann
+\item
+  \texttt{dictionaries} -- ein \emph{Lookup table}. Objekte können über einen Namen addressiert werden. Ich nehme sie gerne um Daten mit ihrem Namen zum Beispiel als \texttt{json} file zu speichern.
+\end{itemize}
+
+\hypertarget{iris-datensatz-2d-plots}{%
+\subsection{Iris Datensatz -- 2D plots}\label{iris-datensatz-2d-plots}}
+
+Erzeugen sie Abbildung \ref{fig:05-iris-allpairs} zum Beispiel über ein \texttt{4x4} Feld von subplots
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, axs }\OperatorTok{=}\NormalTok{ plt.subplots(nrows}\OperatorTok{=}\DecValTok{4}\NormalTok{, ncols}\OperatorTok{=}\DecValTok{4}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{8}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+erzeugen, in das sie mittels
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{axs[zeile, spalte].plot(xdaten, ydaten, }\StringTok{'o'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+die plots fuer die einzelnen targets ``eintragen'' koennen. Bitte die Achsen beschriften (die \texttt{legend} ist nicht unbedingt notwendig).
+
+\hypertarget{kovarianzmatrix-t}{%
+\subsection{Kovarianzmatrix (T)}\label{kovarianzmatrix-t}}
+
+Zeigen sie, dass f"ur zentrierte Datens"atze \({\mathbf{X}}\in \mathbb R^{N\times n}\) gilt, dass
+\begin{equation*}
+\operatorname{Cov}(X) = \frac{1}{N-1}{\mathbf{X}}^T{\mathbf{X}}.
+\end{equation*}
+
+\hypertarget{gesamtvarianz-t}{%
+\subsection{Gesamtvarianz (T)}\label{gesamtvarianz-t}}
+
+Zeigen sie, dass auch für \(n>2\) die Summe der Varianzen in orthogonalen Achsenrichtungen unabhängig von der Wahl des Koordinatensystems sind. (Vergleiche Kapitel 4.2 Koordinatenwechsel)
 
 \end{document}

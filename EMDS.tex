@@ -1556,7 +1556,7 @@ Ist \(\mathbf X\in \mathbb R^{N\times n}\) die Matrix mit den Datenvektoren \({\
 \operatorname{Cov}({\mathbf{X}}) = \frac{1}{N-1}{\mathbf{X}}^T {\mathbf{X}}
 \end{equation*}
 
-Wir bemerken, dass auf der Hauptdiagonalen die Varianzen in Koordinatenrichtung stehen und in den Zeilen oder Spalten ein Mass daf"ur, wie bspw. \({\mathbf{x} _ i}\) und \({\mathbf{x} _ j}\) korreliert sind. Große Zahlen bedeuten eine große Varianz oder eine starke Korrelation und umgekehrt. F"ur die Datenanalyse k"onnen wir \(\operatorname{Cov}({\mathbf{X}})\) wie folgt heranziehen.
+Wir bemerken, dass auf der Hauptdiagonalen die Varianzen in Koordinatenrichtung stehen und in den Zeilen oder Spalten ein Mass dafür, wie bspw. \({\mathbf{x} _ i}\) und \({\mathbf{x} _ j}\) korreliert sind. Große Zahlen bedeuten eine große Varianz oder eine starke Korrelation und umgekehrt. Für die Datenanalyse können wir \(\operatorname{Cov}({\mathbf{X}})\) wie folgt heranziehen:
 
 \hypertarget{hauptachsentransformation}{%
 \section{Hauptachsentransformation}\label{hauptachsentransformation}}
@@ -1571,9 +1571,9 @@ wobei \(\tilde {\mathbf{X}}\) die Daten in den neuen Koordinaten sind (die Basis
 \begin{itemize}
 \tightlist
 \item
-  \(\operatorname{Cov}(X)\) eine Diagonalmatrix ist --- damit wären alle Richtungen in den Daten \emph{unkorreliert} und könnten \emph{unabhängig} voneinander betrachtet werden\footnote{wir dürfen aber nicht vergessen, dass Daten tüpischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den \emph{features} gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens} -- und in der
+  \(\operatorname{Cov}({\mathbf{X}})\) eine Diagonalmatrix ist --- damit wären alle Richtungen in den Daten \emph{unkorreliert} und könnten \emph{unabhängig} voneinander betrachtet werden\footnote{wir dürfen aber nicht vergessen, dass Daten tüpischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den \emph{features} gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens} --
 \item
-  die neuen Varianzen nach Größe geordnet sind gleichzeitig die verfügbare Varianz maximal in wenigen Richtungen konzentrieren.
+  und in der die neuen Varianzen nach Größe geordnet sind gleichzeitig die verfügbare Varianz maximal in wenigen Richtungen konzentrieren.
 \end{itemize}
 
 Nachden den Überlegungen im vorherigen Kapitel ist die erste Hauptrichtung durch den ersten rechten Singulärvektor \(v_1\in \mathbb R^{n}\) der (\emph{ökonomischen}) Singulärwertzerlegung
@@ -1630,7 +1630,7 @@ wobei \(V_{k-1}\) die Matrix der \(k-1\) führenden Singulärvektoren ist und da
 \end{equation*}
 alle Informationen des Datensatzes in kleinerer Dimension parametrisiert.
 
-In der Praxis sind schon allein durch Messfehler exakte lineare Abhängigkeiten sowiedurch die näherungsweise Bestimmung auf dem Computer das Auftreten von \(\sigma_k =0\) quasi ausgeschlossen. Stattdessen werden Schwellwerte definiert, unterhalb derer die SVD abgeschnitten wird.
+In der Praxis sind schon allein durch Messfehler exakte lineare Abhängigkeiten sowie durch die näherungsweise Bestimmung auf dem Computer das Auftreten von \(\sigma_k =0\) quasi ausgeschlossen. Stattdessen werden Schwellwerte definiert, unterhalb derer die SVD abgeschnitten wird.
 
 Wie oben, werden dann die Daten \(\tilde {\mathbf{X}}={\mathbf{X}}V_{\hat k}\) in den (reduzierten) Koordinaten der Hauptachsen betrachtet sowie die Rekonstruktion \(\hat {\mathbf{X}}= {\mathbf{X}}V_{\hat k}V_{\hat k}^T\), wobei der \(V_{\hat k}\) die Matrix der \(\hat k\) führenden Singulärvektoren sind (mit Singulärwerten überhalb des Schwellwertes).
 
@@ -1695,13 +1695,50 @@ Als letztes plotten wir noch \(\hat {{\mathbf{X}}}\) für \(\hat k =2\). Das hei
 \hypertarget{aufgaben-2}{%
 \section{Aufgaben}\label{aufgaben-2}}
 
-\hypertarget{covarianzen}{%
-\subsection{Covarianzen}\label{covarianzen}}
+\hypertarget{kovarianzen-pt}{%
+\subsection{Kovarianzen (P+T)}\label{kovarianzen-pt}}
 
-Erzeugen Sie für \texttt{N} aus \texttt{Nl\ =\ {[}10,\ 100,\ 1000{]}} zufällige Vektoren \texttt{x} und \texttt{y} der Länge \texttt{N} und berechnen Sie jeweils die Covarianzmatrix für den Datensatz \texttt{X\ =\ {[}x,\ x,\ x*y,\ y{]}}. Interpretieren sie die Ergebnisse.
+Erzeugen Sie für \texttt{N} aus \texttt{Nl\ =\ {[}10,\ 1000,\ 100000{]}} zufällige Vektoren \texttt{x} und \texttt{y} der Länge \texttt{N} und berechnen Sie
+für den Datensatz \texttt{X\ =\ {[}x,\ x,\ x*y,\ y{]}}
+jeweils die Matrix der Korrelationskoeffizienten
+\begin{equation*}
+\rho _{i\;j} = \frac{s_{i\, j}}{s_i \cdot s_j}
+\end{equation*}
+wobei \(s_{i\,j}\) die Kovarianz der Daten \({\mathbf{x} _ i}\) und \({\mathbf{x} _ j}\) ist und \(s_{i}\) die Varianz von \({\mathbf{x} _ i}\). Interpretieren sie die Ergebnisse.
 
-\hypertarget{iris-datensatz-targets-plotten}{%
-\subsection{Iris Datensatz -- Targets Plotten}\label{iris-datensatz-targets-plotten}}
+\textbf{Hinweis}: Weil Zufälligkeit involviert ist, ist die Interpretation manchmal schwierig. Lassen sie das Programm öfter laufen und beobachten sie verschiedene Realisierungen der Stichproben.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\CommentTok{# N = 10}
+
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.random.randn(}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{y }\OperatorTok{=}\NormalTok{ np.random.randn(}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+
+\NormalTok{X }\OperatorTok{=}\NormalTok{ np.hstack([x, x, x}\OperatorTok{*}\NormalTok{y, y])}
+
+\NormalTok{Xcntrd }\OperatorTok{=}\NormalTok{ X }\OperatorTok{-}\NormalTok{ X.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\CommentTok{# zentrieren der Daten}
+
+\CommentTok{# Kovarianz Matrix ausrechnen}
+\NormalTok{covX }\OperatorTok{=} \DecValTok{1}\OperatorTok{/}\NormalTok{(}\DecValTok{10-1}\NormalTok{)}\OperatorTok{*}\NormalTok{Xcntrd.T }\OperatorTok{@}\NormalTok{ Xcntrd}
+
+\CommentTok{# Varianzen -- stehen auf der Diagonalen im Quadrat}
+\NormalTok{varvec }\OperatorTok{=}\NormalTok{ np.sqrt(np.diagonal(covX)).reshape(}\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\CommentTok{# Matrix mit den Kombinationen aller Varianzen}
+\NormalTok{varmat }\OperatorTok{=}\NormalTok{ varvec }\OperatorTok{@}\NormalTok{ varvec.T}
+
+\NormalTok{matcc }\OperatorTok{=}\NormalTok{ covX }\OperatorTok{*} \DecValTok{1}\OperatorTok{/}\NormalTok{varmat}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'N=}\SpecialCharTok{\{}\DecValTok{10}\SpecialCharTok{\}}\SpecialStringTok{ : Matrix of Correlation Coefficients='}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(matcc)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{iris-datensatz-targets-plotten-p}{%
+\subsection{Iris Datensatz -- Targets Plotten (P)}\label{iris-datensatz-targets-plotten-p}}
 
 Laden Sie die \href{bilder/iris-data.json}{Iris Datensatz} (hier als \texttt{json} file bereitgestellt) und plotten sie \texttt{petal\ width} versus \texttt{sepal\ length} für die drei Spezies \texttt{setosa}, \texttt{versicolor}, \texttt{virginica} in drei separaten Grafiken.
 
@@ -1770,8 +1807,8 @@ verwendet, die alle für verschiedene Zwecke gerne benutzt werden. Z.B.
   \texttt{dictionaries} -- ein \emph{Lookup table}. Objekte können über einen Namen addressiert werden. Ich nehme sie gerne um Daten mit ihrem Namen zum Beispiel als \texttt{json} file zu speichern.
 \end{itemize}
 
-\hypertarget{iris-datensatz-2d-plots}{%
-\subsection{Iris Datensatz -- 2D plots}\label{iris-datensatz-2d-plots}}
+\hypertarget{iris-datensatz-2d-plots-p}{%
+\subsection{Iris Datensatz -- 2D plots (P)}\label{iris-datensatz-2d-plots-p}}
 
 Erzeugen sie Abbildung \ref{fig:05-iris-allpairs} zum Beispiel über ein \texttt{4x4} Feld von subplots
 
@@ -1791,20 +1828,20 @@ erzeugen, in das sie mittels
 
 die plots fuer die einzelnen targets ``eintragen'' koennen. Bitte die Achsen beschriften (die \texttt{legend} ist nicht unbedingt notwendig).
 
-\hypertarget{kovarianz}{%
-\subsection{Kovarianz}\label{kovarianz}}
+\hypertarget{kovarianz-p}{%
+\subsection{Kovarianz (P)}\label{kovarianz-p}}
 
 Zentrieren Sie den Datensatz (zum Beispiel unter Verwendung der \texttt{numpy.mean} Funktion) und berechnen Sie die Kovarianzmatrix.
 
-\hypertarget{hauptachsentransformation-1}{%
-\subsection{Hauptachsentransformation}\label{hauptachsentransformation-1}}
+\hypertarget{hauptachsentransformation-p}{%
+\subsection{Hauptachsentransformation (P)}\label{hauptachsentransformation-p}}
 
-Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung.
+Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung \ref{fig:05-iris-allpairs-pcs}).
 
 \hypertarget{kovarianzmatrix-t}{%
 \subsection{Kovarianzmatrix (T)}\label{kovarianzmatrix-t}}
 
-Zeigen sie, dass f"ur zentrierte Datens"atze \({\mathbf{X}}\in \mathbb R^{N\times n}\) gilt, dass
+Zeigen sie, dass für zentrierte Datensätze \({\mathbf{X}}\in \mathbb R^{N\times n}\) gilt, dass
 \begin{equation*}
 \operatorname{Cov}(X) = \frac{1}{N-1}{\mathbf{X}}^T{\mathbf{X}}.
 \end{equation*}

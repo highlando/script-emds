@@ -232,7 +232,7 @@ die Kovarianzen sind, die wir auch schon in der ersten Vorlesung kennengelernt h
 <span class="math display">\[\begin{equation*}
 \operatorname{Cov}({\mathbf{X}}) = \frac{1}{N-1}{\mathbf{X}}^T {\mathbf{X}}
 \end{equation*}\]</span></p>
-<p>Wir bemerken, dass auf der Hauptdiagonalen die Varianzen in Koordinatenrichtung stehen und in den Zeilen oder Spalten ein Mass daf"ur, wie bspw. <span class="math inline">\({\mathbf{x} _ i}\)</span> und <span class="math inline">\({\mathbf{x} _ j}\)</span> korreliert sind. Große Zahlen bedeuten eine große Varianz oder eine starke Korrelation und umgekehrt. F"ur die Datenanalyse k"onnen wir <span class="math inline">\(\operatorname{Cov}({\mathbf{X}})\)</span> wie folgt heranziehen.</p>
+<p>Wir bemerken, dass auf der Hauptdiagonalen die Varianzen in Koordinatenrichtung stehen und in den Zeilen oder Spalten ein Mass dafür, wie bspw. <span class="math inline">\({\mathbf{x} _ i}\)</span> und <span class="math inline">\({\mathbf{x} _ j}\)</span> korreliert sind. Große Zahlen bedeuten eine große Varianz oder eine starke Korrelation und umgekehrt. Für die Datenanalyse können wir <span class="math inline">\(\operatorname{Cov}({\mathbf{X}})\)</span> wie folgt heranziehen:</p>
 </div>
 <div id="hauptachsentransformation" class="section level2 hasAnchor">
 <h2><span class="header-section-number">5.4</span> Hauptachsentransformation<a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -243,8 +243,8 @@ Matrix <span class="math inline">\(V\in \mathbb R^{n\times n}\)</span>:
 \end{equation*}\]</span>
 wobei <span class="math inline">\(\tilde {\mathbf{X}}\)</span> die Daten in den neuen Koordinaten sind (die Basisvektoren sind dann die Zeilenvektoren von <span class="math inline">\(V\)</span>). Wir wollen nun eine Basis finden, in der</p>
 <ul>
-<li><span class="math inline">\(\operatorname{Cov}(X)\)</span> eine Diagonalmatrix ist — damit wären alle Richtungen in den Daten <em>unkorreliert</em> und könnten <em>unabhängig</em> voneinander betrachtet werden<a href="hauptkomponentenanalyse-ctd..html#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> – und in der</li>
-<li>die neuen Varianzen nach Größe geordnet sind gleichzeitig die verfügbare Varianz maximal in wenigen Richtungen konzentrieren.</li>
+<li><span class="math inline">\(\operatorname{Cov}({\mathbf{X}})\)</span> eine Diagonalmatrix ist — damit wären alle Richtungen in den Daten <em>unkorreliert</em> und könnten <em>unabhängig</em> voneinander betrachtet werden<a href="hauptkomponentenanalyse-ctd..html#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> –</li>
+<li>und in der die neuen Varianzen nach Größe geordnet sind gleichzeitig die verfügbare Varianz maximal in wenigen Richtungen konzentrieren.</li>
 </ul>
 <p>Nachden den Überlegungen im vorherigen Kapitel ist die erste Hauptrichtung durch den ersten rechten Singulärvektor <span class="math inline">\(v_1\in \mathbb R^{n}\)</span> der (<em>ökonomischen</em>) Singulärwertzerlegung
 <span class="math display">\[\begin{equation*}
@@ -295,7 +295,7 @@ wobei <span class="math inline">\(V_{k-1}\)</span> die Matrix der <span class="m
 \tilde {\mathbf{X}}= {\mathbf{X}}V_{k-1}
 \end{equation*}\]</span>
 alle Informationen des Datensatzes in kleinerer Dimension parametrisiert.</p>
-<p>In der Praxis sind schon allein durch Messfehler exakte lineare Abhängigkeiten sowiedurch die näherungsweise Bestimmung auf dem Computer das Auftreten von <span class="math inline">\(\sigma_k =0\)</span> quasi ausgeschlossen. Stattdessen werden Schwellwerte definiert, unterhalb derer die SVD abgeschnitten wird.</p>
+<p>In der Praxis sind schon allein durch Messfehler exakte lineare Abhängigkeiten sowie durch die näherungsweise Bestimmung auf dem Computer das Auftreten von <span class="math inline">\(\sigma_k =0\)</span> quasi ausgeschlossen. Stattdessen werden Schwellwerte definiert, unterhalb derer die SVD abgeschnitten wird.</p>
 <p>Wie oben, werden dann die Daten <span class="math inline">\(\tilde {\mathbf{X}}={\mathbf{X}}V_{\hat k}\)</span> in den (reduzierten) Koordinaten der Hauptachsen betrachtet sowie die Rekonstruktion <span class="math inline">\(\hat {\mathbf{X}}= {\mathbf{X}}V_{\hat k}V_{\hat k}^T\)</span>, wobei der <span class="math inline">\(V_{\hat k}\)</span> die Matrix der <span class="math inline">\(\hat k\)</span> führenden Singulärvektoren sind (mit Singulärwerten überhalb des Schwellwertes).</p>
 </div>
 <div id="am-beispiel-der-iris-daten" class="section level2 hasAnchor">
@@ -330,49 +330,80 @@ alle Informationen des Datensatzes in kleinerer Dimension parametrisiert.</p>
 </div>
 <div id="aufgaben-2" class="section level2 hasAnchor">
 <h2><span class="header-section-number">5.8</span> Aufgaben<a href="hauptkomponentenanalyse-ctd..html#aufgaben-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="covarianzen" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.8.1</span> Covarianzen<a href="hauptkomponentenanalyse-ctd..html#covarianzen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Erzeugen Sie für <code>N</code> aus <code>Nl = [10, 100, 1000]</code> zufällige Vektoren <code>x</code> und <code>y</code> der Länge <code>N</code> und berechnen Sie jeweils die Covarianzmatrix für den Datensatz <code>X = [x, x, x*y, y]</code>. Interpretieren sie die Ergebnisse.</p>
-</div>
-<div id="iris-datensatz-targets-plotten" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.8.2</span> Iris Datensatz – Targets Plotten<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-targets-plotten" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Laden Sie die <a href="bilder/iris-data.json">Iris Datensatz</a> (hier als <code>json</code> file bereitgestellt) und plotten sie <code>petal width</code> versus <code>sepal length</code> für die drei Spezies <code>setosa</code>, <code>versicolor</code>, <code>virginica</code> in drei separaten Grafiken.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1"><span class="im">import</span> json</a>
+<div id="kovarianzen-pt" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.8.1</span> Kovarianzen (P+T)<a href="hauptkomponentenanalyse-ctd..html#kovarianzen-pt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Erzeugen Sie für <code>N</code> aus <code>Nl = [10, 1000, 100000]</code> zufällige Vektoren <code>x</code> und <code>y</code> der Länge <code>N</code> und berechnen Sie
+für den Datensatz <code>X = [x, x, x*y, y]</code>
+jeweils die Matrix der Korrelationskoeffizienten
+<span class="math display">\[\begin{equation*}
+\rho _{i\;j} = \frac{s_{i\, j}}{s_i \cdot s_j}
+\end{equation*}\]</span>
+wobei <span class="math inline">\(s_{i\,j}\)</span> die Kovarianz der Daten <span class="math inline">\({\mathbf{x} _ i}\)</span> und <span class="math inline">\({\mathbf{x} _ j}\)</span> ist und <span class="math inline">\(s_{i}\)</span> die Varianz von <span class="math inline">\({\mathbf{x} _ i}\)</span>. Interpretieren sie die Ergebnisse.</p>
+<p><strong>Hinweis</strong>: Weil Zufälligkeit involviert ist, ist die Interpretation manchmal schwierig. Lassen sie das Programm öfter laufen und beobachten sie verschiedene Realisierungen der Stichproben.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
 <a class="sourceLine" id="cb10-2" title="2"></a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb10-5" title="5"></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;iris-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
-<a class="sourceLine" id="cb10-7" title="7">    datadict <span class="op">=</span> json.load(f)</a>
-<a class="sourceLine" id="cb10-8" title="8"></a>
-<a class="sourceLine" id="cb10-9" title="9"><span class="bu">print</span>(datadict.keys())</a>
-<a class="sourceLine" id="cb10-10" title="10"></a>
-<a class="sourceLine" id="cb10-11" title="11">data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</a>
-<a class="sourceLine" id="cb10-12" title="12">target <span class="op">=</span> np.array(datadict[<span class="st">&#39;target&#39;</span>])</a>
-<a class="sourceLine" id="cb10-13" title="13">feature_names <span class="op">=</span> datadict[<span class="st">&#39;feature_names&#39;</span>]</a>
-<a class="sourceLine" id="cb10-14" title="14">target_names <span class="op">=</span> datadict[<span class="st">&#39;target_names&#39;</span>]</a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="co"># N = 10</span></a>
+<a class="sourceLine" id="cb10-4" title="4"></a>
+<a class="sourceLine" id="cb10-5" title="5">x <span class="op">=</span> np.random.randn(<span class="dv">10</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb10-6" title="6">y <span class="op">=</span> np.random.randn(<span class="dv">10</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb10-7" title="7"></a>
+<a class="sourceLine" id="cb10-8" title="8">X <span class="op">=</span> np.hstack([x, x, x<span class="op">*</span>y, y])</a>
+<a class="sourceLine" id="cb10-9" title="9"></a>
+<a class="sourceLine" id="cb10-10" title="10">Xcntrd <span class="op">=</span> X <span class="op">-</span> X.mean(axis<span class="op">=</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="co"># zentrieren der Daten</span></a>
+<a class="sourceLine" id="cb10-12" title="12"></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="co"># Kovarianz Matrix ausrechnen</span></a>
+<a class="sourceLine" id="cb10-14" title="14">covX <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">10-1</span>)<span class="op">*</span>Xcntrd.T <span class="op">@</span> Xcntrd</a>
 <a class="sourceLine" id="cb10-15" title="15"></a>
-<a class="sourceLine" id="cb10-16" title="16"><span class="bu">print</span>(<span class="st">&#39;target names: &#39;</span>, target_names)</a>
-<a class="sourceLine" id="cb10-17" title="17"><span class="bu">print</span>(<span class="st">&#39;feature names: &#39;</span>, feature_names)</a>
-<a class="sourceLine" id="cb10-18" title="18"></a>
-<a class="sourceLine" id="cb10-19" title="19">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="co"># Varianzen -- stehen auf der Diagonalen im Quadrat</span></a>
+<a class="sourceLine" id="cb10-17" title="17">varvec <span class="op">=</span> np.sqrt(np.diagonal(covX)).reshape(<span class="dv">4</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb10-18" title="18"><span class="co"># Matrix mit den Kombinationen aller Varianzen</span></a>
+<a class="sourceLine" id="cb10-19" title="19">varmat <span class="op">=</span> varvec <span class="op">@</span> varvec.T</a>
 <a class="sourceLine" id="cb10-20" title="20"></a>
-<a class="sourceLine" id="cb10-21" title="21"><span class="co"># # Ein Vektor der aus dem Target Vektor das target 0 raussucht</span></a>
-<a class="sourceLine" id="cb10-22" title="22">trgtidx_z <span class="op">=</span> (target <span class="op">==</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb10-23" title="23"><span class="co"># # Wird gleich benutzt um die Daten nach diesem target zu filtern</span></a>
-<a class="sourceLine" id="cb10-24" title="24"></a>
-<a class="sourceLine" id="cb10-25" title="25">target_z_daten <span class="op">=</span> data[trgtidx_z, :]</a>
-<a class="sourceLine" id="cb10-26" title="26"></a>
-<a class="sourceLine" id="cb10-27" title="27">axs[<span class="dv">0</span>].plot(target_z_daten[:, <span class="dv">3</span>], target_z_daten[:, <span class="dv">0</span>],</a>
-<a class="sourceLine" id="cb10-28" title="28">            <span class="st">&#39;o&#39;</span>, label<span class="op">=</span>target_names[<span class="dv">0</span>])</a>
-<a class="sourceLine" id="cb10-29" title="29"></a>
-<a class="sourceLine" id="cb10-30" title="30">axs[<span class="dv">0</span>].legend()</a>
-<a class="sourceLine" id="cb10-31" title="31">axs[<span class="dv">0</span>].set_xlabel(feature_names[<span class="dv">3</span>])</a>
-<a class="sourceLine" id="cb10-32" title="32">axs[<span class="dv">0</span>].set_ylabel(feature_names[<span class="dv">0</span>])</a>
-<a class="sourceLine" id="cb10-33" title="33">axs[<span class="dv">0</span>].set_title(target_names[<span class="dv">0</span>])</a>
-<a class="sourceLine" id="cb10-34" title="34"></a>
-<a class="sourceLine" id="cb10-35" title="35">plt.tight_layout()</a>
-<a class="sourceLine" id="cb10-36" title="36">plt.show()</a></code></pre></div>
+<a class="sourceLine" id="cb10-21" title="21">matcc <span class="op">=</span> covX <span class="op">*</span> <span class="dv">1</span><span class="op">/</span>varmat</a>
+<a class="sourceLine" id="cb10-22" title="22"></a>
+<a class="sourceLine" id="cb10-23" title="23"><span class="bu">print</span>(<span class="ss">f&#39;N=</span><span class="sc">{</span><span class="dv">10</span><span class="sc">}</span><span class="ss"> : Matrix of Correlation Coefficients=&#39;</span>)</a>
+<a class="sourceLine" id="cb10-24" title="24"><span class="bu">print</span>(matcc)</a></code></pre></div>
+</div>
+<div id="iris-datensatz-targets-plotten-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.8.2</span> Iris Datensatz – Targets Plotten (P)<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-targets-plotten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Laden Sie die <a href="bilder/iris-data.json">Iris Datensatz</a> (hier als <code>json</code> file bereitgestellt) und plotten sie <code>petal width</code> versus <code>sepal length</code> für die drei Spezies <code>setosa</code>, <code>versicolor</code>, <code>virginica</code> in drei separaten Grafiken.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" title="1"><span class="im">import</span> json</a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb11-5" title="5"></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;iris-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
+<a class="sourceLine" id="cb11-7" title="7">    datadict <span class="op">=</span> json.load(f)</a>
+<a class="sourceLine" id="cb11-8" title="8"></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="bu">print</span>(datadict.keys())</a>
+<a class="sourceLine" id="cb11-10" title="10"></a>
+<a class="sourceLine" id="cb11-11" title="11">data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</a>
+<a class="sourceLine" id="cb11-12" title="12">target <span class="op">=</span> np.array(datadict[<span class="st">&#39;target&#39;</span>])</a>
+<a class="sourceLine" id="cb11-13" title="13">feature_names <span class="op">=</span> datadict[<span class="st">&#39;feature_names&#39;</span>]</a>
+<a class="sourceLine" id="cb11-14" title="14">target_names <span class="op">=</span> datadict[<span class="st">&#39;target_names&#39;</span>]</a>
+<a class="sourceLine" id="cb11-15" title="15"></a>
+<a class="sourceLine" id="cb11-16" title="16"><span class="bu">print</span>(<span class="st">&#39;target names: &#39;</span>, target_names)</a>
+<a class="sourceLine" id="cb11-17" title="17"><span class="bu">print</span>(<span class="st">&#39;feature names: &#39;</span>, feature_names)</a>
+<a class="sourceLine" id="cb11-18" title="18"></a>
+<a class="sourceLine" id="cb11-19" title="19">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb11-20" title="20"></a>
+<a class="sourceLine" id="cb11-21" title="21"><span class="co"># # Ein Vektor der aus dem Target Vektor das target 0 raussucht</span></a>
+<a class="sourceLine" id="cb11-22" title="22">trgtidx_z <span class="op">=</span> (target <span class="op">==</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb11-23" title="23"><span class="co"># # Wird gleich benutzt um die Daten nach diesem target zu filtern</span></a>
+<a class="sourceLine" id="cb11-24" title="24"></a>
+<a class="sourceLine" id="cb11-25" title="25">target_z_daten <span class="op">=</span> data[trgtidx_z, :]</a>
+<a class="sourceLine" id="cb11-26" title="26"></a>
+<a class="sourceLine" id="cb11-27" title="27">axs[<span class="dv">0</span>].plot(target_z_daten[:, <span class="dv">3</span>], target_z_daten[:, <span class="dv">0</span>],</a>
+<a class="sourceLine" id="cb11-28" title="28">            <span class="st">&#39;o&#39;</span>, label<span class="op">=</span>target_names[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb11-29" title="29"></a>
+<a class="sourceLine" id="cb11-30" title="30">axs[<span class="dv">0</span>].legend()</a>
+<a class="sourceLine" id="cb11-31" title="31">axs[<span class="dv">0</span>].set_xlabel(feature_names[<span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb11-32" title="32">axs[<span class="dv">0</span>].set_ylabel(feature_names[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb11-33" title="33">axs[<span class="dv">0</span>].set_title(target_names[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb11-34" title="34"></a>
+<a class="sourceLine" id="cb11-35" title="35">plt.tight_layout()</a>
+<a class="sourceLine" id="cb11-36" title="36">plt.show()</a></code></pre></div>
 <p>Hier wurden die <code>python</code> Datentypen</p>
 <ul>
 <li><em>list</em> – z.B. <code>datenpunkte = [1, 2, 3]</code></li>
@@ -386,25 +417,25 @@ alle Informationen des Datensatzes in kleinerer Dimension parametrisiert.</p>
 <li><code>dictionaries</code> – ein <em>Lookup table</em>. Objekte können über einen Namen addressiert werden. Ich nehme sie gerne um Daten mit ihrem Namen zum Beispiel als <code>json</code> file zu speichern.</li>
 </ul>
 </div>
-<div id="iris-datensatz-2d-plots" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.8.3</span> Iris Datensatz – 2D plots<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-2d-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="iris-datensatz-2d-plots-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.8.3</span> Iris Datensatz – 2D plots (P)<a href="hauptkomponentenanalyse-ctd..html#iris-datensatz-2d-plots-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Erzeugen sie Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-iris-allpairs"><strong>??</strong></a> zum Beispiel über ein <code>4x4</code> Feld von subplots</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" title="1">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">4</span>, ncols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">4</span>, ncols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</a></code></pre></div>
 <p>erzeugen, in das sie mittels</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1">axs[zeile, spalte].plot(xdaten, ydaten, <span class="st">&#39;o&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" title="1">axs[zeile, spalte].plot(xdaten, ydaten, <span class="st">&#39;o&#39;</span>)</a></code></pre></div>
 <p>die plots fuer die einzelnen targets “eintragen” koennen. Bitte die Achsen beschriften (die <code>legend</code> ist nicht unbedingt notwendig).</p>
 </div>
-<div id="kovarianz" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.8.4</span> Kovarianz<a href="hauptkomponentenanalyse-ctd..html#kovarianz" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="kovarianz-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.8.4</span> Kovarianz (P)<a href="hauptkomponentenanalyse-ctd..html#kovarianz-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Zentrieren Sie den Datensatz (zum Beispiel unter Verwendung der <code>numpy.mean</code> Funktion) und berechnen Sie die Kovarianzmatrix.</p>
 </div>
-<div id="hauptachsentransformation-1" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.8.5</span> Hauptachsentransformation<a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung.</p>
+<div id="hauptachsentransformation-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.8.5</span> Hauptachsentransformation (P)<a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-iris-allpairs-pcs"><strong>??</strong></a>).</p>
 </div>
 <div id="kovarianzmatrix-t" class="section level3 hasAnchor">
 <h3><span class="header-section-number">5.8.6</span> Kovarianzmatrix (T)<a href="hauptkomponentenanalyse-ctd..html#kovarianzmatrix-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Zeigen sie, dass f"ur zentrierte Datens"atze <span class="math inline">\({\mathbf{X}}\in \mathbb R^{N\times n}\)</span> gilt, dass
+<p>Zeigen sie, dass für zentrierte Datensätze <span class="math inline">\({\mathbf{X}}\in \mathbb R^{N\times n}\)</span> gilt, dass
 <span class="math display">\[\begin{equation*}
 \operatorname{Cov}(X) = \frac{1}{N-1}{\mathbf{X}}^T{\mathbf{X}}.
 \end{equation*}\]</span></p>

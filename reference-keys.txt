@@ -43,10 +43,10 @@ rekonstruktion
 reduktion-der-daten
 am-beispiel-der-iris-daten
 aufgaben-2
-covarianzen
-iris-datensatz-targets-plotten
-iris-datensatz-2d-plots
-kovarianz
-hauptachsentransformation-1
+kovarianzen-pt
+iris-datensatz-targets-plotten-p
+iris-datensatz-2d-plots-p
+kovarianz-p
+hauptachsentransformation-p
 kovarianzmatrix-t
 gesamtvarianz-t

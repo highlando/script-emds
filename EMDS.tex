@@ -1505,10 +1505,11 @@ Da wir außerdem ermittelt hatten, dass die Summe der Varianz unabhüngig vom Ko
 
 Jetzt wollen wir einen Datensatz mit mehr Merkmalen betrachten und sehen, wie die algorithmische Herangehensweise zum Verständnis beiträgt.
 
-\hypertarget{der-iris-datensatz}{%
-\section{Der IRIS Datensatz}\label{der-iris-datensatz}}
+\hypertarget{der-penguins-datensatz}{%
+\section{Der PENGUINS Datensatz}\label{der-penguins-datensatz}}
 
-Die Grundlage ist der \href{https://en.wikipedia.org/wiki/Iris_flower_data_set}{\emph{Iris Datensatz}}, der ein gern genommene Grundlage für die Illustration der Datenanalyse ist. Die Daten wurden von einem Statistiker und Biologen erhoben und beinhalten 4 verschiedene Merkmale (engl. \emph{features}) von einer Stichprobe von insgesamt 150 Schwertlilien die 3 verschiedenen Klassen zugeordnet werden können oder sollen (Fachbegriff hier: \emph{targets}). Im Beispiel werden die Klassen mit \texttt{0,\ 1,\ 2} codiert und beschreiben die Unterarten \texttt{setosa}, \texttt{versicolor} und \texttt{virginica} der Schwertlilien. Die Merkmale sind gemessene Länge und Breite des Kelchblattes (hier \emph{sepal}) und des Kronblattes (hier \emph{petal}).
+Die Grundlage ist der \href{https://allisonhorst.github.io/palmerpenguins/}{\emph{Pinguin Datensatz}}, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von \href{https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php}{Kristen Gorman} erhoben und beinhalten 4 verschiedene Merkmale (engl. \emph{features}) von einer Stichprobe von insgesamt 344\footnote{allerdings mit 2 unvollsändigen Datenpunkten, die ich entfernt habe für unseere Beispiele}Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: \emph{targets}). Im Beispiel werden die Klassen mit \texttt{0,\ 1,\ 2} codiert und beschreiben die Unterarten \emph{Adele}, \emph{Gentoo} und \emph{Chinstrap} der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier \emph{bill}), die Länge der Flosse (\emph{flipper}) sowie das Köpergewicht \footnote{Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet}
+(\emph{body mass}).
 
 Wir stellen uns 2-3 Fragen:
 
@@ -1527,10 +1528,10 @@ Wir stellen uns 2-3 Fragen:
 In höheren Dimensionen ist schon die graphische Darstellung der Daten ein Problem. Wir können aber alle möglichen 2er Kombinationen der Daten in 2D plots visualisieren.
 
 \begin{figure}
-\hypertarget{fig:05-iris-allpairs}{%
+\hypertarget{fig:05-penguin-allpairs}{%
 \centering
 \includegraphics[width=0.75\textwidth,height=\textheight]{bilder/05-all-pairs.png}
-\caption{Iris Datenset 2D plots}\label{fig:05-iris-allpairs}
+\caption{Pinguin Datenset 2D plots}\label{fig:05-penguin-allpairs}
 }
 \end{figure}
 
@@ -1634,28 +1635,28 @@ In der Praxis sind schon allein durch Messfehler exakte lineare Abhängigkeiten 
 
 Wie oben, werden dann die Daten \(\tilde {\mathbf{X}}={\mathbf{X}}V_{\hat k}\) in den (reduzierten) Koordinaten der Hauptachsen betrachtet sowie die Rekonstruktion \(\hat {\mathbf{X}}= {\mathbf{X}}V_{\hat k}V_{\hat k}^T\), wobei der \(V_{\hat k}\) die Matrix der \(\hat k\) führenden Singulärvektoren sind (mit Singulärwerten überhalb des Schwellwertes).
 
-\hypertarget{am-beispiel-der-iris-daten}{%
-\section{Am Beispiel der Iris Daten}\label{am-beispiel-der-iris-daten}}
+\hypertarget{am-beispiel-der-pinguin-daten}{%
+\section{Am Beispiel der Pinguin Daten}\label{am-beispiel-der-pinguin-daten}}
 
 Wir stellen die Daten noch einmal zentriert dar:
 
 \begin{figure}
-\hypertarget{fig:05-iris-allpairs-cntrd}{%
+\hypertarget{fig:05-penguin-allpairs-cntrd}{%
 \centering
 \includegraphics[width=0.75\textwidth,height=\textheight]{bilder/05-all-pairs-cntrd.png}
-\caption{Iris Daten Zentriert}\label{fig:05-iris-allpairs-cntrd}
+\caption{Pinguin Daten Zentriert}\label{fig:05-penguin-allpairs-cntrd}
 }
 \end{figure}
 
-Für die Kovarianzmatrix der Iris Daten erhalten wir:
+Für die Kovarianzmatrix der Pinguin Daten erhalten wir:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{Covariance matrix: }
-\NormalTok{[[ }\FloatTok{0.6857} \FloatTok{-0.0424}  \FloatTok{1.2743}  \FloatTok{0.5163}\NormalTok{]}
-\NormalTok{ [}\OperatorTok{-}\FloatTok{0.0424}  \FloatTok{0.19}   \FloatTok{-0.3297} \FloatTok{-0.1216}\NormalTok{]}
-\NormalTok{ [ }\FloatTok{1.2743} \FloatTok{-0.3297}  \FloatTok{3.1163}  \FloatTok{1.2956}\NormalTok{]}
-\NormalTok{ [ }\FloatTok{0.5163} \FloatTok{-0.1216}  \FloatTok{1.2956}  \FloatTok{0.581}\NormalTok{ ]]}
+\NormalTok{[[ }\FloatTok{29.8071}  \FloatTok{-2.5342}  \FloatTok{50.3758}   \FloatTok{2.6056}\NormalTok{]}
+\NormalTok{ [ }\FloatTok{-2.5342}   \FloatTok{3.8998} \FloatTok{-16.213}   \FloatTok{-0.7474}\NormalTok{]}
+\NormalTok{ [ }\FloatTok{50.3758} \FloatTok{-16.213}  \FloatTok{197.7318}   \FloatTok{9.8244}\NormalTok{]}
+\NormalTok{ [  }\FloatTok{2.6056}  \FloatTok{-0.7474}   \FloatTok{9.8244}   \FloatTok{0.6431}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1666,29 +1667,29 @@ Für die Singulärwerte:
 \NormalTok{In: U, S, Vh }\OperatorTok{=}\NormalTok{ np.linalg.svd(data, full_matrices}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
 
 \NormalTok{In: }\BuiltInTok{print}\NormalTok{(S)}
-\NormalTok{Out: [}\FloatTok{25.1}     \FloatTok{6.0131}  \FloatTok{3.4137}  \FloatTok{1.8845}\NormalTok{]}
+\NormalTok{Out: [}\FloatTok{269.7858}  \FloatTok{74.1334}  \FloatTok{28.4183}   \FloatTok{7.2219}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
-Zwar ist hier kein Singulärwert nah an der Null, allerdings beträgt der Unterschied zwischen dem größten und dem kleinsten schon eine 10er Potenz, was auf eine starke Dominanz der ersten Hauptachsen hinweist.
+Zwar ist hier kein Singulärwert nah an der Null, allerdings beträgt der Unterschied zwischen dem größten und dem kleinsten schon eine gute 10er Potenz, was auf eine starke Dominanz der ersten Hauptachsen hinweist.
 
-In der Tat, plotten wir die Daten in den Koordinaten der Hauptachsen (also \(\tilde {\mathbf{X}}\)), zeigen Bilder der \(v_1\) oder \(v_2\)-Koordinaten klare Tendenzen in den Daten, während die Plots der übrigen Richtungen wie eine zufällige Punktwolke aussieht, vgl. Abbildung \ref{fig:05-iris-allpairs-pcs}.
+In der Tat, plotten wir die Daten in den Koordinaten der Hauptachsen (also \(\tilde {\mathbf{X}}\)), zeigen Bilder der \(v_1\) oder \(v_2\)-Koordinaten klare Tendenzen in den Daten, während die Plots der übrigen Richtungen wie eine zufällige Punktwolke aussieht, vgl. Abbildung \ref{fig:05-penguin-allpairs-pcs}.
 
 \begin{figure}
-\hypertarget{fig:05-iris-allpairs-pcs}{%
+\hypertarget{fig:05-penguin-allpairs-pcs}{%
 \centering
 \includegraphics[width=0.75\textwidth,height=\textheight]{bilder/05-all-pairs-pcs.png}
-\caption{Iris Datenset 2D plots in Hauptachsenkoordinaten}\label{fig:05-iris-allpairs-pcs}
+\caption{Pinguin Datenset 2D plots in Hauptachsenkoordinaten}\label{fig:05-penguin-allpairs-pcs}
 }
 \end{figure}
 
 Als letztes plotten wir noch \(\hat {{\mathbf{X}}}\) für \(\hat k =2\). Das heißt wir reduzieren die Daten auf die \(v_1\) und \(v_2\)-Richtungen und betrachten die Rekonstruktion. Im Plot sehen wir, dass in gewissen Teilen die Daten gut rekonstruiert werden. Allerdings, hat \(\hat{{\mathbf{X}}}\) nur Rang \(\operatorname{Rk} \hat {{\mathbf{X}}}=2\) (warum?), sodass in den Plots notwendigerweise direkte lineare Abhängigkeiten offenbar werden.
 
 \begin{figure}
-\hypertarget{fig:05-iris-allpairs-k2-rec}{%
+\hypertarget{fig:05-penguin-allpairs-k2-rec}{%
 \centering
 \includegraphics[width=0.75\textwidth,height=\textheight]{bilder/05-all-pairs-k2-rec.png}
-\caption{Iris Datenset -- rekonstruiert von \(\hat k =2\) Hauptachsenkoordinaten}\label{fig:05-iris-allpairs-k2-rec}
+\caption{Pinguin Datenset -- rekonstruiert von \(\hat k =2\) Hauptachsenkoordinaten}\label{fig:05-penguin-allpairs-k2-rec}
 }
 \end{figure}
 
@@ -1737,10 +1738,10 @@ wobei \(s_{i\,j}\) die Kovarianz der Daten \({\mathbf{x} _ i}\) und \({\mathbf{x
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{iris-datensatz-targets-plotten-p}{%
-\subsection{Iris Datensatz -- Targets Plotten (P)}\label{iris-datensatz-targets-plotten-p}}
+\hypertarget{pinguin-datensatz-targets-plotten-p}{%
+\subsection{Pinguin Datensatz -- Targets Plotten (P)}\label{pinguin-datensatz-targets-plotten-p}}
 
-Laden Sie die \href{bilder/iris-data.json}{Iris Datensatz} (hier als \texttt{json} file bereitgestellt) und plotten sie \texttt{petal\ width} versus \texttt{sepal\ length} für die drei Spezies \texttt{setosa}, \texttt{versicolor}, \texttt{virginica} in drei separaten Grafiken.
+Laden Sie die \href{bilder/penguin-data.json}{Pinguin Datensatz} (hier als \texttt{json} file bereitgestellt) und plotten sie \texttt{petal\ width} versus \texttt{sepal\ length} für die drei Spezies \texttt{setosa}, \texttt{versicolor}, \texttt{virginica} in drei separaten Grafiken.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1749,7 +1750,7 @@ Laden Sie die \href{bilder/iris-data.json}{Iris Datensatz} (hier als \texttt{jso
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
 
-\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'iris-data.json'}\NormalTok{, }\StringTok{'r'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'penguin-data.json'}\NormalTok{, }\StringTok{'r'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
 \NormalTok{    datadict }\OperatorTok{=}\NormalTok{ json.load(f)}
 
 \BuiltInTok{print}\NormalTok{(datadict.keys())}
@@ -1807,10 +1808,10 @@ verwendet, die alle für verschiedene Zwecke gerne benutzt werden. Z.B.
   \texttt{dictionaries} -- ein \emph{Lookup table}. Objekte können über einen Namen addressiert werden. Ich nehme sie gerne um Daten mit ihrem Namen zum Beispiel als \texttt{json} file zu speichern.
 \end{itemize}
 
-\hypertarget{iris-datensatz-2d-plots-p}{%
-\subsection{Iris Datensatz -- 2D plots (P)}\label{iris-datensatz-2d-plots-p}}
+\hypertarget{pinguin-datensatz-2d-plots-p}{%
+\subsection{Pinguin Datensatz -- 2D plots (P)}\label{pinguin-datensatz-2d-plots-p}}
 
-Erzeugen sie Abbildung \ref{fig:05-iris-allpairs} zum Beispiel über ein \texttt{4x4} Feld von subplots
+Erzeugen sie Abbildung \ref{fig:05-penguin-allpairs} zum Beispiel über ein \texttt{4x4} Feld von subplots
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1836,7 +1837,7 @@ Zentrieren Sie den Datensatz (zum Beispiel unter Verwendung der \texttt{numpy.me
 \hypertarget{hauptachsentransformation-p}{%
 \subsection{Hauptachsentransformation (P)}\label{hauptachsentransformation-p}}
 
-Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung \ref{fig:05-iris-allpairs-pcs}).
+Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung \ref{fig:05-penguin-allpairs-pcs}).
 
 \hypertarget{kovarianzmatrix-t}{%
 \subsection{Kovarianzmatrix (T)}\label{kovarianzmatrix-t}}

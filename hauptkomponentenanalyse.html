@@ -274,13 +274,13 @@ x_i \\ y_i
 \end{equation*}\]</span></p>
 <p>Damit, können wir jeden Datenpunkt <span class="math inline">\(\mathbf x_i=(x_i, y_i)\)</span> in den neuen Koordinaten <span class="math inline">\((\alpha_{i1}, \alpha_{i2})\)</span> ausdrücken.</p>
 <p>Zunächst halten wir fest, dass auch in den neuen Koordinaten die Daten zentriert sind. Es gilt nämlich, dass
-<span class="math display">\[\begin{equation*}
+<span class="math display">\[\begin{align*}
 \frac 1N \sum_{i=1}^N \alpha_{ji}=\frac 1N \sum_{i=1}^N b_j^T\mathbb x_i 
 =\frac 1N b_j^T \sum_{i=1}^N \begin{bmatrix} x_i \\ y_i \end{bmatrix}
-=\frac 1N b_j^T \begin{bmatrix} \sum_{i=1}^N x_i \\ \sum_{i=1}^N y_i \end{bmatrix}
-=b_j^T \begin{bmatrix} \frac 1N \sum_{i=1}^N x_i \\ \frac 1N \sum_{i=1}^N y_i \end{bmatrix}
+=&amp; \frac 1N b_j^T \begin{bmatrix} \sum_{i=1}^N x_i \\ \sum_{i=1}^N y_i \end{bmatrix}\\
+&amp;=b_j^T \begin{bmatrix} \frac 1N \sum_{i=1}^N x_i \\ \frac 1N \sum_{i=1}^N y_i \end{bmatrix}
 =b_j^T \begin{bmatrix} 0 \\ 0 \end{bmatrix} = 0,
-\end{equation*}\]</span>
+\end{align*}\]</span>
 für <span class="math inline">\(j=1,2\)</span>.</p>
 <p>Desweiteren gilt wegen der Orthogonalität von <span class="math inline">\(B=[b_1~b_2]\in \mathbb R^{2\times 2}\)</span>, dass
 <span class="math display">\[\begin{equation*}

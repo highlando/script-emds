@@ -1741,7 +1741,7 @@ wobei \(s_{i\,j}\) die Kovarianz der Daten \({\mathbf{x} _ i}\) und \({\mathbf{x
 \hypertarget{pinguin-datensatz-targets-plotten-p}{%
 \subsection{Pinguin Datensatz -- Targets Plotten (P)}\label{pinguin-datensatz-targets-plotten-p}}
 
-Laden Sie die \href{bilder/penguin-data.json}{Pinguin Datensatz} (hier als \texttt{json} file bereitgestellt) und plotten sie \texttt{petal\ width} versus \texttt{sepal\ length} für die drei Spezies \texttt{setosa}, \texttt{versicolor}, \texttt{virginica} in drei separaten Grafiken.
+Laden Sie die \href{bilder/penguin-data.json}{Pinguin Datensatz} (hier als \texttt{json} file bereitgestellt) und plotten sie \texttt{bill\_length} versus \texttt{flipper\_length} für die drei Spezies \texttt{Adelie}, \texttt{Gentoo}, \texttt{Chinstrap} in drei separaten Grafiken.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1771,7 +1771,7 @@ Laden Sie die \href{bilder/penguin-data.json}{Pinguin Datensatz} (hier als \text
 
 \NormalTok{target_z_daten }\OperatorTok{=}\NormalTok{ data[trgtidx_z, :]}
 
-\NormalTok{axs[}\DecValTok{0}\NormalTok{].plot(target_z_daten[:, }\DecValTok{3}\NormalTok{], target_z_daten[:, }\DecValTok{0}\NormalTok{],}
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].plot(target_z_daten[:, }\DecValTok{2}\NormalTok{], target_z_daten[:, }\DecValTok{0}\NormalTok{],}
             \StringTok{'o'}\NormalTok{, label}\OperatorTok{=}\NormalTok{target_names[}\DecValTok{0}\NormalTok{])}
 
 \NormalTok{axs[}\DecValTok{0}\NormalTok{].legend()}

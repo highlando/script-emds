@@ -368,7 +368,7 @@ wobei <span class="math inline">\(s_{i\,j}\)</span> die Kovarianz der Daten <spa
 </div>
 <div id="pinguin-datensatz-targets-plotten-p" class="section level3 hasAnchor">
 <h3><span class="header-section-number">5.8.2</span> Pinguin Datensatz – Targets Plotten (P)<a href="hauptkomponentenanalyse-ctd..html#pinguin-datensatz-targets-plotten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Laden Sie die <a href="bilder/penguin-data.json">Pinguin Datensatz</a> (hier als <code>json</code> file bereitgestellt) und plotten sie <code>petal width</code> versus <code>sepal length</code> für die drei Spezies <code>setosa</code>, <code>versicolor</code>, <code>virginica</code> in drei separaten Grafiken.</p>
+<p>Laden Sie die <a href="bilder/penguin-data.json">Pinguin Datensatz</a> (hier als <code>json</code> file bereitgestellt) und plotten sie <code>bill_length</code> versus <code>flipper_length</code> für die drei Spezies <code>Adelie</code>, <code>Gentoo</code>, <code>Chinstrap</code> in drei separaten Grafiken.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" title="1"><span class="im">import</span> json</a>
 <a class="sourceLine" id="cb11-2" title="2"></a>
 <a class="sourceLine" id="cb11-3" title="3"><span class="im">import</span> numpy <span class="im">as</span> np</a>
@@ -395,7 +395,7 @@ wobei <span class="math inline">\(s_{i\,j}\)</span> die Kovarianz der Daten <spa
 <a class="sourceLine" id="cb11-24" title="24"></a>
 <a class="sourceLine" id="cb11-25" title="25">target_z_daten <span class="op">=</span> data[trgtidx_z, :]</a>
 <a class="sourceLine" id="cb11-26" title="26"></a>
-<a class="sourceLine" id="cb11-27" title="27">axs[<span class="dv">0</span>].plot(target_z_daten[:, <span class="dv">3</span>], target_z_daten[:, <span class="dv">0</span>],</a>
+<a class="sourceLine" id="cb11-27" title="27">axs[<span class="dv">0</span>].plot(target_z_daten[:, <span class="dv">2</span>], target_z_daten[:, <span class="dv">0</span>],</a>
 <a class="sourceLine" id="cb11-28" title="28">            <span class="st">&#39;o&#39;</span>, label<span class="op">=</span>target_names[<span class="dv">0</span>])</a>
 <a class="sourceLine" id="cb11-29" title="29"></a>
 <a class="sourceLine" id="cb11-30" title="30">axs[<span class="dv">0</span>].legend()</a>

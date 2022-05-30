@@ -253,11 +253,11 @@ Außerdem können wir noch allgemeine Eigenschaften (Qualitätsmerkmale) von Dat
   geordnet (oder nicht zu ordnen)
 \end{itemize}
 
-\hypertarget{beispiele-01-tabellendaten}{%
-\section{Beispiele \{\#01-tabellendaten\}}\label{beispiele-01-tabellendaten}}
+\hypertarget{beispiele}{%
+\section{Beispiele}\label{beispiele}}
 
-\hypertarget{tabellendaten-mietpreise}{%
-\subsection{Tabellendaten -- Mietpreise}\label{tabellendaten-mietpreise}}
+\hypertarget{tabellendaten}{%
+\subsection{Tabellendaten -- Mietpreise}\label{tabellendaten}}
 
 \begin{figure}
 \centering
@@ -891,7 +891,7 @@ Allerdings, wie Sie als Übungsaufgabe nachweisen werden, löst dieser Ansatz ta
 Eine weitere Matrix Zerlegung, die eng mit der Lösung von Optimierungsproblemen oder überbestimmten Gleichungssystemen zusammenhängt ist die \emph{Singulärwertzerlegung} (SVD -- von english: \emph{Singular Value Decomposition}).
 
 \begin{theorem}[Singulärwertzerlegung]
-\protect\hypertarget{thm:svd}{}\label{thm:svd}Sei \(A\in \mathbb C^{m\times n}\), \(m\geq n\). Dann existieren orthogonale Matrizen \(U \in \mathbb C^{m\times m}\) und \(V\in \mathbb C^{n\times n}\) und eine Matrix \(\Sigma \in \mathbb R^{m\times n}\) der Form
+\protect\hypertarget{thm:SVD}{}\label{thm:SVD}Sei \(A\in \mathbb C^{m\times n}\), \(m\geq n\). Dann existieren orthogonale Matrizen \(U \in \mathbb C^{m\times m}\) und \(V\in \mathbb C^{n\times n}\) und eine Matrix \(\Sigma \in \mathbb R^{m\times n}\) der Form
 \begin{equation*}
 \Sigma = 
 \begin{bmatrix}
@@ -924,10 +924,10 @@ Ein paar Bemerkungen.
 \item
   Die Annahme \(m \geq n\) war nur nötig um für die Matrix \(\Sigma\) keine Fallunterscheidung zu machen. (Für \(m\leq n\) ``steht der Nullblock rechts von den Singulärwerten''). Insbesondere gilt \(A^* = V\Sigma U^*\) ist eine SVD von \(A^*\).
 \item
-  Eine Illustration der Zerlegung ist in Abbildung \ref{SVD} zu sehen.
+  Eine Illustration der Zerlegung ist \href{@fig-SVD}{hier} zu sehen.
 \end{itemize}
 
-Wir machen einige Überlegungen im Hinblick auf große Matrizen. Sei dazu \(m>n\), \(A\in \mathbb C^{m\times n}\) und \(A=U\Sigma V^*\) eine SVD wie in Theorem @ref\{thm:SVD\}. Sei nun
+Wir machen einige Überlegungen im Hinblick auf große Matrizen. Sei dazu \(m>n\), \(A\in \mathbb C^{m\times n}\) und \(A=U\Sigma V^*\) eine SVD wie in Theorem \ref{thm:SVD}. Sei nun
 \begin{equation*}
 U = \begin{bmatrix}
 U_1 & U_2
@@ -998,10 +998,10 @@ aus \(\Sigma \hat \Sigma^{-1}\hat \Sigma^{-1}\) herrührt.
 \textbf{Bemerkung}: \(\Sigma^+\) kann auch definiert werden, wenn \(\hat \Sigma\) nicht invertierbar ist (weil manche Diagonaleinträge null sind). Dann wird \(\hat \Sigma^+\) betrachtet, bei welcher nur die \(\sigma_i>0\) invertiert werden und die anderen \(\sigma_i=0\) belassen werden. Das definiert eine sogenannte \emph{verallgemeinerte Inverse} und löst auch das Optimierungsproblem falls \(A\) keinen vollen Rang hat.
 
 \begin{figure}
-\hypertarget{SVD}{%
+\hypertarget{fig-SVD}{%
 \centering
 \includegraphics[width=0.5\textwidth,height=\textheight]{bilder/03-412px-Singular_value_decomposition_visualisation.svg.png}
-\caption{Illustration der SVD. Bitte beachten der \(*\) bedeutet hier transponiert und komplex konjugiert. By Cmglee - Own work, CC BY-SA 4.0, \url{https://commons.wikimedia.org/w/index.php?curid=67853297}}\label{SVD}
+\caption{Illustration der SVD. Bitte beachten der \(*\) bedeutet hier transponiert und komplex konjugiert. By Cmglee - Own work, CC BY-SA 4.0, \url{https://commons.wikimedia.org/w/index.php?curid=67853297}}\label{fig-SVD}
 }
 \end{figure}
 

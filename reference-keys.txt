@@ -1,10 +1,10 @@
 thm:qr
-thm:svd
+thm:SVD
 was-ist-data-science
 wie-passiert-die-datenanalyse
 was-sind-daten
-beispiele-01-tabellendaten
-tabellendaten-mietpreise
+beispiele
+tabellendaten
 covid-19-daten
 netflix-prize
 python

@@ -2,12 +2,12 @@ book_filename: "EMDS"
 # chapter_name: "Chapter "
 repo: https://github.com/highlando/script-emds
 output_dir: docs
-rmd_files: ["index.md",
-            "vl_01.md",
-            "vl_02.md",
-            "vl_03.md",
-            "vl_04.md",
-            "vl_05.md",
-            "vl_06.md"]
+rmd_files: ["index.Rmd",
+            "vl_01.Rmd",
+            "vl_02.Rmd",
+            "vl_03.Rmd",
+            "vl_04.Rmd",
+            "vl_05.Rmd",
+            "vl_06.Rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

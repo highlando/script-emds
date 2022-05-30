@@ -1,0 +1,72 @@
+# Clustering und Hauptkomponentenanalyse
+
+Mit der Hauptkomponentenanalyse haben wir eine Methode kennengelernt, Daten gem&auml;&szlig; in Koordinaten darzustellen, die nach inhaltsschwere^[wenn wir Inhalt mit Varianz gleich setzen] absteigend sortiert sind. Die Konzentrierung der Varianz in den Hauptachsenrichtungen erm&ouml;glicht uns
+
+1. die Hauptkomponenten zu ermitteln, die den Datensatz optimal in niedrigerer Dimension darstellen (wobei optimal hier bedeutet dass die Varianz in der Differenz $\bX-\hat \bX$ minimal ist)
+2. und in diesem Sinne die Daten optimal auf niedrigere Dimensionen zu reduzieren.
+
+::: {#rem-clustering-goal .JHSAYS data-latex=''}
+Die noch offene Frage war, ob wir mit universalen Methoden aus den Merkmalen (oder deren Kombination) auf die Spezies schliessen k&ouml;nnen.
+:::
+
+Ein einfacher Blick auf die Plots der Pinguin Merkmale (Abbildung \@ref(fig:05-penguin-allpairs-cntrd)) l&auml;&szlig;t uns schlie&szlig;en, dass 
+
+* ein Merkmal (z.B. `bill_depth`) auf jeden Fall nicht ausreichend ist f&uuml;r eine Unterscheidung) aber
+* zwei Merkmale (z.B. `bill_length` vs. `flipper_length`) die farbigen Punkte (also die Spezies) schon etwas im Raum separieren, w&auml;hrend 
+* mehrere Merkmale die Datenwolken im h&ouml;her-dimensionalen Raum eventuell noch besser separieren, dass aber schwerlich nachvollziehbar ist.
+
+Im 2D Fall allerdings, w&uuml;rde Jan einen zus&auml;tzlich gefundenen Pinguin vermessen, den neuen Datenpunkt im Diagramm eintragen und dann schauen, in welchem Bereich er landet um daraus die Spezies abzuleiten. Alles mit reichlich Vorwissen (z.B. dass es 3 Spezies gibt und welche Merkmale die Unterscheidung am besten erlauben).
+
+F&uuml;r allgemeine F&auml;lle wird die Identifikation der Bereiche (manchmal ist es sogar gar nicht klar wieviele Bereiche n&ouml;tig oder zielf&uuml;hrend sind) und die Zuweisung der Datenpunkte von sogenannten **clustering** Algorithmen &uuml;bernommen.
+
+## Clustering im Allgemeinen
+
+Das Ziel ist es in einer Datenwolke Bereiche (**cluster**) zu identifizieren, sodass die vorhandenen (oder auch neu hinzukommende) Datenpunkte anhand ihrer Merkmale den Bereichen zugeordnet (*klassifiziert*) werden k&ouml;nnen.
+
+Je nach Anwendungsfall und Vorwissen kann diese Aufgabe verschieden definiert werden
+
+ * Ist die Anzahl der cluster bekannt (wie bei unseren Pinguinen wo es einfach 3 Arten zu unterscheiden gibt), soll der Datenraum optimal in entsprechend viele nicht &uuml;berlappende Bereiche geteilt.
+ * Anderenfalls sollen die Anzahl der Cluster und die zugeh&ouml;rigen Bereiche simultan optimal bestimmt werden.
+
+Typischerweise werden die cluster durch ihre Mittelpunkte (**centroids**) $c_j\in \mathbb R^{n}$ bestimmt, $j=1,\dots,K$, wobei $K$ die Anzahl der cluster ist sowie eine Zuweisungsregel $k\colon \bxi \mapsto \{1,\dots,K\}$ die zu einem Datenpunkt das entsprechende cluster aussucht. Die Zuweisung passiert generell so, dass einem Datenpunkt $\bxi$ der naheste Zentroid zugewiesen wird, also $k(\bxi)$ ist der Index $j^*$, sodass
+\begin{equation*}
+\|\bxi - c_{j^*}\| = \min_{j=1,\dots K} \|\bxi - c_{j^*}\|
+\end{equation*}
+
+Die Qualit&auml;t des clusterings wird &uuml;ber die summierte Differenz 
+\begin{equation*}
+\sum_{i=1}^N\|\bxi - c_{k(\bxi)}\|
+\end{equation*}
+bewertet.
+
+::: {#cluster-norms .JHSAYS data-latex=''}
+Wir sehen, dass zum Bewerten (und damit Definieren) der Cluster eine Norm (oder auch einfach eine Metrik) benutzt und machen uns klar, dass das Ergebnis des clusterings stark von der Wahl der Norm abh&auml;ngen kann.
+:::
+
+## K-means Clustering
+
+Aus der Definition und der Bewertung der Cluster ergibt sich ein einfacher aber sehr oft und erfolgreich genutzter Algorithmus zum clustering, der *k-means* Algorithmus. Er funktioniert wie folgt
+
+```{py, alg-k-means, name='k-means Algorithmus', attr.source='.numberLines'}
+# Initialisierung: K zufaellige centroids c_j
+#
+# Wiederholung bis zur Stagnation
+#   Berechnung der Zuordnung: k: x_i -> c_j
+#   Update der centroids: c_j <- mean{ x_i | x_i aus cluster c_j }
+```
+
+Ausgehend von zuf&auml;llig gew&auml;hlten centroids, wird die Zuordnung berechnent und dann der Mittelwert aus jedem Cluster als neuer centroid definiert. Dieses Verfahren wird solange wiederholt bis eine maximale Iterationszahl erreicht ist oder die centroids sich nur noch wenig oder gar nicht mehr ver&auml;ndern. In Abbildung \@ref(fig:k-means-evoexa) ist eine beispielhafte Ausf&uuml;hrung des Algorithmus auf Beispieldaten dargestellt.
+
+<!--![](bilder/06-plot1.png){width="30%"}-->
+
+```{r k-means-evoexa, echo=FALSE, fig.show='hold', fig.cap='Entwicklung der Centroids im Verlauf des k-means clustering Algorithmus auf Beispieldaten', out.width='40%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics(c("bilder/06-plot1.png"
+,"bilder/06-plot2.png" ,"bilder/06-plot4.png", "bilder/06-plot6.png"))
+```
+
+## Clustering und Hauptkomponentenanalyse 
+
+## Training und Testing
+
+## Am Beispiel der Pinguine
+

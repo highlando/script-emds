@@ -1,5 +1,10 @@
 set spell spelllang=de
 
+imap ,a &auml;
+imap ,o &ouml;
+imap ,u &uuml;
+imap ,s &szlig;
+
 imap ,eq \begin{equation*}<CR>\end{equation*}<esc>O
 imap ,bbm \begin{bmatrix}<CR>\end{bmatrix}<esc>O
 imap ,rr \mathbb R^{}

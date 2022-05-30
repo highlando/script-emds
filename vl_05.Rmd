@@ -13,7 +13,7 @@ Jetzt wollen wir einen Datensatz mit mehr Merkmalen betrachten und sehen, wie di
 
 ## Der PENGUINS Datensatz
 
-Die Grundlage ist der [*Pinguin Datensatz*](https://allisonhorst.github.io/palmerpenguins/), der eine gern genommene Grundlage f&uuml;r die Illustration in der Datenanalyse ist. Die Daten wurden von [Kristen Gorman](https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php) erhoben und beinhalten 4 verschiedene Merkmale (engl. *features*) von einer Stichprobe von insgesamt 344^[allerdings mit 2 unvolls&auml;ndigen Datenpunkten, die ich entfernt habe f&uuml;r unseere Beispiele]Pinguinen die 3 verschiedenen Spezies zugeordnet werden k&ouml;nnen oder sollen (Fachbegriff hier: *targets*). Im Beispiel werden die Klassen mit `0, 1, 2` codiert und beschreiben die Unterarten *Adele*, *Gentoo* und *Chinstrap* der Schwertlilien. Die Merkmale sind gemessene L&auml;nge und H&ouml;he des Schnabels (hier *bill*), die L&auml;nge der Flosse (*flipper*) sowie das K&ouml;pergewicht ^[Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet]
+Die Grundlage ist der [*Pinguin Datensatz*](https://allisonhorst.github.io/palmerpenguins/), der eine gern genommene Grundlage f&uuml;r die Illustration in der Datenanalyse ist. Die Daten wurden von [Kristen Gorman](https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php) erhoben und beinhalten 4 verschiedene Merkmale (engl. *features*) von einer Stichprobe von insgesamt 344^[allerdings mit 2 unvollst&auml;ndigen Datenpunkten, die ich entfernt habe f&uuml;r unseere Beispiele]Pinguinen die 3 verschiedenen Spezies zugeordnet werden k&ouml;nnen oder sollen (Fachbegriff hier: *targets*). Im Beispiel werden die Klassen mit `0, 1, 2` codiert und beschreiben die Unterarten *Adele*, *Gentoo* und *Chinstrap* der Schwertlilien. Die Merkmale sind gemessene L&auml;nge und H&ouml;he des Schnabels (hier *bill*), die L&auml;nge der Flosse (*flipper*) sowie das K&ouml;pergewicht ^[Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet]
 (*body mass*).
 
 Wir stellen uns 2-3 Fragen:
@@ -62,7 +62,7 @@ Matrix $V\in \mathbb R^{n\times n}$:
 \end{equation*}
 wobei $\tilde \bX$ die Daten in den neuen Koordinaten sind (die Basisvektoren sind dann die Zeilenvektoren von $V$). Wir wollen nun eine Basis finden, in der
 
-* $\Cov(\bX)$ eine Diagonalmatrix ist --- damit w&auml;ren alle Richtungen in den Daten *unkorreliert* und k&ouml;nnten *unabh&auml;ngig* voneinander betrachtet werden^[wir d&uuml;rfen aber nicht vergessen, dass Daten t&uuml;pischerweise nur eine Stichprobe von Beobachtungen eines Ph&auml;nomens sind. Die Unabh&auml;ngigkeit in den *features* gilt also nur f&uuml;r die gesammelten Daten aber in der Regel nicht f&uuml;r das Ph&auml;nomen. F&uuml;r normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Ph&auml;nomens] --
+* $\Cov(\bX)$ eine Diagonalmatrix ist --- damit w&auml;ren alle Richtungen in den Daten *unkorreliert* und k&ouml;nnten *unabh&auml;ngig* voneinander betrachtet werden^[wir d&uuml;rfen aber nicht vergessen, dass Daten typischerweise nur eine Stichprobe von Beobachtungen eines Ph&auml;nomens sind. Die Unabh&auml;ngigkeit in den *features* gilt also nur f&uuml;r die gesammelten Daten aber in der Regel nicht f&uuml;r das Ph&auml;nomen. F&uuml;r normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Ph&auml;nomens] --
 * und in der die neuen Varianzen nach Gr&ouml;&szlig;e geordnet sind gleichzeitig die verf&uuml;gbare Varianz maximal in wenigen Richtungen konzentrieren.
 
 Nachden den &Uuml;berlegungen im vorherigen Kapitel ist die erste Hauptrichtung durch den ersten rechten Singul&auml;rvektor $v_1\in \mathbb R^{n}$ der (*&ouml;konomischen*) Singul&auml;rwertzerlegung 
@@ -125,7 +125,9 @@ Wie oben, werden dann die Daten $\tilde \bX=\bX V_{\hat k}$ in den (reduzierten)
 
 Wir stellen die Daten noch einmal zentriert dar:
 
-![Pinguin Daten Zentriert](bilder/05-all-pairs-cntrd.png){#fig:05-penguin-allpairs-cntrd width="75%"}
+```{r 05-penguin-allpairs-cntrd, echo=FALSE, fig.cap='Pinguin Daten Zentriert', out.width='75%', fig.align='center'}
+knitr::include_graphics("bilder/05-all-pairs-cntrd.png")
+```
 
 
 F&uuml;r die Kovarianzmatrix der Pinguin Daten erhalten wir:

@@ -1508,7 +1508,7 @@ Jetzt wollen wir einen Datensatz mit mehr Merkmalen betrachten und sehen, wie di
 \hypertarget{der-penguins-datensatz}{%
 \section{Der PENGUINS Datensatz}\label{der-penguins-datensatz}}
 
-Die Grundlage ist der \href{https://allisonhorst.github.io/palmerpenguins/}{\emph{Pinguin Datensatz}}, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von \href{https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php}{Kristen Gorman} erhoben und beinhalten 4 verschiedene Merkmale (engl. \emph{features}) von einer Stichprobe von insgesamt 344\footnote{allerdings mit 2 unvollsändigen Datenpunkten, die ich entfernt habe für unseere Beispiele}Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: \emph{targets}). Im Beispiel werden die Klassen mit \texttt{0,\ 1,\ 2} codiert und beschreiben die Unterarten \emph{Adele}, \emph{Gentoo} und \emph{Chinstrap} der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier \emph{bill}), die Länge der Flosse (\emph{flipper}) sowie das Köpergewicht \footnote{Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet}
+Die Grundlage ist der \href{https://allisonhorst.github.io/palmerpenguins/}{\emph{Pinguin Datensatz}}, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von \href{https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php}{Kristen Gorman} erhoben und beinhalten 4 verschiedene Merkmale (engl. \emph{features}) von einer Stichprobe von insgesamt 344\footnote{allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele}Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: \emph{targets}). Im Beispiel werden die Klassen mit \texttt{0,\ 1,\ 2} codiert und beschreiben die Unterarten \emph{Adele}, \emph{Gentoo} und \emph{Chinstrap} der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier \emph{bill}), die Länge der Flosse (\emph{flipper}) sowie das Köpergewicht \footnote{Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet}
 (\emph{body mass}).
 
 Wir stellen uns 2-3 Fragen:
@@ -1572,7 +1572,7 @@ wobei \(\tilde {\mathbf{X}}\) die Daten in den neuen Koordinaten sind (die Basis
 \begin{itemize}
 \tightlist
 \item
-  \(\operatorname{Cov}({\mathbf{X}})\) eine Diagonalmatrix ist --- damit wären alle Richtungen in den Daten \emph{unkorreliert} und könnten \emph{unabhängig} voneinander betrachtet werden\footnote{wir dürfen aber nicht vergessen, dass Daten tüpischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den \emph{features} gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens} --
+  \(\operatorname{Cov}({\mathbf{X}})\) eine Diagonalmatrix ist --- damit wären alle Richtungen in den Daten \emph{unkorreliert} und könnten \emph{unabhängig} voneinander betrachtet werden\footnote{wir dürfen aber nicht vergessen, dass Daten typischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den \emph{features} gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens} --
 \item
   und in der die neuen Varianzen nach Größe geordnet sind gleichzeitig die verfügbare Varianz maximal in wenigen Richtungen konzentrieren.
 \end{itemize}
@@ -1641,11 +1641,12 @@ Wie oben, werden dann die Daten \(\tilde {\mathbf{X}}={\mathbf{X}}V_{\hat k}\) i
 Wir stellen die Daten noch einmal zentriert dar:
 
 \begin{figure}
-\hypertarget{fig:05-penguin-allpairs-cntrd}{%
-\centering
-\includegraphics[width=0.75\textwidth,height=\textheight]{bilder/05-all-pairs-cntrd.png}
-\caption{Pinguin Daten Zentriert}\label{fig:05-penguin-allpairs-cntrd}
+
+{\centering \includegraphics[width=0.75\linewidth]{bilder/05-all-pairs-cntrd} 
+
 }
+
+\caption{Pinguin Daten Zentriert}\label{fig:05-penguin-allpairs-cntrd}
 \end{figure}
 
 Für die Kovarianzmatrix der Pinguin Daten erhalten wir:
@@ -1673,7 +1674,7 @@ Für die Singulärwerte:
 
 Zwar ist hier kein Singulärwert nah an der Null, allerdings beträgt der Unterschied zwischen dem größten und dem kleinsten schon eine gute 10er Potenz, was auf eine starke Dominanz der ersten Hauptachsen hinweist.
 
-In der Tat, plotten wir die Daten in den Koordinaten der Hauptachsen (also \(\tilde {\mathbf{X}}\)), zeigen Bilder der \(v_1\) oder \(v_2\)-Koordinaten klare Tendenzen in den Daten, während die Plots der übrigen Richtungen wie eine zufällige Punktwolke aussieht, vgl. Abbildung \ref{fig:05-penguin-allpairs-pcs}.
+In der Tat, plotten wir die Daten in den Koordinaten der Hauptachsen (also \(\tilde {\mathbf{X}}\)), zeigen Bilder der \(v_1\) oder \(v_2\)-Koordinaten klare Tendenzen in den Daten, während die Plots der übrigen Richtungen wie eine zufällige Punktwolke aussieht, vgl. die Abbildung \protect\hyperlink{fig:05-penguin-allpairs-pcs}{hier}.
 
 \begin{figure}
 \hypertarget{fig:05-penguin-allpairs-pcs}{%
@@ -1811,7 +1812,7 @@ verwendet, die alle für verschiedene Zwecke gerne benutzt werden. Z.B.
 \hypertarget{pinguin-datensatz-2d-plots-p}{%
 \subsection{Pinguin Datensatz -- 2D plots (P)}\label{pinguin-datensatz-2d-plots-p}}
 
-Erzeugen sie Abbildung \ref{fig:05-penguin-allpairs} zum Beispiel über ein \texttt{4x4} Feld von subplots
+Erzeugen sie die \protect\hyperlink{fig:05-penguin-allpairs}{Abbildung aller Merkmalpaare} zum Beispiel über ein \texttt{4x4} Feld von subplots
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1837,7 +1838,7 @@ Zentrieren Sie den Datensatz (zum Beispiel unter Verwendung der \texttt{numpy.me
 \hypertarget{hauptachsentransformation-p}{%
 \subsection{Hauptachsentransformation (P)}\label{hauptachsentransformation-p}}
 
-Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung \ref{fig:05-penguin-allpairs-pcs}).
+Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in \protect\hyperlink{fig:05-penguin-allpairs-pcs}{dieser Abbildung}).
 
 \hypertarget{kovarianzmatrix-t}{%
 \subsection{Kovarianzmatrix (T)}\label{kovarianzmatrix-t}}
@@ -1851,5 +1852,108 @@ Zeigen sie, dass für zentrierte Datensätze \({\mathbf{X}}\in \mathbb R^{N\time
 \subsection{Gesamtvarianz (T)}\label{gesamtvarianz-t}}
 
 Zeigen sie, dass auch für \(n>2\) die Summe der Varianzen in orthogonalen Achsenrichtungen unabhängig von der Wahl des Koordinatensystems sind. (Vergleiche Kapitel 4.2 Koordinatenwechsel)
+
+\hypertarget{clustering-und-hauptkomponentenanalyse}{%
+\chapter{Clustering und Hauptkomponentenanalyse}\label{clustering-und-hauptkomponentenanalyse}}
+
+Mit der Hauptkomponentenanalyse haben wir eine Methode kennengelernt, Daten gemäß in Koordinaten darzustellen, die nach inhaltsschwere\footnote{wenn wir Inhalt mit Varianz gleich setzen} absteigend sortiert sind. Die Konzentrierung der Varianz in den Hauptachsenrichtungen ermöglicht uns
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  die Hauptkomponenten zu ermitteln, die den Datensatz optimal in niedrigerer Dimension darstellen (wobei optimal hier bedeutet dass die Varianz in der Differenz \({\mathbf{X}}-\hat {\mathbf{X}}\) minimal ist)
+\item
+  und in diesem Sinne die Daten optimal auf niedrigere Dimensionen zu reduzieren.
+\end{enumerate}
+
+\leavevmode\hypertarget{rem-clustering-goal}{}%
+\begin{JHSAYS}
+Die noch offene Frage war, ob wir mit universalen Methoden aus den Merkmalen (oder deren Kombination) auf die Spezies schliessen können.
+
+\end{JHSAYS}
+
+Ein einfacher Blick auf die Plots der Pinguin Merkmale (Abbildung \ref{fig:05-penguin-allpairs-cntrd}) läßt uns schließen, dass
+
+\begin{itemize}
+\tightlist
+\item
+  ein Merkmal (z.B. \texttt{bill\_depth}) auf jeden Fall nicht ausreichend ist für eine Unterscheidung) aber
+\item
+  zwei Merkmale (z.B. \texttt{bill\_length} vs.~\texttt{flipper\_length}) die farbigen Punkte (also die Spezies) schon etwas im Raum separieren, während
+\item
+  mehrere Merkmale die Datenwolken im höher-dimensionalen Raum eventuell noch besser separieren, dass aber schwerlich nachvollziehbar ist.
+\end{itemize}
+
+Im 2D Fall allerdings, würde Jan einen zusätzlich gefundenen Pinguin vermessen, den neuen Datenpunkt im Diagramm eintragen und dann schauen, in welchem Bereich er landet um daraus die Spezies abzuleiten. Alles mit reichlich Vorwissen (z.B. dass es 3 Spezies gibt und welche Merkmale die Unterscheidung am besten erlauben).
+
+Für allgemeine Fälle wird die Identifikation der Bereiche (manchmal ist es sogar gar nicht klar wieviele Bereiche nötig oder zielführend sind) und die Zuweisung der Datenpunkte von sogenannten \textbf{clustering} Algorithmen übernommen.
+
+\hypertarget{clustering-im-allgemeinen}{%
+\section{Clustering im Allgemeinen}\label{clustering-im-allgemeinen}}
+
+Das Ziel ist es in einer Datenwolke Bereiche (\textbf{cluster}) zu identifizieren, sodass die vorhandenen (oder auch neu hinzukommende) Datenpunkte anhand ihrer Merkmale den Bereichen zugeordnet (\emph{klassifiziert}) werden können.
+
+Je nach Anwendungsfall und Vorwissen kann diese Aufgabe verschieden definiert werden
+
+\begin{itemize}
+\tightlist
+\item
+  Ist die Anzahl der cluster bekannt (wie bei unseren Pinguinen wo es einfach 3 Arten zu unterscheiden gibt), soll der Datenraum optimal in entsprechend viele nicht überlappende Bereiche geteilt.
+\item
+  Anderenfalls sollen die Anzahl der Cluster und die zugehörigen Bereiche simultan optimal bestimmt werden.
+\end{itemize}
+
+Typischerweise werden die cluster durch ihre Mittelpunkte (\textbf{centroids}) \(c_j\in \mathbb R^{n}\) bestimmt, \(j=1,\dots,K\), wobei \(K\) die Anzahl der cluster ist sowie eine Zuweisungsregel \(k\colon {\mathbf{x} _ i}\mapsto \{1,\dots,K\}\) die zu einem Datenpunkt das entsprechende cluster aussucht. Die Zuweisung passiert generell so, dass einem Datenpunkt \({\mathbf{x} _ i}\) der naheste Zentroid zugewiesen wird, also \(k({\mathbf{x} _ i})\) ist der Index \(j^*\), sodass
+\begin{equation*}
+\|{\mathbf{x} _ i}- c_{j^*}\| = \min_{j=1,\dots K} \|{\mathbf{x} _ i}- c_{j^*}\|
+\end{equation*}
+
+Die Qualität des clusterings wird über die summierte Differenz
+\begin{equation*}
+\sum_{i=1}^N\|{\mathbf{x} _ i}- c_{k({\mathbf{x} _ i})}\|
+\end{equation*}
+bewertet.
+
+\leavevmode\hypertarget{cluster-norms}{}%
+\begin{JHSAYS}
+Wir sehen, dass zum Bewerten (und damit Definieren) der Cluster eine Norm (oder auch einfach eine Metrik) benutzt und machen uns klar, dass das Ergebnis des clusterings stark von der Wahl der Norm abhängen kann.
+
+\end{JHSAYS}
+
+\hypertarget{k-means-clustering}{%
+\section{K-means Clustering}\label{k-means-clustering}}
+
+Aus der Definition und der Bewertung der Cluster ergibt sich ein einfacher aber sehr oft und erfolgreich genutzter Algorithmus zum clustering, der \emph{k-means} Algorithmus. Er funktioniert wie folgt
+
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,]
+\CommentTok{# Initialisierung: K zufaellige centroids c_j}
+\CommentTok{#}
+\CommentTok{# Wiederholung bis zur Stagnation}
+\CommentTok{#   Berechnung der Zuordnung: k: x_i -> c_j}
+\CommentTok{#   Update der centroids: c_j <- mean\{ x_i | x_i aus cluster c_j \}}
+\end{Highlighting}
+\end{Shaded}
+
+Ausgehend von zufällig gewählten centroids, wird die Zuordnung berechnent und dann der Mittelwert aus jedem Cluster als neuer centroid definiert. Dieses Verfahren wird solange wiederholt bis eine maximale Iterationszahl erreicht ist oder die centroids sich nur noch wenig oder gar nicht mehr verändern. In Abbildung \ref{fig:k-means-evoexa} ist eine beispielhafte Ausführung des Algorithmus auf Beispieldaten dargestellt.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.4\linewidth]{bilder/06-plot1} \includegraphics[width=0.4\linewidth]{bilder/06-plot2} \includegraphics[width=0.4\linewidth]{bilder/06-plot4} \includegraphics[width=0.4\linewidth]{bilder/06-plot6} 
+
+}
+
+\caption{Entwicklung der Centroids im Verlauf des k-means clustering Algorithmus auf Beispieldaten}\label{fig:k-means-evoexa}
+\end{figure}
+
+\hypertarget{clustering-und-hauptkomponentenanalyse-1}{%
+\section{Clustering und Hauptkomponentenanalyse}\label{clustering-und-hauptkomponentenanalyse-1}}
+
+\hypertarget{training-und-testing}{%
+\section{Training und Testing}\label{training-und-testing}}
+
+\hypertarget{am-beispiel-der-pinguine}{%
+\section{Am Beispiel der Pinguine}\label{am-beispiel-der-pinguine}}
 
 \end{document}

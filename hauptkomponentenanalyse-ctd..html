@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="hauptkomponentenanalyse.html"/>
-
+<link rel="next" href="clustering-und-hauptkomponentenanalyse.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -168,6 +168,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.7" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-pinguin-daten"><i class="fa fa-check"></i><b>5.7</b> Am Beispiel der Pinguin Daten</a></li>
 <li class="chapter" data-level="5.8" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.8</b> Aufgaben</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="6.1" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-im-allgemeinen"><i class="fa fa-check"></i><b>6.1</b> Clustering im Allgemeinen</a></li>
+<li class="chapter" data-level="6.2" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#k-means-clustering"><i class="fa fa-check"></i><b>6.2</b> K-means Clustering</a></li>
+<li class="chapter" data-level="6.3" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse-1"><i class="fa fa-check"></i><b>6.3</b> Clustering und Hauptkomponentenanalyse</a></li>
+<li class="chapter" data-level="6.4" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#training-und-testing"><i class="fa fa-check"></i><b>6.4</b> Training und Testing</a></li>
+<li class="chapter" data-level="6.5" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine"><i class="fa fa-check"></i><b>6.5</b> Am Beispiel der Pinguine</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -196,7 +203,7 @@ Da wir außerdem ermittelt hatten, dass die Summe der Varianz unabhüngig vom Ko
 <p>Jetzt wollen wir einen Datensatz mit mehr Merkmalen betrachten und sehen, wie die algorithmische Herangehensweise zum Verständnis beiträgt.</p>
 <div id="der-penguins-datensatz" class="section level2 hasAnchor">
 <h2><span class="header-section-number">5.1</span> Der PENGUINS Datensatz<a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Die Grundlage ist der <a href="https://allisonhorst.github.io/palmerpenguins/"><em>Pinguin Datensatz</em></a>, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von <a href="https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php">Kristen Gorman</a> erhoben und beinhalten 4 verschiedene Merkmale (engl. <em>features</em>) von einer Stichprobe von insgesamt 344<a href="hauptkomponentenanalyse-ctd..html#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: <em>targets</em>). Im Beispiel werden die Klassen mit <code>0, 1, 2</code> codiert und beschreiben die Unterarten <em>Adele</em>, <em>Gentoo</em> und <em>Chinstrap</em> der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier <em>bill</em>), die Länge der Flosse (<em>flipper</em>) sowie das Köpergewicht <a href="hauptkomponentenanalyse-ctd..html#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>
+<p>Die Grundlage ist der <a href="https://allisonhorst.github.io/palmerpenguins/"><em>Pinguin Datensatz</em></a>, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von <a href="https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php">Kristen Gorman</a> erhoben und beinhalten 4 verschiedene Merkmale (engl. <em>features</em>) von einer Stichprobe von insgesamt 344<a href="clustering-und-hauptkomponentenanalyse.html#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: <em>targets</em>). Im Beispiel werden die Klassen mit <code>0, 1, 2</code> codiert und beschreiben die Unterarten <em>Adele</em>, <em>Gentoo</em> und <em>Chinstrap</em> der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier <em>bill</em>), die Länge der Flosse (<em>flipper</em>) sowie das Köpergewicht <a href="clustering-und-hauptkomponentenanalyse.html#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>
 (<em>body mass</em>).</p>
 <p>Wir stellen uns 2-3 Fragen:</p>
 <ol style="list-style-type: decimal">
@@ -244,7 +251,7 @@ Matrix <span class="math inline">\(V\in \mathbb R^{n\times n}\)</span>:
 \end{equation*}\]</span>
 wobei <span class="math inline">\(\tilde {\mathbf{X}}\)</span> die Daten in den neuen Koordinaten sind (die Basisvektoren sind dann die Zeilenvektoren von <span class="math inline">\(V\)</span>). Wir wollen nun eine Basis finden, in der</p>
 <ul>
-<li><span class="math inline">\(\operatorname{Cov}({\mathbf{X}})\)</span> eine Diagonalmatrix ist — damit wären alle Richtungen in den Daten <em>unkorreliert</em> und könnten <em>unabhängig</em> voneinander betrachtet werden<a href="hauptkomponentenanalyse-ctd..html#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> –</li>
+<li><span class="math inline">\(\operatorname{Cov}({\mathbf{X}})\)</span> eine Diagonalmatrix ist — damit wären alle Richtungen in den Daten <em>unkorreliert</em> und könnten <em>unabhängig</em> voneinander betrachtet werden<a href="clustering-und-hauptkomponentenanalyse.html#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> –</li>
 <li>und in der die neuen Varianzen nach Größe geordnet sind gleichzeitig die verfügbare Varianz maximal in wenigen Richtungen konzentrieren.</li>
 </ul>
 <p>Nachden den Überlegungen im vorherigen Kapitel ist die erste Hauptrichtung durch den ersten rechten Singulärvektor <span class="math inline">\(v_1\in \mathbb R^{n}\)</span> der (<em>ökonomischen</em>) Singulärwertzerlegung
@@ -302,9 +309,11 @@ alle Informationen des Datensatzes in kleinerer Dimension parametrisiert.</p>
 <div id="am-beispiel-der-pinguin-daten" class="section level2 hasAnchor">
 <h2><span class="header-section-number">5.7</span> Am Beispiel der Pinguin Daten<a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-pinguin-daten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Wir stellen die Daten noch einmal zentriert dar:</p>
-<div class="figure">
-<img src="bilder/05-all-pairs-cntrd.png" alt="Pinguin Daten Zentriert" id="fig:05-penguin-allpairs-cntrd" style="width:75.0%" />
-<p class="caption">Pinguin Daten Zentriert</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:05-penguin-allpairs-cntrd"></span>
+<img src="bilder/05-all-pairs-cntrd.png" alt="Pinguin Daten Zentriert" width="75%" />
+<p class="caption">
+Figure 5.1: Pinguin Daten Zentriert
+</p>
 </div>
 <p>Für die Kovarianzmatrix der Pinguin Daten erhalten wir:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1">Covariance matrix: </a>
@@ -318,7 +327,7 @@ alle Informationen des Datensatzes in kleinerer Dimension parametrisiert.</p>
 <a class="sourceLine" id="cb9-3" title="3">In: <span class="bu">print</span>(S)</a>
 <a class="sourceLine" id="cb9-4" title="4">Out: [<span class="fl">269.7858</span>  <span class="fl">74.1334</span>  <span class="fl">28.4183</span>   <span class="fl">7.2219</span>]</a></code></pre></div>
 <p>Zwar ist hier kein Singulärwert nah an der Null, allerdings beträgt der Unterschied zwischen dem größten und dem kleinsten schon eine gute 10er Potenz, was auf eine starke Dominanz der ersten Hauptachsen hinweist.</p>
-<p>In der Tat, plotten wir die Daten in den Koordinaten der Hauptachsen (also <span class="math inline">\(\tilde {\mathbf{X}}\)</span>), zeigen Bilder der <span class="math inline">\(v_1\)</span> oder <span class="math inline">\(v_2\)</span>-Koordinaten klare Tendenzen in den Daten, während die Plots der übrigen Richtungen wie eine zufällige Punktwolke aussieht, vgl. Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-penguin-allpairs-pcs"><strong>??</strong></a>.</p>
+<p>In der Tat, plotten wir die Daten in den Koordinaten der Hauptachsen (also <span class="math inline">\(\tilde {\mathbf{X}}\)</span>), zeigen Bilder der <span class="math inline">\(v_1\)</span> oder <span class="math inline">\(v_2\)</span>-Koordinaten klare Tendenzen in den Daten, während die Plots der übrigen Richtungen wie eine zufällige Punktwolke aussieht, vgl. die Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-penguin-allpairs-pcs">hier</a>.</p>
 <div class="figure">
 <img src="bilder/05-all-pairs-pcs.png" alt="Pinguin Datenset 2D plots in Hauptachsenkoordinaten" id="fig:05-penguin-allpairs-pcs" style="width:75.0%" />
 <p class="caption">Pinguin Datenset 2D plots in Hauptachsenkoordinaten</p>
@@ -420,7 +429,7 @@ wobei <span class="math inline">\(s_{i\,j}\)</span> die Kovarianz der Daten <spa
 </div>
 <div id="pinguin-datensatz-2d-plots-p" class="section level3 hasAnchor">
 <h3><span class="header-section-number">5.8.3</span> Pinguin Datensatz – 2D plots (P)<a href="hauptkomponentenanalyse-ctd..html#pinguin-datensatz-2d-plots-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Erzeugen sie Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-penguin-allpairs"><strong>??</strong></a> zum Beispiel über ein <code>4x4</code> Feld von subplots</p>
+<p>Erzeugen sie die <a href="hauptkomponentenanalyse-ctd..html#fig:05-penguin-allpairs">Abbildung aller Merkmalpaare</a> zum Beispiel über ein <code>4x4</code> Feld von subplots</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1">fig, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">4</span>, ncols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</a></code></pre></div>
 <p>erzeugen, in das sie mittels</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" title="1">axs[zeile, spalte].plot(xdaten, ydaten, <span class="st">&#39;o&#39;</span>)</a></code></pre></div>
@@ -432,7 +441,7 @@ wobei <span class="math inline">\(s_{i\,j}\)</span> die Kovarianz der Daten <spa
 </div>
 <div id="hauptachsentransformation-p" class="section level3 hasAnchor">
 <h3><span class="header-section-number">5.8.5</span> Hauptachsentransformation (P)<a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-penguin-allpairs-pcs"><strong>??</strong></a>).</p>
+<p>Berechnen sie Hauptachsen und stellen Sie die Daten in den Hauptachsenkoordinaten dar (wie in <a href="hauptkomponentenanalyse-ctd..html#fig:05-penguin-allpairs-pcs">dieser Abbildung</a>).</p>
 </div>
 <div id="kovarianzmatrix-t" class="section level3 hasAnchor">
 <h3><span class="header-section-number">5.8.6</span> Kovarianzmatrix (T)<a href="hauptkomponentenanalyse-ctd..html#kovarianzmatrix-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -450,20 +459,10 @@ wobei <span class="math inline">\(s_{i\,j}\)</span> die Kovarianz der Daten <spa
 </div>
 <div class="footnotes">
 <hr />
-<ol>
-<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>allerdings mit 2 unvollsändigen Datenpunkten, die ich entfernt habe für unseere Beispiele<a href="hauptkomponentenanalyse-ctd..html#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet<a href="hauptkomponentenanalyse-ctd..html#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>wir dürfen aber nicht vergessen, dass Daten tüpischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den <em>features</em> gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens<a href="hauptkomponentenanalyse-ctd..html#fnref5" class="footnote-back">↩</a></p></li>
-</ol>
-</div>
-<div class="footnotes">
-<hr />
 <ol start="3">
-<li id="fn3"><p>allerdings mit 2 unvollsändigen Datenpunkten, die ich entfernt habe für unseere Beispiele<a href="hauptkomponentenanalyse-ctd..html#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele<a href="hauptkomponentenanalyse-ctd..html#fnref3" class="footnote-back">↩</a></p></li>
 <li id="fn4"><p>Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet<a href="hauptkomponentenanalyse-ctd..html#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>wir dürfen aber nicht vergessen, dass Daten tüpischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den <em>features</em> gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens<a href="hauptkomponentenanalyse-ctd..html#fnref5" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p>wir dürfen aber nicht vergessen, dass Daten typischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den <em>features</em> gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens<a href="hauptkomponentenanalyse-ctd..html#fnref5" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -471,8 +470,8 @@ wobei <span class="math inline">\(s_{i\,j}\)</span> die Kovarianz der Daten <spa
           </div>
         </div>
       </div>
-<a href="hauptkomponentenanalyse.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="hauptkomponentenanalyse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="clustering-und-hauptkomponentenanalyse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

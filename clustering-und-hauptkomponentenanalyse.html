@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse</title>
+  <title>6 Clustering und Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse" />
+  <meta property="og:title" content="6 Clustering und Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="github-repo" content="highlando/script-emds" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse" />
+  <meta name="twitter:title" content="6 Clustering und Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse" />
   
   <meta name="twitter:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="matrix-zerlegungen.html"/>
-<link rel="next" href="hauptkomponentenanalyse-ctd..html"/>
+<link rel="prev" href="hauptkomponentenanalyse-ctd..html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -195,220 +195,97 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="hauptkomponentenanalyse" class="section level1 hasAnchor">
-<h1><span class="header-section-number">4</span> Hauptkomponentenanalyse<a href="hauptkomponentenanalyse.html#hauptkomponentenanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Während in den vorherigen Kapiteln der Versuch war, einen funktionalen Zusammenhang in Daten zu bekommen, geht es jetzt darum, statistische Eigenschaften aus Daten zu extrahieren. Wir werden sehen, dass das auch nur ein anderer Blickwinkel auf das gleiche Problem <em>Wie können wir die Daten verstehen?</em> ist und auch die SVD wieder treffen.</p>
-<p>Weil ich den Ansatz gerne <em>ad hoc</em> also am Problem entlang motivieren und einführen will, vorweg schon mal die bevorstehenden Schritte</p>
+<div id="clustering-und-hauptkomponentenanalyse" class="section level1 hasAnchor">
+<h1><span class="header-section-number">6</span> Clustering und Hauptkomponentenanalyse<a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Mit der Hauptkomponentenanalyse haben wir eine Methode kennengelernt, Daten gemäß in Koordinaten darzustellen, die nach inhaltsschwere<a href="clustering-und-hauptkomponentenanalyse.html#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> absteigend sortiert sind. Die Konzentrierung der Varianz in den Hauptachsenrichtungen ermöglicht uns</p>
 <ol style="list-style-type: decimal">
-<li>Zentrierung/Skalierung der Daten</li>
-<li>Berechnung der Varianzen im Standard Koordinatensystem</li>
-<li>Überlegung, dass Daten in einem anderen Koordinatensystem eventuell besser dargestellt werden im Sinne</li>
-<li>Berechnung eines optimalen Koordinatenvektors mittels SVD.</li>
+<li>die Hauptkomponenten zu ermitteln, die den Datensatz optimal in niedrigerer Dimension darstellen (wobei optimal hier bedeutet dass die Varianz in der Differenz <span class="math inline">\({\mathbf{X}}-\hat {\mathbf{X}}\)</span> minimal ist)</li>
+<li>und in diesem Sinne die Daten optimal auf niedrigere Dimensionen zu reduzieren.</li>
 </ol>
-<p>Wir nehmen noch einmal die Covid-Daten her, vergessen kurz, dass es sich um eine Zeitreihe handelt und betrachten sie als Datenpunkte <span class="math inline">\((x_i, y_i)\)</span>, <span class="math inline">\(i=1,\dotsc,N\)</span>, im zweidimensionalen Raum mit Koordinaten <span class="math inline">\(x\)</span> und <span class="math inline">\(y\)</span>.</p>
-<p>Als erstes werden die Daten <strong>zentriert</strong> indem in jeder Komponente der Mittelwert
-<span class="math display">\[\begin{equation*}
-x_c = \frac 1N \sum_{i=1}^N x_i,
-\quad
-y_c = \frac 1N \sum_{i=1}^N y_i.
-\end{equation*}\]</span>
-abgezogen wird und dann noch mit dem inversen des Mittelwerts skaliert.</p>
-<p>Also, die Daten werden durch <span class="math inline">\((\frac{x_i-\bar x}{\bar x},\, \frac{y_i-\bar y}{\bar y})\)</span> ersetzt.</p>
-<div class="figure">
-<img src="bilder/04-covid-cntrd.png" alt="Fallzahlen von Sars-CoV-2 in Bayern im Oktober 2020 – zentriert" id="fig:cases-cntrd" style="width:65.0%" />
-<p class="caption">Fallzahlen von Sars-CoV-2 in Bayern im Oktober
-2020 – zentriert</p>
+<div id="rem-clustering-goal" class="JHSAYS">
+<p>Die noch offene Frage war, ob wir mit universalen Methoden aus den Merkmalen (oder deren Kombination) auf die Spezies schliessen können.</p>
 </div>
-<div id="variationskoeffizienten" class="section level2 hasAnchor">
-<h2><span class="header-section-number">4.1</span> Variationskoeffizienten<a href="hauptkomponentenanalyse.html#variationskoeffizienten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Als nächstes kann Jan sich fragen, wie gut die Daten durch ihren Mittelwert beschrieben werden und die Varianzen berechnen, die für zentrierte Daten so aussehen</p>
-<p><span class="math display">\[\begin{equation*}
-s_x^2 = \frac {1}{N-1} \sum_{i=1}^N x_i^2,
-\quad
-s_y^2 = \frac {1}{N-1} \sum_{i=1}^N y_i^2.
-\end{equation*}\]</span></p>
-<p>Im gegebenen Fall bekommen wir
-<span class="math display">\[\begin{equation*}
-s_x^2 \approx 0.32
-\quad
-s_y^2 \approx  0.57
-\end{equation*}\]</span>
-<!--Da der grosse Unterschied eventuell durch die verschiedene Skalierung der Daten herr&uuml;hrt berechnen wir besser die Variationskoeffizienten mittels
-\begin{equation*}
-\operatorname {VarK}(x) = \frac{\sqrt{s_x^2} }{x_c} \approx 0.56
-\quad
-\operatorname {VarK}(y) = \frac{\sqrt{s_y^2} }{y_c} \approx 0.76
-\end{equation*}-->
-und schließen daraus, dass in <span class="math inline">\(y\)</span> Richtung <em>viel passiert</em> und in <span class="math inline">\(x\)</span> Richtung <em>nicht ganz so viel</em>. Das ist jeder Hinsicht nicht befriedigend, wir können weder</p>
+<p>Ein einfacher Blick auf die Plots der Pinguin Merkmale (Abbildung <a href="hauptkomponentenanalyse-ctd..html#fig:05-penguin-allpairs-cntrd">5.1</a>) läßt uns schließen, dass</p>
 <ul>
-<li>Redundanzen ausmachen (eine Dimension der Daten vielleicht weniger wichtig?) noch</li>
-<li>dominierende Richtungen feststellen (obwohl dem Bild nach so eine offenbar existiert)</li>
+<li>ein Merkmal (z.B. <code>bill_depth</code>) auf jeden Fall nicht ausreichend ist für eine Unterscheidung) aber</li>
+<li>zwei Merkmale (z.B. <code>bill_length</code> vs. <code>flipper_length</code>) die farbigen Punkte (also die Spezies) schon etwas im Raum separieren, während</li>
+<li>mehrere Merkmale die Datenwolken im höher-dimensionalen Raum eventuell noch besser separieren, dass aber schwerlich nachvollziehbar ist.</li>
 </ul>
-<p>und müssen konstatieren, dass die Repräsentation der Daten im <span class="math inline">\((x,y)\)</span> Koordinatensystem nicht optimal ist.</p>
-<p>Die Frage ist also, ob es ein Koordinatensystem gibt, dass die Daten besser darstellt.</p>
-<div id="rem-coors" class="JHSAYS">
-<p>Ein Koordinatensystem ist nichts anderes als eine Basis. Und die Koordinaten eines Datenpunktes sind die Komponenten des entsprechenden Vektors in dieser Basis. Typischerweise sind Koordinatensysteme orthogonal (das heißt eine Orthogonalbasis) und häufig noch orientiert (die Basisvektoren haben eine bestimmte Reihenfolge und eine bestimmte Richtung).</p>
-</div>
-</div>
-<div id="koordinatenwechsel" class="section level2 hasAnchor">
-<h2><span class="header-section-number">4.2</span> Koordinatenwechsel<a href="hauptkomponentenanalyse.html#koordinatenwechsel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Sei nun also <span class="math inline">\(\{b_1,b_2\}\subset \mathbb R^{2}\)</span> eine orthogonale Basis.</p>
-<div id="rem-ortho-bas" class="JHSAYS">
-<p>Wie allgemein gebräuchlich, sagen wir <em>orthogonal</em>, meinen aber <em>orthonormal</em>. In jedem Falle soll gelten
+<p>Im 2D Fall allerdings, würde Jan einen zusätzlich gefundenen Pinguin vermessen, den neuen Datenpunkt im Diagramm eintragen und dann schauen, in welchem Bereich er landet um daraus die Spezies abzuleiten. Alles mit reichlich Vorwissen (z.B. dass es 3 Spezies gibt und welche Merkmale die Unterscheidung am besten erlauben).</p>
+<p>Für allgemeine Fälle wird die Identifikation der Bereiche (manchmal ist es sogar gar nicht klar wieviele Bereiche nötig oder zielführend sind) und die Zuweisung der Datenpunkte von sogenannten <strong>clustering</strong> Algorithmen übernommen.</p>
+<div id="clustering-im-allgemeinen" class="section level2 hasAnchor">
+<h2><span class="header-section-number">6.1</span> Clustering im Allgemeinen<a href="clustering-und-hauptkomponentenanalyse.html#clustering-im-allgemeinen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Das Ziel ist es in einer Datenwolke Bereiche (<strong>cluster</strong>) zu identifizieren, sodass die vorhandenen (oder auch neu hinzukommende) Datenpunkte anhand ihrer Merkmale den Bereichen zugeordnet (<em>klassifiziert</em>) werden können.</p>
+<p>Je nach Anwendungsfall und Vorwissen kann diese Aufgabe verschieden definiert werden</p>
+<ul>
+<li>Ist die Anzahl der cluster bekannt (wie bei unseren Pinguinen wo es einfach 3 Arten zu unterscheiden gibt), soll der Datenraum optimal in entsprechend viele nicht überlappende Bereiche geteilt.</li>
+<li>Anderenfalls sollen die Anzahl der Cluster und die zugehörigen Bereiche simultan optimal bestimmt werden.</li>
+</ul>
+<p>Typischerweise werden die cluster durch ihre Mittelpunkte (<strong>centroids</strong>) <span class="math inline">\(c_j\in \mathbb R^{n}\)</span> bestimmt, <span class="math inline">\(j=1,\dots,K\)</span>, wobei <span class="math inline">\(K\)</span> die Anzahl der cluster ist sowie eine Zuweisungsregel <span class="math inline">\(k\colon {\mathbf{x} _ i}\mapsto \{1,\dots,K\}\)</span> die zu einem Datenpunkt das entsprechende cluster aussucht. Die Zuweisung passiert generell so, dass einem Datenpunkt <span class="math inline">\({\mathbf{x} _ i}\)</span> der naheste Zentroid zugewiesen wird, also <span class="math inline">\(k({\mathbf{x} _ i})\)</span> ist der Index <span class="math inline">\(j^*\)</span>, sodass
 <span class="math display">\[\begin{equation*}
-b_1^T b_1=1, \quad b_2^Tb_2=1, \quad b_1^Tb_2 = b_2^Tb_1 = 0.
+\|{\mathbf{x} _ i}- c_{j^*}\| = \min_{j=1,\dots K} \|{\mathbf{x} _ i}- c_{j^*}\|
 \end{equation*}\]</span></p>
+<p>Die Qualität des clusterings wird über die summierte Differenz
+<span class="math display">\[\begin{equation*}
+\sum_{i=1}^N\|{\mathbf{x} _ i}- c_{k({\mathbf{x} _ i})}\|
+\end{equation*}\]</span>
+bewertet.</p>
+<div id="cluster-norms" class="JHSAYS">
+<p>Wir sehen, dass zum Bewerten (und damit Definieren) der Cluster eine Norm (oder auch einfach eine Metrik) benutzt und machen uns klar, dass das Ergebnis des clusterings stark von der Wahl der Norm abhängen kann.</p>
 </div>
-<p>Wir können also alle Datenpunkte
-<span class="math inline">\(\mathbf x_i = \begin{bmatrix} x_i \\ y_i \end{bmatrix}\)</span>
-in der neuen Basis darstellen mit eindeutig bestimmten Koeffizienten <span class="math inline">\(\alpha_{i1}\)</span> und <span class="math inline">\(\alpha_{i2}\)</span> mittels
-<span class="math display">\[\begin{equation*}
-\mathbf x_i = \alpha_{i1}b_1 + \alpha_{i2}b_2.
-\end{equation*}\]</span>
-Für orthogonale Basen sind die Koeffizienten durch <em>testen</em> mit dem Basisvektor einfach zu berechnen:
-<span class="math display">\[\begin{align*}
-b_1^T\mathbb x_i = b_1^T(\alpha_{i1}b_1 + \alpha_{i2}b_2) = \alpha_{i1}b_1^Tb_1 + \alpha_{i2}b_1^Tb_2 = \alpha_{i1}\cdot 1 + \alpha_{i2} \cdot 0 = \alpha_{i1},\\
-b_2^T\mathbb x_i = b_2^T(\alpha_{i1}b_1 + \alpha_{i2}b_2) = \alpha_{i1}b_1^Tb_2 + \alpha_{i2}b_2^Tb_2 = \alpha_{i1}\cdot 0 + \alpha_{i2}\cdot 1 = \alpha_{i2}.
-\end{align*}\]</span>
-Es gilt also
-<span class="math display">\[\begin{equation*}
-\alpha_{i1} = b_1^T\mathbb x = b_1^T\begin{bmatrix}
-x_i \\ y_i
-\end{bmatrix}, \quad
-\alpha_{i2} = b_2^T\mathbb x = b_2^T\begin{bmatrix}
-x_i \\ y_i
-\end{bmatrix}.
-\end{equation*}\]</span></p>
-<p>Damit, können wir jeden Datenpunkt <span class="math inline">\(\mathbf x_i=(x_i, y_i)\)</span> in den neuen Koordinaten <span class="math inline">\((\alpha_{i1}, \alpha_{i2})\)</span> ausdrücken.</p>
-<p>Zunächst halten wir fest, dass auch in den neuen Koordinaten die Daten zentriert sind. Es gilt nämlich, dass
-<span class="math display">\[\begin{align*}
-\frac 1N \sum_{i=1}^N \alpha_{ji}=\frac 1N \sum_{i=1}^N b_j^T\mathbb x_i 
-=\frac 1N b_j^T \sum_{i=1}^N \begin{bmatrix} x_i \\ y_i \end{bmatrix}
-=&amp; \frac 1N b_j^T \begin{bmatrix} \sum_{i=1}^N x_i \\ \sum_{i=1}^N y_i \end{bmatrix}\\
-&amp;=b_j^T \begin{bmatrix} \frac 1N \sum_{i=1}^N x_i \\ \frac 1N \sum_{i=1}^N y_i \end{bmatrix}
-=b_j^T \begin{bmatrix} 0 \\ 0 \end{bmatrix} = 0,
-\end{align*}\]</span>
-für <span class="math inline">\(j=1,2\)</span>.</p>
-<p>Desweiteren gilt wegen der Orthogonalität von <span class="math inline">\(B=[b_1~b_2]\in \mathbb R^{2\times 2}\)</span>, dass
-<span class="math display">\[\begin{equation*}
-x_{i}^2 + y_{i}^2 = \|\mathbb x_i\|^2 = \|B^T\mathbb x_i\|^2 
-= \|\begin{bmatrix} b_1^T \\ b_2^T \end{bmatrix} \mathbb x_i\|^2
-= \|\begin{bmatrix} b_1^T\mathbb x \\ b_2^T\mathbb x \end{bmatrix}\|^2
-= \|\begin{bmatrix} \alpha_{i1} \\ \alpha_{i2} \end{bmatrix}\|^2
-= \alpha_{i1}^2 + \alpha_{i2}^2
-\end{equation*}\]</span>
-woraus wir folgern, dass in jedem orthogonalen Koordinatensystem, die Summe der beiden Varianzen die gleiche ist:
-<span class="math display">\[\begin{equation*}
-s_x^2 + s_y^2 = \frac{1}{N-1}\sum_{i=1}^N(x_i^2 + y_i^2) = \frac{1}{N-1}\sum_{i=1}^N(\alpha_{i1}^2 + \alpha_{i2}^2) =: s_1^2 + s_2^2.
-\end{equation*}\]</span></p>
-<p>Das bedeutet, dass durch die Wahl des Koordinatensystems die Varianz als Summe nicht verändert wird. Allerdings können wir das System so wählen, dass eine der Varianzen in Achsenrichtung maximal wird (und die übrige(n) entsprechend klein).</p>
-<p>Analog gilt für den eigentlichen Mittelwert der (nichtzentrierten) Daten, dass die Norm gleich bleibt. In der Tat, für die <em>neuen</em> Koordinaten des Mittelwerts gilt in der Norm
-<span class="math display">\[\begin{equation*}
-\|
-\begin{bmatrix}
-\alpha_{c1} \\ \alpha_{c2}
-\end{bmatrix}
-\|
-=
-\|
-B^T
-\begin{bmatrix}
-x_c \\ y_c
-\end{bmatrix}
-\|
-=
-\|
-\begin{bmatrix}
-x_c \\ y_c
-\end{bmatrix}
-\|.
-\end{equation*}\]</span></p>
 </div>
-<div id="maximierung-der-varianz-in-haupt-achsenrichtung" class="section level2 hasAnchor">
-<h2><span class="header-section-number">4.3</span> Maximierung der Varianz in (Haupt)-Achsenrichtung<a href="hauptkomponentenanalyse.html#maximierung-der-varianz-in-haupt-achsenrichtung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Wir wollen nun also <span class="math inline">\(b_1\in \mathbb R^{2}\)</span>, mit <span class="math inline">\(\|b_1\|=1\)</span> so wählen, dass
-<span class="math display">\[\begin{equation*}
-s_1^2 = \frac{1}{N-1}\sum_{i=1}^n \alpha_{i1}^2
-\end{equation*}\]</span>
-maximal wird. Mit der Matrix <span class="math inline">\(\mathbf X\)</span> aller Daten
-<span class="math display">\[\begin{equation*}
-\mathbf X = \begin{bmatrix}
-x_1 &amp; y_1 \\ x_2 &amp; y_2 \\ \vdots &amp; \vdots \\ x_N &amp; y_N
-\end{bmatrix} = 
-\begin{bmatrix}
-\mathbf x_1^T\\ \mathbf x_2^T  \\  \vdots \\ \mathbf x_N^T
-\end{bmatrix} 
-\in \mathbb R^{N\times 2}
-\end{equation*}\]</span>
-können wir die Varianz in <span class="math inline">\(b_1\)</span>-Richtung kompakt schreiben als
-<span class="math display">\[\begin{equation*}
-s_1^2 = \frac{1}{N-1}\sum_{i=1}^n \alpha_{i1}^2
-= \frac{1}{N-1}\sum_{i=1}^n (b_1^T\mathbf x_i)^2
-= \frac{1}{N-1}\sum_{i=1}^n (\mathbf x_i^Tb_1)^2
-= \frac{1}{N-1}\| \mathbf X b_1 \|^2
-\end{equation*}\]</span>
-Wir sind also ein weiteres mal bei einem Optimierungsproblem (diesmal mit Nebenbedingung) angelangt:
-<span class="math display">\[\begin{equation*}
-\max_{b\in \mathbb R^{2},\, \|b\|=1} \|\mathbf X b\|^2
-\end{equation*}\]</span>
-Die Lösung dieses Problems ist mit <span class="math inline">\(b=v_1\)</span> gegeben, wobei <span class="math inline">\(v_1\)</span> der erste (rechte) Singulärvektor von <span class="math inline">\(\mathbf X\)</span> ist:
-<span class="math display">\[\begin{equation*}
-\mathbf X = U \Sigma V^T = U \Sigma \begin{bmatrix}
-v_1^T \\ v_2^T
-\end{bmatrix}.
-\end{equation*}\]</span>
-Und damit rechnen wir auch direkt nach, dass im neuen Koordinatensystem <span class="math inline">\(\{b_1, b_2\}=\{v_1, v_2\}\)</span> die Varianzen <span class="math inline">\(s_1^2\)</span> und <span class="math inline">\(s_2^2\)</span> (bis auf einen Faktor von <span class="math inline">\(\frac{1}{N-1}\)</span>) genau die quadrierten Singulärwerte von <span class="math inline">\(\mathbf X\)</span> sind:
-<span class="math display">\[\begin{align*}
-(N-1)s_1^2 
-= \|\mathbf X v_1 \|^2 = \|U \Sigma \begin{bmatrix} v_1^T \\ v_2^T \end{bmatrix}v_1\|^2
-= \|\Sigma \begin{bmatrix} v_1^Tv_1 \\ v_2^T v_1\end{bmatrix}\|^2
-=  \|\Sigma \begin{bmatrix} 1 \\  0\end{bmatrix}\|^2
-=\sigma_1^2,\\
-(N-1)s_2^2 
-= \|\mathbf X v_2 \|^2 = \|U \Sigma \begin{bmatrix} v_1^T \\ v_2^T \end{bmatrix}v_2\|^2
-= \|\Sigma \begin{bmatrix} v_1^Tv_2 \\ v_2^T v_2\end{bmatrix}\|^2
-=  \|\Sigma \begin{bmatrix} 0 \\  1\end{bmatrix}\|^2
-=\sigma_2^2
-\end{align*}\]</span></p>
-<p>Für unser Covid Beispiel ergibt sich
-<span class="math display">\[\begin{equation*}
-V^T \approx
-\begin{bmatrix}
-0.5848 &amp;  0.8111 \\
-0.8111 &amp; -0.5848
-\end{bmatrix}
-\end{equation*}\]</span>
-also
-<span class="math display">\[\begin{equation*}
-b_1 = v_1 = \begin{bmatrix}
-0.5848 \\  0.8111 
-\end{bmatrix}
-\quad
-b_2 = v_2 = \begin{bmatrix}
-0.8111 \\ -0.5848
-\end{bmatrix}
-\end{equation*}\]</span>
-als neue Koordinatenrichtungen mit
-<span class="math display">\[\begin{equation*}
-s_1^2 \approx 0.85, \quad s_2^2 \approx 0.04,
-\end{equation*}\]</span>
-was bereits eine deutliche Dominanz der <span class="math inline">\(v_1\)</span>-Richtung – genannt  – zeigt.</p>
-<p>Im Hinblick auf die nächste Vorlesung, in der wir Anwendungen und Eigenschaften der PCA untersuchen werden, noch ein Plot der Daten mit der <span class="math inline">\(v_1\)</span>-Richtung als Linie eingezeichnet.</p>
-<div class="figure">
-<img src="bilder/04-covid-cntrd-HA.png" alt="Fallzahlen von Sars-CoV-2 in Bayern im Oktober 2020 – zentriert/skaliert/Hauptachse" id="fig:cases-cntrd-HA" style="width:65.0%" />
-<p class="caption">Fallzahlen von Sars-CoV-2 in Bayern im Oktober
-2020 – zentriert/skaliert/Hauptachse</p>
+<div id="k-means-clustering" class="section level2 hasAnchor">
+<h2><span class="header-section-number">6.2</span> K-means Clustering<a href="clustering-und-hauptkomponentenanalyse.html#k-means-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Aus der Definition und der Bewertung der Cluster ergibt sich ein einfacher aber sehr oft und erfolgreich genutzter Algorithmus zum clustering, der <em>k-means</em> Algorithmus. Er funktioniert wie folgt</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource py numberLines"><code class="sourceCode python"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># Initialisierung: K zufaellige centroids c_j</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="co">#</span></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="co"># Wiederholung bis zur Stagnation</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="co">#   Berechnung der Zuordnung: k: x_i -&gt; c_j</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="co">#   Update der centroids: c_j &lt;- mean{ x_i | x_i aus cluster c_j }</span></a></code></pre></div>
+<p>Ausgehend von zufällig gewählten centroids, wird die Zuordnung berechnent und dann der Mittelwert aus jedem Cluster als neuer centroid definiert. Dieses Verfahren wird solange wiederholt bis eine maximale Iterationszahl erreicht ist oder die centroids sich nur noch wenig oder gar nicht mehr verändern. In Abbildung <a href="clustering-und-hauptkomponentenanalyse.html#fig:k-means-evoexa">6.1</a> ist eine beispielhafte Ausführung des Algorithmus auf Beispieldaten dargestellt.</p>
+<!--![](bilder/06-plot1.png){width="30%"}-->
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:k-means-evoexa"></span>
+<img src="bilder/06-plot1.png" alt="Entwicklung der Centroids im Verlauf des k-means clustering Algorithmus auf Beispieldaten" width="40%" /><img src="bilder/06-plot2.png" alt="Entwicklung der Centroids im Verlauf des k-means clustering Algorithmus auf Beispieldaten" width="40%" /><img src="bilder/06-plot4.png" alt="Entwicklung der Centroids im Verlauf des k-means clustering Algorithmus auf Beispieldaten" width="40%" /><img src="bilder/06-plot6.png" alt="Entwicklung der Centroids im Verlauf des k-means clustering Algorithmus auf Beispieldaten" width="40%" />
+<p class="caption">
+Figure 6.1: Entwicklung der Centroids im Verlauf des k-means clustering Algorithmus auf Beispieldaten
+</p>
 </div>
+</div>
+<div id="clustering-und-hauptkomponentenanalyse-1" class="section level2 hasAnchor">
+<h2><span class="header-section-number">6.3</span> Clustering und Hauptkomponentenanalyse<a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="training-und-testing" class="section level2 hasAnchor">
+<h2><span class="header-section-number">6.4</span> Training und Testing<a href="clustering-und-hauptkomponentenanalyse.html#training-und-testing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="am-beispiel-der-pinguine" class="section level2 hasAnchor">
+<h2><span class="header-section-number">6.5</span> Am Beispiel der Pinguine<a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele<a href="hauptkomponentenanalyse-ctd..html#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet<a href="hauptkomponentenanalyse-ctd..html#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p>wir dürfen aber nicht vergessen, dass Daten typischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den <em>features</em> gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens<a href="hauptkomponentenanalyse-ctd..html#fnref5" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>wenn wir Inhalt mit Varianz gleich setzen<a href="clustering-und-hauptkomponentenanalyse.html#fnref6" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="6">
+<li id="fn6"><p>wenn wir Inhalt mit Varianz gleich setzen<a href="clustering-und-hauptkomponentenanalyse.html#fnref6" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="matrix-zerlegungen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="hauptkomponentenanalyse-ctd..html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="hauptkomponentenanalyse-ctd..html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

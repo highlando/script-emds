@@ -168,6 +168,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.7" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-pinguin-daten"><i class="fa fa-check"></i><b>5.7</b> Am Beispiel der Pinguin Daten</a></li>
 <li class="chapter" data-level="5.8" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.8</b> Aufgaben</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="6.1" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-im-allgemeinen"><i class="fa fa-check"></i><b>6.1</b> Clustering im Allgemeinen</a></li>
+<li class="chapter" data-level="6.2" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#k-means-clustering"><i class="fa fa-check"></i><b>6.2</b> K-means Clustering</a></li>
+<li class="chapter" data-level="6.3" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse-1"><i class="fa fa-check"></i><b>6.3</b> Clustering und Hauptkomponentenanalyse</a></li>
+<li class="chapter" data-level="6.4" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#training-und-testing"><i class="fa fa-check"></i><b>6.4</b> Training und Testing</a></li>
+<li class="chapter" data-level="6.5" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine"><i class="fa fa-check"></i><b>6.5</b> Am Beispiel der Pinguine</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -323,7 +330,7 @@ Es genügt also nur die ersten <span class="math inline">\(m\)</span> Spalten vo
 <span class="math display">\[\begin{equation*}
 A \approx A_{\hat r}
 \end{equation*}\]</span>
-wobei <span class="math inline">\(A_{\hat r}\)</span> aus der <em>truncated SVD</em> von <span class="math inline">\(A\)</span> erzeugt wurde. Allerdings ist diese Approximation von <span class="math inline">\(A\)</span> durch optimal in dem Sinne, dass es keine Matrix vom Rang <span class="math inline">\(\hat r \geq r=\operatorname{Rg}(A)\)</span> gibt, die <span class="math inline">\(A\)</span> (in der <em>induzierten</em> euklidischen Norm<a href="hauptkomponentenanalyse-ctd..html#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>) besser approximiert. Es gilt
+wobei <span class="math inline">\(A_{\hat r}\)</span> aus der <em>truncated SVD</em> von <span class="math inline">\(A\)</span> erzeugt wurde. Allerdings ist diese Approximation von <span class="math inline">\(A\)</span> durch optimal in dem Sinne, dass es keine Matrix vom Rang <span class="math inline">\(\hat r \geq r=\operatorname{Rg}(A)\)</span> gibt, die <span class="math inline">\(A\)</span> (in der <em>induzierten</em> euklidischen Norm<a href="clustering-und-hauptkomponentenanalyse.html#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>) besser approximiert. Es gilt
 <span class="math display">\[\begin{equation*}
 \min_{B\in \mathbb C^{m\times n}, \operatorname{Rg}(B)=\hat r} \|A-B\|_2 = \|A-A_{\hat r}\|_2 = \sigma_{\hat r + 1};
 \end{equation*}\]</span>
@@ -502,7 +509,7 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
 <div id="truncated-svd-pt" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.8</span> Truncated SVD (P+T)<a href="matrix-zerlegungen.html#truncated-svd-pt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
-<li><strong>(P)</strong> Berechnen und plotten sie die Singulärwerte einer <span class="math inline">\(4000\times 1000\)</span> Matrix mit zufälligen Einträgen und die einer Matrix mit “echten” Daten (hier Simulationsdaten einer Stroemungssimulation)<a href="hauptkomponentenanalyse-ctd..html#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Berechnen sie den Fehler der <em>truncated SVD</em> <span class="math inline">\(\|A-A_{\hat r}\|\)</span> für <span class="math inline">\(\hat r = 10, 20, 40\)</span> für beide Matrizen.</li>
+<li><strong>(P)</strong> Berechnen und plotten sie die Singulärwerte einer <span class="math inline">\(4000\times 1000\)</span> Matrix mit zufälligen Einträgen und die einer Matrix mit “echten” Daten (hier Simulationsdaten einer Stroemungssimulation)<a href="clustering-und-hauptkomponentenanalyse.html#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Berechnen sie den Fehler der <em>truncated SVD</em> <span class="math inline">\(\|A-A_{\hat r}\|\)</span> für <span class="math inline">\(\hat r = 10, 20, 40\)</span> für beide Matrizen.</li>
 <li><strong>(T)</strong> Was lässt sich bezüglich einer Kompression der Daten mittels SVD für die beiden Matrizen sagen. (Vergleichen sie die plots der Singulärwerte und beziehen sie sich auf die gegebene Formel für die Differenz).</li>
 <li><strong>(P+T)</strong> Für die “echten” Daten: Speichern sie die Faktoren der bei <span class="math inline">\(\hat r=40\)</span> abgeschnittenen SVD und vergleichen Sie den Speicherbedarf der Faktoren und der eigentlichen Matrix.</li>
 </ol>

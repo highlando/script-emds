@@ -1911,7 +1911,7 @@ Typischerweise werden die cluster durch ihre Mittelpunkte (\textbf{centroids}) \
 
 Die Qualität des clusterings wird über die summierte Differenz
 \begin{equation*}
-\sum_{i=1}^N\|{\mathbf{x} _ i}- c_{k({\mathbf{x} _ i})}\|
+e = \sum_{i=1}^N\|{\mathbf{x} _ i}- c_{k({\mathbf{x} _ i})}\|
 \end{equation*}
 bewertet.
 
@@ -1920,6 +1920,17 @@ bewertet.
 Wir sehen, dass zum Bewerten (und damit Definieren) der Cluster eine Norm (oder auch einfach eine Metrik) benutzt und machen uns klar, dass das Ergebnis des clusterings stark von der Wahl der Norm abhängen kann.
 
 \end{JHSAYS}
+
+Ist die Anzahl der Cluster nicht vorgegeben, ist wiederum ein guter Kompromiss zwischen
+
+\begin{itemize}
+\item
+  \emph{overfitting} -- je höher die Anzahl der cluster ist, desto ``näher'' können die Daten an den centroids liegen, allerdings wird die Klassifizierung oder Kategorisierung weniger aussagekräftig wenn quasi jeder Datenpunkt sein eigenes cluster bildet.
+\item
+  \emph{underfitting} -- wenige Cluster erlauben zwar sehr konkrete Gruppierung von Daten, allerdings mit dem möglichen Nachteil, dass wesentliche Merkmale nicht berücksichtigt oder falsch klassifiziert werden
+\end{itemize}
+
+In der Praxis behilft Jan sich gerne mit einer \emph{L-Kurve} (oder auch \emph{ellbow plot}), die den Klassifikationsfehler gegenüber der Anzahl der zugelassenen cluster aufträgt: Diese Kurve \(e(K)\) ist -- in der Theorie -- positiv, maximal für \(K=1\) und fällt monoton mit der Anzahl \(K\) der cluster. Zeigt diese Kurve einen merklichen Knick bei \(K^*\) wird dieser Wert gerne als passender Kompromiss genommen.
 
 \hypertarget{k-means-clustering}{%
 \section{K-means Clustering}\label{k-means-clustering}}
@@ -1950,10 +1961,55 @@ Ausgehend von zufällig gewählten centroids, wird die Zuordnung berechnent und 
 \hypertarget{clustering-und-hauptkomponentenanalyse-1}{%
 \section{Clustering und Hauptkomponentenanalyse}\label{clustering-und-hauptkomponentenanalyse-1}}
 
+Der k-means Algorithmus basiert allein auf der Bestimmung von Abständen und Mittelwerten -- beides kann in beliebigen Dimensionen \(n\) der Daten realisiert werden. Allerdings ist die Klassifizierung in höheren Datendimensionen ungleich schwieriger da
+
+\begin{itemize}
+\item
+  für eine vergleichsweise ähnlich große Einzugsbereiche, müssen ungleich mehr clusters verwendet werden. Beispielsweise lößt sich ein Quadrat der Seitenlänge 2 in \(4=2^2\) Quadrate der Größe 1 aufteilen. Für einen Würfel (eine Dimension mehr), braucht Jan entsprechend \(8=2^3\) (das heisst doppelt so viele) Unterbereiche. In vier Dimensionen wären es bereits \(2^4\). Und so weiter.
+\item
+  die Berechnung der Abstände und Zuordnung zu den clusters wird aufwändiger
+\item
+  es gibt ungleich mehr Konfigurationen für die centroids. Es braucht unter Umständen mehr Iterationen um einen stabilen Zustand zu erreichen.
+\end{itemize}
+
+Ein einfacher Zugang wäre es, eine reduzierte Anzahl der Merkmale zur Klassifizierung einzusetzen. Allerdings wird die Qualität der Klassifizierung davon abhöngen, wie geeignet die ausgesuchten Merkmale dafür sind. Ein Blick auf die verschiedenen Plots in Abbildung \ref{fig:05-penguin-allpairs} kann helfen zu verstehen, dass manche Paare von Koordinaten besser als andere geeignet sind um die 3 Pinguinarten zu unterscheiden.
+
+Folgen wir hingegen der Annahme, dass eine hohe Varianz einen hohen Informationsgehalt bedeutet, können wir die Hauptkomponentenanalyse einsetzen um Richtungen von höchster Varianz zu identifizieren und auch Richtungen die überhaupt keine Korrelationen aufzeigen auszuschließen. In der Tat suggerieren die Plots der Pinguindaten in den Hauptkoordinaten (Abbildung \ref{fig:05-penguin-allpairs-pcs}), dass die ersten Hauptrichtungen die Spezies gut unterscheiden, während die letzten Richtungen ein scheinbar zufälliges Rauschen zeigen.
+
+\leavevmode\hypertarget{rem-pca-clustering}{}%
+\begin{JHSAYS}
+Auch wenn die Hauptrichtungen die Daten nicht unbedingt besser separieren, ermöglichen sie doch das ausschließen der (transformierten) Merkmale ohne Informationsgehalt und damit einen strukturierten und allgemeinen Ansatz zur Klassifizierung hochdimensionaler Daten mit reduzierten Merkmalen.
+
+\end{JHSAYS}
+
 \hypertarget{training-und-testing}{%
 \section{Training und Testing}\label{training-und-testing}}
 
+Das Klassifizieren ist ein erstes konkretes Beispiel dafür, wie aus Daten ein Modell abgeleitet wird. Für die gemessenen Pinguine kennen wir die Spezies, das Ziel ist, ein Modell zu haben mit dem wir zukünftig angetroffene Pinguine anhand ihrer gemessenen Merkmale klassifizieren können.
+
+Allgemein wird für einen solchen neuen Datenpunkt wie folgt vorgegangen
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  (Gegebenenfalls) Normalisierung des Datenpunktes durch Skalierung und Abziehen des (zuvor ermittelten) Mittelwertes.
+\item
+  (Gegebenenfalls) Transformation in (reduzierte) Hauptkoordinaten.
+\item
+  Test zu welchen centroid \(c_j\), \(j=1,\dots,K\) der (transformierte) Datenpunkt am nächsten liegt.
+\end{enumerate}
+
+Der in (3.) ermittelte Index \(j^*\) ist dann das Cluster, dem der Datenpunkt zugeordnet wird.
+
+Der Sprachgebrauch hier ist, dass das Modell mit bekannten Daten \emph{trainiert} wird und dann für neue Daten \emph{angewendet} wird\footnote{Im \emph{machine learning} wird gerne von \emph{generalization} gesprochen}. Um zu evaluieren, ob das Modell ``funktioniert'' ist das folgende Vorgehen ebenso naheliegend wie standardmäßig angewandt.
+
+Die vorhandenen Daten werden aufgeteilt in \textbf{Trainingsdaten}, mit denen das Modell trainiert werden, und \textbf{Testdaten}, mit denen die Vorhersagekraft des Modells evaluiert wird. Wie die Aufteilung passiert, wird anhand von Erfahrungswerten und im Hinblick auf die vorliegende Aufgabe entschieden.
+
 \hypertarget{am-beispiel-der-pinguine}{%
 \section{Am Beispiel der Pinguine}\label{am-beispiel-der-pinguine}}
+
+\hypertarget{aufgaben-3}{%
+\section{Aufgaben}\label{aufgaben-3}}
 
 \end{document}

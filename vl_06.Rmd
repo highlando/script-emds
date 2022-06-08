@@ -111,4 +111,34 @@ Die vorhandenen Daten werden aufgeteilt in **Trainingsdaten**, mit denen das Mod
 
 ## Aufgaben
 
+### K-means von Hand (T)
+
+F&uuml;hren sie h&auml;ndisch und nach Augenschein zwei Iterationen des K-means Algorithmus auf den vom folgenden Skript erzeugten `(x,z)` Daten durch.
+
+```{.py}
+from numpy.random import default_rng
+import matplotlib.pyplot as plt
+
+# Zufallszahlengenerator mit "seed=1"
+rng = default_rng(1)
+
+x = rng.beta(1, 1, 9)
+y = rng.beta(1, 1, 9)
+z = (x*x*y)**(1/3)
+
+cntro = rng.beta(1, 1, 2)
+cntrt = rng.beta(1, 1, 2)
+
+plt.figure(1, figsize=(5, 3))
+plt.plot(x, z, '.', label='data')
+plt.plot(cntro[0], cntro[1], 's', label='$c_1$')
+plt.plot(cntrt[0], cntrt[1], 's', label='$c_2$')
+plt.legend(loc='upper left')
+plt.title('K-means: initialer Zustand')
+plt.show()
+```
+
+```{r k-means-evoexaexrcs, echo=FALSE, fig.show='hold', fig.cap='Bitte gerne hier die Evolution einzeichnen', out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics(c("bilder/06-manual-kmeans-ini.png", "bilder/06-manual-kmeans-x.png", "bilder/06-manual-kmeans-x.png"))
+```
 

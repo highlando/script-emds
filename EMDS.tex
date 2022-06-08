@@ -2012,4 +2012,78 @@ Die vorhandenen Daten werden aufgeteilt in \textbf{Trainingsdaten}, mit denen da
 \hypertarget{aufgaben-3}{%
 \section{Aufgaben}\label{aufgaben-3}}
 
+\hypertarget{k-means-von-hand-t}{%
+\subsection{K-means von Hand (T)}\label{k-means-von-hand-t}}
+
+Führen sie händisch und nach Augenschein zwei Iterationen des K-means Algorithmus auf den vom folgenden Skript erzeugten \texttt{(x,z)} Daten durch. Dazu bitte, Beispielsweise in Abbildung \ref{fig:k-means-evoexaexrcs}, in jedem Schritt die Clusterzugehörigkeiten markieren und die neuen (geschätzten) Mittelpunkte \(c_1\) und \(c_2\) eintragen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ default_rng}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\CommentTok{# Zufallszahlengenerator mit "seed=1"}
+\NormalTok{rng }\OperatorTok{=}\NormalTok{ default_rng(}\DecValTok{1}\NormalTok{)}
+
+\CommentTok{# Zufallsdaten mit etwas Korrelation fuer z}
+\NormalTok{x }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{)}
+\NormalTok{y }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{)}
+\NormalTok{z }\OperatorTok{=}\NormalTok{ (x}\OperatorTok{*}\NormalTok{x}\OperatorTok{*}\NormalTok{y)}\OperatorTok{**}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{)}
+
+\CommentTok{# Zufallswahl der initialen centroids}
+\NormalTok{cntro }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{cntrt }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+
+\NormalTok{plt.figure(}\DecValTok{1}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\NormalTok{plt.plot(x, z, }\StringTok{'.'}\NormalTok{, label}\OperatorTok{=}\StringTok{'data'}\NormalTok{)}
+\NormalTok{plt.plot(cntro[}\DecValTok{0}\NormalTok{], cntro[}\DecValTok{1}\NormalTok{], }\StringTok{'s'}\NormalTok{, label}\OperatorTok{=}\StringTok{'$c_1$'}\NormalTok{)}
+\NormalTok{plt.plot(cntrt[}\DecValTok{0}\NormalTok{], cntrt[}\DecValTok{1}\NormalTok{], }\StringTok{'s'}\NormalTok{, label}\OperatorTok{=}\StringTok{'$c_2$'}\NormalTok{)}
+\NormalTok{plt.legend(loc}\OperatorTok{=}\StringTok{'upper left'}\NormalTok{)}
+\NormalTok{plt.title(}\StringTok{'K-means: initialer Zustand'}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{bilder/06-manual-kmeans-ini} \includegraphics[width=0.8\linewidth]{bilder/06-manual-kmeans-x} \includegraphics[width=0.8\linewidth]{bilder/06-manual-kmeans-x} 
+
+}
+
+\caption{Bitte gerne hier die Evolution einzeichnen}\label{fig:k-means-evoexaexrcs}
+\end{figure}
+
+\hypertarget{k-means-als-algorithmus-p}{%
+\subsection{K-means als Algorithmus (P)}\label{k-means-als-algorithmus-p}}
+
+Schreiben sie eine Funktion, die mittels des k-means Algorithmus einen Datensatz in beliebiger Dimension in \texttt{K} vorgegebene cluster gruppiert und die labels der Daten sowie die Koordinaten der centroids zurueckgeben.
+
+Testen sie die Funktion am obigen theoretischen Beispiel.
+
+\hypertarget{k-means-fuer-die-pinguine}{%
+\subsection{K-means fuer die Pinguine}\label{k-means-fuer-die-pinguine}}
+
+Wenden sie den Algorithmus auf die (zentrierten und auf in jeder Richtung auf \([-1, 1]\) skalierten) Pinguindaten an.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  In der gesamten Datendimension
+\item
+  Fuer zwei beliebig gewaehlte Merkmale
+\item
+  Fuer die ersten zwei Hauptkomponenten
+\end{enumerate}
+
+\hypertarget{l-curve}{%
+\subsection{L-curve}\label{l-curve}}
+
+Bestimmen sie die L-Kurve fuer die Pinguindaten fuer \texttt{K=1,2,3,4,...,8} -- fuer das clustering in den ersten beiden Hauptrichtungen.
+
+\hypertarget{trainieren-und-testen}{%
+\subsection{Trainieren und Testen}\label{trainieren-und-testen}}
+
+Bestimmen sie die cluster fuer \texttt{K=3} in den ersten beiden Hauptrichtungen auf Basis von 90\% der Daten und Testen sie die Klassifizierung auf den verbleibenden 10\%.
+
 \end{document}

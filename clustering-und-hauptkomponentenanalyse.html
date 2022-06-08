@@ -290,7 +290,61 @@ Figure 6.1: Entwicklung der Centroids im Verlauf des k-means clustering Algorith
 </div>
 <div id="aufgaben-3" class="section level2 hasAnchor">
 <h2><span class="header-section-number">6.6</span> Aufgaben<a href="clustering-und-hauptkomponentenanalyse.html#aufgaben-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="k-means-von-hand-t" class="section level3 hasAnchor">
+<h3><span class="header-section-number">6.6.1</span> K-means von Hand (T)<a href="clustering-und-hauptkomponentenanalyse.html#k-means-von-hand-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Führen sie händisch und nach Augenschein zwei Iterationen des K-means Algorithmus auf den vom folgenden Skript erzeugten <code>(x,z)</code> Daten durch. Dazu bitte, Beispielsweise in Abbildung <a href="clustering-und-hauptkomponentenanalyse.html#fig:k-means-evoexaexrcs">6.2</a>, in jedem Schritt die Clusterzugehörigkeiten markieren und die neuen (geschätzten) Mittelpunkte <span class="math inline">\(c_1\)</span> und <span class="math inline">\(c_2\)</span> eintragen.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" title="1"><span class="im">from</span> numpy.random <span class="im">import</span> default_rng</a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb15-3" title="3"></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="co"># Zufallszahlengenerator mit &quot;seed=1&quot;</span></a>
+<a class="sourceLine" id="cb15-5" title="5">rng <span class="op">=</span> default_rng(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb15-6" title="6"></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="co"># Zufallsdaten mit etwas Korrelation fuer z</span></a>
+<a class="sourceLine" id="cb15-8" title="8">x <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb15-9" title="9">y <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb15-10" title="10">z <span class="op">=</span> (x<span class="op">*</span>x<span class="op">*</span>y)<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb15-11" title="11"></a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="co"># Zufallswahl der initialen centroids</span></a>
+<a class="sourceLine" id="cb15-13" title="13">cntro <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb15-14" title="14">cntrt <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb15-15" title="15"></a>
+<a class="sourceLine" id="cb15-16" title="16">plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb15-17" title="17">plt.plot(x, z, <span class="st">&#39;.&#39;</span>, label<span class="op">=</span><span class="st">&#39;data&#39;</span>)</a>
+<a class="sourceLine" id="cb15-18" title="18">plt.plot(cntro[<span class="dv">0</span>], cntro[<span class="dv">1</span>], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;$c_1$&#39;</span>)</a>
+<a class="sourceLine" id="cb15-19" title="19">plt.plot(cntrt[<span class="dv">0</span>], cntrt[<span class="dv">1</span>], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;$c_2$&#39;</span>)</a>
+<a class="sourceLine" id="cb15-20" title="20">plt.legend(loc<span class="op">=</span><span class="st">&#39;upper left&#39;</span>)</a>
+<a class="sourceLine" id="cb15-21" title="21">plt.title(<span class="st">&#39;K-means: initialer Zustand&#39;</span>)</a>
+<a class="sourceLine" id="cb15-22" title="22">plt.show()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:k-means-evoexaexrcs"></span>
+<img src="bilder/06-manual-kmeans-ini.png" alt="Bitte gerne hier die Evolution einzeichnen" width="80%" /><img src="bilder/06-manual-kmeans-x.png" alt="Bitte gerne hier die Evolution einzeichnen" width="80%" /><img src="bilder/06-manual-kmeans-x.png" alt="Bitte gerne hier die Evolution einzeichnen" width="80%" />
+<p class="caption">
+Figure 6.2: Bitte gerne hier die Evolution einzeichnen
+</p>
+</div>
+</div>
+<div id="k-means-als-algorithmus-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">6.6.2</span> K-means als Algorithmus (P)<a href="clustering-und-hauptkomponentenanalyse.html#k-means-als-algorithmus-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Schreiben sie eine Funktion, die mittels des k-means Algorithmus einen Datensatz in beliebiger Dimension in <code>K</code> vorgegebene cluster gruppiert und die labels der Daten sowie die Koordinaten der centroids zurueckgeben.</p>
+<p>Testen sie die Funktion am obigen theoretischen Beispiel.</p>
+</div>
+<div id="k-means-fuer-die-pinguine" class="section level3 hasAnchor">
+<h3><span class="header-section-number">6.6.3</span> K-means fuer die Pinguine<a href="clustering-und-hauptkomponentenanalyse.html#k-means-fuer-die-pinguine" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Wenden sie den Algorithmus auf die (zentrierten und auf in jeder Richtung auf <span class="math inline">\([-1, 1]\)</span> skalierten) Pinguindaten an.</p>
+<ol style="list-style-type: decimal">
+<li>In der gesamten Datendimension</li>
+<li>Fuer zwei beliebig gewaehlte Merkmale</li>
+<li>Fuer die ersten zwei Hauptkomponenten</li>
+</ol>
+</div>
+<div id="l-curve" class="section level3 hasAnchor">
+<h3><span class="header-section-number">6.6.4</span> L-curve<a href="clustering-und-hauptkomponentenanalyse.html#l-curve" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Bestimmen sie die L-Kurve fuer die Pinguindaten fuer <code>K=1,2,3,4,...,8</code> – fuer das clustering in den ersten beiden Hauptrichtungen.</p>
+</div>
+<div id="trainieren-und-testen" class="section level3 hasAnchor">
+<h3><span class="header-section-number">6.6.5</span> Trainieren und Testen<a href="clustering-und-hauptkomponentenanalyse.html#trainieren-und-testen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Bestimmen sie die cluster fuer <code>K=3</code> in den ersten beiden Hauptrichtungen auf Basis von 90% der Daten und Testen sie die Klassifizierung auf den verbleibenden 10%.</p>
 
+</div>
 </div>
 </div>
 <div class="footnotes">

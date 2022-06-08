@@ -2,6 +2,7 @@ thm:qr
 thm:SVD
 fig:05-penguin-allpairs-cntrd
 fig:k-means-evoexa
+fig:k-means-evoexaexrcs
 was-ist-data-science
 wie-passiert-die-datenanalyse
 was-sind-daten
@@ -59,3 +60,8 @@ clustering-und-hauptkomponentenanalyse-1
 training-und-testing
 am-beispiel-der-pinguine
 aufgaben-3
+k-means-von-hand-t
+k-means-als-algorithmus-p
+k-means-fuer-die-pinguine
+l-curve
+trainieren-und-testen

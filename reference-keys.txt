@@ -2,6 +2,8 @@ thm:qr
 thm:SVD
 fig:05-penguin-allpairs-cntrd
 fig:k-means-evoexa
+fig:k-means-pingexa
+fig:k-means-pingexa-lcurve
 fig:k-means-evoexaexrcs
 was-ist-data-science
 wie-passiert-die-datenanalyse

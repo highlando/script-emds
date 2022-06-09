@@ -287,12 +287,24 @@ Figure 6.1: Entwicklung der Centroids im Verlauf des k-means clustering Algorith
 </div>
 <div id="am-beispiel-der-pinguine" class="section level2 hasAnchor">
 <h2><span class="header-section-number">6.5</span> Am Beispiel der Pinguine<a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:k-means-pingexa"></span>
+<img src="bilder/06-Figure_10101.png" alt="Einige clustering Resultate fuer die Pinguin Daten" width="80%" /><img src="bilder/06-Figure_101.png" alt="Einige clustering Resultate fuer die Pinguin Daten" width="80%" /><img src="bilder/06-Figure_111.png" alt="Einige clustering Resultate fuer die Pinguin Daten" width="80%" /><img src="bilder/06-Figure_121.png" alt="Einige clustering Resultate fuer die Pinguin Daten" width="80%" />
+<p class="caption">
+Figure 6.2: Einige clustering Resultate fuer die Pinguin Daten
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:k-means-pingexa-lcurve"></span>
+<img src="bilder/06-L-curve.png" alt="Die L-Kurve fuer die Pinguin Daten" width="80%" />
+<p class="caption">
+Figure 6.3: Die L-Kurve fuer die Pinguin Daten
+</p>
+</div>
 </div>
 <div id="aufgaben-3" class="section level2 hasAnchor">
 <h2><span class="header-section-number">6.6</span> Aufgaben<a href="clustering-und-hauptkomponentenanalyse.html#aufgaben-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="k-means-von-hand-t" class="section level3 hasAnchor">
 <h3><span class="header-section-number">6.6.1</span> K-means von Hand (T)<a href="clustering-und-hauptkomponentenanalyse.html#k-means-von-hand-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Führen sie händisch und nach Augenschein zwei Iterationen des K-means Algorithmus auf den vom folgenden Skript erzeugten <code>(x,z)</code> Daten durch. Dazu bitte, Beispielsweise in Abbildung <a href="clustering-und-hauptkomponentenanalyse.html#fig:k-means-evoexaexrcs">6.2</a>, in jedem Schritt die Clusterzugehörigkeiten markieren und die neuen (geschätzten) Mittelpunkte <span class="math inline">\(c_1\)</span> und <span class="math inline">\(c_2\)</span> eintragen.</p>
+<p>Führen sie händisch und nach Augenschein zwei Iterationen des K-means Algorithmus auf den vom folgenden Skript erzeugten <code>(x,z)</code> Daten durch. Dazu bitte, Beispielsweise in Abbildung <a href="clustering-und-hauptkomponentenanalyse.html#fig:k-means-evoexaexrcs">6.4</a>, in jedem Schritt die Clusterzugehörigkeiten markieren und die neuen (geschätzten) Mittelpunkte <span class="math inline">\(c_1\)</span> und <span class="math inline">\(c_2\)</span> eintragen.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" title="1"><span class="im">from</span> numpy.random <span class="im">import</span> default_rng</a>
 <a class="sourceLine" id="cb15-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
 <a class="sourceLine" id="cb15-3" title="3"></a>
@@ -318,7 +330,7 @@ Figure 6.1: Entwicklung der Centroids im Verlauf des k-means clustering Algorith
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:k-means-evoexaexrcs"></span>
 <img src="bilder/06-manual-kmeans-ini.png" alt="Bitte gerne hier die Evolution einzeichnen" width="80%" /><img src="bilder/06-manual-kmeans-x.png" alt="Bitte gerne hier die Evolution einzeichnen" width="80%" /><img src="bilder/06-manual-kmeans-x.png" alt="Bitte gerne hier die Evolution einzeichnen" width="80%" />
 <p class="caption">
-Figure 6.2: Bitte gerne hier die Evolution einzeichnen
+Figure 6.4: Bitte gerne hier die Evolution einzeichnen
 </p>
 </div>
 </div>

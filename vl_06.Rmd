@@ -150,18 +150,154 @@ Schreiben sie eine Funktion, die mittels des k-means Algorithmus einen Datensatz
 
 Testen sie die Funktion am obigen theoretischen Beispiel.
 
+Hier [zum Download angeh&auml;ngt](bilder/kmeans_utils.py) eine Datei mit ein paar hilfreichen Routinen und schon einer Vorgabe f&uuml;r die "Hauptroutine". **Bitte machen Sie sich damit vertraut, wie in Python Routinen aus einem *module* (d.h. einer anderen Datei mit Python Funktionen) importiert werden kann.**
+
+```{.py}
+
+```
+
 ### K-means fuer die Pinguine
 
-Wenden sie den Algorithmus auf die (zentrierten und auf in jeder Richtung auf $[-1, 1]$ skalierten) Pinguindaten an. 
+Wenden sie den Algorithmus auf die (zentrierten und auf in jeder Richtung auf $[-1, 1]$ skalierten) Pinguindaten an. Und vergleichen sie mit den Bildern oben.
 
 1. In der gesamten Datendimension
-2. Fuer zwei beliebig gewaehlte Merkmale
-3. Fuer die ersten zwei Hauptkomponenten
+2. F&uuml;r zwei beliebig gew&auml;hlte Merkmale
+3. F&uuml;r die ersten drei Hauptkomponenten
+
+```{.py}
+from numpy.random import default_rng
+from numpy.linalg import norm
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Zufallszahlengenerator mit "seed=1"
+rng = default_rng(1)
+
+
+def get_labels(datamatrix, centroids=None):
+    ''' find the nearest of given centroids for data
+
+    Parameters
+    ----------
+    datamatrix: (N, n) array
+        the data of N data points with n features each
+    centroids: list
+        of K centroid coordinates of shape (1, n) each
+    '''
+
+    listofdiffs = []
+    Ndata = datamatrix.shape[0]
+    for cj in centroids:
+        cjdiff = norm(datamatrix-cj, axis=1)
+        listofdiffs.append(cjdiff.reshape((Ndata, 1)))
+    arrayofdiffs = np.hstack(listofdiffs)  # better for computing and indexing
+    clabels = np.argmin(arrayofdiffs, axis=1)
+    vecoferrs = np.min(arrayofdiffs, axis=1)
+    clstrerror = norm(vecoferrs)  # the clustering error
+    return clabels, clstrerror
+
+
+def get_centers(datamatrix, K=None, labels=None):
+    ''' compute centroids for given clusters
+
+    Parameters
+    ----------
+    datamatrix: (N, n) numpy array
+        the data of N data points with n features each
+    labels: list
+        of labels that associate data points with clusters
+    K: int
+        number of clusters
+    '''
+
+    newcntrds = []
+    for clstr in range(K):
+        if (labels == clstr).sum() > 0:
+            dataincj = datamatrix[labels == clstr, :]
+            newcj = np.mean(dataincj, axis=0)
+            newcntrds.append(newcj)
+        else:
+            # if no points in cluster -- use random datapoint as centroid
+            rnddidx = np.random.randint(datamatrix.shape[0])
+            newcntrds.append(datamatrix[rnddidx, :])
+
+    return newcntrds
+
+
+def kmeans(datamatrix, K, maxiter=10, itertol=1e-10, cntrdlist=None):
+    ''' compute clusters for data by k-means
+
+    Parameters
+    ----------
+    datamatrix: (N, n) numpy array
+        the data of N data points with n features each
+    K: int
+        number of clusters
+    maxiter: int, optional
+        max number of iterations, defaults to 10
+    itertol: float, optional
+        tolerance to terminate the iteration, defaults to 1e-10
+    cntrdlist: list, optional
+        of coordinates to be used as initial cluster
+    '''
+
+    if cntrdlist is None:
+        # Random centroid initialization
+        cntrdlist = []
+        for kkk in range(K):
+            rnddidx = np.random.randint(datamatrix.shape[0])
+            cntrdlist.append(datamatrix[rnddidx, :])
+    elif not len(cntrdlist) == K:
+        raise RuntimeError('number of initial centroids unequals `K`')
+    else:
+        pass
+    clabels, olderror = get_labels(datamatrix, centroids=cntrdlist)
+
+    for kkk in range(maxiter):
+        cntrdlist = get_centers(datamatrix, K=K, labels=clabels)
+        clabels, newerror = get_labels(datamatrix, centroids=cntrdlist)
+        if np.abs(olderror-newerror) < itertol:
+            print(f'iteration {kkk}: change in error below {itertol:.2e}')
+            break
+        else:
+            olderror = newerror
+    return cntrdlist, clabels, newerror
+
+
+def plot_cluster_data(datamatrix, labels, cntrdlist,
+                      xlabel='feature', ylabel='other feature',
+                      fignum=10101, figsize=(5, 4), titlestr='Clustering'):
+    plt.figure(fignum, figsize=figsize)
+
+    # Set the colors for the plots
+    clm = np.linspace(0.2, 0.8, len(cntrdlist))
+    plt.rcParams["axes.prop_cycle"] = \
+        plt.cycler("color", plt.cm.plasma(clm))
+    # done setting colors
+
+    for kkk in range(len(cntrdlist)):
+        cdata = datamatrix[labels == kkk, :]
+        plt.plot(cdata[:, 0], cdata[:, 1], '.', alpha=.7)
+    for kkk in range(len(cntrdlist)):
+        plt.plot(cntrdlist[kkk][0], cntrdlist[kkk][1],
+                 's', label=f'$c_{kkk+1}$')
+
+    plt.title(titlestr)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.legend(loc='upper left')
+    plt.legend()
+    plt.tight_layout()
+    plt.show(block=False)
+    return
+```
+
+::: {#clustering-random .JHSAYS data-latex=''}
+Achtung -- auch hier ist wieder Zufall involviert. Wenn das Ergebnis seltsam aussieht, gegebenfalls das Experiment mehrfach wiederholen um auszuschlie&szlig;en, dass es sich nur um einen statistischen Ausrei&szlig;er handelt.
+:::
+
 
 ### L-curve
 
-Bestimmen sie die L-Kurve fuer die Pinguindaten fuer `K=1,2,3,4,...,8` -- fuer das clustering in den ersten beiden Hauptrichtungen.
-
-### Trainieren und Testen
-
-Bestimmen sie die cluster fuer `K=3` in den ersten beiden Hauptrichtungen auf Basis von 90% der Daten und Testen sie die Klassifizierung auf den verbleibenden 10%.
+Bestimmen sie die L-Kurve fuer die Pinguindaten fuer `K=1,2,3,4,...,8` -- fuer das clustering auf dem gesamten Datensatz.

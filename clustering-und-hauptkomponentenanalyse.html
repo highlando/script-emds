@@ -326,23 +326,150 @@ Figure 6.2: Bitte gerne hier die Evolution einzeichnen
 <h3><span class="header-section-number">6.6.2</span> K-means als Algorithmus (P)<a href="clustering-und-hauptkomponentenanalyse.html#k-means-als-algorithmus-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Schreiben sie eine Funktion, die mittels des k-means Algorithmus einen Datensatz in beliebiger Dimension in <code>K</code> vorgegebene cluster gruppiert und die labels der Daten sowie die Koordinaten der centroids zurueckgeben.</p>
 <p>Testen sie die Funktion am obigen theoretischen Beispiel.</p>
+<p>Hier <a href="bilder/kmeans_utils.py">zum Download angehängt</a> eine Datei mit ein paar hilfreichen Routinen und schon einer Vorgabe für die “Hauptroutine”. <strong>Bitte machen Sie sich damit vertraut, wie in Python Routinen aus einem <em>module</em> (d.h. einer anderen Datei mit Python Funktionen) importiert werden kann.</strong></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode py"><code class="sourceCode python"></code></pre></div>
 </div>
 <div id="k-means-fuer-die-pinguine" class="section level3 hasAnchor">
 <h3><span class="header-section-number">6.6.3</span> K-means fuer die Pinguine<a href="clustering-und-hauptkomponentenanalyse.html#k-means-fuer-die-pinguine" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Wenden sie den Algorithmus auf die (zentrierten und auf in jeder Richtung auf <span class="math inline">\([-1, 1]\)</span> skalierten) Pinguindaten an.</p>
+<p>Wenden sie den Algorithmus auf die (zentrierten und auf in jeder Richtung auf <span class="math inline">\([-1, 1]\)</span> skalierten) Pinguindaten an. Und vergleichen sie mit den Bildern oben.</p>
 <ol style="list-style-type: decimal">
 <li>In der gesamten Datendimension</li>
-<li>Fuer zwei beliebig gewaehlte Merkmale</li>
-<li>Fuer die ersten zwei Hauptkomponenten</li>
+<li>Für zwei beliebig gewählte Merkmale</li>
+<li>Für die ersten drei Hauptkomponenten</li>
 </ol>
+<div class="sourceCode" id="cb17"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" title="1"><span class="im">from</span> numpy.random <span class="im">import</span> default_rng</a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="im">from</span> numpy.linalg <span class="im">import</span> norm</a>
+<a class="sourceLine" id="cb17-3" title="3"></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb17-6" title="6"></a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="co"># Zufallszahlengenerator mit &quot;seed=1&quot;</span></a>
+<a class="sourceLine" id="cb17-8" title="8">rng <span class="op">=</span> default_rng(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb17-9" title="9"></a>
+<a class="sourceLine" id="cb17-10" title="10"></a>
+<a class="sourceLine" id="cb17-11" title="11"><span class="kw">def</span> get_labels(datamatrix, centroids<span class="op">=</span><span class="va">None</span>):</a>
+<a class="sourceLine" id="cb17-12" title="12">    <span class="co">&#39;&#39;&#39; find the nearest of given centroids for data</span></a>
+<a class="sourceLine" id="cb17-13" title="13"></a>
+<a class="sourceLine" id="cb17-14" title="14"><span class="co">    Parameters</span></a>
+<a class="sourceLine" id="cb17-15" title="15"><span class="co">    ----------</span></a>
+<a class="sourceLine" id="cb17-16" title="16"><span class="co">    datamatrix: (N, n) array</span></a>
+<a class="sourceLine" id="cb17-17" title="17"><span class="co">        the data of N data points with n features each</span></a>
+<a class="sourceLine" id="cb17-18" title="18"><span class="co">    centroids: list</span></a>
+<a class="sourceLine" id="cb17-19" title="19"><span class="co">        of K centroid coordinates of shape (1, n) each</span></a>
+<a class="sourceLine" id="cb17-20" title="20"><span class="co">    &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb17-21" title="21"></a>
+<a class="sourceLine" id="cb17-22" title="22">    listofdiffs <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb17-23" title="23">    Ndata <span class="op">=</span> datamatrix.shape[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb17-24" title="24">    <span class="cf">for</span> cj <span class="kw">in</span> centroids:</a>
+<a class="sourceLine" id="cb17-25" title="25">        cjdiff <span class="op">=</span> norm(datamatrix<span class="op">-</span>cj, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb17-26" title="26">        listofdiffs.append(cjdiff.reshape((Ndata, <span class="dv">1</span>)))</a>
+<a class="sourceLine" id="cb17-27" title="27">    arrayofdiffs <span class="op">=</span> np.hstack(listofdiffs)  <span class="co"># better for computing and indexing</span></a>
+<a class="sourceLine" id="cb17-28" title="28">    clabels <span class="op">=</span> np.argmin(arrayofdiffs, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb17-29" title="29">    vecoferrs <span class="op">=</span> np.<span class="bu">min</span>(arrayofdiffs, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb17-30" title="30">    clstrerror <span class="op">=</span> norm(vecoferrs)  <span class="co"># the clustering error</span></a>
+<a class="sourceLine" id="cb17-31" title="31">    <span class="cf">return</span> clabels, clstrerror</a>
+<a class="sourceLine" id="cb17-32" title="32"></a>
+<a class="sourceLine" id="cb17-33" title="33"></a>
+<a class="sourceLine" id="cb17-34" title="34"><span class="kw">def</span> get_centers(datamatrix, K<span class="op">=</span><span class="va">None</span>, labels<span class="op">=</span><span class="va">None</span>):</a>
+<a class="sourceLine" id="cb17-35" title="35">    <span class="co">&#39;&#39;&#39; compute centroids for given clusters</span></a>
+<a class="sourceLine" id="cb17-36" title="36"></a>
+<a class="sourceLine" id="cb17-37" title="37"><span class="co">    Parameters</span></a>
+<a class="sourceLine" id="cb17-38" title="38"><span class="co">    ----------</span></a>
+<a class="sourceLine" id="cb17-39" title="39"><span class="co">    datamatrix: (N, n) numpy array</span></a>
+<a class="sourceLine" id="cb17-40" title="40"><span class="co">        the data of N data points with n features each</span></a>
+<a class="sourceLine" id="cb17-41" title="41"><span class="co">    labels: list</span></a>
+<a class="sourceLine" id="cb17-42" title="42"><span class="co">        of labels that associate data points with clusters</span></a>
+<a class="sourceLine" id="cb17-43" title="43"><span class="co">    K: int</span></a>
+<a class="sourceLine" id="cb17-44" title="44"><span class="co">        number of clusters</span></a>
+<a class="sourceLine" id="cb17-45" title="45"><span class="co">    &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb17-46" title="46"></a>
+<a class="sourceLine" id="cb17-47" title="47">    newcntrds <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb17-48" title="48">    <span class="cf">for</span> clstr <span class="kw">in</span> <span class="bu">range</span>(K):</a>
+<a class="sourceLine" id="cb17-49" title="49">        <span class="cf">if</span> (labels <span class="op">==</span> clstr).<span class="bu">sum</span>() <span class="op">&gt;</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb17-50" title="50">            dataincj <span class="op">=</span> datamatrix[labels <span class="op">==</span> clstr, :]</a>
+<a class="sourceLine" id="cb17-51" title="51">            newcj <span class="op">=</span> np.mean(dataincj, axis<span class="op">=</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb17-52" title="52">            newcntrds.append(newcj)</a>
+<a class="sourceLine" id="cb17-53" title="53">        <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb17-54" title="54">            <span class="co"># if no points in cluster -- use random datapoint as centroid</span></a>
+<a class="sourceLine" id="cb17-55" title="55">            rnddidx <span class="op">=</span> np.random.randint(datamatrix.shape[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb17-56" title="56">            newcntrds.append(datamatrix[rnddidx, :])</a>
+<a class="sourceLine" id="cb17-57" title="57"></a>
+<a class="sourceLine" id="cb17-58" title="58">    <span class="cf">return</span> newcntrds</a>
+<a class="sourceLine" id="cb17-59" title="59"></a>
+<a class="sourceLine" id="cb17-60" title="60"></a>
+<a class="sourceLine" id="cb17-61" title="61"><span class="kw">def</span> kmeans(datamatrix, K, maxiter<span class="op">=</span><span class="dv">10</span>, itertol<span class="op">=</span><span class="fl">1e-10</span>, cntrdlist<span class="op">=</span><span class="va">None</span>):</a>
+<a class="sourceLine" id="cb17-62" title="62">    <span class="co">&#39;&#39;&#39; compute clusters for data by k-means</span></a>
+<a class="sourceLine" id="cb17-63" title="63"></a>
+<a class="sourceLine" id="cb17-64" title="64"><span class="co">    Parameters</span></a>
+<a class="sourceLine" id="cb17-65" title="65"><span class="co">    ----------</span></a>
+<a class="sourceLine" id="cb17-66" title="66"><span class="co">    datamatrix: (N, n) numpy array</span></a>
+<a class="sourceLine" id="cb17-67" title="67"><span class="co">        the data of N data points with n features each</span></a>
+<a class="sourceLine" id="cb17-68" title="68"><span class="co">    K: int</span></a>
+<a class="sourceLine" id="cb17-69" title="69"><span class="co">        number of clusters</span></a>
+<a class="sourceLine" id="cb17-70" title="70"><span class="co">    maxiter: int, optional</span></a>
+<a class="sourceLine" id="cb17-71" title="71"><span class="co">        max number of iterations, defaults to 10</span></a>
+<a class="sourceLine" id="cb17-72" title="72"><span class="co">    itertol: float, optional</span></a>
+<a class="sourceLine" id="cb17-73" title="73"><span class="co">        tolerance to terminate the iteration, defaults to 1e-10</span></a>
+<a class="sourceLine" id="cb17-74" title="74"><span class="co">    cntrdlist: list, optional</span></a>
+<a class="sourceLine" id="cb17-75" title="75"><span class="co">        of coordinates to be used as initial cluster</span></a>
+<a class="sourceLine" id="cb17-76" title="76"><span class="co">    &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb17-77" title="77"></a>
+<a class="sourceLine" id="cb17-78" title="78">    <span class="cf">if</span> cntrdlist <span class="kw">is</span> <span class="va">None</span>:</a>
+<a class="sourceLine" id="cb17-79" title="79">        <span class="co"># Random centroid initialization</span></a>
+<a class="sourceLine" id="cb17-80" title="80">        cntrdlist <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb17-81" title="81">        <span class="cf">for</span> kkk <span class="kw">in</span> <span class="bu">range</span>(K):</a>
+<a class="sourceLine" id="cb17-82" title="82">            rnddidx <span class="op">=</span> np.random.randint(datamatrix.shape[<span class="dv">0</span>])</a>
+<a class="sourceLine" id="cb17-83" title="83">            cntrdlist.append(datamatrix[rnddidx, :])</a>
+<a class="sourceLine" id="cb17-84" title="84">    <span class="cf">elif</span> <span class="kw">not</span> <span class="bu">len</span>(cntrdlist) <span class="op">==</span> K:</a>
+<a class="sourceLine" id="cb17-85" title="85">        <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">&#39;number of initial centroids unequals `K`&#39;</span>)</a>
+<a class="sourceLine" id="cb17-86" title="86">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb17-87" title="87">        <span class="cf">pass</span></a>
+<a class="sourceLine" id="cb17-88" title="88">    clabels, olderror <span class="op">=</span> get_labels(datamatrix, centroids<span class="op">=</span>cntrdlist)</a>
+<a class="sourceLine" id="cb17-89" title="89"></a>
+<a class="sourceLine" id="cb17-90" title="90">    <span class="cf">for</span> kkk <span class="kw">in</span> <span class="bu">range</span>(maxiter):</a>
+<a class="sourceLine" id="cb17-91" title="91">        cntrdlist <span class="op">=</span> get_centers(datamatrix, K<span class="op">=</span>K, labels<span class="op">=</span>clabels)</a>
+<a class="sourceLine" id="cb17-92" title="92">        clabels, newerror <span class="op">=</span> get_labels(datamatrix, centroids<span class="op">=</span>cntrdlist)</a>
+<a class="sourceLine" id="cb17-93" title="93">        <span class="cf">if</span> np.<span class="bu">abs</span>(olderror<span class="op">-</span>newerror) <span class="op">&lt;</span> itertol:</a>
+<a class="sourceLine" id="cb17-94" title="94">            <span class="bu">print</span>(<span class="ss">f&#39;iteration </span><span class="sc">{</span>kkk<span class="sc">}</span><span class="ss">: change in error below </span><span class="sc">{</span>itertol<span class="sc">:.2e}</span><span class="ss">&#39;</span>)</a>
+<a class="sourceLine" id="cb17-95" title="95">            <span class="cf">break</span></a>
+<a class="sourceLine" id="cb17-96" title="96">        <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb17-97" title="97">            olderror <span class="op">=</span> newerror</a>
+<a class="sourceLine" id="cb17-98" title="98">    <span class="cf">return</span> cntrdlist, clabels, newerror</a>
+<a class="sourceLine" id="cb17-99" title="99"></a>
+<a class="sourceLine" id="cb17-100" title="100"></a>
+<a class="sourceLine" id="cb17-101" title="101"><span class="kw">def</span> plot_cluster_data(datamatrix, labels, cntrdlist,</a>
+<a class="sourceLine" id="cb17-102" title="102">                      xlabel<span class="op">=</span><span class="st">&#39;feature&#39;</span>, ylabel<span class="op">=</span><span class="st">&#39;other feature&#39;</span>,</a>
+<a class="sourceLine" id="cb17-103" title="103">                      fignum<span class="op">=</span><span class="dv">10101</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">4</span>), titlestr<span class="op">=</span><span class="st">&#39;Clustering&#39;</span>):</a>
+<a class="sourceLine" id="cb17-104" title="104">    plt.figure(fignum, figsize<span class="op">=</span>figsize)</a>
+<a class="sourceLine" id="cb17-105" title="105"></a>
+<a class="sourceLine" id="cb17-106" title="106">    <span class="co"># Set the colors for the plots</span></a>
+<a class="sourceLine" id="cb17-107" title="107">    clm <span class="op">=</span> np.linspace(<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="bu">len</span>(cntrdlist))</a>
+<a class="sourceLine" id="cb17-108" title="108">    plt.rcParams[<span class="st">&quot;axes.prop_cycle&quot;</span>] <span class="op">=</span> <span class="op">\</span></a>
+<a class="sourceLine" id="cb17-109" title="109">        plt.cycler(<span class="st">&quot;color&quot;</span>, plt.cm.plasma(clm))</a>
+<a class="sourceLine" id="cb17-110" title="110">    <span class="co"># done setting colors</span></a>
+<a class="sourceLine" id="cb17-111" title="111"></a>
+<a class="sourceLine" id="cb17-112" title="112">    <span class="cf">for</span> kkk <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(cntrdlist)):</a>
+<a class="sourceLine" id="cb17-113" title="113">        cdata <span class="op">=</span> datamatrix[labels <span class="op">==</span> kkk, :]</a>
+<a class="sourceLine" id="cb17-114" title="114">        plt.plot(cdata[:, <span class="dv">0</span>], cdata[:, <span class="dv">1</span>], <span class="st">&#39;.&#39;</span>, alpha<span class="op">=</span>.<span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb17-115" title="115">    <span class="cf">for</span> kkk <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(cntrdlist)):</a>
+<a class="sourceLine" id="cb17-116" title="116">        plt.plot(cntrdlist[kkk][<span class="dv">0</span>], cntrdlist[kkk][<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb17-117" title="117">                 <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="ss">f&#39;$c_</span><span class="sc">{</span>kkk<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">$&#39;</span>)</a>
+<a class="sourceLine" id="cb17-118" title="118"></a>
+<a class="sourceLine" id="cb17-119" title="119">    plt.title(titlestr)</a>
+<a class="sourceLine" id="cb17-120" title="120">    plt.xlabel(xlabel)</a>
+<a class="sourceLine" id="cb17-121" title="121">    plt.ylabel(ylabel)</a>
+<a class="sourceLine" id="cb17-122" title="122">    plt.legend(loc<span class="op">=</span><span class="st">&#39;upper left&#39;</span>)</a>
+<a class="sourceLine" id="cb17-123" title="123">    plt.legend()</a>
+<a class="sourceLine" id="cb17-124" title="124">    plt.tight_layout()</a>
+<a class="sourceLine" id="cb17-125" title="125">    plt.show(block<span class="op">=</span><span class="va">False</span>)</a>
+<a class="sourceLine" id="cb17-126" title="126">    <span class="cf">return</span></a></code></pre></div>
+<div id="clustering-random" class="JHSAYS">
+<p>Achtung – auch hier ist wieder Zufall involviert. Wenn das Ergebnis seltsam aussieht, gegebenfalls das Experiment mehrfach wiederholen um auszuschließen, dass es sich nur um einen statistischen Ausreißer handelt.</p>
+</div>
 </div>
 <div id="l-curve" class="section level3 hasAnchor">
 <h3><span class="header-section-number">6.6.4</span> L-curve<a href="clustering-und-hauptkomponentenanalyse.html#l-curve" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Bestimmen sie die L-Kurve fuer die Pinguindaten fuer <code>K=1,2,3,4,...,8</code> – fuer das clustering in den ersten beiden Hauptrichtungen.</p>
-</div>
-<div id="trainieren-und-testen" class="section level3 hasAnchor">
-<h3><span class="header-section-number">6.6.5</span> Trainieren und Testen<a href="clustering-und-hauptkomponentenanalyse.html#trainieren-und-testen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Bestimmen sie die cluster fuer <code>K=3</code> in den ersten beiden Hauptrichtungen auf Basis von 90% der Daten und Testen sie die Klassifizierung auf den verbleibenden 10%.</p>
+<p>Bestimmen sie die L-Kurve fuer die Pinguindaten fuer <code>K=1,2,3,4,...,8</code> – fuer das clustering auf dem gesamten Datensatz.</p>
 
 </div>
 </div>

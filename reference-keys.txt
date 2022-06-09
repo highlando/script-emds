@@ -64,4 +64,3 @@ k-means-von-hand-t
 k-means-als-algorithmus-p
 k-means-fuer-die-pinguine
 l-curve
-trainieren-und-testen

@@ -109,6 +109,14 @@ Die vorhandenen Daten werden aufgeteilt in **Trainingsdaten**, mit denen das Mod
 
 ## Am Beispiel der Pinguine
 
+```{r k-means-pingexa, echo=FALSE, fig.show='hold', fig.cap='Einige clustering Resultate fuer die Pinguin Daten', out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics(c("bilder/06-Figure_10101.png", "bilder/06-Figure_101.png", "bilder/06-Figure_111.png", "bilder/06-Figure_121.png"))
+```
+
+```{r k-means-pingexa-lcurve, echo=FALSE, fig.show='hold', fig.cap='Die L-Kurve fuer die Pinguin Daten', out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics(c("bilder/06-L-curve.png"))
+```
+
 ## Aufgaben
 
 ### K-means von Hand (T)

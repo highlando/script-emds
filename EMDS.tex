@@ -2104,132 +2104,23 @@ Wenden sie den Algorithmus auf die (zentrierten und auf in jeder Richtung auf \(
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ default_rng}
-\ImportTok{from}\NormalTok{ numpy.linalg }\ImportTok{import}\NormalTok{ norm}
+\ImportTok{import}\NormalTok{ json}
 
-\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
 
-\CommentTok{# Zufallszahlengenerator mit "seed=1"}
-\NormalTok{rng }\OperatorTok{=}\NormalTok{ default_rng(}\DecValTok{1}\NormalTok{)}
+\ImportTok{from}\NormalTok{ kmeans_utils }\ImportTok{import}\NormalTok{ kmeans}
 
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'penguin-data.json'}\NormalTok{, }\StringTok{'r'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
+\NormalTok{    datadict }\OperatorTok{=}\NormalTok{ json.load(f)}
 
-\KeywordTok{def}\NormalTok{ get_labels(datamatrix, centroids}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
-    \CommentTok{''' find the nearest of given centroids for data}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'data'}\NormalTok{])}
 
-\CommentTok{    Parameters}
-\CommentTok{    ----------}
-\CommentTok{    datamatrix: (N, n) array}
-\CommentTok{        the data of N data points with n features each}
-\CommentTok{    centroids: list}
-\CommentTok{        of K centroid coordinates of shape (1, n) each}
-\CommentTok{    '''}
-
-\NormalTok{    listofdiffs }\OperatorTok{=}\NormalTok{ []}
-\NormalTok{    Ndata }\OperatorTok{=}\NormalTok{ datamatrix.shape[}\DecValTok{0}\NormalTok{]}
-    \ControlFlowTok{for}\NormalTok{ cj }\KeywordTok{in}\NormalTok{ centroids:}
-\NormalTok{        cjdiff }\OperatorTok{=}\NormalTok{ norm(datamatrix}\OperatorTok{-}\NormalTok{cj, axis}\OperatorTok{=}\DecValTok{1}\NormalTok{)}
-\NormalTok{        listofdiffs.append(cjdiff.reshape((Ndata, }\DecValTok{1}\NormalTok{)))}
-\NormalTok{    arrayofdiffs }\OperatorTok{=}\NormalTok{ np.hstack(listofdiffs)  }\CommentTok{# better for computing and indexing}
-\NormalTok{    clabels }\OperatorTok{=}\NormalTok{ np.argmin(arrayofdiffs, axis}\OperatorTok{=}\DecValTok{1}\NormalTok{)}
-\NormalTok{    vecoferrs }\OperatorTok{=}\NormalTok{ np.}\BuiltInTok{min}\NormalTok{(arrayofdiffs, axis}\OperatorTok{=}\DecValTok{1}\NormalTok{)}
-\NormalTok{    clstrerror }\OperatorTok{=}\NormalTok{ norm(vecoferrs)  }\CommentTok{# the clustering error}
-    \ControlFlowTok{return}\NormalTok{ clabels, clstrerror}
-
-
-\KeywordTok{def}\NormalTok{ get_centers(datamatrix, K}\OperatorTok{=}\VariableTok{None}\NormalTok{, labels}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
-    \CommentTok{''' compute centroids for given clusters}
-
-\CommentTok{    Parameters}
-\CommentTok{    ----------}
-\CommentTok{    datamatrix: (N, n) numpy array}
-\CommentTok{        the data of N data points with n features each}
-\CommentTok{    labels: list}
-\CommentTok{        of labels that associate data points with clusters}
-\CommentTok{    K: int}
-\CommentTok{        number of clusters}
-\CommentTok{    '''}
-
-\NormalTok{    newcntrds }\OperatorTok{=}\NormalTok{ []}
-    \ControlFlowTok{for}\NormalTok{ clstr }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(K):}
-        \ControlFlowTok{if}\NormalTok{ (labels }\OperatorTok{==}\NormalTok{ clstr).}\BuiltInTok{sum}\NormalTok{() }\OperatorTok{>} \DecValTok{0}\NormalTok{:}
-\NormalTok{            dataincj }\OperatorTok{=}\NormalTok{ datamatrix[labels }\OperatorTok{==}\NormalTok{ clstr, :]}
-\NormalTok{            newcj }\OperatorTok{=}\NormalTok{ np.mean(dataincj, axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
-\NormalTok{            newcntrds.append(newcj)}
-        \ControlFlowTok{else}\NormalTok{:}
-            \CommentTok{# if no points in cluster -- use random datapoint as centroid}
-\NormalTok{            rnddidx }\OperatorTok{=}\NormalTok{ np.random.randint(datamatrix.shape[}\DecValTok{0}\NormalTok{])}
-\NormalTok{            newcntrds.append(datamatrix[rnddidx, :])}
-
-    \ControlFlowTok{return}\NormalTok{ newcntrds}
-
-
-\KeywordTok{def}\NormalTok{ kmeans(datamatrix, K, maxiter}\OperatorTok{=}\DecValTok{10}\NormalTok{, itertol}\OperatorTok{=}\FloatTok{1e-10}\NormalTok{, cntrdlist}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
-    \CommentTok{''' compute clusters for data by k-means}
-
-\CommentTok{    Parameters}
-\CommentTok{    ----------}
-\CommentTok{    datamatrix: (N, n) numpy array}
-\CommentTok{        the data of N data points with n features each}
-\CommentTok{    K: int}
-\CommentTok{        number of clusters}
-\CommentTok{    maxiter: int, optional}
-\CommentTok{        max number of iterations, defaults to 10}
-\CommentTok{    itertol: float, optional}
-\CommentTok{        tolerance to terminate the iteration, defaults to 1e-10}
-\CommentTok{    cntrdlist: list, optional}
-\CommentTok{        of coordinates to be used as initial cluster}
-\CommentTok{    '''}
-
-    \ControlFlowTok{if}\NormalTok{ cntrdlist }\KeywordTok{is} \VariableTok{None}\NormalTok{:}
-        \CommentTok{# Random centroid initialization}
-\NormalTok{        cntrdlist }\OperatorTok{=}\NormalTok{ []}
-        \ControlFlowTok{for}\NormalTok{ kkk }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(K):}
-\NormalTok{            rnddidx }\OperatorTok{=}\NormalTok{ np.random.randint(datamatrix.shape[}\DecValTok{0}\NormalTok{])}
-\NormalTok{            cntrdlist.append(datamatrix[rnddidx, :])}
-    \ControlFlowTok{elif} \KeywordTok{not} \BuiltInTok{len}\NormalTok{(cntrdlist) }\OperatorTok{==}\NormalTok{ K:}
-        \ControlFlowTok{raise} \PreprocessorTok{RuntimeError}\NormalTok{(}\StringTok{'number of initial centroids unequals `K`'}\NormalTok{)}
-    \ControlFlowTok{else}\NormalTok{:}
-        \ControlFlowTok{pass}
-\NormalTok{    clabels, olderror }\OperatorTok{=}\NormalTok{ get_labels(datamatrix, centroids}\OperatorTok{=}\NormalTok{cntrdlist)}
-
-    \ControlFlowTok{for}\NormalTok{ kkk }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(maxiter):}
-\NormalTok{        cntrdlist }\OperatorTok{=}\NormalTok{ get_centers(datamatrix, K}\OperatorTok{=}\NormalTok{K, labels}\OperatorTok{=}\NormalTok{clabels)}
-\NormalTok{        clabels, newerror }\OperatorTok{=}\NormalTok{ get_labels(datamatrix, centroids}\OperatorTok{=}\NormalTok{cntrdlist)}
-        \ControlFlowTok{if}\NormalTok{ np.}\BuiltInTok{abs}\NormalTok{(olderror}\OperatorTok{-}\NormalTok{newerror) }\OperatorTok{<}\NormalTok{ itertol:}
-            \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'iteration }\SpecialCharTok{\{}\NormalTok{kkk}\SpecialCharTok{\}}\SpecialStringTok{: change in error below }\SpecialCharTok{\{}\NormalTok{itertol}\SpecialCharTok{:.2e\}}\SpecialStringTok{'}\NormalTok{)}
-            \ControlFlowTok{break}
-        \ControlFlowTok{else}\NormalTok{:}
-\NormalTok{            olderror }\OperatorTok{=}\NormalTok{ newerror}
-    \ControlFlowTok{return}\NormalTok{ cntrdlist, clabels, newerror}
-
-
-\KeywordTok{def}\NormalTok{ plot_cluster_data(datamatrix, labels, cntrdlist,}
-\NormalTok{                      xlabel}\OperatorTok{=}\StringTok{'feature'}\NormalTok{, ylabel}\OperatorTok{=}\StringTok{'other feature'}\NormalTok{,}
-\NormalTok{                      fignum}\OperatorTok{=}\DecValTok{10101}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{), titlestr}\OperatorTok{=}\StringTok{'Clustering'}\NormalTok{):}
-\NormalTok{    plt.figure(fignum, figsize}\OperatorTok{=}\NormalTok{figsize)}
-
-    \CommentTok{# Set the colors for the plots}
-\NormalTok{    clm }\OperatorTok{=}\NormalTok{ np.linspace(}\FloatTok{0.2}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\BuiltInTok{len}\NormalTok{(cntrdlist))}
-\NormalTok{    plt.rcParams[}\StringTok{"axes.prop_cycle"}\NormalTok{] }\OperatorTok{=} \OperatorTok{\textbackslash{}}
-\NormalTok{        plt.cycler(}\StringTok{"color"}\NormalTok{, plt.cm.plasma(clm))}
-    \CommentTok{# done setting colors}
-
-    \ControlFlowTok{for}\NormalTok{ kkk }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(cntrdlist)):}
-\NormalTok{        cdata }\OperatorTok{=}\NormalTok{ datamatrix[labels }\OperatorTok{==}\NormalTok{ kkk, :]}
-\NormalTok{        plt.plot(cdata[:, }\DecValTok{0}\NormalTok{], cdata[:, }\DecValTok{1}\NormalTok{], }\StringTok{'.'}\NormalTok{, alpha}\OperatorTok{=}\NormalTok{.}\DecValTok{7}\NormalTok{)}
-    \ControlFlowTok{for}\NormalTok{ kkk }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(cntrdlist)):}
-\NormalTok{        plt.plot(cntrdlist[kkk][}\DecValTok{0}\NormalTok{], cntrdlist[kkk][}\DecValTok{1}\NormalTok{],}
-                 \StringTok{'s'}\NormalTok{, label}\OperatorTok{=}\SpecialStringTok{f'$c_}\SpecialCharTok{\{}\NormalTok{kkk}\OperatorTok{+}\DecValTok{1}\SpecialCharTok{\}}\SpecialStringTok{$'}\NormalTok{)}
-
-\NormalTok{    plt.title(titlestr)}
-\NormalTok{    plt.xlabel(xlabel)}
-\NormalTok{    plt.ylabel(ylabel)}
-\NormalTok{    plt.legend(loc}\OperatorTok{=}\StringTok{'upper left'}\NormalTok{)}
-\NormalTok{    plt.legend()}
-\NormalTok{    plt.tight_layout()}
-\NormalTok{    plt.show(block}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
-    \ControlFlowTok{return}
+\CommentTok{# center and scale}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ data }\OperatorTok{-}\NormalTok{ data.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\NormalTok{maxvals }\OperatorTok{=}\NormalTok{ np.}\BuiltInTok{max}\NormalTok{(np.}\BuiltInTok{abs}\NormalTok{(data), axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ data }\OperatorTok{*} \DecValTok{1}\OperatorTok{/}\NormalTok{maxvals}
+\CommentTok{# now the data has zero mean and is scaled to fit into [-1, 1]}
 \end{Highlighting}
 \end{Shaded}
 

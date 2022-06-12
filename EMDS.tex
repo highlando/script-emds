@@ -2082,7 +2082,31 @@ Hier \href{bilder/kmeans_utils.py}{zum Download angehängt} eine Datei mit ein p
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ kmeans_utils }\ImportTok{import}\NormalTok{ kmeans, plot_cluster_data}
+\CommentTok{# import routines from a module}
 
+\CommentTok{# construct data as above}
+\NormalTok{N }\OperatorTok{=} \DecValTok{9}
+\NormalTok{K }\OperatorTok{=} \DecValTok{2}
+
+\NormalTok{x }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, N)}
+\NormalTok{y }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, N)}
+\NormalTok{z }\OperatorTok{=}\NormalTok{ (x}\OperatorTok{*}\NormalTok{x}\OperatorTok{*}\NormalTok{y)}\OperatorTok{**}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{)}
+
+\NormalTok{cntro }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{cntrt }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+
+\NormalTok{cntrdlist }\OperatorTok{=}\NormalTok{ [cntro, cntrt]}
+\NormalTok{datamatrix }\OperatorTok{=}\NormalTok{ np.hstack([x.reshape((x.size, }\DecValTok{1}\NormalTok{)), z.reshape((z.size, }\DecValTok{1}\NormalTok{))])}
+
+\CommentTok{# run the kmeans algorithm}
+\NormalTok{cntrdlist, labels, cerror }\OperatorTok{=}\NormalTok{ kmeans(datamatrix, K}\OperatorTok{=}\DecValTok{2}\NormalTok{, cntrdlist}\OperatorTok{=}\NormalTok{cntrdlist)}
+
+\CommentTok{# plot the result}
+\NormalTok{plot_cluster_data(datamatrix, labels, cntrdlist,}
+\NormalTok{                  xlabel}\OperatorTok{=}\StringTok{'feature'}\NormalTok{, ylabel}\OperatorTok{=}\StringTok{'other feature'}\NormalTok{,}
+\NormalTok{                  fignum}\OperatorTok{=}\DecValTok{10101}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{),}
+\NormalTok{                  titlestr}\OperatorTok{=}\StringTok{'K-means: finaler Zustand'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 

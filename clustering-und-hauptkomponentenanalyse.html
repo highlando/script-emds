@@ -339,7 +339,31 @@ Figure 6.4: Bitte gerne hier die Evolution einzeichnen
 <p>Schreiben sie eine Funktion, die mittels des k-means Algorithmus einen Datensatz in beliebiger Dimension in <code>K</code> vorgegebene cluster gruppiert und die labels der Daten sowie die Koordinaten der centroids zurueckgeben.</p>
 <p>Testen sie die Funktion am obigen theoretischen Beispiel.</p>
 <p>Hier <a href="bilder/kmeans_utils.py">zum Download angehängt</a> eine Datei mit ein paar hilfreichen Routinen und schon einer Vorgabe für die “Hauptroutine”. <strong>Bitte machen Sie sich damit vertraut, wie in Python Routinen aus einem <em>module</em> (d.h. einer anderen Datei mit Python Funktionen) importiert werden kann.</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode py"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" title="1"><span class="im">from</span> kmeans_utils <span class="im">import</span> kmeans, plot_cluster_data</a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="co"># import routines from a module</span></a>
+<a class="sourceLine" id="cb16-3" title="3"></a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="co"># construct data as above</span></a>
+<a class="sourceLine" id="cb16-5" title="5">N <span class="op">=</span> <span class="dv">9</span></a>
+<a class="sourceLine" id="cb16-6" title="6">K <span class="op">=</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb16-7" title="7"></a>
+<a class="sourceLine" id="cb16-8" title="8">x <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, N)</a>
+<a class="sourceLine" id="cb16-9" title="9">y <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, N)</a>
+<a class="sourceLine" id="cb16-10" title="10">z <span class="op">=</span> (x<span class="op">*</span>x<span class="op">*</span>y)<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb16-11" title="11"></a>
+<a class="sourceLine" id="cb16-12" title="12">cntro <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb16-13" title="13">cntrt <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb16-14" title="14"></a>
+<a class="sourceLine" id="cb16-15" title="15">cntrdlist <span class="op">=</span> [cntro, cntrt]</a>
+<a class="sourceLine" id="cb16-16" title="16">datamatrix <span class="op">=</span> np.hstack([x.reshape((x.size, <span class="dv">1</span>)), z.reshape((z.size, <span class="dv">1</span>))])</a>
+<a class="sourceLine" id="cb16-17" title="17"></a>
+<a class="sourceLine" id="cb16-18" title="18"><span class="co"># run the kmeans algorithm</span></a>
+<a class="sourceLine" id="cb16-19" title="19">cntrdlist, labels, cerror <span class="op">=</span> kmeans(datamatrix, K<span class="op">=</span><span class="dv">2</span>, cntrdlist<span class="op">=</span>cntrdlist)</a>
+<a class="sourceLine" id="cb16-20" title="20"></a>
+<a class="sourceLine" id="cb16-21" title="21"><span class="co"># plot the result</span></a>
+<a class="sourceLine" id="cb16-22" title="22">plot_cluster_data(datamatrix, labels, cntrdlist,</a>
+<a class="sourceLine" id="cb16-23" title="23">                  xlabel<span class="op">=</span><span class="st">&#39;feature&#39;</span>, ylabel<span class="op">=</span><span class="st">&#39;other feature&#39;</span>,</a>
+<a class="sourceLine" id="cb16-24" title="24">                  fignum<span class="op">=</span><span class="dv">10101</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb16-25" title="25">                  titlestr<span class="op">=</span><span class="st">&#39;K-means: finaler Zustand&#39;</span>)</a></code></pre></div>
 </div>
 <div id="k-means-fuer-die-pinguine" class="section level3 hasAnchor">
 <h3><span class="header-section-number">6.6.3</span> K-means fuer die Pinguine<a href="clustering-und-hauptkomponentenanalyse.html#k-means-fuer-die-pinguine" class="anchor-section" aria-label="Anchor link to header"></a></h3>

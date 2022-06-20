@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Clustering und Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Clustering und Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="hauptkomponentenanalyse-ctd..html"/>
-
+<link rel="next" href="optimierung.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -141,12 +141,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#python"><i class="fa fa-check"></i><b>1.4</b> Python</a></li>
 <li class="chapter" data-level="1.5" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#aufgaben"><i class="fa fa-check"></i><b>1.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="lineare-regression.html"><a href="lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
-<li class="chapter" data-level="2.1" data-path="lineare-regression.html"><a href="lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
-<li class="chapter" data-level="2.2" data-path="lineare-regression.html"><a href="lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
-<li class="chapter" data-level="2.3" data-path="lineare-regression.html"><a href="lineare-regression.html#fehlerfunktional-und-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
-<li class="chapter" data-level="2.4" data-path="lineare-regression.html"><a href="lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
-<li class="chapter" data-level="2.5" data-path="lineare-regression.html"><a href="lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
+<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
+<li class="chapter" data-level="2.1" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
+<li class="chapter" data-level="2.2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
+<li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#fehlerfunktional-und-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
+<li class="chapter" data-level="2.4" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a><ul>
 <li class="chapter" data-level="3.1" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#qr-zerlegung"><i class="fa fa-check"></i><b>3.1</b> QR Zerlegung</a></li>
@@ -176,6 +176,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine"><i class="fa fa-check"></i><b>6.5</b> Am Beispiel der Pinguine</a></li>
 <li class="chapter" data-level="6.6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#aufgaben-3"><i class="fa fa-check"></i><b>6.6</b> Aufgaben</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a><ul>
+<li class="chapter" data-level="7.1" data-path="optimierung.html"><a href="optimierung.html#multivariable-funktionen"><i class="fa fa-check"></i><b>7.1</b> Multivariable Funktionen</a></li>
+<li class="chapter" data-level="7.2" data-path="optimierung.html"><a href="optimierung.html#partielle-ableitungen-und-der-gradient"><i class="fa fa-check"></i><b>7.2</b> Partielle Ableitungen und der Gradient</a></li>
+<li class="chapter" data-level="7.3" data-path="optimierung.html"><a href="optimierung.html#richtungs-ableitung"><i class="fa fa-check"></i><b>7.3</b> Richtungs-Ableitung</a></li>
+<li class="chapter" data-level="7.4" data-path="optimierung.html"><a href="optimierung.html#optimierung-1"><i class="fa fa-check"></i><b>7.4</b> Optimierung</a></li>
+<li class="chapter" data-level="7.5" data-path="optimierung.html"><a href="optimierung.html#optimierung-unter-nebenbedingungen"><i class="fa fa-check"></i><b>7.5</b> Optimierung unter Nebenbedingungen</a></li>
+<li class="chapter" data-level="7.6" data-path="optimierung.html"><a href="optimierung.html#whats-more"><i class="fa fa-check"></i><b>7.6</b> What’s more</a></li>
+<li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.7</b> Aufgaben</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -198,7 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="clustering-und-hauptkomponentenanalyse" class="section level1 hasAnchor">
 <h1><span class="header-section-number">6</span> Clustering und Hauptkomponentenanalyse<a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Mit der Hauptkomponentenanalyse haben wir eine Methode kennengelernt, Daten gemäß in Koordinaten darzustellen, die nach inhaltsschwere<a href="clustering-und-hauptkomponentenanalyse.html#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> absteigend sortiert sind. Die Konzentrierung der Varianz in den Hauptachsenrichtungen ermöglicht uns</p>
+<p>Mit der Hauptkomponentenanalyse haben wir eine Methode kennengelernt, Daten gemäß in Koordinaten darzustellen, die nach inhaltsschwere<a href="optimierung.html#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> absteigend sortiert sind. Die Konzentrierung der Varianz in den Hauptachsenrichtungen ermöglicht uns</p>
 <ol style="list-style-type: decimal">
 <li>die Hauptkomponenten zu ermitteln, die den Datensatz optimal in niedrigerer Dimension darstellen (wobei optimal hier bedeutet dass die Varianz in der Differenz <span class="math inline">\({\mathbf{X}}-\hat {\mathbf{X}}\)</span> minimal ist)</li>
 <li>und in diesem Sinne die Daten optimal auf niedrigere Dimensionen zu reduzieren.</li>
@@ -282,7 +291,7 @@ Figure 6.1: Entwicklung der Centroids im Verlauf des k-means clustering Algorith
 <li>Test zu welchen centroid <span class="math inline">\(c_j\)</span>, <span class="math inline">\(j=1,\dots,K\)</span> der (transformierte) Datenpunkt am nächsten liegt.</li>
 </ol>
 <p>Der in (3.) ermittelte Index <span class="math inline">\(j^*\)</span> ist dann das Cluster, dem der Datenpunkt zugeordnet wird.</p>
-<p>Der Sprachgebrauch hier ist, dass das Modell mit bekannten Daten <em>trainiert</em> wird und dann für neue Daten <em>angewendet</em> wird<a href="clustering-und-hauptkomponentenanalyse.html#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>. Um zu evaluieren, ob das Modell “funktioniert” ist das folgende Vorgehen ebenso naheliegend wie standardmäßig angewandt.</p>
+<p>Der Sprachgebrauch hier ist, dass das Modell mit bekannten Daten <em>trainiert</em> wird und dann für neue Daten <em>angewendet</em> wird<a href="optimierung.html#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>. Um zu evaluieren, ob das Modell “funktioniert” ist das folgende Vorgehen ebenso naheliegend wie standardmäßig angewandt.</p>
 <p>Die vorhandenen Daten werden aufgeteilt in <strong>Trainingsdaten</strong>, mit denen das Modell trainiert werden, und <strong>Testdaten</strong>, mit denen die Vorhersagekraft des Modells evaluiert wird. Wie die Aufteilung passiert, wird anhand von Erfahrungswerten und im Hinblick auf die vorliegende Aufgabe entschieden.</p>
 </div>
 <div id="am-beispiel-der-pinguine" class="section level2 hasAnchor">
@@ -403,18 +412,6 @@ Figure 6.4: Bitte gerne hier die Evolution einzeichnen
 </div>
 <div class="footnotes">
 <hr />
-<ol>
-<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele<a href="hauptkomponentenanalyse-ctd..html#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet<a href="hauptkomponentenanalyse-ctd..html#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>wir dürfen aber nicht vergessen, dass Daten typischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den <em>features</em> gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens<a href="hauptkomponentenanalyse-ctd..html#fnref5" class="footnote-back">↩</a></p></li>
-<li id="fn6"><p>wenn wir Inhalt mit Varianz gleich setzen<a href="clustering-und-hauptkomponentenanalyse.html#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p>Im <em>machine learning</em> wird gerne von <em>generalization</em> gesprochen<a href="clustering-und-hauptkomponentenanalyse.html#fnref7" class="footnote-back">↩</a></p></li>
-</ol>
-</div>
-<div class="footnotes">
-<hr />
 <ol start="6">
 <li id="fn6"><p>wenn wir Inhalt mit Varianz gleich setzen<a href="clustering-und-hauptkomponentenanalyse.html#fnref6" class="footnote-back">↩</a></p></li>
 <li id="fn7"><p>Im <em>machine learning</em> wird gerne von <em>generalization</em> gesprochen<a href="clustering-und-hauptkomponentenanalyse.html#fnref7" class="footnote-back">↩</a></p></li>
@@ -425,8 +422,8 @@ Figure 6.4: Bitte gerne hier die Evolution einzeichnen
           </div>
         </div>
       </div>
-<a href="hauptkomponentenanalyse-ctd..html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="hauptkomponentenanalyse-ctd..html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="optimierung.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

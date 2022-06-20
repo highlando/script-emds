@@ -479,8 +479,8 @@ Achtung:
   \end{itemize}
 \end{itemize}
 
-\hypertarget{lineare-regression}{%
-\chapter{Lineare Regression}\label{lineare-regression}}
+\hypertarget{sec-lineare-regression}{%
+\chapter{Lineare Regression}\label{sec-lineare-regression}}
 
 Auch bekannt als
 
@@ -2158,5 +2158,199 @@ Achtung -- auch hier ist wieder Zufall involviert. Wenn das Ergebnis seltsam aus
 \subsection{L-curve}\label{l-curve}}
 
 Bestimmen sie die L-Kurve fuer die Pinguindaten fuer \texttt{K=1,2,3,4,...,8} -- fuer das clustering auf dem gesamten Datensatz.
+
+\hypertarget{optimierung}{%
+\chapter{Optimierung}\label{optimierung}}
+
+\providecommand{\diva}[1]{\text{\textup{d}} #1}
+
+\begin{itemize}
+\tightlist
+\item
+  Schon kennengelernt
+
+  \begin{itemize}
+  \tightlist
+  \item
+    lineare Regression
+  \item
+    PCA
+  \item
+    bei uns immer ein quadratisches Problem
+  \end{itemize}
+\item
+  Neural Networks
+\end{itemize}
+
+\hypertarget{multivariable-funktionen}{%
+\section{Multivariable Funktionen}\label{multivariable-funktionen}}
+
+Um unsere Optimierungsprobleme in allgemeiner Form zu formulieren und auch um allgemeine Lösungsansätze herzuleiten, brauchen wir erstmal ein paar Begriffe aus der Analysis von multivariablen Funktionen.
+
+Es sei also eine Funktion
+\begin{equation*}
+f\colon \mathbb R^{n}\to \mathbb R^{}, \quad f \colon (x_1,x_2, \dots, x_n) \mapsto f(x_1, x_2, \dotsc, x_n)
+\end{equation*}
+gegeben, die ein \(n\)-tupel von Variablen auf einen reellen Wert abbildet. Ein Beispiel wäre
+\begin{equation*}
+g(x_1, x_2, x_3) = \sin(x_1) + x_1^2 x_2 x_3.
+\end{equation*}
+
+\leavevmode\hypertarget{variablen-namen}{}%
+\begin{JHSAYS}
+Hier verwenden wir jetzt \(x_i\) für die \(i\)-te Variable der multivariablen Funktion. Bitte nicht verwechseln mit der Bezeichnung für den \(i\)-ten Datenpunkt zum Beispiel in Kapitel \ref{sec-lineare-regression}.
+
+Außerdem wäre es besser wir würden die Funktion mit einem Definitionsbereich \(D(f)\) angeben, also schreiben
+\begin{equation*}
+f\colon D(f) \subset \mathbb R^{n}\to \mathbb R^{}
+\end{equation*}
+da eine Funktion eventuell nicht überall definiert ist (bzw. definiert sein muss). Im Sinne der besseren Lesbarkeit, ersparen wir uns dieses Detail.
+
+\end{JHSAYS}
+
+\hypertarget{partielle-ableitungen-und-der-gradient}{%
+\section{Partielle Ableitungen und der Gradient}\label{partielle-ableitungen-und-der-gradient}}
+
+Wenn wir alle Variablen bis auf die \(i\)-te für einen Augenblick einfrieren (also auf einen konstanten Wert \(\bar x_j\) festlegen und nicht verändern), können wir die Teilfunktion
+\begin{equation*}
+\bar f_{(i)}\colon \mathbb R^{}\to \mathbb R^{}, \quad \bar f_{(i)}\colon x_i \to f(\bar x_1, \dotsc, \bar x_{i-1}, x_i, \bar x_{i+1}, \dotsc, \bar x_n)
+\end{equation*}
+als Funktion mit einer Veränderlichen (und \(n-1\) Parametern) betrachten und wie gehabt ableiten. Die erhaltene, sogenannte \emph{partielle Ableitung} hängt von den Parametern \(\bar x_j\) ab und wird mit
+\begin{equation*}
+\frac{\partial f}{\partial x_i}
+\end{equation*}
+bezeichnet. Alle \(n\) möglichen partiellen Ableitungen in einen Vektor geschrieben ergeben den sogenannten \emph{Gradienten}
+\begin{equation*}
+\nabla f = 
+\begin{bmatrix}
+\frac{\partial f}{\partial x_1} \\
+\frac{\partial f}{\partial x_2} \\
+\vdots \\
+\frac{\partial f}{\partial x_n}
+\end{bmatrix}
+\colon \mathbb R^{n} \to \mathbb R^{n}
+\end{equation*}
+der wiederum einen (vektorwertige) Funktion von \(n\) Variablen ist.
+Für unser obiges Beispiel bekommen wir
+\begin{equation*}
+\nabla g(x_1, x_2, x_3) =
+\begin{bmatrix}
+\cos(x_1)+2x_1x_2x_3\\
+x_1^2x_3 \\
+x_1^2x_2
+\end{bmatrix}
+\end{equation*}
+
+\hypertarget{richtungs-ableitung}{%
+\section{Richtungs-Ableitung}\label{richtungs-ableitung}}
+
+Die Betrachtung der Funktionen \(\bar f_{(i)}\) ermöglicht die Analysis des Verhaltens der Funktion entlang der \(i\)-ten Koordinaten Richtung. Um die Funktion in einer beliebigen Richtung um einen festen Punkt
+\begin{equation*}
+\bar x = (\bar x_1, \bar x_2, \dotsc, \bar x_n)
+\end{equation*}
+zu untersuchen, kann die Funktion entlang einer Richtung \(v \in \mathbb R^{n}\) parametrisiert werden:
+\begin{equation*}
+\bar f_{(v)} \colon \mathbb R^{} \to \mathbb R^{}, \quad t \mapsto \bar f_{(v)}(t) = f(\bar x + tv)
+\end{equation*}
+
+\leavevmode\hypertarget{richtung-is-partiell}{}%
+\begin{JHSAYS}
+Für \(v=e_i\) bekommen wir direkt, dass \(\bar f_{(v)}=\bar f_{(i)}\).
+
+\end{JHSAYS}
+
+Wiederum handelt es sich um eine reelle Funktion in einer Variablen (hier der Parameter \(t\)), die wir schulbuchmäßig ableiten könnten. Für diese sogenannte \emph{Richtungsableitung} gilt der folgende Zusammenhang\footnote{Das folgt aus der Kettenregel für multivariable Funktionen, die wir in der Vorlesung \emph{Mathematik für Data Science 2} noch beweisen werden}
+\begin{equation*}
+\frac{\text{\textup{d}} \bar f_{(v)}}{\text{\textup{d}} t}\Bigr |_{t=0} = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
+\end{equation*}
+
+\leavevmode\hypertarget{richtung-ableitung}{}%
+\begin{JHSAYS}
+Die Veränderungsrate der Funktion \(f\) im Punkt \(\bar x\) in der Richtung von \(v\) ist gleich dem Skalarprodukt aus Gradient im Punkt \(\bar x\) und der gewählten Richtung.
+
+\end{JHSAYS}
+
+Sei nun \(v\) normiert, also \(\|v\|=1\), dann gilt nach der Winkelformel, dass
+\begin{equation*}
+\langle \nabla f(\bar x), v \rangle = \|\nabla f(\bar x) \| \cos (\alpha)
+\end{equation*}
+wobei \(\alpha\) der von \(\nabla f(\bar x)\) und \(v\) eingeschlossene Winkel ist. Wir bemerken, dass die Veränderung maximal wird, wenn \(\alpha = 0\) oder
+\begin{equation*}
+v = \frac{1}{ \| \nabla f(\bar x) \| } \nabla f(\bar x)
+\end{equation*}
+als ein Vielfaches des Gradientenvektors gewählt wird.
+Andersherum können wir einige ganz wesentliche Aspekte folgern:
+
+\begin{itemize}
+\tightlist
+\item
+  der Gradient selbst in die Richtung des stärksten Anstiegs
+\item
+  der negative Gradient \(-\nabla f(\bar x)\) zeigt in die Richtung des stärksten Abfalls
+\item
+  ist der Gradient der Nullvektor, dann findet keine Veränderung mehr statt, d.h. dass aus \(\nabla f(\bar x) =0\) folgt, dass \(\bar x\) ein kritischer Punkt von \(f\) ist
+\item
+  ist der Gradient nicht der Nullvektor, kann \(\bar x\) kein Minimum und kein Maximum sein (weil die Funktion in \(-\nabla f(\bar x)\) Richtung abfällt und in \(\nabla f(\bar x)\) Richtung ansteigt)
+\end{itemize}
+
+\hypertarget{optimierung-1}{%
+\section{Optimierung}\label{optimierung-1}}
+
+Ganz allgemein können wir unsere bisherigen Optimierungsprobleme schreiben als
+\begin{equation*}
+f(x) \to \min_{x\in \mathbb R^{n}}
+\end{equation*}
+
+\begin{itemize}
+\tightlist
+\item
+  allgemeine Darstellung
+
+  \begin{itemize}
+  \tightlist
+  \item
+    multivariable Funktion
+  \end{itemize}
+\item
+  Gradient/Hesse Matrix
+\item
+  Gradientenabstiegsverfahren
+
+  \begin{itemize}
+  \tightlist
+  \item
+    klassisch
+  \item
+    gedaempft
+  \item
+    stochastisch
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{optimierung-unter-nebenbedingungen}{%
+\section{Optimierung unter Nebenbedingungen}\label{optimierung-unter-nebenbedingungen}}
+
+\hypertarget{whats-more}{%
+\section{What's more}\label{whats-more}}
+
+\begin{itemize}
+\tightlist
+\item
+  Automatisches Differenzieren
+\item
+  Multikriterielle Optimierung
+\end{itemize}
+
+\hypertarget{aufgaben-4}{%
+\section{Aufgaben}\label{aufgaben-4}}
+
+\hypertarget{optimierung-ohne-gradienten-p}{%
+\subsection{Optimierung ohne Gradienten (P)}\label{optimierung-ohne-gradienten-p}}
+
+\hypertarget{gradientenabstiegsverfahren-p}{%
+\subsection{Gradientenabstiegsverfahren (P)}\label{gradientenabstiegsverfahren-p}}
+
+\hypertarget{built-in-optimierung-in-scipy-p}{%
+\subsection{Built-in Optimierung in Scipy (P)}\label{built-in-optimierung-in-scipy-p}}
 
 \end{document}

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Einführung in die mathematische Datenanalyse</title>
+  <title>7 Optimierung | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Einführung in die mathematische Datenanalyse" />
+  <meta property="og:title" content="7 Optimierung | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="github-repo" content="highlando/script-emds" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Einführung in die mathematische Datenanalyse" />
+  <meta name="twitter:title" content="7 Optimierung | Einführung in die mathematische Datenanalyse" />
   
   <meta name="twitter:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   
@@ -29,7 +29,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
+<link rel="prev" href="clustering-und-hauptkomponentenanalyse.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -205,18 +205,176 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="optimierung" class="section level1 hasAnchor">
+<h1><span class="header-section-number">7</span> Optimierung<a href="optimierung.html#optimierung" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+
+<ul>
+<li>Schon kennengelernt
+<ul>
+<li>lineare Regression</li>
+<li>PCA</li>
+<li>bei uns immer ein quadratisches Problem</li>
+</ul></li>
+<li>Neural Networks</li>
+</ul>
+<div id="multivariable-funktionen" class="section level2 hasAnchor">
+<h2><span class="header-section-number">7.1</span> Multivariable Funktionen<a href="optimierung.html#multivariable-funktionen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Um unsere Optimierungsprobleme in allgemeiner Form zu formulieren und auch um allgemeine Lösungsansätze herzuleiten, brauchen wir erstmal ein paar Begriffe aus der Analysis von multivariablen Funktionen.</p>
+<p>Es sei also eine Funktion
+<span class="math display">\[\begin{equation*}
+f\colon \mathbb R^{n}\to \mathbb R^{}, \quad f \colon (x_1,x_2, \dots, x_n) \mapsto f(x_1, x_2, \dotsc, x_n)
+\end{equation*}\]</span>
+gegeben, die ein <span class="math inline">\(n\)</span>-tupel von Variablen auf einen reellen Wert abbildet. Ein Beispiel wäre
+<span class="math display">\[\begin{equation*}
+g(x_1, x_2, x_3) = \sin(x_1) + x_1^2 x_2 x_3.
+\end{equation*}\]</span></p>
+<div id="variablen-namen" class="JHSAYS">
+<p>Hier verwenden wir jetzt <span class="math inline">\(x_i\)</span> für die <span class="math inline">\(i\)</span>-te Variable der multivariablen Funktion. Bitte nicht verwechseln mit der Bezeichnung für den <span class="math inline">\(i\)</span>-ten Datenpunkt zum Beispiel in Kapitel <a href="sec-lineare-regression.html#sec-lineare-regression">2</a>.</p>
+<p>Außerdem wäre es besser wir würden die Funktion mit einem Definitionsbereich <span class="math inline">\(D(f)\)</span> angeben, also schreiben
+<span class="math display">\[\begin{equation*}
+f\colon D(f) \subset \mathbb R^{n}\to \mathbb R^{}
+\end{equation*}\]</span>
+da eine Funktion eventuell nicht überall definiert ist (bzw. definiert sein muss). Im Sinne der besseren Lesbarkeit, ersparen wir uns dieses Detail.</p>
+</div>
+</div>
+<div id="partielle-ableitungen-und-der-gradient" class="section level2 hasAnchor">
+<h2><span class="header-section-number">7.2</span> Partielle Ableitungen und der Gradient<a href="optimierung.html#partielle-ableitungen-und-der-gradient" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wenn wir alle Variablen bis auf die <span class="math inline">\(i\)</span>-te für einen Augenblick einfrieren (also auf einen konstanten Wert <span class="math inline">\(\bar x_j\)</span> festlegen und nicht verändern), können wir die Teilfunktion
+<span class="math display">\[\begin{equation*}
+\bar f_{(i)}\colon \mathbb R^{}\to \mathbb R^{}, \quad \bar f_{(i)}\colon x_i \to f(\bar x_1, \dotsc, \bar x_{i-1}, x_i, \bar x_{i+1}, \dotsc, \bar x_n)
+\end{equation*}\]</span>
+als Funktion mit einer Veränderlichen (und <span class="math inline">\(n-1\)</span> Parametern) betrachten und wie gehabt ableiten. Die erhaltene, sogenannte <em>partielle Ableitung</em> hängt von den Parametern <span class="math inline">\(\bar x_j\)</span> ab und wird mit
+<span class="math display">\[\begin{equation*}
+\frac{\partial f}{\partial x_i}
+\end{equation*}\]</span>
+bezeichnet. Alle <span class="math inline">\(n\)</span> möglichen partiellen Ableitungen in einen Vektor geschrieben ergeben den sogenannten <em>Gradienten</em>
+<span class="math display">\[\begin{equation*}
+\nabla f = 
+\begin{bmatrix}
+\frac{\partial f}{\partial x_1} \\
+\frac{\partial f}{\partial x_2} \\
+\vdots \\
+\frac{\partial f}{\partial x_n}
+\end{bmatrix}
+\colon \mathbb R^{n} \to \mathbb R^{n}
+\end{equation*}\]</span>
+der wiederum einen (vektorwertige) Funktion von <span class="math inline">\(n\)</span> Variablen ist.
+Für unser obiges Beispiel bekommen wir
+<span class="math display">\[\begin{equation*}
+\nabla g(x_1, x_2, x_3) =
+\begin{bmatrix}
+\cos(x_1)+2x_1x_2x_3\\
+x_1^2x_3 \\
+x_1^2x_2
+\end{bmatrix}
+\end{equation*}\]</span></p>
+</div>
+<div id="richtungs-ableitung" class="section level2 hasAnchor">
+<h2><span class="header-section-number">7.3</span> Richtungs-Ableitung<a href="optimierung.html#richtungs-ableitung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Die Betrachtung der Funktionen <span class="math inline">\(\bar f_{(i)}\)</span> ermöglicht die Analysis des Verhaltens der Funktion entlang der <span class="math inline">\(i\)</span>-ten Koordinaten Richtung. Um die Funktion in einer beliebigen Richtung um einen festen Punkt
+<span class="math display">\[\begin{equation*}
+\bar x = (\bar x_1, \bar x_2, \dotsc, \bar x_n)
+\end{equation*}\]</span>
+zu untersuchen, kann die Funktion entlang einer Richtung <span class="math inline">\(v \in \mathbb R^{n}\)</span> parametrisiert werden:
+<span class="math display">\[\begin{equation*}
+\bar f_{(v)} \colon \mathbb R^{} \to \mathbb R^{}, \quad t \mapsto \bar f_{(v)}(t) = f(\bar x + tv)
+\end{equation*}\]</span></p>
+<div id="richtung-is-partiell" class="JHSAYS">
+<p>Für <span class="math inline">\(v=e_i\)</span> bekommen wir direkt, dass <span class="math inline">\(\bar f_{(v)}=\bar f_{(i)}\)</span>.</p>
+</div>
+<p>Wiederum handelt es sich um eine reelle Funktion in einer Variablen (hier der Parameter <span class="math inline">\(t\)</span>), die wir schulbuchmäßig ableiten könnten. Für diese sogenannte <em>Richtungsableitung</em> gilt der folgende Zusammenhang<a href="optimierung.html#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>
+<span class="math display">\[\begin{equation*}
+\frac{\text{\textup{d}} \bar f_{(v)}}{\text{\textup{d}} t}\Bigr |_{t=0} = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
+\end{equation*}\]</span></p>
+<div id="richtung-ableitung" class="JHSAYS">
+<p>Die Veränderungsrate der Funktion <span class="math inline">\(f\)</span> im Punkt <span class="math inline">\(\bar x\)</span> in der Richtung von <span class="math inline">\(v\)</span> ist gleich dem Skalarprodukt aus Gradient im Punkt <span class="math inline">\(\bar x\)</span> und der gewählten Richtung.</p>
+</div>
+<p>Sei nun <span class="math inline">\(v\)</span> normiert, also <span class="math inline">\(\|v\|=1\)</span>, dann gilt nach der Winkelformel, dass
+<span class="math display">\[\begin{equation*}
+\langle \nabla f(\bar x), v \rangle = \|\nabla f(\bar x) \| \cos (\alpha)
+\end{equation*}\]</span>
+wobei <span class="math inline">\(\alpha\)</span> der von <span class="math inline">\(\nabla f(\bar x)\)</span> und <span class="math inline">\(v\)</span> eingeschlossene Winkel ist. Wir bemerken, dass die Veränderung maximal wird, wenn <span class="math inline">\(\alpha = 0\)</span> oder
+<span class="math display">\[\begin{equation*}
+v = \frac{1}{ \| \nabla f(\bar x) \| } \nabla f(\bar x)
+\end{equation*}\]</span>
+als ein Vielfaches des Gradientenvektors gewählt wird.
+Andersherum können wir einige ganz wesentliche Aspekte folgern:</p>
+<ul>
+<li>der Gradient selbst in die Richtung des stärksten Anstiegs</li>
+<li>der negative Gradient <span class="math inline">\(-\nabla f(\bar x)\)</span> zeigt in die Richtung des stärksten Abfalls</li>
+<li>ist der Gradient der Nullvektor, dann findet keine Veränderung mehr statt, d.h. dass aus <span class="math inline">\(\nabla f(\bar x) =0\)</span> folgt, dass <span class="math inline">\(\bar x\)</span> ein kritischer Punkt von <span class="math inline">\(f\)</span> ist</li>
+<li>ist der Gradient nicht der Nullvektor, kann <span class="math inline">\(\bar x\)</span> kein Minimum und kein Maximum sein (weil die Funktion in <span class="math inline">\(-\nabla f(\bar x)\)</span> Richtung abfällt und in <span class="math inline">\(\nabla f(\bar x)\)</span> Richtung ansteigt)</li>
+</ul>
+</div>
+<div id="optimierung-1" class="section level2 hasAnchor">
+<h2><span class="header-section-number">7.4</span> Optimierung<a href="optimierung.html#optimierung-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ganz allgemein können wir unsere bisherigen Optimierungsprobleme schreiben als
+<span class="math display">\[\begin{equation*}
+f(x) \to \min_{x\in \mathbb R^{n}}
+\end{equation*}\]</span></p>
+<ul>
+<li>allgemeine Darstellung
+<ul>
+<li>multivariable Funktion</li>
+</ul></li>
+<li>Gradient/Hesse Matrix</li>
+<li>Gradientenabstiegsverfahren
+<ul>
+<li>klassisch</li>
+<li>gedaempft</li>
+<li>stochastisch</li>
+</ul></li>
+</ul>
+</div>
+<div id="optimierung-unter-nebenbedingungen" class="section level2 hasAnchor">
+<h2><span class="header-section-number">7.5</span> Optimierung unter Nebenbedingungen<a href="optimierung.html#optimierung-unter-nebenbedingungen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="whats-more" class="section level2 hasAnchor">
+<h2><span class="header-section-number">7.6</span> What’s more<a href="optimierung.html#whats-more" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Automatisches Differenzieren</li>
+<li>Multikriterielle Optimierung</li>
+</ul>
+</div>
+<div id="aufgaben-4" class="section level2 hasAnchor">
+<h2><span class="header-section-number">7.7</span> Aufgaben<a href="optimierung.html#aufgaben-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="optimierung-ohne-gradienten-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">7.7.1</span> Optimierung ohne Gradienten (P)<a href="optimierung.html#optimierung-ohne-gradienten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="gradientenabstiegsverfahren-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">7.7.2</span> Gradientenabstiegsverfahren (P)<a href="optimierung.html#gradientenabstiegsverfahren-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="built-in-optimierung-in-scipy-p" class="section level3 hasAnchor">
+<h3><span class="header-section-number">7.7.3</span> Built-in Optimierung in Scipy (P)<a href="optimierung.html#built-in-optimierung-in-scipy-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele<a href="hauptkomponentenanalyse-ctd..html#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet<a href="hauptkomponentenanalyse-ctd..html#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p>wir dürfen aber nicht vergessen, dass Daten typischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den <em>features</em> gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens<a href="hauptkomponentenanalyse-ctd..html#fnref5" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>wenn wir Inhalt mit Varianz gleich setzen<a href="clustering-und-hauptkomponentenanalyse.html#fnref6" class="footnote-back">↩</a></p></li>
+<li id="fn7"><p>Im <em>machine learning</em> wird gerne von <em>generalization</em> gesprochen<a href="clustering-und-hauptkomponentenanalyse.html#fnref7" class="footnote-back">↩</a></p></li>
+<li id="fn8"><p>Das folgt aus der Kettenregel für multivariable Funktionen, die wir in der Vorlesung <em>Mathematik für Data Science 2</em> noch beweisen werden<a href="optimierung.html#fnref8" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="8">
+<li id="fn8"><p>Das folgt aus der Kettenregel für multivariable Funktionen, die wir in der Vorlesung <em>Mathematik für Data Science 2</em> noch beweisen werden<a href="optimierung.html#fnref8" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
+<a href="clustering-und-hauptkomponentenanalyse.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

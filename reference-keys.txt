@@ -17,7 +17,7 @@ aufgaben
 python-1
 einheitsmatrix
 matrizen-multiplikation-und-potenz
-lineare-regression
+sec-lineare-regression
 rauschen-und-fitting
 ansätze-für-lineare-regression
 fehlerfunktional-und-minimierung
@@ -66,3 +66,14 @@ k-means-von-hand-t
 k-means-als-algorithmus-p
 k-means-fuer-die-pinguine
 l-curve
+optimierung
+multivariable-funktionen
+partielle-ableitungen-und-der-gradient
+richtungs-ableitung
+optimierung-1
+optimierung-unter-nebenbedingungen
+whats-more
+aufgaben-4
+optimierung-ohne-gradienten-p
+gradientenabstiegsverfahren-p
+built-in-optimierung-in-scipy-p

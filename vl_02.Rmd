@@ -1,4 +1,4 @@
-# Lineare Regression 
+# Lineare Regression {#sec-lineare-regression}
 
 Auch bekannt als
 

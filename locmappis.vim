@@ -14,3 +14,5 @@ imap mby \mathbb y
 imap smn \sum_{i=1}^N
 
 map ,m <esc>:w<CR>:!./mkdc.sh<CR>
+imap xin (x_1, x_2, \dotsc, x_n)
+imap dfdx \frac{\partial f}{\partial x_i}

@@ -8,6 +8,7 @@ rmd_files: ["index.Rmd",
             "vl_03.Rmd",
             "vl_04.Rmd",
             "vl_05.Rmd",
-            "vl_06.Rmd"]
+            "vl_06.Rmd",
+            "vl_07.Rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

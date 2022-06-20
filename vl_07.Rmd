@@ -1,0 +1,134 @@
+# Optimierung
+
+\providecommand{\diva}[1]{\text{\textup{d}} #1}
+
+ * Schon kennengelernt
+   * lineare Regression
+   * PCA
+   * bei uns immer ein quadratisches Problem
+ * Neural Networks 
+
+## Multivariable Funktionen
+
+Um unsere Optimierungsprobleme in allgemeiner Form zu formulieren und auch um allgemeine L&ouml;sungsans&auml;tze herzuleiten, brauchen wir erstmal ein paar Begriffe aus der Analysis von multivariablen Funktionen.
+
+Es sei also eine Funktion
+\begin{equation*}
+f\colon \mathbb R^{n}\to \mathbb R^{}, \quad f \colon (x_1,x_2, \dots, x_n) \mapsto f(x_1, x_2, \dotsc, x_n)
+\end{equation*}
+gegeben, die ein $n$-tupel von Variablen auf einen reellen Wert abbildet. Ein Beispiel w&auml;re
+\begin{equation*}
+g(x_1, x_2, x_3) = \sin(x_1) + x_1^2 x_2 x_3.
+\end{equation*}
+
+::: {#variablen-namen .JHSAYS data-latex=''}
+Hier verwenden wir jetzt $x_i$ f&uuml;r die $i$-te Variable der multivariablen Funktion. Bitte nicht verwechseln mit der Bezeichnung f&uuml;r den $i$-ten Datenpunkt zum Beispiel in Kapitel \@ref(sec-lineare-regression).
+
+Au&szlig;erdem w&auml;re es besser wir w&uuml;rden die Funktion mit einem Definitionsbereich $D(f)$ angeben, also schreiben
+\begin{equation*}
+f\colon D(f) \subset \mathbb R^{n}\to \mathbb R^{}
+\end{equation*}
+da eine Funktion eventuell nicht &uuml;berall definiert ist (bzw. definiert sein muss). Im Sinne der besseren Lesbarkeit, ersparen wir uns dieses Detail.
+:::
+
+## Partielle Ableitungen und der Gradient
+
+Wenn wir alle Variablen bis auf die $i$-te f&uuml;r einen Augenblick einfrieren (also auf einen konstanten Wert $\bar x_j$ festlegen und nicht ver&auml;ndern), k&ouml;nnen wir die Teilfunktion 
+\begin{equation*}
+\bar f_{(i)}\colon \mathbb R^{}\to \mathbb R^{}, \quad \bar f_{(i)}\colon x_i \to f(\bar x_1, \dotsc, \bar x_{i-1}, x_i, \bar x_{i+1}, \dotsc, \bar x_n)
+\end{equation*}
+als Funktion mit einer Ver&auml;nderlichen (und $n-1$ Parametern) betrachten und wie gehabt ableiten. Die erhaltene, sogenannte *partielle Ableitung* h&auml;ngt von den Parametern $\bar x_j$ ab und wird mit
+\begin{equation*}
+\frac{\partial f}{\partial x_i}
+\end{equation*}
+bezeichnet. Alle $n$ m&ouml;glichen partiellen Ableitungen in einen Vektor geschrieben ergeben den sogenannten *Gradienten*
+\begin{equation*}
+\nabla f = 
+\begin{bmatrix}
+\frac{\partial f}{\partial x_1} \\
+\frac{\partial f}{\partial x_2} \\
+\vdots \\
+\frac{\partial f}{\partial x_n}
+\end{bmatrix}
+\colon \mathbb R^{n} \to \mathbb R^{n}
+\end{equation*}
+der wiederum einen (vektorwertige) Funktion von $n$ Variablen ist.
+F&uuml;r unser obiges Beispiel bekommen wir
+\begin{equation*}
+\nabla g(x_1, x_2, x_3) =
+\begin{bmatrix}
+\cos(x_1)+2x_1x_2x_3\\
+x_1^2x_3 \\
+x_1^2x_2
+\end{bmatrix}
+\end{equation*}
+
+## Richtungs-Ableitung
+
+Die Betrachtung der Funktionen $\bar f_{(i)}$ erm&ouml;glicht die Analysis des Verhaltens der Funktion entlang der $i$-ten Koordinaten Richtung. Um die Funktion in einer beliebigen Richtung um einen festen Punkt 
+\begin{equation*}
+\bar x = (\bar x_1, \bar x_2, \dotsc, \bar x_n)
+\end{equation*}
+zu untersuchen, kann die Funktion entlang einer Richtung $v \in \mathbb R^{n}$ parametrisiert werden:
+\begin{equation*}
+\bar f_{(v)} \colon \mathbb R^{} \to \mathbb R^{}, \quad t \mapsto \bar f_{(v)}(t) = f(\bar x + tv)
+\end{equation*}
+
+::: {#richtung-is-partiell .JHSAYS data-latex=''}
+F&uuml;r $v=e_i$ bekommen wir direkt, dass $\bar f_{(v)}=\bar f_{(i)}$.
+:::
+
+Wiederum handelt es sich um eine reelle Funktion in einer Variablen (hier der Parameter $t$), die wir schulbuchm&auml;&szlig;ig ableiten k&ouml;nnten. F&uuml;r diese sogenannte *Richtungsableitung* gilt der folgende Zusammenhang^[Das folgt aus der Kettenregel f&uuml;r multivariable Funktionen, die wir in der Vorlesung *Mathematik f&uuml;r Data Science 2* noch beweisen werden]
+\begin{equation*}
+\frac{\diva \bar f_{(v)}}{\diva t}\Bigr |_{t=0} = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
+\end{equation*}
+
+::: {#richtung-ableitung .JHSAYS data-latex=''}
+Die Ver&auml;nderungsrate der Funktion $f$ im Punkt $\bar x$ in der Richtung von $v$ ist gleich dem Skalarprodukt aus Gradient im Punkt $\bar x$ und der gew&auml;hlten Richtung.
+:::
+
+Sei nun $v$ normiert, also $\|v\|=1$, dann gilt nach der Winkelformel, dass 
+\begin{equation*}
+\langle \nabla f(\bar x), v \rangle = \|\nabla f(\bar x) \| \cos (\alpha)
+\end{equation*}
+wobei $\alpha$ der von $\nabla f(\bar x)$ und $v$ eingeschlossene Winkel ist. Wir bemerken, dass die Ver&auml;nderung maximal wird, wenn $\alpha = 0$ oder 
+\begin{equation*}
+v = \frac{1}{ \| \nabla f(\bar x) \| } \nabla f(\bar x)
+\end{equation*}
+als ein Vielfaches des Gradientenvektors gew&auml;hlt wird.
+Andersherum k&ouml;nnen wir einige ganz wesentliche Aspekte folgern:
+
+ * der Gradient selbst in die Richtung des st&auml;rksten Anstiegs
+ * der negative Gradient $-\nabla f(\bar x)$ zeigt in die Richtung des st&auml;rksten Abfalls
+ * ist der Gradient der Nullvektor, dann findet keine Ver&auml;nderung mehr statt, d.h. dass aus $\nabla f(\bar x) =0$ folgt, dass $\bar x$ ein kritischer Punkt von $f$ ist 
+ * ist der Gradient nicht der Nullvektor, kann $\bar x$ kein Minimum und kein Maximum sein (weil die Funktion in $-\nabla f(\bar x)$ Richtung abf&auml;llt und in $\nabla f(\bar x)$ Richtung ansteigt)
+
+## Optimierung
+
+Ganz allgemein k&ouml;nnen wir unsere bisherigen Optimierungsprobleme schreiben als
+\begin{equation*}
+f(x) \to \min_{x\in \mathbb R^{n}}
+\end{equation*}
+
+ * allgemeine Darstellung
+   * multivariable Funktion
+ * Gradient/Hesse Matrix
+ * Gradientenabstiegsverfahren
+   * klassisch
+   * gedaempft
+   * stochastisch
+
+## Optimierung unter Nebenbedingungen
+
+## What's more
+
+ * Automatisches Differenzieren
+ * Multikriterielle Optimierung
+
+## Aufgaben
+
+### Optimierung ohne Gradienten (P)
+
+### Gradientenabstiegsverfahren (P)
+
+### Built-in Optimierung in Scipy (P)

@@ -142,7 +142,7 @@ x_c \\ y_c
 \|.
 \end{equation*}
 
-## Maximierung der Varianz in (Haupt)-Achsenrichtung
+## Maximierung der Varianz in (Haupt)-Achsenrichtung {#sec-PCA-maximierung}
 
 Wir wollen nun also $b_1\in \mathbb R^{2}$, mit $\|b_1\|=1$ so w&auml;hlen, dass 
 \begin{equation*}

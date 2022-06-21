@@ -1,12 +1,36 @@
 # Optimierung
 
 \providecommand{\diva}[1]{\text{\textup{d}} #1}
+<!-- \DeclareMathOperator\diva{d} -->
 
- * Schon kennengelernt
-   * lineare Regression
-   * PCA
-   * bei uns immer ein quadratisches Problem
- * Neural Networks 
+Einige Optimierungsprobleme haben wir schon kennengelernt und zwar
+
+   * bei der linearen Regression (vgl. besonders Kapitel \@ref(sec-linreg-minimierung)) bei der die Parameter der Ansatzfunktion **bestm&ouml;glich** an die Daten gefittet wurden
+   * bei der Hauptkomponentenanalyse (vgl. besonders Kapitel \@ref(sec-PCA-maximierung)) als wir die Hauptrichtungen so ermittelt, dass in ihrer Richtung die Varianz **maximal** wurde.
+
+Hier lag in beiden F&auml;llen ein sogenanntes linear-quadratisches Optimierungsproblem vor, f&uuml;r welche die Existenz der L&ouml;sungen bewiesen werden kann und die mit Methoden aus der linearen Algebra direkt gel&ouml;st werden k&ouml;nnen.
+
+Sogenannte *nichtlineare Optimierungsprobleme* liegen vor, wenn die zu erf&uuml;llenden Ziele wirklich nichtlineare Gleichungen enthalten. Zum Bespiel sind g&auml;ngige Elemente von *Neuronalen Netzen* als 
+\begin{equation*}
+f(x) = \tanh(a\, x + b)
+\end{equation*}
+gegeben, mit Parametern $a$, $b$ die aus der Minimierung eines *mean square error* Terms der Form
+\begin{equation*}
+\frac 1N \sum_{k=1}^N|y_k - \tanh(a\, x_k + b)|^2
+\end{equation*}
+f&uuml;r gegebene Trainingsdaten $(x_k, y_k)$ bestimmt werden.
+
+Wir sehen, dass die Optimierung ein ganz wesentlicher Teil der *Data Science* ist (und ganz unabh&auml;ngig davon ein eigenes Forschungsgebiet ist und quasi &uuml;berall in der Praxis mittel-- oder unmittelbar benutzt wird).
+
+Nachfolgend ein paar Begriffe aus der Optimierung
+
+ * *glatte Optimierung* -- das Modell beinhaltet ausreichend stetige (bzw. differenzierbare) Funktionen. Ein Optimum k&ouml;nnte durch Bestimmung von Ableitungen berechnet werden.
+ * *nichtglatte Optimierung* -- das Modell beinhaltet Teile, die nicht differenzierbar sind. Das kann am Problem selbst liegen oder, was bei *machine learning* im Speziellen und *Data Science* an sich eine Rolle spielt, dass die Daten verrauscht sind. Jetzt ist eine (klassische) Ableitung nicht mehr m&ouml;glich aber es existieren diverse Ans&auml;tze zur Abhilfe.
+ * *diskrete Optimierung* -- in obigen F&auml;llen sind wir implizit davon ausgegangen, dass die L&ouml;sung und die Gleichungen auf den reellen oder komplexen Zahlen leben. Denkbar ist aber auch, dass diskrete L&ouml;sungen (z.B. Anzahlen oder bin&auml;re Zust&auml;nde) gesucht werden.
+ * *kombinatorische Optimierung* -- hier ergeben sich die m&ouml;glichen L&ouml;sungen als Kombination von M&ouml;glichkeiten. Oft ist die Anzahl m&ouml;glicher L&ouml;sungen endlich aber sehr gro&szlig;.
+ * *restringierte Optimierung* -- zus&auml;tzlich zu einem Optimalit&auml;tskriterium sind noch Nebenbedingungen zu erf&uuml;llen.
+
+Hier werden wir uns erstmal mit glatter Optimierung ohne Nebenbedingungen besch&auml;ftigen.
 
 ## Multivariable Funktionen
 

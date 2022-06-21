@@ -102,7 +102,7 @@ Typische Wahlen f&uuml;r die Basis $\{b_1, b_2, \dotsc, b_n\}$ sind
  * Splines -- Polynome, die abschnittsweise definiert werden
  * Wavelets -- Verallgemeinerungen von trigonometrischen Funktionen
 
-## Fehlerfunktional und Minimierung
+## Fehlerfunktional und Minimierung {#sec-linreg-minimierung}
 
 Wir setzen nun also an
 \begin{equation*}

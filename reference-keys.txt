@@ -20,7 +20,7 @@ matrizen-multiplikation-und-potenz
 sec-lineare-regression
 rauschen-und-fitting
 ansätze-für-lineare-regression
-fehlerfunktional-und-minimierung
+sec-linreg-minimierung
 berechnung-der-bestlösung
 beispiel
 matrix-zerlegungen
@@ -38,7 +38,7 @@ truncated-svd-pt
 hauptkomponentenanalyse
 variationskoeffizienten
 koordinatenwechsel
-maximierung-der-varianz-in-haupt-achsenrichtung
+sec-PCA-maximierung
 hauptkomponentenanalyse-ctd.
 der-penguins-datensatz
 darstellung
@@ -74,6 +74,7 @@ optimierung-1
 optimierung-unter-nebenbedingungen
 whats-more
 aufgaben-4
+numerische-berechnung-des-gradienten
 optimierung-ohne-gradienten-p
 gradientenabstiegsverfahren-p
 built-in-optimierung-in-scipy-p

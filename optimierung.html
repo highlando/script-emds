@@ -144,7 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
 <li class="chapter" data-level="2.1" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
 <li class="chapter" data-level="2.2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
-<li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#fehlerfunktional-und-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
+<li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#sec-linreg-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
 <li class="chapter" data-level="2.4" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
 <li class="chapter" data-level="2.5" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
 </ul></li>
@@ -156,7 +156,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
-<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#maximierung-der-varianz-in-haupt-achsenrichtung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
+<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-PCA-maximierung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
 <li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der PENGUINS Datensatz</a></li>
@@ -208,15 +208,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="optimierung" class="section level1 hasAnchor">
 <h1><span class="header-section-number">7</span> Optimierung<a href="optimierung.html#optimierung" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
+<!-- \DeclareMathOperator\diva{d} -->
+<p>Einige Optimierungsprobleme haben wir schon kennengelernt und zwar</p>
 <ul>
-<li>Schon kennengelernt
-<ul>
-<li>lineare Regression</li>
-<li>PCA</li>
-<li>bei uns immer ein quadratisches Problem</li>
-</ul></li>
-<li>Neural Networks</li>
+<li>bei der linearen Regression (vgl. besonders Kapitel <a href="sec-lineare-regression.html#sec-linreg-minimierung">2.3</a>) bei der die Parameter der Ansatzfunktion <strong>bestmöglich</strong> an die Daten gefittet wurden</li>
+<li>bei der Hauptkomponentenanalyse (vgl. besonders Kapitel <a href="hauptkomponentenanalyse.html#sec-PCA-maximierung">4.3</a>) als wir die Hauptrichtungen so ermittelt, dass in ihrer Richtung die Varianz <strong>maximal</strong> wurde.</li>
 </ul>
+<p>Hier lag in beiden Fällen ein sogenanntes linear-quadratisches Optimierungsproblem vor, für welche die Existenz der Lösungen bewiesen werden kann und die mit Methoden aus der linearen Algebra direkt gelöst werden können.</p>
+<p>Sogenannte <em>nichtlineare Optimierungsprobleme</em> liegen vor, wenn die zu erfüllenden Ziele wirklich nichtlineare Gleichungen enthalten. Zum Bespiel sind gängige Elemente von <em>Neuronalen Netzen</em> als
+<span class="math display">\[\begin{equation*}
+f(x) = \tanh(a\, x + b)
+\end{equation*}\]</span>
+gegeben, mit Parametern <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> die aus der Minimierung eines <em>mean square error</em> Terms der Form
+<span class="math display">\[\begin{equation*}
+\frac 1N \sum_{k=1}^N|y_k - \tanh(a\, x_k + b)|^2
+\end{equation*}\]</span>
+für gegebene Trainingsdaten <span class="math inline">\((x_k, y_k)\)</span> bestimmt werden.</p>
+<p>Wir sehen, dass die Optimierung ein ganz wesentlicher Teil der <em>Data Science</em> ist (und ganz unabhängig davon ein eigenes Forschungsgebiet ist und quasi überall in der Praxis mittel– oder unmittelbar benutzt wird).</p>
+<p>Nachfolgend ein paar Begriffe aus der Optimierung</p>
+<ul>
+<li><em>glatte Optimierung</em> – das Modell beinhaltet ausreichend stetige (bzw. differenzierbare) Funktionen. Ein Optimum könnte durch Bestimmung von Ableitungen berechnet werden.</li>
+<li><em>nichtglatte Optimierung</em> – das Modell beinhaltet Teile, die nicht differenzierbar sind. Das kann am Problem selbst liegen oder, was bei <em>machine learning</em> im Speziellen und <em>Data Science</em> an sich eine Rolle spielt, dass die Daten verrauscht sind. Jetzt ist eine (klassische) Ableitung nicht mehr möglich aber es existieren diverse Ansätze zur Abhilfe.</li>
+<li><em>diskrete Optimierung</em> – in obigen Fällen sind wir implizit davon ausgegangen, dass die Lösung und die Gleichungen auf den reellen oder komplexen Zahlen leben. Denkbar ist aber auch, dass diskrete Lösungen (z.B. Anzahlen oder binäre Zustände) gesucht werden.</li>
+<li><em>kombinatorische Optimierung</em> – hier ergeben sich die möglichen Lösungen als Kombination von Möglichkeiten. Oft ist die Anzahl möglicher Lösungen endlich aber sehr groß.</li>
+<li><em>restringierte Optimierung</em> – zusätzlich zu einem Optimalitätskriterium sind noch Nebenbedingungen zu erfüllen.</li>
+</ul>
+<p>Hier werden wir uns erstmal mit glatter Optimierung ohne Nebenbedingungen beschäftigen.</p>
 <div id="multivariable-funktionen" class="section level2 hasAnchor">
 <h2><span class="header-section-number">7.1</span> Multivariable Funktionen<a href="optimierung.html#multivariable-funktionen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Um unsere Optimierungsprobleme in allgemeiner Form zu formulieren und auch um allgemeine Lösungsansätze herzuleiten, brauchen wir erstmal ein paar Begriffe aus der Analysis von multivariablen Funktionen.</p>
@@ -226,7 +243,7 @@ f\colon \mathbb R^{n}\to \mathbb R^{}, \quad f \colon (x_1,x_2, \dots, x_n) \map
 \end{equation*}\]</span>
 gegeben, die ein <span class="math inline">\(n\)</span>-tupel von Variablen auf einen reellen Wert abbildet. Ein Beispiel wäre
 <span class="math display">\[\begin{equation*}
-g(x_1, x_2, x_3) = \sin(x_1) + x_1^2 x_2 x_3.
+g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 + 2x_2.
 \end{equation*}\]</span></p>
 <div id="variablen-namen" class="JHSAYS">
 <p>Hier verwenden wir jetzt <span class="math inline">\(x_i\)</span> für die <span class="math inline">\(i\)</span>-te Variable der multivariablen Funktion. Bitte nicht verwechseln mit der Bezeichnung für den <span class="math inline">\(i\)</span>-ten Datenpunkt zum Beispiel in Kapitel <a href="sec-lineare-regression.html#sec-lineare-regression">2</a>.</p>
@@ -256,16 +273,16 @@ bezeichnet. Alle <span class="math inline">\(n\)</span> möglichen partiellen Ab
 \vdots \\
 \frac{\partial f}{\partial x_n}
 \end{bmatrix}
-\colon \mathbb R^{n} \to \mathbb R^{n}
+\colon \mathbb R^{n} \to \mathbb R^{n},
 \end{equation*}\]</span>
-der wiederum einen (vektorwertige) Funktion von <span class="math inline">\(n\)</span> Variablen ist.
+der wiederum eine (vektorwertige) Funktion von <span class="math inline">\(n\)</span> Variablen ist.
 Für unser obiges Beispiel bekommen wir
 <span class="math display">\[\begin{equation*}
 \nabla g(x_1, x_2, x_3) =
 \begin{bmatrix}
-\cos(x_1)+2x_1x_2x_3\\
-x_1^2x_3 \\
-x_1^2x_2
+\cos(x_1)+2x_1x_2^2x_3^2\\
+-x_3\sin(x_2) + x_1^2x_2x_3^2 + 2 \\
+\cos(x_2) + 2x_1^2x_2^2x_3
 \end{bmatrix}
 \end{equation*}\]</span></p>
 </div>
@@ -284,7 +301,7 @@ zu untersuchen, kann die Funktion entlang einer Richtung <span class="math inlin
 </div>
 <p>Wiederum handelt es sich um eine reelle Funktion in einer Variablen (hier der Parameter <span class="math inline">\(t\)</span>), die wir schulbuchmäßig ableiten könnten. Für diese sogenannte <em>Richtungsableitung</em> gilt der folgende Zusammenhang<a href="optimierung.html#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>
 <span class="math display">\[\begin{equation*}
-\frac{\text{\textup{d}} \bar f_{(v)}}{\text{\textup{d}} t}\Bigr |_{t=0} = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
+\frac{\mathrm{d} \bar f_{(v)}}{\mathrm{d} t}(0) = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
 \end{equation*}\]</span></p>
 <div id="richtung-ableitung" class="JHSAYS">
 <p>Die Veränderungsrate der Funktion <span class="math inline">\(f\)</span> im Punkt <span class="math inline">\(\bar x\)</span> in der Richtung von <span class="math inline">\(v\)</span> ist gleich dem Skalarprodukt aus Gradient im Punkt <span class="math inline">\(\bar x\)</span> und der gewählten Richtung.</p>
@@ -338,14 +355,34 @@ f(x) \to \min_{x\in \mathbb R^{n}}
 </div>
 <div id="aufgaben-4" class="section level2 hasAnchor">
 <h2><span class="header-section-number">7.7</span> Aufgaben<a href="optimierung.html#aufgaben-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="numerische-berechnung-des-gradienten" class="section level3 hasAnchor">
+<h3><span class="header-section-number">7.7.1</span> Numerische Berechnung des Gradienten<a href="optimierung.html#numerische-berechnung-des-gradienten" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Berechnen sie näherungsweise den Gradienten unserer Beispielfunktion
+<span class="math display">\[\begin{equation*}
+g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 - 2x_2
+\end{equation*}\]</span>
+im Punkt <span class="math inline">\((x_1, x_2, x_3) = (1, 1, 1)\)</span>,
+indem sie die partiellen Ableitungen durch den Differenzenquotienten
+<span class="math display">\[\begin{equation*}
+\frac{\partial f}{\partial x_2}(1, 1, 1) \approx \frac{g(1, 1+h, 1) - g(1, 1,1)}{h}
+\end{equation*}\]</span>
+für <span class="math inline">\(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\)</span> berechnen. Berechnen sie auch die Norm der Differenz zum exakten Wert von <span class="math inline">\(\nabla g(1, 1, 1)\)</span> (s.o.) und interpretieren sie die Ergebnisse.</p>
+</div>
 <div id="optimierung-ohne-gradienten-p" class="section level3 hasAnchor">
-<h3><span class="header-section-number">7.7.1</span> Optimierung ohne Gradienten (P)<a href="optimierung.html#optimierung-ohne-gradienten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">7.7.2</span> Optimierung ohne Gradienten (P)<a href="optimierung.html#optimierung-ohne-gradienten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Werten sie <span class="math inline">\(g\)</span> an <span class="math inline">\(1000\)</span> zufällig gewählten Punkten aus und lokalisieren sie das <span class="math inline">\(\bar x \in \mathbb R^{3}\)</span> an welchem <span class="math inline">\(g\)</span> in diesem Sample den kleinsten Wert annimmt.</p>
+<p>Überlegen Sie sich eine mögliche Verbesserung dieses rein auf Zufall basierenden Verfahrens.</p>
 </div>
 <div id="gradientenabstiegsverfahren-p" class="section level3 hasAnchor">
-<h3><span class="header-section-number">7.7.2</span> Gradientenabstiegsverfahren (P)<a href="optimierung.html#gradientenabstiegsverfahren-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">7.7.3</span> Gradientenabstiegsverfahren (P)<a href="optimierung.html#gradientenabstiegsverfahren-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Implementieren Sie ein Gradientenabstiegsverfahren mit <em>line search</em> durch Bisektion und berechnen Sie ein Minimum von <span class="math inline">\(g\)</span> damit.</p>
 </div>
 <div id="built-in-optimierung-in-scipy-p" class="section level3 hasAnchor">
-<h3><span class="header-section-number">7.7.3</span> Built-in Optimierung in Scipy (P)<a href="optimierung.html#built-in-optimierung-in-scipy-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">7.7.4</span> Built-in Optimierung in Scipy (P)<a href="optimierung.html#built-in-optimierung-in-scipy-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>Benutzen sie die <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize"><code>scipy.optimize.minimize</code></a> Routine um ein Minimum von <span class="math inline">\(g\)</span> zu finden und messen Sie die Zeit die der Algorithmus braucht.</p></li>
+<li><p>Geben Sie dem Algorithmus eine Funktion mit, die den Gradienten berechnet. Berechnen sie ein Minimum und vergleichen Sie die benötigte Zeit.</p></li>
+</ol>
 
 </div>
 </div>

@@ -633,8 +633,8 @@ Typische Wahlen für die Basis \(\{b_1, b_2, \dotsc, b_n\}\) sind
   Wavelets -- Verallgemeinerungen von trigonometrischen Funktionen
 \end{itemize}
 
-\hypertarget{fehlerfunktional-und-minimierung}{%
-\section{Fehlerfunktional und Minimierung}\label{fehlerfunktional-und-minimierung}}
+\hypertarget{sec-linreg-minimierung}{%
+\section{Fehlerfunktional und Minimierung}\label{sec-linreg-minimierung}}
 
 Wir setzen nun also an
 \begin{equation*}
@@ -1408,8 +1408,8 @@ x_c \\ y_c
 \|.
 \end{equation*}
 
-\hypertarget{maximierung-der-varianz-in-haupt-achsenrichtung}{%
-\section{Maximierung der Varianz in (Haupt)-Achsenrichtung}\label{maximierung-der-varianz-in-haupt-achsenrichtung}}
+\hypertarget{sec-PCA-maximierung}{%
+\section{Maximierung der Varianz in (Haupt)-Achsenrichtung}\label{sec-PCA-maximierung}}
 
 Wir wollen nun also \(b_1\in \mathbb R^{2}\), mit \(\|b_1\|=1\) so wählen, dass
 \begin{equation*}
@@ -2162,25 +2162,49 @@ Bestimmen sie die L-Kurve fuer die Pinguindaten fuer \texttt{K=1,2,3,4,...,8} --
 \hypertarget{optimierung}{%
 \chapter{Optimierung}\label{optimierung}}
 
-\providecommand{\diva}[1]{\text{\textup{d}} #1}
+\providecommand{\diva}[1]{\mathrm{d} #1}
+
+Einige Optimierungsprobleme haben wir schon kennengelernt und zwar
 
 \begin{itemize}
 \tightlist
 \item
-  Schon kennengelernt
-
-  \begin{itemize}
-  \tightlist
-  \item
-    lineare Regression
-  \item
-    PCA
-  \item
-    bei uns immer ein quadratisches Problem
-  \end{itemize}
+  bei der linearen Regression (vgl. besonders Kapitel \ref{sec-linreg-minimierung}) bei der die Parameter der Ansatzfunktion \textbf{bestmöglich} an die Daten gefittet wurden
 \item
-  Neural Networks
+  bei der Hauptkomponentenanalyse (vgl. besonders Kapitel \ref{sec-PCA-maximierung}) als wir die Hauptrichtungen so ermittelt, dass in ihrer Richtung die Varianz \textbf{maximal} wurde.
 \end{itemize}
+
+Hier lag in beiden Fällen ein sogenanntes linear-quadratisches Optimierungsproblem vor, für welche die Existenz der Lösungen bewiesen werden kann und die mit Methoden aus der linearen Algebra direkt gelöst werden können.
+
+Sogenannte \emph{nichtlineare Optimierungsprobleme} liegen vor, wenn die zu erfüllenden Ziele wirklich nichtlineare Gleichungen enthalten. Zum Bespiel sind gängige Elemente von \emph{Neuronalen Netzen} als
+\begin{equation*}
+f(x) = \tanh(a\, x + b)
+\end{equation*}
+gegeben, mit Parametern \(a\), \(b\) die aus der Minimierung eines \emph{mean square error} Terms der Form
+\begin{equation*}
+\frac 1N \sum_{k=1}^N|y_k - \tanh(a\, x_k + b)|^2
+\end{equation*}
+für gegebene Trainingsdaten \((x_k, y_k)\) bestimmt werden.
+
+Wir sehen, dass die Optimierung ein ganz wesentlicher Teil der \emph{Data Science} ist (und ganz unabhängig davon ein eigenes Forschungsgebiet ist und quasi überall in der Praxis mittel-- oder unmittelbar benutzt wird).
+
+Nachfolgend ein paar Begriffe aus der Optimierung
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{glatte Optimierung} -- das Modell beinhaltet ausreichend stetige (bzw. differenzierbare) Funktionen. Ein Optimum könnte durch Bestimmung von Ableitungen berechnet werden.
+\item
+  \emph{nichtglatte Optimierung} -- das Modell beinhaltet Teile, die nicht differenzierbar sind. Das kann am Problem selbst liegen oder, was bei \emph{machine learning} im Speziellen und \emph{Data Science} an sich eine Rolle spielt, dass die Daten verrauscht sind. Jetzt ist eine (klassische) Ableitung nicht mehr möglich aber es existieren diverse Ansätze zur Abhilfe.
+\item
+  \emph{diskrete Optimierung} -- in obigen Fällen sind wir implizit davon ausgegangen, dass die Lösung und die Gleichungen auf den reellen oder komplexen Zahlen leben. Denkbar ist aber auch, dass diskrete Lösungen (z.B. Anzahlen oder binäre Zustände) gesucht werden.
+\item
+  \emph{kombinatorische Optimierung} -- hier ergeben sich die möglichen Lösungen als Kombination von Möglichkeiten. Oft ist die Anzahl möglicher Lösungen endlich aber sehr groß.
+\item
+  \emph{restringierte Optimierung} -- zusätzlich zu einem Optimalitätskriterium sind noch Nebenbedingungen zu erfüllen.
+\end{itemize}
+
+Hier werden wir uns erstmal mit glatter Optimierung ohne Nebenbedingungen beschäftigen.
 
 \hypertarget{multivariable-funktionen}{%
 \section{Multivariable Funktionen}\label{multivariable-funktionen}}
@@ -2193,7 +2217,7 @@ f\colon \mathbb R^{n}\to \mathbb R^{}, \quad f \colon (x_1,x_2, \dots, x_n) \map
 \end{equation*}
 gegeben, die ein \(n\)-tupel von Variablen auf einen reellen Wert abbildet. Ein Beispiel wäre
 \begin{equation*}
-g(x_1, x_2, x_3) = \sin(x_1) + x_1^2 x_2 x_3.
+g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 + 2x_2.
 \end{equation*}
 
 \leavevmode\hypertarget{variablen-namen}{}%
@@ -2228,16 +2252,16 @@ bezeichnet. Alle \(n\) möglichen partiellen Ableitungen in einen Vektor geschri
 \vdots \\
 \frac{\partial f}{\partial x_n}
 \end{bmatrix}
-\colon \mathbb R^{n} \to \mathbb R^{n}
+\colon \mathbb R^{n} \to \mathbb R^{n},
 \end{equation*}
-der wiederum einen (vektorwertige) Funktion von \(n\) Variablen ist.
+der wiederum eine (vektorwertige) Funktion von \(n\) Variablen ist.
 Für unser obiges Beispiel bekommen wir
 \begin{equation*}
 \nabla g(x_1, x_2, x_3) =
 \begin{bmatrix}
-\cos(x_1)+2x_1x_2x_3\\
-x_1^2x_3 \\
-x_1^2x_2
+\cos(x_1)+2x_1x_2^2x_3^2\\
+-x_3\sin(x_2) + x_1^2x_2x_3^2 + 2 \\
+\cos(x_2) + 2x_1^2x_2^2x_3
 \end{bmatrix}
 \end{equation*}
 
@@ -2261,7 +2285,7 @@ Für \(v=e_i\) bekommen wir direkt, dass \(\bar f_{(v)}=\bar f_{(i)}\).
 
 Wiederum handelt es sich um eine reelle Funktion in einer Variablen (hier der Parameter \(t\)), die wir schulbuchmäßig ableiten könnten. Für diese sogenannte \emph{Richtungsableitung} gilt der folgende Zusammenhang\footnote{Das folgt aus der Kettenregel für multivariable Funktionen, die wir in der Vorlesung \emph{Mathematik für Data Science 2} noch beweisen werden}
 \begin{equation*}
-\frac{\text{\textup{d}} \bar f_{(v)}}{\text{\textup{d}} t}\Bigr |_{t=0} = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
+\frac{\mathrm{d} \bar f_{(v)}}{\mathrm{d} t}(0) = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
 \end{equation*}
 
 \leavevmode\hypertarget{richtung-ableitung}{}%
@@ -2344,13 +2368,41 @@ f(x) \to \min_{x\in \mathbb R^{n}}
 \hypertarget{aufgaben-4}{%
 \section{Aufgaben}\label{aufgaben-4}}
 
+\hypertarget{numerische-berechnung-des-gradienten}{%
+\subsection{Numerische Berechnung des Gradienten}\label{numerische-berechnung-des-gradienten}}
+
+Berechnen sie näherungsweise den Gradienten unserer Beispielfunktion
+\begin{equation*}
+g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 - 2x_2
+\end{equation*}
+im Punkt \((x_1, x_2, x_3) = (1, 1, 1)\),
+indem sie die partiellen Ableitungen durch den Differenzenquotienten
+\begin{equation*}
+\frac{\partial f}{\partial x_2}(1, 1, 1) \approx \frac{g(1, 1+h, 1) - g(1, 1,1)}{h}
+\end{equation*}
+für \(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\) berechnen. Berechnen sie auch die Norm der Differenz zum exakten Wert von \(\nabla g(1, 1, 1)\) (s.o.) und interpretieren sie die Ergebnisse.
+
 \hypertarget{optimierung-ohne-gradienten-p}{%
 \subsection{Optimierung ohne Gradienten (P)}\label{optimierung-ohne-gradienten-p}}
+
+Werten sie \(g\) an \(1000\) zufällig gewählten Punkten aus und lokalisieren sie das \(\bar x \in \mathbb R^{3}\) an welchem \(g\) in diesem Sample den kleinsten Wert annimmt.
+
+Überlegen Sie sich eine mögliche Verbesserung dieses rein auf Zufall basierenden Verfahrens.
 
 \hypertarget{gradientenabstiegsverfahren-p}{%
 \subsection{Gradientenabstiegsverfahren (P)}\label{gradientenabstiegsverfahren-p}}
 
+Implementieren Sie ein Gradientenabstiegsverfahren mit \emph{line search} durch Bisektion und berechnen Sie ein Minimum von \(g\) damit.
+
 \hypertarget{built-in-optimierung-in-scipy-p}{%
 \subsection{Built-in Optimierung in Scipy (P)}\label{built-in-optimierung-in-scipy-p}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Benutzen sie die \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html\#scipy.optimize.minimize}{\texttt{scipy.optimize.minimize}} Routine um ein Minimum von \(g\) zu finden und messen Sie die Zeit die der Algorithmus braucht.
+\item
+  Geben Sie dem Algorithmus eine Funktion mit, die den Gradienten berechnet. Berechnen sie ein Minimum und vergleichen Sie die benötigte Zeit.
+\end{enumerate}
 
 \end{document}

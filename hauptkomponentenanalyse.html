@@ -144,7 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
 <li class="chapter" data-level="2.1" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
 <li class="chapter" data-level="2.2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
-<li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#fehlerfunktional-und-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
+<li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#sec-linreg-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
 <li class="chapter" data-level="2.4" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
 <li class="chapter" data-level="2.5" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
 </ul></li>
@@ -156,7 +156,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
-<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#maximierung-der-varianz-in-haupt-achsenrichtung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
+<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-PCA-maximierung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
 <li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der PENGUINS Datensatz</a></li>
@@ -334,8 +334,8 @@ x_c \\ y_c
 \|.
 \end{equation*}\]</span></p>
 </div>
-<div id="maximierung-der-varianz-in-haupt-achsenrichtung" class="section level2 hasAnchor">
-<h2><span class="header-section-number">4.3</span> Maximierung der Varianz in (Haupt)-Achsenrichtung<a href="hauptkomponentenanalyse.html#maximierung-der-varianz-in-haupt-achsenrichtung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="sec-PCA-maximierung" class="section level2 hasAnchor">
+<h2><span class="header-section-number">4.3</span> Maximierung der Varianz in (Haupt)-Achsenrichtung<a href="hauptkomponentenanalyse.html#sec-PCA-maximierung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Wir wollen nun also <span class="math inline">\(b_1\in \mathbb R^{2}\)</span>, mit <span class="math inline">\(\|b_1\|=1\)</span> so wählen, dass
 <span class="math display">\[\begin{equation*}
 s_1^2 = \frac{1}{N-1}\sum_{i=1}^n \alpha_{i1}^2

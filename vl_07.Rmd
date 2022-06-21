@@ -1,6 +1,6 @@
 # Optimierung
 
-\providecommand{\diva}[1]{\text{\textup{d}} #1}
+\providecommand{\diva}[1]{\mathrm{d} #1}
 <!-- \DeclareMathOperator\diva{d} -->
 
 Einige Optimierungsprobleme haben wir schon kennengelernt und zwar
@@ -42,7 +42,7 @@ f\colon \mathbb R^{n}\to \mathbb R^{}, \quad f \colon (x_1,x_2, \dots, x_n) \map
 \end{equation*}
 gegeben, die ein $n$-tupel von Variablen auf einen reellen Wert abbildet. Ein Beispiel w&auml;re
 \begin{equation*}
-g(x_1, x_2, x_3) = \sin(x_1) + x_1^2 x_2 x_3.
+g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 + 2x_2.
 \end{equation*}
 
 ::: {#variablen-namen .JHSAYS data-latex=''}
@@ -74,16 +74,16 @@ bezeichnet. Alle $n$ m&ouml;glichen partiellen Ableitungen in einen Vektor gesch
 \vdots \\
 \frac{\partial f}{\partial x_n}
 \end{bmatrix}
-\colon \mathbb R^{n} \to \mathbb R^{n}
+\colon \mathbb R^{n} \to \mathbb R^{n},
 \end{equation*}
-der wiederum einen (vektorwertige) Funktion von $n$ Variablen ist.
+der wiederum eine (vektorwertige) Funktion von $n$ Variablen ist.
 F&uuml;r unser obiges Beispiel bekommen wir
 \begin{equation*}
 \nabla g(x_1, x_2, x_3) =
 \begin{bmatrix}
-\cos(x_1)+2x_1x_2x_3\\
-x_1^2x_3 \\
-x_1^2x_2
+\cos(x_1)+2x_1x_2^2x_3^2\\
+-x_3\sin(x_2) + x_1^2x_2x_3^2 + 2 \\
+\cos(x_2) + 2x_1^2x_2^2x_3
 \end{bmatrix}
 \end{equation*}
 
@@ -104,7 +104,7 @@ F&uuml;r $v=e_i$ bekommen wir direkt, dass $\bar f_{(v)}=\bar f_{(i)}$.
 
 Wiederum handelt es sich um eine reelle Funktion in einer Variablen (hier der Parameter $t$), die wir schulbuchm&auml;&szlig;ig ableiten k&ouml;nnten. F&uuml;r diese sogenannte *Richtungsableitung* gilt der folgende Zusammenhang^[Das folgt aus der Kettenregel f&uuml;r multivariable Funktionen, die wir in der Vorlesung *Mathematik f&uuml;r Data Science 2* noch beweisen werden]
 \begin{equation*}
-\frac{\diva \bar f_{(v)}}{\diva t}\Bigr |_{t=0} = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
+\frac{\diva \bar f_{(v)}}{\diva t}(0) = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
 \end{equation*}
 
 ::: {#richtung-ableitung .JHSAYS data-latex=''}
@@ -151,8 +151,32 @@ f(x) \to \min_{x\in \mathbb R^{n}}
 
 ## Aufgaben
 
+### Numerische Berechnung des Gradienten
+
+Berechnen sie n&auml;herungsweise den Gradienten unserer Beispielfunktion 
+\begin{equation*}
+g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 - 2x_2
+\end{equation*}
+im Punkt $(x_1, x_2, x_3) = (1, 1, 1)$, 
+indem sie die partiellen Ableitungen durch den Differenzenquotienten
+\begin{equation*}
+\frac{\partial f}{\partial x_2}(1, 1, 1) \approx \frac{g(1, 1+h, 1) - g(1, 1,1)}{h}
+\end{equation*}
+f&uuml;r $h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}$ berechnen. Berechnen sie auch die Norm der Differenz zum exakten Wert von $\nabla g(1, 1, 1)$ (s.o.) und interpretieren sie die Ergebnisse.
+
 ### Optimierung ohne Gradienten (P)
+
+Werten sie $g$ an $1000$ zuf&auml;llig gew&auml;hlten Punkten aus und lokalisieren sie das $\bar x \in \mathbb R^{3}$ an welchem $g$ in diesem Sample den kleinsten Wert annimmt.
+
+&Uuml;berlegen Sie sich eine m&ouml;gliche Verbesserung dieses rein auf Zufall basierenden Verfahrens.
 
 ### Gradientenabstiegsverfahren (P)
 
+Implementieren Sie ein Gradientenabstiegsverfahren mit *line search* durch Bisektion und berechnen Sie ein Minimum von $g$ damit.
+
 ### Built-in Optimierung in Scipy (P)
+
+1. Benutzen sie die [`scipy.optimize.minimize`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize) Routine um ein Minimum von $g$ zu finden und messen Sie die Zeit die der Algorithmus braucht.
+
+2. Geben Sie dem Algorithmus eine Funktion mit, die den Gradienten berechnet. Berechnen sie ein Minimum und vergleichen Sie die ben&ouml;tigte Zeit.
+

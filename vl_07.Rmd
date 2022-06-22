@@ -42,7 +42,7 @@ f\colon \mathbb R^{n}\to \mathbb R^{}, \quad f \colon (x_1,x_2, \dots, x_n) \map
 \end{equation*}
 gegeben, die ein $n$-tupel von Variablen auf einen reellen Wert abbildet. Ein Beispiel w&auml;re
 \begin{equation*}
-g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 + 2x_2.
+g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 - 2x_2.
 \end{equation*}
 
 ::: {#variablen-namen .JHSAYS data-latex=''}
@@ -151,7 +151,7 @@ f(x) \to \min_{x\in \mathbb R^{n}}
 
 ## Aufgaben
 
-### Numerische Berechnung des Gradienten
+### Numerische Berechnung des Gradienten (P+T)
 
 Berechnen sie n&auml;herungsweise den Gradienten unserer Beispielfunktion 
 \begin{equation*}
@@ -203,11 +203,11 @@ hdiff = np.linalg.norm((hgrad-gradx)[1])
 print(f'h={h:.2e}: diff in gradient {hdiff.flatten()[0]:.2e}')
 ```
 
-### Optimierung ohne Gradienten (P)
+### Optimierung ohne Gradienten (P+T)
 
 Werten sie $g$ an $1000$ zuf&auml;llig gew&auml;hlten Punkten aus und lokalisieren sie das $\bar x \in \mathbb R^{3}$ an welchem $g$ in diesem Sample den kleinsten Wert annimmt.
 
-&Uuml;berlegen Sie sich eine m&ouml;gliche Verbesserung dieses rein auf Zufall basierenden Verfahrens.
+&Uuml;berlegen Sie sich eine m&ouml;gliche Verbesserung dieses rein auf Zufall basierenden Verfahrens. Wer Inspiration braucht, kann mal nach *Generischen Algorithmen* suchen.
 
 ### Gradientenabstiegsverfahren (P)
 
@@ -259,8 +259,8 @@ def gradienten_abstieg_linesearch(func=None, grad=None, inix=None,
 
     return nxtx
 
+# der Startwert
 xzero = np.ones((3, 1))
-
 minx = gradienten_abstieg_linesearch(func=gfun, grad=gradg, inix=xzero)
 ```
 

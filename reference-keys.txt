@@ -74,7 +74,7 @@ optimierung-1
 optimierung-unter-nebenbedingungen
 whats-more
 aufgaben-4
-numerische-berechnung-des-gradienten
-optimierung-ohne-gradienten-p
+numerische-berechnung-des-gradienten-pt
+optimierung-ohne-gradienten-pt
 gradientenabstiegsverfahren-p
 built-in-optimierung-in-scipy-p

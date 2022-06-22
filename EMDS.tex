@@ -2217,7 +2217,7 @@ f\colon \mathbb R^{n}\to \mathbb R^{}, \quad f \colon (x_1,x_2, \dots, x_n) \map
 \end{equation*}
 gegeben, die ein \(n\)-tupel von Variablen auf einen reellen Wert abbildet. Ein Beispiel wäre
 \begin{equation*}
-g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 + 2x_2.
+g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 - 2x_2.
 \end{equation*}
 
 \leavevmode\hypertarget{variablen-namen}{}%
@@ -2368,8 +2368,8 @@ f(x) \to \min_{x\in \mathbb R^{n}}
 \hypertarget{aufgaben-4}{%
 \section{Aufgaben}\label{aufgaben-4}}
 
-\hypertarget{numerische-berechnung-des-gradienten}{%
-\subsection{Numerische Berechnung des Gradienten}\label{numerische-berechnung-des-gradienten}}
+\hypertarget{numerische-berechnung-des-gradienten-pt}{%
+\subsection{Numerische Berechnung des Gradienten (P+T)}\label{numerische-berechnung-des-gradienten-pt}}
 
 Berechnen sie näherungsweise den Gradienten unserer Beispielfunktion
 \begin{equation*}
@@ -2423,12 +2423,12 @@ für \(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\) berechnen. Berechnen sie au
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{optimierung-ohne-gradienten-p}{%
-\subsection{Optimierung ohne Gradienten (P)}\label{optimierung-ohne-gradienten-p}}
+\hypertarget{optimierung-ohne-gradienten-pt}{%
+\subsection{Optimierung ohne Gradienten (P+T)}\label{optimierung-ohne-gradienten-pt}}
 
 Werten sie \(g\) an \(1000\) zufällig gewählten Punkten aus und lokalisieren sie das \(\bar x \in \mathbb R^{3}\) an welchem \(g\) in diesem Sample den kleinsten Wert annimmt.
 
-Überlegen Sie sich eine mögliche Verbesserung dieses rein auf Zufall basierenden Verfahrens.
+Überlegen Sie sich eine mögliche Verbesserung dieses rein auf Zufall basierenden Verfahrens. Wer Inspiration braucht, kann mal nach \emph{Generischen Algorithmen} suchen.
 
 \hypertarget{gradientenabstiegsverfahren-p}{%
 \subsection{Gradientenabstiegsverfahren (P)}\label{gradientenabstiegsverfahren-p}}
@@ -2482,8 +2482,8 @@ Implementieren Sie ein Gradientenabstiegsverfahren mit \emph{line search} durch 
 
     \ControlFlowTok{return}\NormalTok{ nxtx}
 
+\CommentTok{# der Startwert}
 \NormalTok{xzero }\OperatorTok{=}\NormalTok{ np.ones((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
-
 \NormalTok{minx }\OperatorTok{=}\NormalTok{ gradienten_abstieg_linesearch(func}\OperatorTok{=}\NormalTok{gfun, grad}\OperatorTok{=}\NormalTok{gradg, inix}\OperatorTok{=}\NormalTok{xzero)}
 \end{Highlighting}
 \end{Shaded}

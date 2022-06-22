@@ -281,7 +281,7 @@ Für unser obiges Beispiel bekommen wir
 \nabla g(x_1, x_2, x_3) =
 \begin{bmatrix}
 \cos(x_1)+2x_1x_2^2x_3^2\\
--x_3\sin(x_2) + x_1^2x_2x_3^2 + 2 \\
+-x_3\sin(x_2) + x_1^2x_2x_3^2 - 2 \\
 \cos(x_2) + 2x_1^2x_2^2x_3
 \end{bmatrix}
 \end{equation*}\]</span></p>
@@ -362,11 +362,47 @@ f(x) \to \min_{x\in \mathbb R^{n}}
 g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 - 2x_2
 \end{equation*}\]</span>
 im Punkt <span class="math inline">\((x_1, x_2, x_3) = (1, 1, 1)\)</span>,
-indem sie die partiellen Ableitungen durch den Differenzenquotienten
+indem sie die partiellen Ableitungen durch den Differenzenquotienten, z.B.,
 <span class="math display">\[\begin{equation*}
-\frac{\partial f}{\partial x_2}(1, 1, 1) \approx \frac{g(1, 1+h, 1) - g(1, 1,1)}{h}
+\frac{\partial g}{\partial x_2}(1, 1, 1) \approx \frac{g(1, 1+h, 1) - g(1, 1,1)}{h}
 \end{equation*}\]</span>
 für <span class="math inline">\(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\)</span> berechnen. Berechnen sie auch die Norm der Differenz zum exakten Wert von <span class="math inline">\(\nabla g(1, 1, 1)\)</span> (s.o.) und interpretieren sie die Ergebnisse.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb18-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb18-2" title="2"></a>
+<a class="sourceLine" id="cb18-3" title="3"></a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="kw">def</span> gfun(x):</a>
+<a class="sourceLine" id="cb18-5" title="5">    <span class="cf">return</span> np.sin(x[<span class="dv">0</span>]) <span class="op">+</span> x[<span class="dv">2</span>]<span class="op">*</span>np.cos(x[<span class="dv">1</span>]) <span class="op">\</span></a>
+<a class="sourceLine" id="cb18-6" title="6">        <span class="op">+</span> x[<span class="dv">0</span>]<span class="op">*</span>x[<span class="dv">0</span>]<span class="op">*</span>x[<span class="dv">1</span>]<span class="op">*</span>x[<span class="dv">1</span>]<span class="op">*</span>x[<span class="dv">2</span>]<span class="op">*</span>x[<span class="dv">2</span>] <span class="op">\</span></a>
+<a class="sourceLine" id="cb18-7" title="7">        <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>x[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb18-8" title="8"></a>
+<a class="sourceLine" id="cb18-9" title="9"></a>
+<a class="sourceLine" id="cb18-10" title="10"><span class="kw">def</span> gradg(x):</a>
+<a class="sourceLine" id="cb18-11" title="11">    <span class="cf">return</span> np.array([np.NaN,  <span class="co"># bitte hier vervollstaendigen</span></a>
+<a class="sourceLine" id="cb18-12" title="12">                     <span class="op">-</span>x[<span class="dv">2</span>]<span class="op">*</span>np.sin(x[<span class="dv">1</span>])<span class="op">+</span>x[<span class="dv">0</span>]<span class="op">*</span>x[<span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span><span class="op">*</span>x[<span class="dv">1</span>]<span class="op">*</span>x[<span class="dv">2</span>]<span class="op">*</span>x[<span class="dv">2</span>]<span class="op">-</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb18-13" title="13">                     np.NaN]).reshape((<span class="dv">3</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb18-14" title="14"></a>
+<a class="sourceLine" id="cb18-15" title="15"></a>
+<a class="sourceLine" id="cb18-16" title="16"><span class="co"># Inkrement</span></a>
+<a class="sourceLine" id="cb18-17" title="17">h <span class="op">=</span> <span class="fl">1e-3</span></a>
+<a class="sourceLine" id="cb18-18" title="18"></a>
+<a class="sourceLine" id="cb18-19" title="19"><span class="co"># der x-wert und das h-Inkrement in der zweiten Komponente</span></a>
+<a class="sourceLine" id="cb18-20" title="20">xzero <span class="op">=</span> np.ones((<span class="dv">3</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb18-21" title="21">xzeroh <span class="op">=</span> xzero <span class="op">+</span> np.array([<span class="dv">0</span>, h, <span class="dv">0</span>]).reshape((<span class="dv">3</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb18-22" title="22"></a>
+<a class="sourceLine" id="cb18-23" title="23"><span class="co"># partieller Differenzenquotient</span></a>
+<a class="sourceLine" id="cb18-24" title="24">dgdxtwo <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>h<span class="op">*</span>(gfun(xzeroh) <span class="op">-</span> gfun(xzero))</a>
+<a class="sourceLine" id="cb18-25" title="25"><span class="co"># Alle partiellen Ableitungen ergeben den Gradienten</span></a>
+<a class="sourceLine" id="cb18-26" title="26">hgrad <span class="op">=</span> np.array([np.NaN, dgdxtwo, np.NaN]).reshape((<span class="dv">3</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb18-27" title="27"></a>
+<a class="sourceLine" id="cb18-28" title="28"><span class="co"># Analytisch bestimmter Gradient</span></a>
+<a class="sourceLine" id="cb18-29" title="29">gradx <span class="op">=</span> gradg(xzero)</a>
+<a class="sourceLine" id="cb18-30" title="30"></a>
+<a class="sourceLine" id="cb18-31" title="31"><span class="co"># Die Differenz in der Norm</span></a>
+<a class="sourceLine" id="cb18-32" title="32">hdiff <span class="op">=</span> np.linalg.norm((hgrad<span class="op">-</span>gradx)[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb18-33" title="33"><span class="co"># bitte alle Kompenenten berechnen</span></a>
+<a class="sourceLine" id="cb18-34" title="34"><span class="co"># und dann die Norm ueber den ganzen Vektor nehmen</span></a>
+<a class="sourceLine" id="cb18-35" title="35"></a>
+<a class="sourceLine" id="cb18-36" title="36"><span class="bu">print</span>(<span class="ss">f&#39;h=</span><span class="sc">{h:.2e}</span><span class="ss">: diff in gradient </span><span class="sc">{</span>hdiff<span class="sc">.</span>flatten()[<span class="dv">0</span>]<span class="sc">:.2e}</span><span class="ss">&#39;</span>)</a></code></pre></div>
 </div>
 <div id="optimierung-ohne-gradienten-p" class="section level3 hasAnchor">
 <h3><span class="header-section-number">7.7.2</span> Optimierung ohne Gradienten (P)<a href="optimierung.html#optimierung-ohne-gradienten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -376,6 +412,54 @@ für <span class="math inline">\(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\)</
 <div id="gradientenabstiegsverfahren-p" class="section level3 hasAnchor">
 <h3><span class="header-section-number">7.7.3</span> Gradientenabstiegsverfahren (P)<a href="optimierung.html#gradientenabstiegsverfahren-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Implementieren Sie ein Gradientenabstiegsverfahren mit <em>line search</em> durch Bisektion und berechnen Sie ein Minimum von <span class="math inline">\(g\)</span> damit.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb19-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb19-2" title="2"></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="im">from</span> loesung_5_1 <span class="im">import</span> gfun, gradg</a>
+<a class="sourceLine" id="cb19-4" title="4"></a>
+<a class="sourceLine" id="cb19-5" title="5"></a>
+<a class="sourceLine" id="cb19-6" title="6"><span class="kw">def</span> min_by_bisec(func, v<span class="op">=</span><span class="va">None</span>, curx<span class="op">=</span><span class="va">None</span>, stepsize<span class="op">=</span><span class="fl">1.</span>, maxiter<span class="op">=</span><span class="dv">15</span>):</a>
+<a class="sourceLine" id="cb19-7" title="7">    <span class="co">&#39;&#39;&#39; find a smaller value of f in the direction</span></a>
+<a class="sourceLine" id="cb19-8" title="8"></a>
+<a class="sourceLine" id="cb19-9" title="9"><span class="co">    f(x+s*v)</span></a>
+<a class="sourceLine" id="cb19-10" title="10"></a>
+<a class="sourceLine" id="cb19-11" title="11"><span class="co">    for s in [0, stepsize]</span></a>
+<a class="sourceLine" id="cb19-12" title="12"></a>
+<a class="sourceLine" id="cb19-13" title="13"><span class="co">    by bisection</span></a>
+<a class="sourceLine" id="cb19-14" title="14"><span class="co">    &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb19-15" title="15">    cstep <span class="op">=</span> stepsize</a>
+<a class="sourceLine" id="cb19-16" title="16"></a>
+<a class="sourceLine" id="cb19-17" title="17">    cval <span class="op">=</span> func(curx)</a>
+<a class="sourceLine" id="cb19-18" title="18">    nval <span class="op">=</span> func(curx<span class="op">+</span>cstep<span class="op">*</span>v)</a>
+<a class="sourceLine" id="cb19-19" title="19"></a>
+<a class="sourceLine" id="cb19-20" title="20">    <span class="cf">for</span> kkk <span class="kw">in</span> maxiter:</a>
+<a class="sourceLine" id="cb19-21" title="21">        <span class="cf">if</span> nval <span class="op">&gt;</span> cval:</a>
+<a class="sourceLine" id="cb19-22" title="22">            cstep <span class="op">=</span> <span class="fl">.5</span><span class="op">*</span>cstep</a>
+<a class="sourceLine" id="cb19-23" title="23">            newx <span class="op">=</span> curx<span class="op">+</span>cstep<span class="op">*</span>v</a>
+<a class="sourceLine" id="cb19-24" title="24">            nval <span class="op">=</span> func(newx)</a>
+<a class="sourceLine" id="cb19-25" title="25">        <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb19-26" title="26">            <span class="cf">return</span> newx</a>
+<a class="sourceLine" id="cb19-27" title="27">    <span class="cf">raise</span> <span class="pp">UserWarning</span>(<span class="st">&#39;no smaller value could be found&#39;</span>)</a>
+<a class="sourceLine" id="cb19-28" title="28">    <span class="cf">return</span></a>
+<a class="sourceLine" id="cb19-29" title="29"></a>
+<a class="sourceLine" id="cb19-30" title="30"></a>
+<a class="sourceLine" id="cb19-31" title="31"></a>
+<a class="sourceLine" id="cb19-32" title="32"><span class="kw">def</span> gradienten_abstieg_linesearch(func<span class="op">=</span><span class="va">None</span>, grad<span class="op">=</span><span class="va">None</span>, inix<span class="op">=</span><span class="va">None</span>,</a>
+<a class="sourceLine" id="cb19-33" title="33">                                  maxiter<span class="op">=</span><span class="dv">10</span>):</a>
+<a class="sourceLine" id="cb19-34" title="34">    <span class="co">&#39;&#39;&#39;sucht ein Minimum einer Funktion `func` durch</span></a>
+<a class="sourceLine" id="cb19-35" title="35"><span class="co">     * Evaluieren des Gradienten `grad`</span></a>
+<a class="sourceLine" id="cb19-36" title="36"><span class="co">     * und anpassen von `inix` in Richtung von `-grad`</span></a>
+<a class="sourceLine" id="cb19-37" title="37"><span class="co">     * mit einem `line search Verfahren`</span></a>
+<a class="sourceLine" id="cb19-38" title="38"><span class="co">    &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb19-39" title="39"></a>
+<a class="sourceLine" id="cb19-40" title="40">    curx <span class="op">=</span> inix</a>
+<a class="sourceLine" id="cb19-41" title="41">    cgrad <span class="op">=</span> grad(curx)</a>
+<a class="sourceLine" id="cb19-42" title="42">    nxtx <span class="op">=</span> min_by_bisec(func, v<span class="op">=-</span>cgrad, curx<span class="op">=</span>curx)</a>
+<a class="sourceLine" id="cb19-43" title="43"></a>
+<a class="sourceLine" id="cb19-44" title="44">    <span class="cf">return</span> nxtx</a>
+<a class="sourceLine" id="cb19-45" title="45"></a>
+<a class="sourceLine" id="cb19-46" title="46">xzero <span class="op">=</span> np.ones((<span class="dv">3</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb19-47" title="47"></a>
+<a class="sourceLine" id="cb19-48" title="48">minx <span class="op">=</span> gradienten_abstieg_linesearch(func<span class="op">=</span>gfun, grad<span class="op">=</span>gradg, inix<span class="op">=</span>xzero)</a></code></pre></div>
 </div>
 <div id="built-in-optimierung-in-scipy-p" class="section level3 hasAnchor">
 <h3><span class="header-section-number">7.7.4</span> Built-in Optimierung in Scipy (P)<a href="optimierung.html#built-in-optimierung-in-scipy-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>

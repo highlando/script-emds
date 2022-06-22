@@ -2260,7 +2260,7 @@ Für unser obiges Beispiel bekommen wir
 \nabla g(x_1, x_2, x_3) =
 \begin{bmatrix}
 \cos(x_1)+2x_1x_2^2x_3^2\\
--x_3\sin(x_2) + x_1^2x_2x_3^2 + 2 \\
+-x_3\sin(x_2) + x_1^2x_2x_3^2 - 2 \\
 \cos(x_2) + 2x_1^2x_2^2x_3
 \end{bmatrix}
 \end{equation*}
@@ -2376,11 +2376,52 @@ Berechnen sie näherungsweise den Gradienten unserer Beispielfunktion
 g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 - 2x_2
 \end{equation*}
 im Punkt \((x_1, x_2, x_3) = (1, 1, 1)\),
-indem sie die partiellen Ableitungen durch den Differenzenquotienten
+indem sie die partiellen Ableitungen durch den Differenzenquotienten, z.B.,
 \begin{equation*}
-\frac{\partial f}{\partial x_2}(1, 1, 1) \approx \frac{g(1, 1+h, 1) - g(1, 1,1)}{h}
+\frac{\partial g}{\partial x_2}(1, 1, 1) \approx \frac{g(1, 1+h, 1) - g(1, 1,1)}{h}
 \end{equation*}
 für \(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\) berechnen. Berechnen sie auch die Norm der Differenz zum exakten Wert von \(\nabla g(1, 1, 1)\) (s.o.) und interpretieren sie die Ergebnisse.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+
+\KeywordTok{def}\NormalTok{ gfun(x):}
+    \ControlFlowTok{return}\NormalTok{ np.sin(x[}\DecValTok{0}\NormalTok{]) }\OperatorTok{+}\NormalTok{ x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{np.cos(x[}\DecValTok{1}\NormalTok{]) }\OperatorTok{\textbackslash{}}
+        \OperatorTok{+}\NormalTok{ x[}\DecValTok{0}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{0}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{2}\NormalTok{] }\OperatorTok{\textbackslash{}}
+        \OperatorTok{-} \DecValTok{2}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{]}
+
+
+\KeywordTok{def}\NormalTok{ gradg(x):}
+    \ControlFlowTok{return}\NormalTok{ np.array([np.NaN,  }\CommentTok{# bitte hier vervollstaendigen}
+                     \OperatorTok{-}\NormalTok{x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{np.sin(x[}\DecValTok{1}\NormalTok{])}\OperatorTok{+}\NormalTok{x[}\DecValTok{0}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{0}\NormalTok{]}\OperatorTok{*}\DecValTok{2}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{2}\NormalTok{]}\OperatorTok{-}\DecValTok{2}\NormalTok{,}
+\NormalTok{                     np.NaN]).reshape((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+
+\CommentTok{# Inkrement}
+\NormalTok{h }\OperatorTok{=} \FloatTok{1e-3}
+
+\CommentTok{# der x-wert und das h-Inkrement in der zweiten Komponente}
+\NormalTok{xzero }\OperatorTok{=}\NormalTok{ np.ones((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\NormalTok{xzeroh }\OperatorTok{=}\NormalTok{ xzero }\OperatorTok{+}\NormalTok{ np.array([}\DecValTok{0}\NormalTok{, h, }\DecValTok{0}\NormalTok{]).reshape((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+\CommentTok{# partieller Differenzenquotient}
+\NormalTok{dgdxtwo }\OperatorTok{=} \DecValTok{1}\OperatorTok{/}\NormalTok{h}\OperatorTok{*}\NormalTok{(gfun(xzeroh) }\OperatorTok{-}\NormalTok{ gfun(xzero))}
+\CommentTok{# Alle partiellen Ableitungen ergeben den Gradienten}
+\NormalTok{hgrad }\OperatorTok{=}\NormalTok{ np.array([np.NaN, dgdxtwo, np.NaN]).reshape((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+\CommentTok{# Analytisch bestimmter Gradient}
+\NormalTok{gradx }\OperatorTok{=}\NormalTok{ gradg(xzero)}
+
+\CommentTok{# Die Differenz in der Norm}
+\NormalTok{hdiff }\OperatorTok{=}\NormalTok{ np.linalg.norm((hgrad}\OperatorTok{-}\NormalTok{gradx)[}\DecValTok{1}\NormalTok{])}
+\CommentTok{# bitte alle Kompenenten berechnen}
+\CommentTok{# und dann die Norm ueber den ganzen Vektor nehmen}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'h=}\SpecialCharTok{\{h:.2e\}}\SpecialStringTok{: diff in gradient }\SpecialCharTok{\{}\NormalTok{hdiff}\SpecialCharTok{.}\NormalTok{flatten()[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{:.2e\}}\SpecialStringTok{'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{optimierung-ohne-gradienten-p}{%
 \subsection{Optimierung ohne Gradienten (P)}\label{optimierung-ohne-gradienten-p}}
@@ -2393,6 +2434,59 @@ Werten sie \(g\) an \(1000\) zufällig gewählten Punkten aus und lokalisieren s
 \subsection{Gradientenabstiegsverfahren (P)}\label{gradientenabstiegsverfahren-p}}
 
 Implementieren Sie ein Gradientenabstiegsverfahren mit \emph{line search} durch Bisektion und berechnen Sie ein Minimum von \(g\) damit.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\ImportTok{from}\NormalTok{ loesung_5_1 }\ImportTok{import}\NormalTok{ gfun, gradg}
+
+
+\KeywordTok{def}\NormalTok{ min_by_bisec(func, v}\OperatorTok{=}\VariableTok{None}\NormalTok{, curx}\OperatorTok{=}\VariableTok{None}\NormalTok{, stepsize}\OperatorTok{=}\FloatTok{1.}\NormalTok{, maxiter}\OperatorTok{=}\DecValTok{15}\NormalTok{):}
+    \CommentTok{''' find a smaller value of f in the direction}
+
+\CommentTok{    f(x+s*v)}
+
+\CommentTok{    for s in [0, stepsize]}
+
+\CommentTok{    by bisection}
+\CommentTok{    '''}
+\NormalTok{    cstep }\OperatorTok{=}\NormalTok{ stepsize}
+
+\NormalTok{    cval }\OperatorTok{=}\NormalTok{ func(curx)}
+\NormalTok{    nval }\OperatorTok{=}\NormalTok{ func(curx}\OperatorTok{+}\NormalTok{cstep}\OperatorTok{*}\NormalTok{v)}
+
+    \ControlFlowTok{for}\NormalTok{ kkk }\KeywordTok{in}\NormalTok{ maxiter:}
+        \ControlFlowTok{if}\NormalTok{ nval }\OperatorTok{>}\NormalTok{ cval:}
+\NormalTok{            cstep }\OperatorTok{=} \FloatTok{.5}\OperatorTok{*}\NormalTok{cstep}
+\NormalTok{            newx }\OperatorTok{=}\NormalTok{ curx}\OperatorTok{+}\NormalTok{cstep}\OperatorTok{*}\NormalTok{v}
+\NormalTok{            nval }\OperatorTok{=}\NormalTok{ func(newx)}
+        \ControlFlowTok{else}\NormalTok{:}
+            \ControlFlowTok{return}\NormalTok{ newx}
+    \ControlFlowTok{raise} \PreprocessorTok{UserWarning}\NormalTok{(}\StringTok{'no smaller value could be found'}\NormalTok{)}
+    \ControlFlowTok{return}
+
+
+
+\KeywordTok{def}\NormalTok{ gradienten_abstieg_linesearch(func}\OperatorTok{=}\VariableTok{None}\NormalTok{, grad}\OperatorTok{=}\VariableTok{None}\NormalTok{, inix}\OperatorTok{=}\VariableTok{None}\NormalTok{,}
+\NormalTok{                                  maxiter}\OperatorTok{=}\DecValTok{10}\NormalTok{):}
+    \CommentTok{'''sucht ein Minimum einer Funktion `func` durch}
+\CommentTok{     * Evaluieren des Gradienten `grad`}
+\CommentTok{     * und anpassen von `inix` in Richtung von `-grad`}
+\CommentTok{     * mit einem `line search Verfahren`}
+\CommentTok{    '''}
+
+\NormalTok{    curx }\OperatorTok{=}\NormalTok{ inix}
+\NormalTok{    cgrad }\OperatorTok{=}\NormalTok{ grad(curx)}
+\NormalTok{    nxtx }\OperatorTok{=}\NormalTok{ min_by_bisec(func, v}\OperatorTok{=-}\NormalTok{cgrad, curx}\OperatorTok{=}\NormalTok{curx)}
+
+    \ControlFlowTok{return}\NormalTok{ nxtx}
+
+\NormalTok{xzero }\OperatorTok{=}\NormalTok{ np.ones((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+\NormalTok{minx }\OperatorTok{=}\NormalTok{ gradienten_abstieg_linesearch(func}\OperatorTok{=}\NormalTok{gfun, grad}\OperatorTok{=}\NormalTok{gradg, inix}\OperatorTok{=}\NormalTok{xzero)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{built-in-optimierung-in-scipy-p}{%
 \subsection{Built-in Optimierung in Scipy (P)}\label{built-in-optimierung-in-scipy-p}}

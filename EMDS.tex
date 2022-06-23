@@ -2373,7 +2373,7 @@ f(x) \to \min_{x\in \mathbb R^{n}}
 
 Berechnen sie näherungsweise den Gradienten der Beispielfunktion
 \begin{equation*}
-f(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1x_2x_3 - 2x_2 + x_1^2 + x_2^2 + x_3^2
+f(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + - 2x_2 + x_1^2 + x_2^2 + x_3^2
 \end{equation*}
 (\textbf{Achtung} dieses \(f\) ist nur fast das \(g\) wie oben)
 im Punkt \((x_1, x_2, x_3) = (1, 1, 1)\),
@@ -2389,13 +2389,12 @@ für \(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\) berechnen. Berechnen sie au
  
 \KeywordTok{def}\NormalTok{ gfun(x):}
     \ControlFlowTok{return}\NormalTok{ np.sin(x[}\DecValTok{0}\NormalTok{]) }\OperatorTok{+}\NormalTok{ x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{np.cos(x[}\DecValTok{1}\NormalTok{]) }\OperatorTok{\textbackslash{}}
-        \OperatorTok{+}\NormalTok{ x[}\DecValTok{0}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{2}\NormalTok{] }\OperatorTok{\textbackslash{}}
         \OperatorTok{-} \DecValTok{2}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{] }\OperatorTok{+}\NormalTok{ x[}\DecValTok{0}\NormalTok{]}\OperatorTok{**}\DecValTok{2} \OperatorTok{+}\NormalTok{ x[}\DecValTok{1}\NormalTok{]}\OperatorTok{**}\DecValTok{2} \OperatorTok{\textbackslash{}}
         \OperatorTok{+}\NormalTok{ x[}\DecValTok{2}\NormalTok{]}\OperatorTok{**}\DecValTok{2}
 
 \KeywordTok{def}\NormalTok{ gradg(x):}
     \ControlFlowTok{return}\NormalTok{ np.array([np.NaN,}
-                     \OperatorTok{-}\NormalTok{x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{np.sin(x[}\DecValTok{1}\NormalTok{]) }\OperatorTok{+}\NormalTok{ x[}\DecValTok{0}\NormalTok{]}\OperatorTok{*}\NormalTok{x[}\DecValTok{2}\NormalTok{] }\OperatorTok{-} \DecValTok{2} \OperatorTok{+} \DecValTok{2}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{],}
+                     \OperatorTok{-}\NormalTok{x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{np.sin(x[}\DecValTok{1}\NormalTok{]) }\OperatorTok{-} \DecValTok{2} \OperatorTok{+} \DecValTok{2}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{],}
 \NormalTok{                     np.NaN]).reshape((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
 
 
@@ -2508,7 +2507,31 @@ Implementieren Sie ein Gradientenabstiegsverfahren mit \emph{line search} durch 
 \item
   Benutzen sie die \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html\#scipy.optimize.minimize}{\texttt{scipy.optimize.minimize}} Routine um ein Minimum von \(g\) zu finden und messen Sie die Zeit die der Algorithmus braucht.
 \item
-  Geben Sie dem Algorithmus eine Funktion mit, die den Gradienten berechnet. Berechnen sie ein Minimum und vergleichen Sie die benötigte Zeit.
+  Geben Sie dem Algorithmus eine Funktion mit, die den Gradienten berechnet. Berechnen sie ein Minimum und vergleichen Sie die benötigte Zeit. \textbf{Hinweis}: die Routine braucht den Gradienten als \emph{flachen} Vektor. Das kann (wie unten im Beispiel) durch eine \emph{wrapper} Funktion erreicht werden.
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{from}\NormalTok{ timeit }\ImportTok{import}\NormalTok{ default_timer}
+
+\ImportTok{from}\NormalTok{ scipy.optimize }\ImportTok{import}\NormalTok{ minimize}
+
+\ImportTok{from}\NormalTok{ loesung_5_1 }\ImportTok{import}\NormalTok{ gfun, gradg}
+
+
+\KeywordTok{def}\NormalTok{ gradforopt(x):}
+    \ControlFlowTok{return}\NormalTok{ gradg(x).flatten()}
+
+
+\NormalTok{starttime }\OperatorTok{=}\NormalTok{ default_timer()}
+\NormalTok{result }\OperatorTok{=}\NormalTok{ minimize(...., jac}\OperatorTok{=}\NormalTok{gradforopt)}
+\NormalTok{runtime }\OperatorTok{=}\NormalTok{ default_timer() }\OperatorTok{-}\NormalTok{ starttime}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'with gradient: found minimum f(x) = }\SpecialCharTok{\{}\NormalTok{result}\SpecialCharTok{.}\NormalTok{fun}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{'at x = '}\NormalTok{, result.x)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'in }\SpecialCharTok{\{}\NormalTok{runtime}\SpecialCharTok{:.4f\}}\SpecialStringTok{s time'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \end{document}

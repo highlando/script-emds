@@ -153,10 +153,11 @@ f(x) \to \min_{x\in \mathbb R^{n}}
 
 ### Numerische Berechnung des Gradienten (P+T)
 
-Berechnen sie n&auml;herungsweise den Gradienten unserer Beispielfunktion 
+Berechnen sie n&auml;herungsweise den Gradienten der Beispielfunktion 
 \begin{equation*}
-g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 - 2x_2
+f(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1x_2x_3 - 2x_2 + x_1^2 + x_2^2 + x_3^2
 \end{equation*}
+(**Achtung** dieses $f$ ist nur fast das $g$ wie oben)
 im Punkt $(x_1, x_2, x_3) = (1, 1, 1)$, 
 indem sie die partiellen Ableitungen durch den Differenzenquotienten, z.B.,
 \begin{equation*}
@@ -166,17 +167,16 @@ f&uuml;r $h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}$ berechnen. Berechnen sie 
 
 ```{.py}
 import numpy as np
-
-
+ 
 def gfun(x):
     return np.sin(x[0]) + x[2]*np.cos(x[1]) \
-        + x[0]*x[0]*x[1]*x[1]*x[2]*x[2] \
-        - 2*x[1]
-
+        + x[0]*x[1]*x[2] \
+        - 2*x[1] + x[0]**2 + x[1]**2 \
+        + x[2]**2
 
 def gradg(x):
-    return np.array([np.NaN,  # bitte hier vervollstaendigen
-                     -x[2]*np.sin(x[1])+x[0]*x[0]*2*x[1]*x[2]*x[2]-2,
+    return np.array([np.NaN,
+                     -x[2]*np.sin(x[1]) + x[0]*x[2] - 2 + 2*x[1],
                      np.NaN]).reshape((3, 1))
 
 
@@ -219,49 +219,61 @@ import numpy as np
 from loesung_5_1 import gfun, gradg
 
 
-def min_by_bisec(func, v=None, curx=None, stepsize=1., maxiter=15):
+def min_by_btls(func, v=None, curx=None,
+                azero=10., tau=.8, c=.9, maxiter=200):
     ''' find a smaller value of f in the direction
 
     f(x+s*v)
 
-    for s in [0, stepsize]
+    for s in [0, azero]
+    by backtracking linesearch
 
-    by bisection
+    https://en.wikipedia.org/wiki/Backtracking_line_search
     '''
-    cstep = stepsize
+
+    m = -v.T.dot(v)
+    cstep = azero
+    t = -c*m
 
     cval = func(curx)
-    nval = func(curx+cstep*v)
 
-    for kkk in maxiter:
-        if nval > cval:
-            cstep = .5*cstep
-            newx = curx+cstep*v
-            nval = func(newx)
-        else:
+    for kkk in range(maxiter):
+        newx = curx+cstep*v
+        if cval - func(newx) >= cstep*t:
             return newx
+        else:
+            cstep = tau*cstep
     raise UserWarning('no smaller value could be found')
     return
 
 
-
 def gradienten_abstieg_linesearch(func=None, grad=None, inix=None,
-                                  maxiter=10):
+                                  maxiter=100, grad_tol=1e-6):
     '''sucht ein Minimum einer Funktion `func` durch
      * Evaluieren des Gradienten `grad`
      * und anpassen von `inix` in Richtung von `-grad`
      * mit einem `line search Verfahren`
     '''
 
+    # initialisierung
     curx = inix
-    cgrad = grad(curx)
-    nxtx = min_by_bisec(func, v=-cgrad, curx=curx)
+    for kkk in range(maxiter):
+        # compute the current gradient
+        # finde ein neues `newx` in -Gradienten Richtung
+        # check ob der Gradient unter der Toleranz ist
+        # anderenfalls:
+        curx = newx  # naechster Iterationschritt
 
-    return nxtx
+    print(f'max iter {maxiter} reached -- size of grad {nrmcgrd:.2e}')
+    return newx
 
-# der Startwert
+# Startwert
 xzero = np.ones((3, 1))
+
 minx = gradienten_abstieg_linesearch(func=gfun, grad=gradg, inix=xzero)
+
+print(f'found minimum f(x) = {gfun(minx)}')
+print('at x = ', minx)
 ```
 
 ### Built-in Optimierung in Scipy (P)

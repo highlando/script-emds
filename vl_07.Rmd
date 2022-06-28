@@ -131,8 +131,57 @@ Andersherum k&ouml;nnen wir einige ganz wesentliche Aspekte folgern:
 
 Ganz allgemein k&ouml;nnen wir unsere bisherigen Optimierungsprobleme schreiben als
 \begin{equation*}
-f(x) \to \min_{x\in \mathbb R^{n}}
+f(x) \to \min_{x\in \mathbb R^{n}},
 \end{equation*}
+das hei&szlig;t f&uuml;r eine Funktion $f\colon \mathbb R^n \to \mathbb R^{}$ suchen wir das $x \in D(f) \subset \mathbb R^{n}$, f&uuml;r das $f(x)$ minimal wird. 
+
+::: {.definition}
+Gegeben sei $f\colon \mathbb R^{n} \to \mathbb R^{}$. Wir nennen $x^* \in D(f)\subset \mathbb R^{n}$ 
+
+ * ein *lokales Minimum* (von $f$) falls es ein $\epsilon >0$ gibt, sodass
+\begin{equation*}
+f(x^*) \leq f(x)
+\end{equation*}
+f&uuml;r alle $x \in D(f) \cap B_\epsilon (x^*)$.
+
+ * ein globales Minimum, falls $f(x^*) \leq f(x)$ f&uuml;r alle $x\in D(f)$ ist.
+
+:::
+
+In dieser Definition benutzen wir "$\leq$", da das im Hinblick auf Minimierung (der Wert von $f$ ist wichtig, die Stelle, an der das Minimum angenommen wird, ist weniger entscheidend) praktikabel ist. Wir k&ouml;nnten aber auch von strikten (oder "echten") Minima sprechen und "$<$" verlangen.
+
+Der Schnitt der Umgebung 
+$$ B_\epsilon(x^*) := \{x\in \mathbb R^{n}| \|x-x^*\|< \epsilon\} $$
+mit dem Definitionsbereich $D(f)$ ist relevant, wenn $x^*$ genau auf dem Rand des Definitionsbereichs liegt.
+
+Nun erstmal ein hinreichendes Kriterium f&uuml;r ein Extremum
+[vgl. Thm. 2.2, @NocW06]:
+
+::: {.theorem}
+ Sei $D(f) \subseteq \mathbb{R}^{n}$ offen, und sei $f: D(f) \rightarrow \mathbb{R}$ partiell differenzierbar. Besitzt $f$ in $\mathbf{x}^{*} \in D(f)$ ein lokales Extremum, dann ist $\nabla f(\mathbf{x}^{*})=0$.
+:::
+
+::: {.jhsays}
+Liegt in $x^*$ ein Extremum vor und $x^*$ liegt nicht auf dem Rand, so verschwindet die erste Ableitung.
+:::
+
+Definition 17.30 (Hesse ${ }^{40}$-Matrix). Sei $D \subseteq \mathbb{R}^{n}$ offen, und sei $f: D \rightarrow \mathbb{R}$ eine 2 -mal stetig partiell differenzierbare Funktion. Für $\mathbf{x}^{\star} \in D$ heißt die symmetrische $(n \times n)$-Matrix
+$$
+H_{f}\left(\mathbf{x}^{\star}\right)=\left(\begin{array}{cccc}
+\frac{\partial^{2} f}{\partial x_{1} \partial x_{1}}\left(\mathbf{x}^{\star}\right) & \frac{\partial^{2} f}{\partial x_{2} \partial x_{1}}\left(\mathbf{x}^{\star}\right) & \cdots & \frac{\partial^{2} f}{\partial x_{n} \partial x_{1}}\left(\mathbf{x}^{\star}\right) \\
+\frac{\partial^{2} f}{\partial x_{1} \partial x_{2}}\left(\mathbf{x}^{\star}\right) & \frac{\partial^{2} f}{\partial x_{2} \partial x_{2}}\left(\mathbf{x}^{\star}\right) & \cdots & \frac{\partial^{2} f}{\partial x_{n} \partial x_{2}}\left(\mathbf{x}^{\star}\right) \\
+\vdots & \vdots & \cdots & \vdots \\
+\frac{\partial^{2} f}{\partial x_{1} \partial x_{n}}\left(\mathbf{x}^{\star}\right) & \frac{\partial^{2} f}{\partial x_{2} \partial x_{n}}\left(\mathbf{x}^{\star}\right) & \cdots & \frac{\partial^{2} f}{\partial x_{n} \partial x_{n}}\left(\mathbf{x}^{\star}\right)
+\end{array}\right)
+$$
+Hesse-Matrix von $f$ in $\mathbf{x}^{\star}$.
+Satz 17.31 ((vgl. Satz 13.18 ii), iii) und Satz 9.37)). Sei $D \subset \mathbb{R}^{n}$ offen, und sei $f: D \rightarrow \mathbb{R}$ eine 2-mal stetig partiell differenzierbare Funktion. Sei $\mathbf{x}^{\star} \in D \operatorname{mit} \operatorname{grad} f\left(\mathbf{x}^{\star}\right)=\mathbf{0}$.
+40 Otto Hesse, 1811-1874
+94
+i) Ist $H_{f}\left(\mathbf{x}^{\star}\right)$ positiv definit, dann ist $\mathbf{x}^{\star}$ ein lokales Minimum.
+ii) Ist $H_{f}\left(\mathbf{x}^{\star}\right)$ negativ definit, dann ist $\mathbf{x}^{\star}$ ein lokales Maximum.
+iii) Ist $H_{f}\left(\mathbf{x}^{\star}\right)$ weder positiv noch negativ semi-definit (d.h. indefinit), dann ist $\mathbf{x}^{\star}$ kein lokales Extremum, sondern ein Sattelpunkt.
+iv) Ist $H_{f}\left(\mathbf{x}^{\star}\right)$ negativ semi-definit oder positiv-definit, dann ist keine Aussage möglich.
 
  * allgemeine Darstellung
    * multivariable Funktion

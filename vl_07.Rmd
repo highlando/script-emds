@@ -158,14 +158,15 @@ Nun erstmal ein hinreichendes Kriterium f&uuml;r ein Extremum
 [vgl. Thm. 2.2, @NocW06]:
 
 ::: {.theorem}
- Sei $D(f) \subseteq \mathbb{R}^{n}$ offen, und sei $f: D(f) \rightarrow \mathbb{R}$ partiell differenzierbar. Besitzt $f$ in $\mathbf{x}^{*} \in D(f)$ ein lokales Extremum, dann ist $\nabla f(\mathbf{x}^{*})=0$.
+ Sei $D(f) \subseteq \mathbb{R}^{n}$ offen, und sei $f\colon D(f) \rightarrow \mathbb{R}$ stetig partiell differenzierbar. Besitzt $f$ in $\mathbf{x}^{*} \in D(f)$ ein lokales Extremum[^k&ouml;nnte auch ein Maximum sein, was wir aber einfach als ein Minimum von $-f$ einordnen], dann ist $\nabla f(\mathbf{x}^{*})=0$.
 :::
 
-::: {.jhsays}
-Liegt in $x^*$ ein Extremum vor und $x^*$ liegt nicht auf dem Rand, so verschwindet die erste Ableitung.
+::: {.JHSAYS data-latex=''}
+Das k&ouml;nnen wir wie in der einfachen Kurvendiskussion verstehen: *Liegt in $x^*$ ein Extremum vor und $x^*$ liegt nicht auf dem Rand, so verschwindet die erste Ableitung.* Um festzustellen, ob ein Minimum, Maximum und vor allem nicht einfach ein Sattelpunkt vorliegt, wurde geschaut ob die zweite Ableitung positiv, negativ oder gleich 0 ist. Bei multivariablen Funktionen wird die zweite Ableitung durch eine Matrix repr&auml;sentiert. Und positiv, negativ oder indefinit wird wird &uuml;ber die Eigenwerte definiert.
 :::
 
-Definition 17.30 (Hesse ${ }^{40}$-Matrix). Sei $D \subseteq \mathbb{R}^{n}$ offen, und sei $f: D \rightarrow \mathbb{R}$ eine 2 -mal stetig partiell differenzierbare Funktion. Für $\mathbf{x}^{\star} \in D$ heißt die symmetrische $(n \times n)$-Matrix
+::: {.definition name="Hesse-Matrix"}
+ Sei $D(f) \subseteq \mathbb{R}^{n}$ offen, und sei $f\colon D(f) \rightarrow \mathbb{R}$ eine 2-mal stetig partiell differenzierbare Funktion. Für $\mathbf{x}^{\star} \in D$ heißt die symmetrische $(n \times n)$-Matrix
 $$
 H_{f}\left(\mathbf{x}^{\star}\right)=\left(\begin{array}{cccc}
 \frac{\partial^{2} f}{\partial x_{1} \partial x_{1}}\left(\mathbf{x}^{\star}\right) & \frac{\partial^{2} f}{\partial x_{2} \partial x_{1}}\left(\mathbf{x}^{\star}\right) & \cdots & \frac{\partial^{2} f}{\partial x_{n} \partial x_{1}}\left(\mathbf{x}^{\star}\right) \\
@@ -175,28 +176,96 @@ H_{f}\left(\mathbf{x}^{\star}\right)=\left(\begin{array}{cccc}
 \end{array}\right)
 $$
 Hesse-Matrix von $f$ in $\mathbf{x}^{\star}$.
-Satz 17.31 ((vgl. Satz 13.18 ii), iii) und Satz 9.37)). Sei $D \subset \mathbb{R}^{n}$ offen, und sei $f: D \rightarrow \mathbb{R}$ eine 2-mal stetig partiell differenzierbare Funktion. Sei $\mathbf{x}^{\star} \in D \operatorname{mit} \operatorname{grad} f\left(\mathbf{x}^{\star}\right)=\mathbf{0}$.
-40 Otto Hesse, 1811-1874
-94
-i) Ist $H_{f}\left(\mathbf{x}^{\star}\right)$ positiv definit, dann ist $\mathbf{x}^{\star}$ ein lokales Minimum.
-ii) Ist $H_{f}\left(\mathbf{x}^{\star}\right)$ negativ definit, dann ist $\mathbf{x}^{\star}$ ein lokales Maximum.
-iii) Ist $H_{f}\left(\mathbf{x}^{\star}\right)$ weder positiv noch negativ semi-definit (d.h. indefinit), dann ist $\mathbf{x}^{\star}$ kein lokales Extremum, sondern ein Sattelpunkt.
-iv) Ist $H_{f}\left(\mathbf{x}^{\star}\right)$ negativ semi-definit oder positiv-definit, dann ist keine Aussage möglich.
+:::
 
- * allgemeine Darstellung
-   * multivariable Funktion
- * Gradient/Hesse Matrix
- * Gradientenabstiegsverfahren
-   * klassisch
-   * gedaempft
-   * stochastisch
+Hierbei ist $\frac{\partial^{2} f}{\partial x_{i} \partial x_{j}}:=\frac{\partial }{\partial x_{i}}(\frac{\partial f}{\partial x_{j}})$ die wiederholte partielle Differentiation in m&ouml;glicherweise verschiedene Koordinatenrichtungen. Die postulierte Symmetrie der Hesse-Matrix folgt aus der Gleichheit
+\begin{equation*}
+\frac{\partial }{\partial x_{i}}(\frac{\partial f}{\partial x_{j}})
+=
+\frac{\partial }{\partial x_{j}}(\frac{\partial f}{\partial x_{i}})
+\end{equation*}
+deren G&uuml;ltigkeit wir noch in der Mathematik Vorlesung beweisen werden. Als n&auml;chstes ein Hinreichendes Kriterium f&uuml;r Minimalit&auml;t [vgl. Theorem 2.4, @NocW06]:
 
-## Optimierung unter Nebenbedingungen
+::: {.theorem name="Hinreichende Optimalit&auml;tsbedingung zweiter Ordnung"}
+Sei $D(f) \subset \mathbb{R}^{n}$ offen, und sei $f\colon D(f) \rightarrow \mathbb{R}$ eine 2-mal stetig partiell differenzierbare Funktion. Sei $x^{\star} \in D(f)$ mit $\nabla f ({x}^{\star})={0}$ 
+Ist $H_{f}({x}^{\star})$ positiv definit, dann ist $\mathbf{x}^{\star}$ ein lokales Minimum.
+:::
 
-## What's more
+Ein paar Bemerkungen dazu
 
- * Automatisches Differenzieren
- * Multikriterielle Optimierung
+ * Eine symmetrische Matrix $M$ hei&szlig;t *positiv definit*, wenn $x^TMx>0$ ist f&uuml;r alle $x\in \mathbb R^{n}\setminus \{0\}$. Wir schreiben $M \prec 0$.
+
+ * Hinreichende Kriterien daf&uuml;r sind
+   * alle Eigenwerte sind positiv oder
+   * alle Hauptminoren sind positiv (das sind die Determinante der Matrizen, die aus $M$ durch Streichung der letzten $r$ Zeilen und Spalten entstehen $r=0,1,\dotsc, n-1$.)
+
+ * Ist $-M \prec 0$, dann liegt ein lokales Minimum von $-f$ vor (oder eben ein Maximum von $f$)
+
+ * Gilt $M \preccurlyeq 0$ (also $M$ ist positiv semidefinit, das hei&szlig;t die Eigenwerte sind nur "$\geq 0$" bzw. es gilt nur $x^TMx\geq 0$), dann ist **keine** Aussage m&ouml;glich. 
+
+ * Ist die Matrix bestimmt indefinit, also alle Eigenwerte "$\neq 0$" aber manche positiv und manche negativ, dann liegt ein Sattelpunkt vor (und sicher kein Extremum).
+
+## Gradientenabstiegsverfahren
+
+Aus dem Wissen, dass in einem Minimum $x^*$, der Gradient $\nabla f(x^*)$ verschwindet und dass in einem beliebigen Punkt $x^0$ (der kein Extremum ist), der negative Gradient $-\nabla f(x^0)$ in die Richtung des st&auml;rksten Abstiegs zeigt, ergibt sich der folgende Zusammenhang:
+
+> F&uuml;r einen beliebigen Startpunkt $x^0$ gibt es eine Schrittweite $\alpha^0$, so dass
+> $$f(x^1) := f(x^0 - \alpha^0 \nabla f(x^0)) < f(x_0) $$
+
+Das hei&szlig;t in einem Startpunkt k&ouml;nnen wir einen kleinen Schritt in die Richtung des st&auml;rksten Abstiegs gehen und so die Funktion etwas minimieren. Das wiederholte Anwenden dieses Prinzips ergibt das Gradientenabstiegsverfahren,
+$$f(x^{n+1}) := f(x^n - \alpha^n \nabla f(x^n)) < f(x_n) $$,
+das die Funktion immer weiter minimiert bis entweder der Definitionsbereich verlassen ist oder ein kritischer Punkt mit $\nabla f(x^k)=0$ erreicht wurde. An diesem k&ouml;nnte nun die Hessematrix ausgewertet werden um festzustellen ob tats&auml;chlich ein Minimum vorliegt. 
+
+ * Neben der Berechnung des Gradienten, die f&uuml;r gro&szlig;e Dimensionen sehr aufw&auml;ndig werden kann, ist die Bestimmung der Schrittweite $\alpha^k$ in jedem Schritt entscheidend. 
+   * Dazu kann beispielsweise in jeder Iteration die skalare Funktion $\alpha \mapsto f(x^{k} - \alpha \nabla f(x^k))$ minimiert werden (*exact line search*)
+   * Da das aber auch aufw&auml;ndig sein kann, wurden zahlreiche Approximationen an diese Zwischenoptimierung entwickelt (*inexact line search*).
+   * Vgl. auch den Wikipedia Artikel zum [Gradientenverfahren#Bestimmen_der_Schrittweite](https://de.wikipedia.org/wiki/Gradientenverfahren#Bestimmen_der_Schrittweite)
+
+ * F&uuml;r passend gew&auml;hlte Schrittweiten und wenn $f$ hinreichend glatt ist (der Gradient soll Lipshitz-stetig sein), l&auml;sst sich Konvergenz und sogar Konvergenzrate der Iteration zu einem station&auml;ren Punkt $x^*$ mit $\nabla f(x^*)=0$ bestimmen [vgl. Section 3.2 in @NocW06].
+
+ * Um tats&auml;chlich die Konvergenz zu einem Minimum zu beweisen, wird beispielsweise vorausgesetzt, dass ein striktes lokales Minimum existiert (*lokale Konvexit&auml;t*) und dass die Hesse-Matrix stetig ist (also $f$ zweimal stetig partiell differenzierbar ist) [vgl. Section 3.2 in @NocW06].
+
+ * Wir k&ouml;nnen uns leicht &uuml;berlegen, dass dieser Algorithmus immer zu einem lokalen Minimum konvergieren wird und das entscheidend von der Wahl des Startpunktes abh&auml;ngt.
+
+## Extra: Nichtglatte Optimierung
+
+Ist die Zielfunktion nicht differenzierbar (oder ist die Berechnung des Gradienten zu aufw&auml;ndig) kann auf Optimierungsverfahren zur&uuml;ckgegriffen werden, die keinen Gradienten ben&ouml;tigen. Die bekanntesten sind
+
+ * \emph{Nelder-Mead} oder auch (*nonlinear Simplex*) Verfahren: Berechnet f&uuml;r $n+1$ St&uuml;tzpunkte (ein Simplex im $\mathbb R^{n}$ die Werte von $f$ und ersetzt den *schlechtesten* nach Kriterien die eine (vergleichsweise) schnelle Konvergenz zu einem lokalen Minimum garantieren k&ouml;nnen.
+ * Sogenannte *generische* oder *genetische Algorithmen*: nach dem Prinzip der Variation (oder Mutation) und Selektion wird der Suchraum $D(f)$ in zuf&auml;lliger Weise aber mit einer gewissen Systematik abgesucht -- diese Algorithmen konvergieren (in Wahrscheinlichkeit) zu einem globalen Minimum sind aber vergleichsweise langsam bzw. rechenaufw&auml;ndig.
+
+## Extra: Automatisches Differenzieren
+
+Wir sehen, dass in der glatten Optimierung die Berechnung des Gradienten die wichtigste und gleichzeitig aufw&auml;ndigste Komponente ist. Kann der Gradient analytisch berechnet und als Funktion zur Verf&uuml;gung gestellt werden, ist dieses Problem elegant umgangen. In der Praxis sind die Probleme aber oft als eine mehrschichitige Verkn&uuml;pfung von Funktionen in einem Programmcode gegeben. Andererseits sind die kleinste Elemente dieser Funktion typischerweise Elementarfunktionen, die einfach und analytisch differenziert werden k&ouml;nnen.
+
+Die Darstellung einer Funktion, zum Beispiel,
+\begin{equation*}
+f(x_1, x_2) = \|(x_1, x_2)\| = \sqrt{x_1^2 + x_2^2}
+\end{equation*}
+die als Koordinatenfunktion f&uuml;r $x_1$ dargestellt werden kann als
+$$
+\tilde f_1(x_1, z) = g_3(g_2(g_1(x_1); z)), \quad g_3(y) = \sqrt y, \quad g_2(y;z) = y + z^2, \quad g_1(y) = y^2
+$$
+und mittels Kettenregel die partielle Ableitung als Kombination elementarer Ableitungen berechnet als
+\begin{equation*}
+\frac{\partial f}{\partial x_1}(x_1,x_2) = g_3(g_2(g_1(x_1); x_2))'\cdot g_2(g_1(x_1); x_2)'\cdot g_1(x_1)'
+\end{equation*}
+
+macht sich *Automatisches Differenzieren* zu Nutze und kann zu einem Programmcode 
+
+```{.py}
+def ffun(x):
+    # ..... alles was f machen soll
+    return fx
+```
+
+einen Programmcode erzeugen, der `grad_ffun(x)` berechnet. Das ist der sogenannten Vorw&auml;rtsmodus des *Automatischen Differenzierens*.
+
+Der sogenannte *R&uuml;ckw&auml;rtsmodus* ist effizienter und kann leicht ein Programme eingebaut werden und damit zu jeder Funktionsevalution, direkt den Gradienten an dieser Stelle mitliefern. 
+
+::: {.JHSAYS data-latex=''}
+Die systematische Verwendung des *Automatischen Differenzierens* ist einer der wesentlichsten Garanten f&uuml;r den Erfolg von *machine learning*, da AD das tr&auml;inieren von grossen Netzwerken &uuml;berhaupt erst m&ouml;glich macht.
+:::
 
 ## Aufgaben
 

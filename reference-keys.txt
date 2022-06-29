@@ -5,6 +5,8 @@ fig:k-means-evoexa
 fig:k-means-pingexa
 fig:k-means-pingexa-lcurve
 fig:k-means-evoexaexrcs
+def:unlabeled-div-1
+thm:unlabeled-div-2
 was-ist-data-science
 wie-passiert-die-datenanalyse
 was-sind-daten

@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="clustering-und-hauptkomponentenanalyse.html"/>
-
+<link rel="next" href="referenzen.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -185,6 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6" data-path="optimierung.html"><a href="optimierung.html#whats-more"><i class="fa fa-check"></i><b>7.6</b> What’s more</a></li>
 <li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.7</b> Aufgaben</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -299,7 +300,7 @@ zu untersuchen, kann die Funktion entlang einer Richtung <span class="math inlin
 <div id="richtung-is-partiell" class="JHSAYS">
 <p>Für <span class="math inline">\(v=e_i\)</span> bekommen wir direkt, dass <span class="math inline">\(\bar f_{(v)}=\bar f_{(i)}\)</span>.</p>
 </div>
-<p>Wiederum handelt es sich um eine reelle Funktion in einer Variablen (hier der Parameter <span class="math inline">\(t\)</span>), die wir schulbuchmäßig ableiten könnten. Für diese sogenannte <em>Richtungsableitung</em> gilt der folgende Zusammenhang<a href="optimierung.html#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>
+<p>Wiederum handelt es sich um eine reelle Funktion in einer Variablen (hier der Parameter <span class="math inline">\(t\)</span>), die wir schulbuchmäßig ableiten könnten. Für diese sogenannte <em>Richtungsableitung</em> gilt der folgende Zusammenhang<a href="referenzen.html#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>
 <span class="math display">\[\begin{equation*}
 \frac{\mathrm{d} \bar f_{(v)}}{\mathrm{d} t}(0) = \sum_i^n \frac{\partial f}{\partial x_i}(\bar x_i) v_i = \langle \nabla f(\bar x), v \rangle
 \end{equation*}\]</span></p>
@@ -327,8 +328,49 @@ Andersherum können wir einige ganz wesentliche Aspekte folgern:</p>
 <h2><span class="header-section-number">7.4</span> Optimierung<a href="optimierung.html#optimierung-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Ganz allgemein können wir unsere bisherigen Optimierungsprobleme schreiben als
 <span class="math display">\[\begin{equation*}
-f(x) \to \min_{x\in \mathbb R^{n}}
-\end{equation*}\]</span></p>
+f(x) \to \min_{x\in \mathbb R^{n}},
+\end{equation*}\]</span>
+das heißt für eine Funktion <span class="math inline">\(f\colon \mathbb R^n \to \mathbb R^{}\)</span> suchen wir das <span class="math inline">\(x \in D(f) \subset \mathbb R^{n}\)</span>, für das <span class="math inline">\(f(x)\)</span> minimal wird.</p>
+<div class="definition">
+<p><span id="def:unlabeled-div-1" class="definition"><strong>Definition 7.1  </strong></span>Gegeben sei <span class="math inline">\(f\colon \mathbb R^{n} \to \mathbb R^{}\)</span>. Wir nennen <span class="math inline">\(x^* \in D(f)\subset \mathbb R^{n}\)</span></p>
+<ul>
+<li><p>ein <em>lokales Minimum</em> (von <span class="math inline">\(f\)</span>) falls es ein <span class="math inline">\(\epsilon &gt;0\)</span> gibt, sodass
+<span class="math display">\[\begin{equation*}
+f(x^*) \leq f(x)
+\end{equation*}\]</span>
+für alle <span class="math inline">\(x \in D(f) \cap B_\epsilon (x^*)\)</span>.</p></li>
+<li><p>ein globales Minimum, falls <span class="math inline">\(f(x^*) \leq f(x)\)</span> für alle <span class="math inline">\(x\in D(f)\)</span> ist.</p></li>
+</ul>
+</div>
+<p>In dieser Definition benutzen wir “<span class="math inline">\(\leq\)</span>”, da das im Hinblick auf Minimierung (der Wert von <span class="math inline">\(f\)</span> ist wichtig, die Stelle, an der das Minimum angenommen wird, ist weniger entscheidend) praktikabel ist. Wir könnten aber auch von strikten (oder “echten”) Minima sprechen und “<span class="math inline">\(&lt;\)</span>” verlangen.</p>
+<p>Der Schnitt der Umgebung
+<span class="math display">\[ B_\epsilon(x^*) := \{x\in \mathbb R^{n}| \|x-x^*\|&lt; \epsilon\} \]</span>
+mit dem Definitionsbereich <span class="math inline">\(D(f)\)</span> ist relevant, wenn <span class="math inline">\(x^*\)</span> genau auf dem Rand des Definitionsbereichs liegt.</p>
+<p>Nun erstmal ein hinreichendes Kriterium für ein Extremum
+<span class="citation">(vgl. Thm. 2.2, Nocedal and Wright <a href="#ref-NocW06">2006</a>)</span>:</p>
+<div class="theorem">
+<p><span id="thm:unlabeled-div-2" class="theorem"><strong>Theorem 7.1  </strong></span>Sei <span class="math inline">\(D(f) \subseteq \mathbb{R}^{n}\)</span> offen, und sei <span class="math inline">\(f: D(f) \rightarrow \mathbb{R}\)</span> partiell differenzierbar. Besitzt <span class="math inline">\(f\)</span> in <span class="math inline">\(\mathbf{x}^{*} \in D(f)\)</span> ein lokales Extremum, dann ist <span class="math inline">\(\nabla f(\mathbf{x}^{*})=0\)</span>.</p>
+</div>
+<div class="jhsays">
+<p>Liegt in <span class="math inline">\(x^*\)</span> ein Extremum vor und <span class="math inline">\(x^*\)</span> liegt nicht auf dem Rand, so verschwindet die erste Ableitung.</p>
+</div>
+<p>Definition 17.30 (Hesse <span class="math inline">\({ }^{40}\)</span>-Matrix). Sei <span class="math inline">\(D \subseteq \mathbb{R}^{n}\)</span> offen, und sei <span class="math inline">\(f: D \rightarrow \mathbb{R}\)</span> eine 2 -mal stetig partiell differenzierbare Funktion. Für <span class="math inline">\(\mathbf{x}^{\star} \in D\)</span> heißt die symmetrische <span class="math inline">\((n \times n)\)</span>-Matrix
+<span class="math display">\[
+H_{f}\left(\mathbf{x}^{\star}\right)=\left(\begin{array}{cccc}
+\frac{\partial^{2} f}{\partial x_{1} \partial x_{1}}\left(\mathbf{x}^{\star}\right) &amp; \frac{\partial^{2} f}{\partial x_{2} \partial x_{1}}\left(\mathbf{x}^{\star}\right) &amp; \cdots &amp; \frac{\partial^{2} f}{\partial x_{n} \partial x_{1}}\left(\mathbf{x}^{\star}\right) \\
+\frac{\partial^{2} f}{\partial x_{1} \partial x_{2}}\left(\mathbf{x}^{\star}\right) &amp; \frac{\partial^{2} f}{\partial x_{2} \partial x_{2}}\left(\mathbf{x}^{\star}\right) &amp; \cdots &amp; \frac{\partial^{2} f}{\partial x_{n} \partial x_{2}}\left(\mathbf{x}^{\star}\right) \\
+\vdots &amp; \vdots &amp; \cdots &amp; \vdots \\
+\frac{\partial^{2} f}{\partial x_{1} \partial x_{n}}\left(\mathbf{x}^{\star}\right) &amp; \frac{\partial^{2} f}{\partial x_{2} \partial x_{n}}\left(\mathbf{x}^{\star}\right) &amp; \cdots &amp; \frac{\partial^{2} f}{\partial x_{n} \partial x_{n}}\left(\mathbf{x}^{\star}\right)
+\end{array}\right)
+\]</span>
+Hesse-Matrix von <span class="math inline">\(f\)</span> in <span class="math inline">\(\mathbf{x}^{\star}\)</span>.
+Satz 17.31 ((vgl. Satz 13.18 ii), iii) und Satz 9.37)). Sei <span class="math inline">\(D \subset \mathbb{R}^{n}\)</span> offen, und sei <span class="math inline">\(f: D \rightarrow \mathbb{R}\)</span> eine 2-mal stetig partiell differenzierbare Funktion. Sei <span class="math inline">\(\mathbf{x}^{\star} \in D \operatorname{mit} \operatorname{grad} f\left(\mathbf{x}^{\star}\right)=\mathbf{0}\)</span>.
+40 Otto Hesse, 1811-1874
+94
+i) Ist <span class="math inline">\(H_{f}\left(\mathbf{x}^{\star}\right)\)</span> positiv definit, dann ist <span class="math inline">\(\mathbf{x}^{\star}\)</span> ein lokales Minimum.
+ii) Ist <span class="math inline">\(H_{f}\left(\mathbf{x}^{\star}\right)\)</span> negativ definit, dann ist <span class="math inline">\(\mathbf{x}^{\star}\)</span> ein lokales Maximum.
+iii) Ist <span class="math inline">\(H_{f}\left(\mathbf{x}^{\star}\right)\)</span> weder positiv noch negativ semi-definit (d.h. indefinit), dann ist <span class="math inline">\(\mathbf{x}^{\star}\)</span> kein lokales Extremum, sondern ein Sattelpunkt.
+iv) Ist <span class="math inline">\(H_{f}\left(\mathbf{x}^{\star}\right)\)</span> negativ semi-definit oder positiv-definit, dann ist keine Aussage möglich.</p>
 <ul>
 <li>allgemeine Darstellung
 <ul>
@@ -501,18 +543,11 @@ für <span class="math inline">\(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\)</
 </div>
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele<a href="hauptkomponentenanalyse-ctd..html#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet<a href="hauptkomponentenanalyse-ctd..html#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>wir dürfen aber nicht vergessen, dass Daten typischerweise nur eine Stichprobe von Beobachtungen eines Phänomens sind. Die Unabhängigkeit in den <em>features</em> gilt also nur für die gesammelten Daten aber in der Regel nicht für das Phänomen. Für normalverteilte Prozesse liefern die daten-basiert ermittelten Hauptrichtungen jedoch auch die Hauptrichtungen des zugrundeliegenden Phänomens<a href="hauptkomponentenanalyse-ctd..html#fnref5" class="footnote-back">↩</a></p></li>
-<li id="fn6"><p>wenn wir Inhalt mit Varianz gleich setzen<a href="clustering-und-hauptkomponentenanalyse.html#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p>Im <em>machine learning</em> wird gerne von <em>generalization</em> gesprochen<a href="clustering-und-hauptkomponentenanalyse.html#fnref7" class="footnote-back">↩</a></p></li>
-<li id="fn8"><p>Das folgt aus der Kettenregel für multivariable Funktionen, die wir in der Vorlesung <em>Mathematik für Data Science 2</em> noch beweisen werden<a href="optimierung.html#fnref8" class="footnote-back">↩</a></p></li>
-</ol>
+<h3>Referenzen<a href="referenzen.html#referenzen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references">
+<div id="ref-NocW06">
+<p> Nocedal, J., Wright, S.J.: Numerical optimization. Springer (2006)</p>
+</div>
 </div>
 <div class="footnotes">
 <hr />
@@ -525,8 +560,8 @@ für <span class="math inline">\(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\)</
           </div>
         </div>
       </div>
-<a href="clustering-und-hauptkomponentenanalyse.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="clustering-und-hauptkomponentenanalyse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referenzen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

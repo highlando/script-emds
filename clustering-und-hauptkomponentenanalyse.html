@@ -185,6 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6" data-path="optimierung.html"><a href="optimierung.html#whats-more"><i class="fa fa-check"></i><b>7.6</b> What’s more</a></li>
 <li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.7</b> Aufgaben</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -207,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="clustering-und-hauptkomponentenanalyse" class="section level1 hasAnchor">
 <h1><span class="header-section-number">6</span> Clustering und Hauptkomponentenanalyse<a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Mit der Hauptkomponentenanalyse haben wir eine Methode kennengelernt, Daten gemäß in Koordinaten darzustellen, die nach inhaltsschwere<a href="optimierung.html#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> absteigend sortiert sind. Die Konzentrierung der Varianz in den Hauptachsenrichtungen ermöglicht uns</p>
+<p>Mit der Hauptkomponentenanalyse haben wir eine Methode kennengelernt, Daten gemäß in Koordinaten darzustellen, die nach inhaltsschwere<a href="referenzen.html#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> absteigend sortiert sind. Die Konzentrierung der Varianz in den Hauptachsenrichtungen ermöglicht uns</p>
 <ol style="list-style-type: decimal">
 <li>die Hauptkomponenten zu ermitteln, die den Datensatz optimal in niedrigerer Dimension darstellen (wobei optimal hier bedeutet dass die Varianz in der Differenz <span class="math inline">\({\mathbf{X}}-\hat {\mathbf{X}}\)</span> minimal ist)</li>
 <li>und in diesem Sinne die Daten optimal auf niedrigere Dimensionen zu reduzieren.</li>
@@ -291,7 +292,7 @@ Figure 6.1: Entwicklung der Centroids im Verlauf des k-means clustering Algorith
 <li>Test zu welchen centroid <span class="math inline">\(c_j\)</span>, <span class="math inline">\(j=1,\dots,K\)</span> der (transformierte) Datenpunkt am nächsten liegt.</li>
 </ol>
 <p>Der in (3.) ermittelte Index <span class="math inline">\(j^*\)</span> ist dann das Cluster, dem der Datenpunkt zugeordnet wird.</p>
-<p>Der Sprachgebrauch hier ist, dass das Modell mit bekannten Daten <em>trainiert</em> wird und dann für neue Daten <em>angewendet</em> wird<a href="optimierung.html#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>. Um zu evaluieren, ob das Modell “funktioniert” ist das folgende Vorgehen ebenso naheliegend wie standardmäßig angewandt.</p>
+<p>Der Sprachgebrauch hier ist, dass das Modell mit bekannten Daten <em>trainiert</em> wird und dann für neue Daten <em>angewendet</em> wird<a href="referenzen.html#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>. Um zu evaluieren, ob das Modell “funktioniert” ist das folgende Vorgehen ebenso naheliegend wie standardmäßig angewandt.</p>
 <p>Die vorhandenen Daten werden aufgeteilt in <strong>Trainingsdaten</strong>, mit denen das Modell trainiert werden, und <strong>Testdaten</strong>, mit denen die Vorhersagekraft des Modells evaluiert wird. Wie die Aufteilung passiert, wird anhand von Erfahrungswerten und im Hinblick auf die vorliegende Aufgabe entschieden.</p>
 </div>
 <div id="am-beispiel-der-pinguine" class="section level2 hasAnchor">

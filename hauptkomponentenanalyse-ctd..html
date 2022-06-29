@@ -185,6 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6" data-path="optimierung.html"><a href="optimierung.html#whats-more"><i class="fa fa-check"></i><b>7.6</b> What’s more</a></li>
 <li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.7</b> Aufgaben</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -213,7 +214,7 @@ Da wir außerdem ermittelt hatten, dass die Summe der Varianz unabhüngig vom Ko
 <p>Jetzt wollen wir einen Datensatz mit mehr Merkmalen betrachten und sehen, wie die algorithmische Herangehensweise zum Verständnis beiträgt.</p>
 <div id="der-penguins-datensatz" class="section level2 hasAnchor">
 <h2><span class="header-section-number">5.1</span> Der PENGUINS Datensatz<a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Die Grundlage ist der <a href="https://allisonhorst.github.io/palmerpenguins/"><em>Pinguin Datensatz</em></a>, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von <a href="https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php">Kristen Gorman</a> erhoben und beinhalten 4 verschiedene Merkmale (engl. <em>features</em>) von einer Stichprobe von insgesamt 344<a href="optimierung.html#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: <em>targets</em>). Im Beispiel werden die Klassen mit <code>0, 1, 2</code> codiert und beschreiben die Unterarten <em>Adele</em>, <em>Gentoo</em> und <em>Chinstrap</em> der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier <em>bill</em>), die Länge der Flosse (<em>flipper</em>) sowie das Köpergewicht <a href="optimierung.html#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>
+<p>Die Grundlage ist der <a href="https://allisonhorst.github.io/palmerpenguins/"><em>Pinguin Datensatz</em></a>, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von <a href="https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php">Kristen Gorman</a> erhoben und beinhalten 4 verschiedene Merkmale (engl. <em>features</em>) von einer Stichprobe von insgesamt 344<a href="referenzen.html#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: <em>targets</em>). Im Beispiel werden die Klassen mit <code>0, 1, 2</code> codiert und beschreiben die Unterarten <em>Adele</em>, <em>Gentoo</em> und <em>Chinstrap</em> der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier <em>bill</em>), die Länge der Flosse (<em>flipper</em>) sowie das Köpergewicht<a href="referenzen.html#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>
 (<em>body mass</em>).</p>
 <p>Wir stellen uns 2-3 Fragen:</p>
 <ol style="list-style-type: decimal">
@@ -261,7 +262,7 @@ Matrix <span class="math inline">\(V\in \mathbb R^{n\times n}\)</span>:
 \end{equation*}\]</span>
 wobei <span class="math inline">\(\tilde {\mathbf{X}}\)</span> die Daten in den neuen Koordinaten sind (die Basisvektoren sind dann die Zeilenvektoren von <span class="math inline">\(V\)</span>). Wir wollen nun eine Basis finden, in der</p>
 <ul>
-<li><span class="math inline">\(\operatorname{Cov}({\mathbf{X}})\)</span> eine Diagonalmatrix ist — damit wären alle Richtungen in den Daten <em>unkorreliert</em> und könnten <em>unabhängig</em> voneinander betrachtet werden<a href="optimierung.html#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> –</li>
+<li><span class="math inline">\(\operatorname{Cov}({\mathbf{X}})\)</span> eine Diagonalmatrix ist — damit wären alle Richtungen in den Daten <em>unkorreliert</em> und könnten <em>unabhängig</em> voneinander betrachtet werden<a href="referenzen.html#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> –</li>
 <li>und in der die neuen Varianzen nach Größe geordnet sind gleichzeitig die verfügbare Varianz maximal in wenigen Richtungen konzentrieren.</li>
 </ul>
 <p>Nachden den Überlegungen im vorherigen Kapitel ist die erste Hauptrichtung durch den ersten rechten Singulärvektor <span class="math inline">\(v_1\in \mathbb R^{n}\)</span> der (<em>ökonomischen</em>) Singulärwertzerlegung

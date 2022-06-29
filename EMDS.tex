@@ -1508,7 +1508,7 @@ Jetzt wollen wir einen Datensatz mit mehr Merkmalen betrachten und sehen, wie di
 \hypertarget{der-penguins-datensatz}{%
 \section{Der PENGUINS Datensatz}\label{der-penguins-datensatz}}
 
-Die Grundlage ist der \href{https://allisonhorst.github.io/palmerpenguins/}{\emph{Pinguin Datensatz}}, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von \href{https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php}{Kristen Gorman} erhoben und beinhalten 4 verschiedene Merkmale (engl. \emph{features}) von einer Stichprobe von insgesamt 344\footnote{allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele}Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: \emph{targets}). Im Beispiel werden die Klassen mit \texttt{0,\ 1,\ 2} codiert und beschreiben die Unterarten \emph{Adele}, \emph{Gentoo} und \emph{Chinstrap} der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier \emph{bill}), die Länge der Flosse (\emph{flipper}) sowie das Köpergewicht \footnote{Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet}
+Die Grundlage ist der \href{https://allisonhorst.github.io/palmerpenguins/}{\emph{Pinguin Datensatz}}, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von \href{https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php}{Kristen Gorman} erhoben und beinhalten 4 verschiedene Merkmale (engl. \emph{features}) von einer Stichprobe von insgesamt 344\footnote{allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele}Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: \emph{targets}). Im Beispiel werden die Klassen mit \texttt{0,\ 1,\ 2} codiert und beschreiben die Unterarten \emph{Adele}, \emph{Gentoo} und \emph{Chinstrap} der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier \emph{bill}), die Länge der Flosse (\emph{flipper}) sowie das Köpergewicht\footnote{Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet}
 (\emph{body mass}).
 
 Wir stellen uns 2-3 Fragen:
@@ -2322,8 +2322,59 @@ Andersherum können wir einige ganz wesentliche Aspekte folgern:
 
 Ganz allgemein können wir unsere bisherigen Optimierungsprobleme schreiben als
 \begin{equation*}
-f(x) \to \min_{x\in \mathbb R^{n}}
+f(x) \to \min_{x\in \mathbb R^{n}},
 \end{equation*}
+das heißt für eine Funktion \(f\colon \mathbb R^n \to \mathbb R^{}\) suchen wir das \(x \in D(f) \subset \mathbb R^{n}\), für das \(f(x)\) minimal wird.
+
+\begin{definition}
+
+Gegeben sei \(f\colon \mathbb R^{n} \to \mathbb R^{}\). Wir nennen \(x^* \in D(f)\subset \mathbb R^{n}\)
+
+\begin{itemize}
+\item
+  ein \emph{lokales Minimum} (von \(f\)) falls es ein \(\epsilon >0\) gibt, sodass
+  \begin{equation*}
+  f(x^*) \leq f(x)
+  \end{equation*}
+  für alle \(x \in D(f) \cap B_\epsilon (x^*)\).
+\item
+  ein globales Minimum, falls \(f(x^*) \leq f(x)\) für alle \(x\in D(f)\) ist.
+\end{itemize}
+
+\end{definition}
+
+In dieser Definition benutzen wir ``\(\leq\)'', da das im Hinblick auf Minimierung (der Wert von \(f\) ist wichtig, die Stelle, an der das Minimum angenommen wird, ist weniger entscheidend) praktikabel ist. Wir könnten aber auch von strikten (oder ``echten'') Minima sprechen und ``\(<\)'' verlangen.
+
+Der Schnitt der Umgebung
+\[ B_\epsilon(x^*) := \{x\in \mathbb R^{n}| \|x-x^*\|< \epsilon\} \]
+mit dem Definitionsbereich \(D(f)\) ist relevant, wenn \(x^*\) genau auf dem Rand des Definitionsbereichs liegt.
+
+Nun erstmal ein hinreichendes Kriterium für ein Extremum
+(vgl. Thm. 2.2, Nocedal and Wright \protect\hyperlink{ref-NocW06}{2006}):
+
+\begin{theorem}
+Sei \(D(f) \subseteq \mathbb{R}^{n}\) offen, und sei \(f: D(f) \rightarrow \mathbb{R}\) partiell differenzierbar. Besitzt \(f\) in \(\mathbf{x}^{*} \in D(f)\) ein lokales Extremum, dann ist \(\nabla f(\mathbf{x}^{*})=0\).
+\end{theorem}
+
+Liegt in \(x^*\) ein Extremum vor und \(x^*\) liegt nicht auf dem Rand, so verschwindet die erste Ableitung.
+
+Definition 17.30 (Hesse \({ }^{40}\)-Matrix). Sei \(D \subseteq \mathbb{R}^{n}\) offen, und sei \(f: D \rightarrow \mathbb{R}\) eine 2 -mal stetig partiell differenzierbare Funktion. Für \(\mathbf{x}^{\star} \in D\) heißt die symmetrische \((n \times n)\)-Matrix
+\[
+H_{f}\left(\mathbf{x}^{\star}\right)=\left(\begin{array}{cccc}
+\frac{\partial^{2} f}{\partial x_{1} \partial x_{1}}\left(\mathbf{x}^{\star}\right) & \frac{\partial^{2} f}{\partial x_{2} \partial x_{1}}\left(\mathbf{x}^{\star}\right) & \cdots & \frac{\partial^{2} f}{\partial x_{n} \partial x_{1}}\left(\mathbf{x}^{\star}\right) \\
+\frac{\partial^{2} f}{\partial x_{1} \partial x_{2}}\left(\mathbf{x}^{\star}\right) & \frac{\partial^{2} f}{\partial x_{2} \partial x_{2}}\left(\mathbf{x}^{\star}\right) & \cdots & \frac{\partial^{2} f}{\partial x_{n} \partial x_{2}}\left(\mathbf{x}^{\star}\right) \\
+\vdots & \vdots & \cdots & \vdots \\
+\frac{\partial^{2} f}{\partial x_{1} \partial x_{n}}\left(\mathbf{x}^{\star}\right) & \frac{\partial^{2} f}{\partial x_{2} \partial x_{n}}\left(\mathbf{x}^{\star}\right) & \cdots & \frac{\partial^{2} f}{\partial x_{n} \partial x_{n}}\left(\mathbf{x}^{\star}\right)
+\end{array}\right)
+\]
+Hesse-Matrix von \(f\) in \(\mathbf{x}^{\star}\).
+Satz 17.31 ((vgl. Satz 13.18 ii), iii) und Satz 9.37)). Sei \(D \subset \mathbb{R}^{n}\) offen, und sei \(f: D \rightarrow \mathbb{R}\) eine 2-mal stetig partiell differenzierbare Funktion. Sei \(\mathbf{x}^{\star} \in D \operatorname{mit} \operatorname{grad} f\left(\mathbf{x}^{\star}\right)=\mathbf{0}\).
+40 Otto Hesse, 1811-1874
+94
+i) Ist \(H_{f}\left(\mathbf{x}^{\star}\right)\) positiv definit, dann ist \(\mathbf{x}^{\star}\) ein lokales Minimum.
+ii) Ist \(H_{f}\left(\mathbf{x}^{\star}\right)\) negativ definit, dann ist \(\mathbf{x}^{\star}\) ein lokales Maximum.
+iii) Ist \(H_{f}\left(\mathbf{x}^{\star}\right)\) weder positiv noch negativ semi-definit (d.h. indefinit), dann ist \(\mathbf{x}^{\star}\) kein lokales Extremum, sondern ein Sattelpunkt.
+iv) Ist \(H_{f}\left(\mathbf{x}^{\star}\right)\) negativ semi-definit oder positiv-definit, dann ist keine Aussage möglich.
 
 \begin{itemize}
 \tightlist
@@ -2533,5 +2584,13 @@ Implementieren Sie ein Gradientenabstiegsverfahren mit \emph{line search} durch 
 \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'in }\SpecialCharTok{\{}\NormalTok{runtime}\SpecialCharTok{:.4f\}}\SpecialStringTok{s time'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{referenzen}{%
+\chapter*{Referenzen}\label{referenzen}}
+\addcontentsline{toc}{chapter}{Referenzen}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-NocW06}{}%
+Nocedal, J., Wright, S.J.: Numerical optimization. Springer (2006)
 
 \end{document}

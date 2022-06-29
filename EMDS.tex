@@ -2353,7 +2353,7 @@ Nun erstmal ein hinreichendes Kriterium für ein Extremum
 (vgl. Thm. 2.2, Nocedal and Wright \protect\hyperlink{ref-NocW06}{2006}):
 
 \begin{theorem}
-Sei \(D(f) \subseteq \mathbb{R}^{n}\) offen, und sei \(f\colon D(f) \rightarrow \mathbb{R}\) stetig partiell differenzierbar. Besitzt \(f\) in \(\mathbf{x}^{*} \in D(f)\) ein lokales Extremum{[}\^{}könnte auch ein Maximum sein, was wir aber einfach als ein Minimum von \(-f\) einordnen{]}, dann ist \(\nabla f(\mathbf{x}^{*})=0\).
+Sei \(D(f) \subseteq \mathbb{R}^{n}\) offen, und sei \(f\colon D(f) \rightarrow \mathbb{R}\) stetig partiell differenzierbar. Besitzt \(f\) in \(\mathbf{x}^{*} \in D(f)\) ein lokales Extremum\footnote{könnte auch ein Maximum sein, was wir aber einfach als ein Minimum von \(-f\) einordnen}, dann ist \(\nabla f(\mathbf{x}^{*})=0\).
 \end{theorem}
 
 \begin{JHSAYS}
@@ -2473,7 +2473,7 @@ die als Koordinatenfunktion für \(x_1\) dargestellt werden kann als
 \]
 und mittels Kettenregel die partielle Ableitung als Kombination elementarer Ableitungen berechnet als
 \begin{equation*}
-\frac{\partial f}{\partial x_1}(x_1,x_2) = g_3(g_2(g_1(x_1); x_2))'\cdot g_2(g_1(x_1); x_2)'\cdot g_1(x_1)'
+\frac{\partial f}{\partial x_1}(x_1,x_2) = g_3'(g_2(g_1(x_1); x_2))\cdot g_2'(g_1(x_1); x_2)\cdot g_1'(x_1)
 \end{equation*}
 
 macht sich \emph{Automatisches Differenzieren} zu Nutze und kann zu einem Programmcode

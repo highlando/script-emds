@@ -350,7 +350,7 @@ mit dem Definitionsbereich <span class="math inline">\(D(f)\)</span> ist relevan
 <p>Nun erstmal ein hinreichendes Kriterium für ein Extremum
 <span class="citation">(vgl. Thm. 2.2, Nocedal and Wright <a href="#ref-NocW06">2006</a>)</span>:</p>
 <div class="theorem">
-<p><span id="thm:unlabeled-div-2" class="theorem"><strong>Theorem 7.1  </strong></span>Sei <span class="math inline">\(D(f) \subseteq \mathbb{R}^{n}\)</span> offen, und sei <span class="math inline">\(f\colon D(f) \rightarrow \mathbb{R}\)</span> stetig partiell differenzierbar. Besitzt <span class="math inline">\(f\)</span> in <span class="math inline">\(\mathbf{x}^{*} \in D(f)\)</span> ein lokales Extremum[^könnte auch ein Maximum sein, was wir aber einfach als ein Minimum von <span class="math inline">\(-f\)</span> einordnen], dann ist <span class="math inline">\(\nabla f(\mathbf{x}^{*})=0\)</span>.</p>
+<p><span id="thm:unlabeled-div-2" class="theorem"><strong>Theorem 7.1  </strong></span>Sei <span class="math inline">\(D(f) \subseteq \mathbb{R}^{n}\)</span> offen, und sei <span class="math inline">\(f\colon D(f) \rightarrow \mathbb{R}\)</span> stetig partiell differenzierbar. Besitzt <span class="math inline">\(f\)</span> in <span class="math inline">\(\mathbf{x}^{*} \in D(f)\)</span> ein lokales Extremum<a href="referenzen.html#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>, dann ist <span class="math inline">\(\nabla f(\mathbf{x}^{*})=0\)</span>.</p>
 </div>
 <div class="JHSAYS">
 <p>Das können wir wie in der einfachen Kurvendiskussion verstehen: <em>Liegt in <span class="math inline">\(x^*\)</span> ein Extremum vor und <span class="math inline">\(x^*\)</span> liegt nicht auf dem Rand, so verschwindet die erste Ableitung.</em> Um festzustellen, ob ein Minimum, Maximum und vor allem nicht einfach ein Sattelpunkt vorliegt, wurde geschaut ob die zweite Ableitung positiv, negativ oder gleich 0 ist. Bei multivariablen Funktionen wird die zweite Ableitung durch eine Matrix repräsentiert. Und positiv, negativ oder indefinit wird wird über die Eigenwerte definiert.</p>
@@ -434,7 +434,7 @@ die als Koordinatenfunktion für <span class="math inline">\(x_1\)</span> darges
 \]</span>
 und mittels Kettenregel die partielle Ableitung als Kombination elementarer Ableitungen berechnet als
 <span class="math display">\[\begin{equation*}
-\frac{\partial f}{\partial x_1}(x_1,x_2) = g_3(g_2(g_1(x_1); x_2))&#39;\cdot g_2(g_1(x_1); x_2)&#39;\cdot g_1(x_1)&#39;
+\frac{\partial f}{\partial x_1}(x_1,x_2) = g_3&#39;(g_2(g_1(x_1); x_2))\cdot g_2&#39;(g_1(x_1); x_2)\cdot g_1&#39;(x_1)
 \end{equation*}\]</span></p>
 <p>macht sich <em>Automatisches Differenzieren</em> zu Nutze und kann zu einem Programmcode</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">def</span> ffun(x):</a>
@@ -604,6 +604,7 @@ für <span class="math inline">\(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\)</
 <hr />
 <ol start="8">
 <li id="fn8"><p>Das folgt aus der Kettenregel für multivariable Funktionen, die wir in der Vorlesung <em>Mathematik für Data Science 2</em> noch beweisen werden<a href="optimierung.html#fnref8" class="footnote-back">↩</a></p></li>
+<li id="fn9"><p>könnte auch ein Maximum sein, was wir aber einfach als ein Minimum von <span class="math inline">\(-f\)</span> einordnen<a href="optimierung.html#fnref9" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>

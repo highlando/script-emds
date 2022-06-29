@@ -181,9 +181,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="optimierung.html"><a href="optimierung.html#partielle-ableitungen-und-der-gradient"><i class="fa fa-check"></i><b>7.2</b> Partielle Ableitungen und der Gradient</a></li>
 <li class="chapter" data-level="7.3" data-path="optimierung.html"><a href="optimierung.html#richtungs-ableitung"><i class="fa fa-check"></i><b>7.3</b> Richtungs-Ableitung</a></li>
 <li class="chapter" data-level="7.4" data-path="optimierung.html"><a href="optimierung.html#optimierung-1"><i class="fa fa-check"></i><b>7.4</b> Optimierung</a></li>
-<li class="chapter" data-level="7.5" data-path="optimierung.html"><a href="optimierung.html#optimierung-unter-nebenbedingungen"><i class="fa fa-check"></i><b>7.5</b> Optimierung unter Nebenbedingungen</a></li>
-<li class="chapter" data-level="7.6" data-path="optimierung.html"><a href="optimierung.html#whats-more"><i class="fa fa-check"></i><b>7.6</b> What’s more</a></li>
-<li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.7</b> Aufgaben</a></li>
+<li class="chapter" data-level="7.5" data-path="optimierung.html"><a href="optimierung.html#gradientenabstiegsverfahren"><i class="fa fa-check"></i><b>7.5</b> Gradientenabstiegsverfahren</a></li>
+<li class="chapter" data-level="7.6" data-path="optimierung.html"><a href="optimierung.html#extra-nichtglatte-optimierung"><i class="fa fa-check"></i><b>7.6</b> Extra: Nichtglatte Optimierung</a></li>
+<li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#extra-automatisches-differenzieren"><i class="fa fa-check"></i><b>7.7</b> Extra: Automatisches Differenzieren</a></li>
+<li class="chapter" data-level="7.8" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.8</b> Aufgaben</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
 <li class="divider"></li>
@@ -345,7 +346,7 @@ wobei <span class="math inline">\(A_{\hat r}\)</span> aus der <em>truncated SVD<
 <span class="math display">\[\begin{equation*}
 \min_{B\in \mathbb C^{m\times n}, \operatorname{Rg}(B)=\hat r} \|A-B\|_2 = \|A-A_{\hat r}\|_2 = \sigma_{\hat r + 1};
 \end{equation*}\]</span>
-vgl. Bollhoefer/Mehrmann Satz 14.15.</p>
+<span class="citation">(vgl. Satz 14.15, Bollhöfer and Mehrmann <a href="#ref-BolM04">2004</a>)</span>.</p>
 <p>Zum Abschluss noch der Zusammenhang zum Optimierungsproblem. Ist <span class="math inline">\(A=U\Sigma V^*\)</span> “SV-zerlegt”, dann gilt
 <span class="math display">\[\begin{equation*}
 A^*Aw = V\Sigma^*U^*U\Sigma V^*w = V\hat \Sigma^2 V^* 
@@ -562,6 +563,12 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
 </ul>
 
 </div>
+</div>
+</div>
+<h3>Referenzen<a href="referenzen.html#referenzen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references">
+<div id="ref-BolM04">
+<p> Bollhöfer, M., Mehrmann, V.: Numerische Mathematik. Eine projektorientierte Einführung für Ingenieure, Mathematiker und Naturwissenschaftler. Vieweg (2004)</p>
 </div>
 </div>
 <div class="footnotes">

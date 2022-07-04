@@ -2327,18 +2327,19 @@ f(x) \to \min_{x\in \mathbb R^{n}},
 das heißt für eine Funktion \(f\colon \mathbb R^n \to \mathbb R^{}\) suchen wir das \(x \in D(f) \subset \mathbb R^{n}\), für das \(f(x)\) minimal wird.
 
 \begin{definition}
+\protect\hypertarget{def:loc-glob-minimum}{}\label{def:loc-glob-minimum}
 
-Gegeben sei \(f\colon \mathbb R^{n} \to \mathbb R^{}\). Wir nennen \(x^* \in D(f)\subset \mathbb R^{n}\)
+Gegeben sei \(f\colon \mathbb R^{n} \to \mathbb R^{}\). Wir nennen \(x^* \in D(f)\subset \mathbb R^{n}\) die Stelle
 
 \begin{itemize}
 \item
-  ein \emph{lokales Minimum} (von \(f\)) falls es ein \(\epsilon >0\) gibt, sodass
+  eines \emph{lokales Minimum} (von \(f\)) falls es ein \(\epsilon >0\) gibt, sodass
   \begin{equation*}
   f(x^*) \leq f(x)
   \end{equation*}
   für alle \(x \in D(f) \cap B_\epsilon (x^*)\).
 \item
-  ein globales Minimum, falls \(f(x^*) \leq f(x)\) für alle \(x\in D(f)\) ist.
+  eines globales Minimum, falls \(f(x^*) \leq f(x)\) für alle \(x\in D(f)\) ist.
 \end{itemize}
 
 \end{definition}
@@ -2663,6 +2664,81 @@ Implementieren Sie ein Gradientenabstiegsverfahren mit \emph{line search} durch 
 \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'in }\SpecialCharTok{\{}\NormalTok{runtime}\SpecialCharTok{:.4f\}}\SpecialStringTok{s time'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{optimierung-unter-nebenbedingungen}{%
+\chapter{Optimierung unter Nebenbedingungen}\label{optimierung-unter-nebenbedingungen}}
+
+Oftmals werden an die gesuchte Lösung \(x^* \in \mathbb R^{n}\) eines Optimierungsproblems a-priori bestimmte Anforderungen gestellt, wie:
+
+\begin{itemize}
+\tightlist
+\item
+  \(x_1 + x_2 \geq 0\) (die Lösung soll in einem bestimmten Abschnitt liegen)
+\item
+  \(x_1^2 + x_2*2 - c^2 = 0\) (die ersten beiden Komponenten der Lösung sollen auf einer Kreisbahn liegen)
+\end{itemize}
+
+Allgemein lässt sich so ein Optimierungsproblem schreiben als
+
+\begin{definition}[Optimierungsproblem mit Nebenbedingungen]
+\begin{equation*}
+f(x) \to \min_{x\in \mathbb R^{n}}, \quad \text{s.t.} \quad g_i(x)\geq 0, \quad h_j(x) = 0,
+\end{equation*}
+
+\begin{itemize}
+\item
+  mit der \emph{Zielfunktion} \(f\colon \mathbb R^{n} \to \mathbb R^{}\)
+\item
+  und zusätzlichen Nebenbedingungen (\emph{s.t.} -- \emph{subject to}), die in
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \emph{Ungleichungsform} über Funktionen \(g_i\colon \mathbb R^{n} \to \mathbb R\), mit \(i\) aus der Indexmenge \(\mathcal I \subset \mathbb N\) oder
+  \item
+    \emph{Gleichungsform} über Funktionen \(h_j\colon \mathbb R^{n} \to \mathbb R\), mit \(j\) aus der Indexmenge \(\mathcal J \subset \mathbb N\)
+    vorliegen können.
+  \end{itemize}
+\end{itemize}
+
+heißt \emph{restringiertes Optimierungsproblem} oder \emph{Optimierungsproblem mit Nebenbedingungen}
+
+Liegen keine Gleichheits-- oder keine Ungleichungsnebenbedingungen vor, setzen wir \(\mathcal I = \emptyset\) oder \(\mathcal J = \emptyset\).
+
+Ein Optimierungsproblem ohne Nebenbedingungen heißt auch \emph{unrestringiertes} Problem.
+\end{definition}
+
+Jetzt stellt sich zur Frage ob ein \(x^*\) \emph{optimal} ist, noch die Frage, ob es auch \emph{zulässig} (engl.: \emph{feasible}) ist. Dazu lässt sich formal der Zulässigkeitsbereich (engl.: \emph{feasible set}) definieren
+\begin{equation*}
+\Omega = \{x\in \mathbb R^{n} ~|~g_i(x)\geq 0, \quad h_j(x)=0, \quad i\in \mathcal I,\, j\in \mathcal J\}
+\end{equation*}
+und das Optimierungsproblem als
+\begin{equation*}
+f(x) \to \min_{x\in \Omega}
+\end{equation*}
+schreiben.
+
+\leavevmode\hypertarget{constaints-domofdef}{}%
+\begin{JHSAYS}
+Die Definition \ref{def:loc-glob-minimum} einer Minimalstelle gilt unmittelbar weiter, wenn nun auch der Zulässigkeitsbereich noch beachtet wird.
+
+\end{JHSAYS}
+
+Die Unterscheidung von \(D(f)\) und \(\Omega\) in der Betrachtung des Optimierungsproblems und potentieller Minimalstellen hat diverse vor allem praktische Gründe:
+
+\begin{itemize}
+\tightlist
+\item
+  der Definitionsbereich von \(f\) ist eine vorgegebene Eigenschaft der Funktion während \(\Omega\) vielleicht variiert werden soll
+\item
+  liegen nichttriviale Gleichheitsbedingungen vor, ist beispielsweise kein Punkt von \(\Omega\) mehr ein innerer Punkt (im \(\mathbb R^{n}\)) und der Gradient von \(f\) wäre erstmal nicht definiert
+\item
+  die Modellierung ist oftmals einfacher, wenn Nebenbedingungen einfach zum Problem hinzugefügt werden können
+\item
+  ebenso die Feststellung ob ein gegebener Punkt im Zulässigkeitsbereich liegt
+\end{itemize}
+
+Die Analysis restringierter Optimierungsprobleme
 
 \hypertarget{referenzen}{%
 \chapter*{Referenzen}\label{referenzen}}

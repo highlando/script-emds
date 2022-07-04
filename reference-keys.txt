@@ -5,10 +5,11 @@ fig:k-means-evoexa
 fig:k-means-pingexa
 fig:k-means-pingexa-lcurve
 fig:k-means-evoexaexrcs
-def:unlabeled-div-1
-thm:unlabeled-div-2
-def:unlabeled-div-3
-thm:unlabeled-div-4
+def:loc-glob-minimum
+thm:unlabeled-div-1
+def:unlabeled-div-2
+thm:unlabeled-div-3
+def:unlabeled-div-4
 was-ist-data-science
 wie-passiert-die-datenanalyse
 was-sind-daten
@@ -83,3 +84,4 @@ numerische-berechnung-des-gradienten-pt
 optimierung-ohne-gradienten-pt
 gradientenabstiegsverfahren-p
 built-in-optimierung-in-scipy-p
+optimierung-unter-nebenbedingungen

@@ -186,7 +186,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#extra-automatisches-differenzieren"><i class="fa fa-check"></i><b>7.7</b> Extra: Automatisches Differenzieren</a></li>
 <li class="chapter" data-level="7.8" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.8</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a></li>
+<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a><ul>
+<li class="chapter" data-level="8.1" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#richtungen-und-nebenbedingungen"><i class="fa fa-check"></i><b>8.1</b> Richtungen und Nebenbedingungen</a></li>
+<li class="chapter" data-level="8.2" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#restringierte-optimierungsprobleme-und-der-gradient"><i class="fa fa-check"></i><b>8.2</b> Restringierte Optimierungsprobleme und der Gradient</a></li>
+<li class="chapter" data-level="8.3" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#linear-quadratische-probleme"><i class="fa fa-check"></i><b>8.3</b> Linear Quadratische Probleme</a></li>
+<li class="chapter" data-level="8.4" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming"><i class="fa fa-check"></i><b>8.4</b> Sequential Quadratic Programming</a></li>
+<li class="chapter" data-level="8.5" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#aufgaben-5"><i class="fa fa-check"></i><b>8.5</b> Aufgaben</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -252,8 +258,149 @@ schreiben.</p>
 <li>die Modellierung ist oftmals einfacher, wenn Nebenbedingungen einfach zum Problem hinzugefügt werden können</li>
 <li>ebenso die Feststellung ob ein gegebener Punkt im Zulässigkeitsbereich liegt</li>
 </ul>
-<p>Die Analysis restringierter Optimierungsprobleme</p>
+<p>Die Analysis restringierter Optimierungsprobleme und entsprechend die Umsetzung von Algorithmen zur Lösung wird durch die Nebenbedingungen ungleich schwieriger, da</p>
+<ul>
+<li>in der Theorie nicht mehr einfach differenziert werden kann (insbesondere bei Gleichheitsbedingungen oder wenn der kritische Punkt am Rand der Ungleichungsbedingungen liegt) und</li>
+<li>in der Umsetzung auf dem Computer darauf geachtet werden muss, dass der Zulässigkeitsbereich nicht verlassen wird.</li>
+</ul>
+<div id="richtungen-und-nebenbedingungen" class="section level2 hasAnchor">
+<h2><span class="header-section-number">8.1</span> Richtungen und Nebenbedingungen<a href="optimierung-unter-nebenbedingungen.html#richtungen-und-nebenbedingungen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Bei <em>restringierten Optimierungsproblemen</em> ist die Richtung in der analysiert wird entscheidend. Hierbei geht es darum ob in einer Richtung <span class="math inline">\(v\)</span></p>
+<ol style="list-style-type: decimal">
+<li>die Zielfunktion eventuell kleiner wird</li>
+<li>der Zulässigkeitsbereich eventuell verlassen wird (bspw. charakterisiert durch <span class="math inline">\(g(x) = 0\)</span> oder <span class="math inline">\(h(x)\geq0\)</span>)</li>
+</ol>
+<p>Da es stets nur um die unmittelbare Umgebung eines Punktes geht, und wir aus der Diskussion der Ableitung (in 1D) wissen, dass eine differenzierbare Funktion lokal gut durch ihre Tangente angenähert werden kann<a href="referenzen.html#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>, können wir beide Betrachtungen in der <em>lineaeren Approximation</em> anstellen.</p>
+<p>Wir schauen also ob für eine Richtung <span class="math inline">\(v\)</span> gilt, ob nicht</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(f(x^*) &gt; f(x^*+hv) \approx f(x^*) + \nabla f(x^*)^Tv\)</span> bzw.</li>
+<li><span class="math inline">\(0 \neq g(x^*+hv) \approx \nabla g(x^*)^Tv\)</span> oder <span class="math inline">\(0&gt;h(x^*+hv) \approx \nabla h(x^*)^Tv\)</span>.</li>
+</ol>
+</div>
+<div id="restringierte-optimierungsprobleme-und-der-gradient" class="section level2 hasAnchor">
+<h2><span class="header-section-number">8.2</span> Restringierte Optimierungsprobleme und der Gradient<a href="optimierung-unter-nebenbedingungen.html#restringierte-optimierungsprobleme-und-der-gradient" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Zur Illustration und zur Einführung der Konzepte betrachten wir Probleme, die entweder nur Gleichungsnebenbedingungen oder nur Ungleichungsnebenbedingungen haben.</p>
+<p>Wir beginnen mit Gleichungsnebenbedingungen und das auch nur im zweidimensionalen Fall:
+<span class="math display">\[\begin{equation*}
+f(x,y) \to \min, \quad \text{s.t. }g(x,y)=c.
+\end{equation*}\]</span>
+Aus der schematischen Darstellung in Abbildung <a href="optimierung-unter-nebenbedingungen.html#fig:eqconstraint-opti">8.1</a> können wir ablesen, dass in einem potentiellen Extremum, die Gradienten von <span class="math inline">\(f\)</span> und <span class="math inline">\(g\)</span> in die gleiche Richtung zeigen, es also eine Skalar <span class="math inline">\(\lambda\)</span> geben muss, sodass in einem kritischen Punkt <span class="math inline">\((x^*, y^*)\)</span> gilt, dass
+<span class="math display">\[\begin{equation*}
+\nabla f(x^*, y^*) + \lambda \nabla g(x^*, y^*) =0
+\end{equation*}\]</span></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:eqconstraint-opti"></span>
+<img src="bilder/08-LagrangeMultipliers2D.png" alt="Schematische Darstellung eines Optimierungsproblems mit Gleichungsnebenbedingungen in 2D." width="60%" />
+<p class="caption">
+Figure 8.1: Schematische Darstellung eines Optimierungsproblems mit Gleichungsnebenbedingungen in 2D.
+</p>
+</div>
+<p>Wir könnten also versuchen, eine Lösung <span class="math inline">\((x,y,\lambda)\)</span> für das Gleichungssystem
+<span class="math display">\[\begin{align*}
+\nabla f(x, y) + \lambda \nabla g(x, y) &amp;=0 \\
+g(x,y) &amp;= c
+\end{align*}\]</span>
+zu finden.</p>
+<div id="lagrange-KKT" class="JHSAYS">
+<p>Dieses Gleichungssystem ist ein Spezialfall der <em>Karush-Kuhn-Tucker</em> Bedingungen, die ein notwendiges Kriterium für einen optimalen Punkt darstellen. Das involvierte <span class="math inline">\(\lambda\)</span> wird <em>Lagrange Multiplikator</em> genannt.</p>
+</div>
+<p>Dass an einem potentiellen Minimum gelten muss, dass <span class="math inline">\(\nabla f(x^*) = -\lambda \nabla g(x^*)\)</span> haben wir anhand einer Zeichnung im 2D Fall festgestellt.</p>
+<p>Für <span class="math inline">\(x\in \mathbb R^{n}\)</span> und einer Gleichungsnebenbedingung <span class="math inline">\(g\)</span>, ist die Argumentation wie folgt.</p>
+<div class="lemma">
+<p><span id="lem:not-para-not-min" class="lemma"><strong>Lemma 8.1  </strong></span>Sei <span class="math inline">\(x^*\in \mathbb R^{n}\)</span> mit <span class="math inline">\(g(x^*)=0\)</span> so, dass <span class="math inline">\(\nabla f\)</span> und <span class="math inline">\(\nabla g\)</span> <strong>nicht</strong> parallel sind. Dann gilt für die Richtung
+<span class="math display">\[\begin{equation*}
+v := -\biggl (I-\frac{1}{\|\nabla g(x^*)\|^2}\nabla g(x^*)g(x^*)^T \biggr )\nabla f(x^*)
+\end{equation*}\]</span>
+dass <span class="math inline">\(\nabla g(x^*)^Tv=0\)</span> und <span class="math inline">\(\nabla f(x^*)^Tv&lt;0\)</span> ist.</p>
+</div>
+<p>Lemma <a href="optimierung-unter-nebenbedingungen.html#lem:not-para-not-min">8.1</a> sagt, dass es im skizzierten Fall also eine Richtung gibt, in der (in erster Ableitung) die Funktion <span class="math inline">\(f\)</span> minimiert werden kann ohne den Zulässigkeitsbereich zu verlassen.</p>
+</div>
+<div id="linear-quadratische-probleme" class="section level2 hasAnchor">
+<h2><span class="header-section-number">8.3</span> Linear Quadratische Probleme<a href="optimierung-unter-nebenbedingungen.html#linear-quadratische-probleme" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ist die Zielfunktion als quadratische Funktion
+<span class="math display">\[\begin{equation*}
+f(x) = x^T Q x + c^Tx 
+\end{equation*}\]</span>
+gegeben mit <span class="math inline">\(Q\in \mathbb R^{n\times n}\)</span> und <span class="math inline">\(c\in \mathbb R^{n}\)</span> und sind die Nebenbedingungen linear gegeben als
+<span class="math display">\[\begin{equation*}
+Ax \geq b
+\end{equation*}\]</span>
+mit <span class="math inline">\(A\in \mathbb R^{m\times n}\)</span>, <span class="math inline">\(b\in \mathbb R^{m}\)</span> und mit <span class="math inline">\(Ax \geq b\)</span> bedeuten soll, dass <strong>alle Einträge</strong> des Vektors <span class="math inline">\(Ax-b\)</span> kleiner oder gleich <span class="math inline">\(0\)</span> sind, dann sprechen wir von einem (linearen) quadratischen Optimierungsproblem.</p>
+<p>Hier müssen Gleichheitsbedingungen nicht explizit angeführt werden, da sie durch Ungleichungsbedingungen ausgedrückt werden können (vgl. <span class="math inline">\(x=0\)</span> gdw. <span class="math inline">\(x\geq0\)</span> und <span class="math inline">\(-x\geq 0\)</span>).</p>
+<p>Sind allerdings alle Bedingungen letztlich Gleichheitsbedingungen, liegt also das Problem als
+<span class="math display">\[\begin{equation*}
+x^T Q x + c^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }Ax=b
+\end{equation*}\]</span>
+vor, dann sind die notwendigen Optimalitätsbedingungen durch
+<span class="math display">\[\begin{equation*}
+\begin{bmatrix}
+Q &amp; A^T \\
+A &amp; 0
+\end{bmatrix}
+=
+\begin{bmatrix}
+-c \\ b
+\end{bmatrix}.
+\end{equation*}\]</span></p>
+<p>Aus der Betrachtung dieser Optimalitätsbedingungen können wir folgern, dass, wenn <span class="math inline">\(Q\)</span> symmetrisch ist und positiv definit,
+sowie alle Zeilen von <span class="math inline">\(A\)</span> linear unabhängig sind, dass dann das Optimierungsproblem eine eindeutige Lösung hat, die durch die Optimalitätsbedingungen eindeutig charakterisiert ist.</p>
+</div>
+<div id="sequential-quadratic-programming" class="section level2 hasAnchor">
+<h2><span class="header-section-number">8.4</span> Sequential Quadratic Programming<a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Aus der Beobachtung, dass wir LQP Probleme direkt mit <span class="math inline">\(Q\)</span> symmetrisch positiv definit direkt lösen können und dass wir für kleine Abweichungen <span class="math inline">\(h=x^*-x \in \mathbb R^{n}\)</span> multivariable Funktionen über quadratische (für unser <span class="math inline">\(f\)</span>) und lineare Approximationen (für unsere <span class="math inline">\(g_i\)</span>) gut annähern können:
+<span class="math display">\[\begin{equation*}
+f(x^*) = f(x+h) = f(x) + \nabla f(x)^T h + h^TH_f(x) h + \mathcal o(\| h \| ^2 )
+\end{equation*}\]</span>
+und
+<span class="math display">\[\begin{equation*}
+g_i(x^*) = g_i(x+h) = g_i(x) + \nabla g_i(x)^T h + \mathcal o(\| h \|), \quad i \in \mathcal I,
+\end{equation*}\]</span>
+ergibt sich das iterative Verfahren aus einer Näherungslösung <span class="math inline">\(x_k\)</span> eine Verbesserung <span class="math inline">\(x_{k+1}\)</span> als Lösung des LQP Problems
+<span class="math display">\[\begin{equation*}
+x^T Q_k x + c_k^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }A_kx=b_k
+\end{equation*}\]</span>
+zu berechnen, wobei
+<span class="math display">\[\begin{equation*}
+Q_k=H_f(x_k), \quad c_k=\nabla f(x_k)
+\end{equation*}\]</span>
+und
+<span class="math display">\[\begin{equation*}
+A_k = 
+\begin{bmatrix}
+\nabla g_i(x_k) 
+\end{bmatrix}_{i \in \mathcal I} \in \mathbb R^{|\mathcal I| \times n},
+\quad 
+b_k = -
+\begin{bmatrix}
+g_i(x_k) 
+\end{bmatrix}_{i \in \mathcal I}\in \mathbb R^{|\mathcal I|}.
+\end{equation*}\]</span></p>
+<div id="rem-conv-hesse" class="JHSAYS">
+<p>Ist die Funktion <span class="math inline">\(f\)</span> konvex und zweimal stetig differenzierbar (in einer Umgebung von <span class="math inline">\(x_k\)</span>), dann ist <span class="math inline">\(H_f(x_k)\)</span> positiv definit und das LQP hat eine eindeutitge Lösung <span class="math inline">\(x_{k+1}\)</span>.</p>
+</div>
+</div>
+<div id="aufgaben-5" class="section level2 hasAnchor">
+<h2><span class="header-section-number">8.5</span> Aufgaben<a href="optimierung-unter-nebenbedingungen.html#aufgaben-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="kkt-für-lqp-t" class="section level3 hasAnchor">
+<h3><span class="header-section-number">8.5.1</span> KKT für LQP (T)<a href="optimierung-unter-nebenbedingungen.html#kkt-für-lqp-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Verifizieren Sie, dass die notwendigen Optimalitätsbedingungen für das LQP Problem mit Gleichungsnebenbedingungen (mit <span class="math inline">\(m=1\)</span>) genau der Optimalitäsbedingung “<span class="math inline">\(\nabla f = \lambda \nabla g\)</span>” entspricht.</p>
+</div>
+<div id="nicht-parallele-gradienten-t" class="section level3 hasAnchor">
+<h3><span class="header-section-number">8.5.2</span> Nicht parallele Gradienten (T)<a href="optimierung-unter-nebenbedingungen.html#nicht-parallele-gradienten-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Verifizieren sie die Aussage aus Lemma <a href="optimierung-unter-nebenbedingungen.html#lem:not-para-not-min">8.1</a>.</p>
+</div>
+<div id="hauptkomponente-aus-sqp-tp" class="section level3 hasAnchor">
+<h3><span class="header-section-number">8.5.3</span> Hauptkomponente aus SQP (T+P)<a href="optimierung-unter-nebenbedingungen.html#hauptkomponente-aus-sqp-tp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Skizzieren einen SQP-Schritt des Optimierungsproblem, das die erste Hauptkomponentenrichtung definiert.</p>
+<p>Implementieren sie die SQP Iteration zur Berechnung der ersten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie den Fehler zur <em>exakten</em> (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt aus.</p>
 
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="10">
+<li id="fn10"><p><em>gut</em> im Sinne von der Fehler <span class="math inline">\(f(x+h)-f(x)-f&#39;(x)h\)</span> geht schneller zur <span class="math inline">\(0\)</span> als <span class="math inline">\(h\)</span><a href="optimierung-unter-nebenbedingungen.html#fnref10" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 

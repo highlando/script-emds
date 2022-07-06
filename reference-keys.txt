@@ -10,6 +10,8 @@ thm:unlabeled-div-1
 def:unlabeled-div-2
 thm:unlabeled-div-3
 def:unlabeled-div-4
+fig:eqconstraint-opti
+lem:not-para-not-min
 was-ist-data-science
 wie-passiert-die-datenanalyse
 was-sind-daten
@@ -85,3 +87,11 @@ optimierung-ohne-gradienten-pt
 gradientenabstiegsverfahren-p
 built-in-optimierung-in-scipy-p
 optimierung-unter-nebenbedingungen
+richtungen-und-nebenbedingungen
+restringierte-optimierungsprobleme-und-der-gradient
+linear-quadratische-probleme
+sequential-quadratic-programming
+aufgaben-5
+kkt-für-lqp-t
+nicht-parallele-gradienten-t
+hauptkomponente-aus-sqp-tp

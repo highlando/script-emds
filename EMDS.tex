@@ -2738,7 +2738,184 @@ Die Unterscheidung von \(D(f)\) und \(\Omega\) in der Betrachtung des Optimierun
   ebenso die Feststellung ob ein gegebener Punkt im Zulässigkeitsbereich liegt
 \end{itemize}
 
-Die Analysis restringierter Optimierungsprobleme
+Die Analysis restringierter Optimierungsprobleme und entsprechend die Umsetzung von Algorithmen zur Lösung wird durch die Nebenbedingungen ungleich schwieriger, da
+
+\begin{itemize}
+\tightlist
+\item
+  in der Theorie nicht mehr einfach differenziert werden kann (insbesondere bei Gleichheitsbedingungen oder wenn der kritische Punkt am Rand der Ungleichungsbedingungen liegt) und
+\item
+  in der Umsetzung auf dem Computer darauf geachtet werden muss, dass der Zulässigkeitsbereich nicht verlassen wird.
+\end{itemize}
+
+\hypertarget{richtungen-und-nebenbedingungen}{%
+\section{Richtungen und Nebenbedingungen}\label{richtungen-und-nebenbedingungen}}
+
+Bei \emph{restringierten Optimierungsproblemen} ist die Richtung in der analysiert wird entscheidend. Hierbei geht es darum ob in einer Richtung \(v\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  die Zielfunktion eventuell kleiner wird
+\item
+  der Zulässigkeitsbereich eventuell verlassen wird (bspw. charakterisiert durch \(g(x) = 0\) oder \(h(x)\geq0\))
+\end{enumerate}
+
+Da es stets nur um die unmittelbare Umgebung eines Punktes geht, und wir aus der Diskussion der Ableitung (in 1D) wissen, dass eine differenzierbare Funktion lokal gut durch ihre Tangente angenähert werden kann\footnote{\emph{gut} im Sinne von der Fehler \(f(x+h)-f(x)-f'(x)h\) geht schneller zur \(0\) als \(h\)}, können wir beide Betrachtungen in der \emph{lineaeren Approximation} anstellen.
+
+Wir schauen also ob für eine Richtung \(v\) gilt, ob nicht
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(f(x^*) > f(x^*+hv) \approx f(x^*) + \nabla f(x^*)^Tv\) bzw.
+\item
+  \(0 \neq g(x^*+hv) \approx \nabla g(x^*)^Tv\) oder \(0>h(x^*+hv) \approx \nabla h(x^*)^Tv\).
+\end{enumerate}
+
+\hypertarget{restringierte-optimierungsprobleme-und-der-gradient}{%
+\section{Restringierte Optimierungsprobleme und der Gradient}\label{restringierte-optimierungsprobleme-und-der-gradient}}
+
+Zur Illustration und zur Einführung der Konzepte betrachten wir Probleme, die entweder nur Gleichungsnebenbedingungen oder nur Ungleichungsnebenbedingungen haben.
+
+Wir beginnen mit Gleichungsnebenbedingungen und das auch nur im zweidimensionalen Fall:
+\begin{equation*}
+f(x,y) \to \min, \quad \text{s.t. }g(x,y)=c.
+\end{equation*}
+Aus der schematischen Darstellung in Abbildung \ref{fig:eqconstraint-opti} können wir ablesen, dass in einem potentiellen Extremum, die Gradienten von \(f\) und \(g\) in die gleiche Richtung zeigen, es also eine Skalar \(\lambda\) geben muss, sodass in einem kritischen Punkt \((x^*, y^*)\) gilt, dass
+\begin{equation*}
+\nabla f(x^*, y^*) + \lambda \nabla g(x^*, y^*) =0
+\end{equation*}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{bilder/08-LagrangeMultipliers2D} 
+
+}
+
+\caption{Schematische Darstellung eines Optimierungsproblems mit Gleichungsnebenbedingungen in 2D.}\label{fig:eqconstraint-opti}
+\end{figure}
+
+Wir könnten also versuchen, eine Lösung \((x,y,\lambda)\) für das Gleichungssystem
+\begin{align*}
+\nabla f(x, y) + \lambda \nabla g(x, y) &=0 \\
+g(x,y) &= c
+\end{align*}
+zu finden.
+
+\leavevmode\hypertarget{lagrange-KKT}{}%
+\begin{JHSAYS}
+Dieses Gleichungssystem ist ein Spezialfall der \emph{Karush-Kuhn-Tucker} Bedingungen, die ein notwendiges Kriterium für einen optimalen Punkt darstellen. Das involvierte \(\lambda\) wird \emph{Lagrange Multiplikator} genannt.
+
+\end{JHSAYS}
+
+Dass an einem potentiellen Minimum gelten muss, dass \(\nabla f(x^*) = -\lambda \nabla g(x^*)\) haben wir anhand einer Zeichnung im 2D Fall festgestellt.
+
+Für \(x\in \mathbb R^{n}\) und einer Gleichungsnebenbedingung \(g\), ist die Argumentation wie folgt.
+
+\begin{lemma}
+\protect\hypertarget{lem:not-para-not-min}{}\label{lem:not-para-not-min}Sei \(x^*\in \mathbb R^{n}\) mit \(g(x^*)=0\) so, dass \(\nabla f\) und \(\nabla g\) \textbf{nicht} parallel sind. Dann gilt für die Richtung
+\begin{equation*}
+v := -\biggl (I-\frac{1}{\|\nabla g(x^*)\|^2}\nabla g(x^*)g(x^*)^T \biggr )\nabla f(x^*)
+\end{equation*}
+dass \(\nabla g(x^*)^Tv=0\) und \(\nabla f(x^*)^Tv<0\) ist.
+\end{lemma}
+
+Lemma \ref{lem:not-para-not-min} sagt, dass es im skizzierten Fall also eine Richtung gibt, in der (in erster Ableitung) die Funktion \(f\) minimiert werden kann ohne den Zulässigkeitsbereich zu verlassen.
+
+\hypertarget{linear-quadratische-probleme}{%
+\section{Linear Quadratische Probleme}\label{linear-quadratische-probleme}}
+
+Ist die Zielfunktion als quadratische Funktion
+\begin{equation*}
+f(x) = x^T Q x + c^Tx 
+\end{equation*}
+gegeben mit \(Q\in \mathbb R^{n\times n}\) und \(c\in \mathbb R^{n}\) und sind die Nebenbedingungen linear gegeben als
+\begin{equation*}
+Ax \geq b
+\end{equation*}
+mit \(A\in \mathbb R^{m\times n}\), \(b\in \mathbb R^{m}\) und mit \(Ax \geq b\) bedeuten soll, dass \textbf{alle Einträge} des Vektors \(Ax-b\) kleiner oder gleich \(0\) sind, dann sprechen wir von einem (linearen) quadratischen Optimierungsproblem.
+
+Hier müssen Gleichheitsbedingungen nicht explizit angeführt werden, da sie durch Ungleichungsbedingungen ausgedrückt werden können (vgl. \(x=0\) gdw. \(x\geq0\) und \(-x\geq 0\)).
+
+Sind allerdings alle Bedingungen letztlich Gleichheitsbedingungen, liegt also das Problem als
+\begin{equation*}
+x^T Q x + c^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }Ax=b
+\end{equation*}
+vor, dann sind die notwendigen Optimalitätsbedingungen durch
+\begin{equation*}
+\begin{bmatrix}
+Q & A^T \\
+A & 0
+\end{bmatrix}
+=
+\begin{bmatrix}
+-c \\ b
+\end{bmatrix}.
+\end{equation*}
+
+Aus der Betrachtung dieser Optimalitätsbedingungen können wir folgern, dass, wenn \(Q\) symmetrisch ist und positiv definit,
+sowie alle Zeilen von \(A\) linear unabhängig sind, dass dann das Optimierungsproblem eine eindeutige Lösung hat, die durch die Optimalitätsbedingungen eindeutig charakterisiert ist.
+
+\hypertarget{sequential-quadratic-programming}{%
+\section{Sequential Quadratic Programming}\label{sequential-quadratic-programming}}
+
+Aus der Beobachtung, dass wir LQP Probleme direkt mit \(Q\) symmetrisch positiv definit direkt lösen können und dass wir für kleine Abweichungen \(h=x^*-x \in \mathbb R^{n}\) multivariable Funktionen über quadratische (für unser \(f\)) und lineare Approximationen (für unsere \(g_i\)) gut annähern können:
+\begin{equation*}
+f(x^*) = f(x+h) = f(x) + \nabla f(x)^T h + h^TH_f(x) h + \mathcal o(\| h \| ^2 )
+\end{equation*}
+und
+\begin{equation*}
+g_i(x^*) = g_i(x+h) = g_i(x) + \nabla g_i(x)^T h + \mathcal o(\| h \|), \quad i \in \mathcal I,
+\end{equation*}
+ergibt sich das iterative Verfahren aus einer Näherungslösung \(x_k\) eine Verbesserung \(x_{k+1}\) als Lösung des LQP Problems
+\begin{equation*}
+x^T Q_k x + c_k^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }A_kx=b_k
+\end{equation*}
+zu berechnen, wobei
+\begin{equation*}
+Q_k=H_f(x_k), \quad c_k=\nabla f(x_k)
+\end{equation*}
+und
+\begin{equation*}
+A_k = 
+\begin{bmatrix}
+\nabla g_i(x_k) 
+\end{bmatrix}_{i \in \mathcal I} \in \mathbb R^{|\mathcal I| \times n},
+\quad 
+b_k = -
+\begin{bmatrix}
+g_i(x_k) 
+\end{bmatrix}_{i \in \mathcal I}\in \mathbb R^{|\mathcal I|}.
+\end{equation*}
+
+\leavevmode\hypertarget{rem-conv-hesse}{}%
+\begin{JHSAYS}
+Ist die Funktion \(f\) konvex und zweimal stetig differenzierbar (in einer Umgebung von \(x_k\)), dann ist \(H_f(x_k)\) positiv definit und das LQP hat eine eindeutitge Lösung \(x_{k+1}\).
+
+\end{JHSAYS}
+
+\hypertarget{aufgaben-5}{%
+\section{Aufgaben}\label{aufgaben-5}}
+
+\hypertarget{kkt-fuxfcr-lqp-t}{%
+\subsection{KKT für LQP (T)}\label{kkt-fuxfcr-lqp-t}}
+
+Verifizieren Sie, dass die notwendigen Optimalitätsbedingungen für das LQP Problem mit Gleichungsnebenbedingungen (mit \(m=1\)) genau der Optimalitäsbedingung ``\(\nabla f = \lambda \nabla g\)'' entspricht.
+
+\hypertarget{nicht-parallele-gradienten-t}{%
+\subsection{Nicht parallele Gradienten (T)}\label{nicht-parallele-gradienten-t}}
+
+Verifizieren sie die Aussage aus Lemma \ref{lem:not-para-not-min}.
+
+\hypertarget{hauptkomponente-aus-sqp-tp}{%
+\subsection{Hauptkomponente aus SQP (T+P)}\label{hauptkomponente-aus-sqp-tp}}
+
+Skizzieren einen SQP-Schritt des Optimierungsproblem, das die erste Hauptkomponentenrichtung definiert.
+
+Implementieren sie die SQP Iteration zur Berechnung der ersten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie den Fehler zur \emph{exakten} (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt aus.
 
 \hypertarget{referenzen}{%
 \chapter*{Referenzen}\label{referenzen}}

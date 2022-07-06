@@ -86,10 +86,13 @@ knitr::include_graphics(c("bilder/08-LagrangeMultipliers2D.png"))
 ```
 
 Wir k&ouml;nnten also versuchen, eine L&ouml;sung $(x,y,\lambda)$ f&uuml;r das Gleichungssystem
-\begin{align*}
+\begin{equation}
+\begin{split}
 \nabla f(x, y) + \lambda \nabla g(x, y) &=0 \\
 g(x,y) &= c
-\end{align*}
+\end{split}
+(\#eq:kkt-sc)
+\end{equation}
 zu finden.
 
 ::: {#lagrange-KKT .JHSAYS data-latex=''}
@@ -145,21 +148,31 @@ sowie alle Zeilen von $A$ linear unabh&auml;ngig sind, dass dann das Optimierung
 
 ## Sequential Quadratic Programming
 
-Aus der Beobachtung, dass wir LQP Probleme direkt mit $Q$ symmetrisch positiv definit direkt l&ouml;sen k&ouml;nnen und dass wir f&uuml;r kleine Abweichungen $h=x^*-x \in \mathbb R^{n}$ multivariable Funktionen &uuml;ber quadratische (f&uuml;r unser $f$) und lineare Approximationen (f&uuml;r unsere $g_i$) gut ann&auml;hern k&ouml;nnen:
+Aus der Beobachtung, dass wir LQP Probleme direkt mit $Q$ symmetrisch positiv definit direkt l&ouml;sen k&ouml;nnen und dass wir f&uuml;r kleine Abweichungen $\xi$ von einem gebenen Punkt $x$ multivariable Funktionen &uuml;ber quadratische (f&uuml;r unser $f$) und lineare Approximationen (f&uuml;r unsere $g_i$) gut ann&auml;hern k&ouml;nnen:
 \begin{equation*}
-f(x^*) = f(x+h) = f(x) + \nabla f(x)^T h + h^TH_f(x) h + \mathcal o(\| h \| ^2 )
+f(x^*) = f(x+\xi) = f(x) + \nabla f(x)^T \xi + \xi^TH_f(x) \xi + \mathcal o(\| \xi \| ^2 )
 \end{equation*}
 und
 \begin{equation*}
-g_i(x^*) = g_i(x+h) = g_i(x) + \nabla g_i(x)^T h + \mathcal o(\| h \|), \quad i \in \mathcal I,
+g_i(x^*) = g_i(x+\xi) = g_i(\xi) + \nabla g_i(\xi)^T h + \mathcal o(\| \xi \|), \quad i \in \mathcal I,
 \end{equation*}
-ergibt sich das iterative Verfahren aus einer N&auml;herungsl&ouml;sung $x_k$ eine Verbesserung $x_{k+1}$ als L&ouml;sung des LQP Problems
+ergibt sich das folgende iterative Verfahren genannt *Sequential Linear Programming* (SQP):
+
+Beginnend von einem N&auml;herungswert $x^k$
+
+1. Berechne $d^k$ aus der Minimierung von^[Die korrekte quadratische Approximation von $f$ w&uuml;rde noch den Term $f(x^k)$ enthalten. Dieser kann aber einfach weggelassen werden bei der Suche der Minimalstelle.]
+  \begin{align*}
+   \tilde f(x^k+d):= \nabla f(x^k)^T d + d^TH_f(x^k) d \to \min_{d\in \mathbb R^{n}}, \quad \intertext{unter der Nebenbedingung}g_i^k(d):=g_(x^k)+\nabla g_i(x^k)d = 0 \quad i \in \mathcal I
+  \end{align*}
+2. ein Update $x^{k+1}=x^k+d^k$.
+
+Es ist also in jeder Iteration ein linear quadratisches Optimierungsproblem 
 \begin{equation*}
 x^T Q_k x + c_k^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }A_kx=b_k
 \end{equation*}
-zu berechnen, wobei
+zu l&ouml;sen, wobei (in der obigen Notation mit $Q$, $c$, $A$ und $b$) gilt dass
 \begin{equation*}
-Q_k=H_f(x_k), \quad c_k=\nabla f(x_k)
+Q_k=H_f(x^k), \quad c_k=\nabla f(x_k)
 \end{equation*}
 und
 \begin{equation*}
@@ -175,14 +188,14 @@ g_i(x_k)
 \end{equation*}
 
 ::: {#rem-conv-hesse .JHSAYS data-latex=''}
-Ist die Funktion $f$ konvex und zweimal stetig differenzierbar (in einer Umgebung von $x_k$), dann ist $H_f(x_k)$ positiv definit und das LQP hat eine eindeutitge L&ouml;sung $x_{k+1}$.
+Ist die Funktion $f$ konvex und zweimal stetig differenzierbar (in einer Umgebung von $x_k$), dann ist die Hesse-matrix $H_f(x_k)$ positiv definit und das LQP hat eine eindeutige L&ouml;sung $x_{k+1}$.
 :::
 
 ## Aufgaben
 
 ### KKT f&uuml;r LQP (T)
 
-Verifizieren Sie, dass die notwendigen Optimalit&auml;tsbedingungen f&uuml;r das LQP Problem mit Gleichungsnebenbedingungen (mit $m=1$) genau der Optimalit&auml;sbedingung "$\nabla f = \lambda \nabla g$" entspricht.
+Verifizieren Sie, dass die notwendigen Optimalit&auml;tsbedingungen f&uuml;r das LQP Problem mit Gleichungsnebenbedingungen (mit $m=1$) genau der Optimalit&auml;sbedingung aus Gleichung \@ref(eq:kkt-sc) entspricht. **Hinweis**: Mit der Definition der *totalen Ableitung* und der Relation zum Gradienten f&uuml;r reellwertige multivariable Funktionen (vgl. die Vorlesung *Mathe f&uuml;r DS2* vom 6. Juli) ist eine Darstellung der Gradienten $\nabla f(x)$ und $\nabla g(x)$ direkt herleitbar.
 
 ### Nicht parallele Gradienten (T)
 
@@ -190,6 +203,6 @@ Verifizieren sie die Aussage aus Lemma \@ref(lem:not-para-not-min).
 
 ### Hauptkomponente aus SQP (T+P)
 
-Skizzieren einen SQP-Schritt des Optimierungsproblem, das die erste Hauptkomponentenrichtung definiert.
+Skizzieren einen SQP-Schritt des Optimierungsproblems, das die erste Hauptkomponentenrichtung definiert (wie in Abschnitt \@ref(sec-PCA-maximierung) eingef&uuml;hrt).
 
 Implementieren sie die SQP Iteration zur Berechnung der ersten Hauptkomponentenrichtung f&uuml;r die Pinguin Daten. Berechnen Sie den Fehler zur *exakten* (mit der SVD berechneten) L&ouml;sung und geben sie ihn in jedem Schritt aus.

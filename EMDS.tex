@@ -2883,7 +2883,7 @@ Beginnend von einem Näherungswert \(x^k\)
 \item
   Berechne \(d^k\) aus der Minimierung von\footnote{Die korrekte quadratische Approximation von \(f\) würde noch den Term \(f(x^k)\) enthalten. Dieser kann aber einfach weggelassen werden bei der Suche der Minimalstelle.}
   \begin{align*}
-  \tilde f(x^k+d):= \nabla f(x^k)^T d + d^TH_f(x^k) d \to \min_{d\in \mathbb R^{n}}, \quad \intertext{unter der Nebenbedingung}g_i^k(d):=g_(x^k)+\nabla g_i(x^k)d = 0 \quad i \in \mathcal I
+  \tilde f(x^k+d):= \nabla f(x^k)^T d + d^TH_f(x^k) d \to \min_{d\in \mathbb R^{n}}, \\\quad \text{unter der Nebenbedingung} \\ g_i^k(d):=g_(x^k)+\nabla g_i(x^k)d = 0 \quad i \in \mathcal I
     \end{align*}
 \item
   ein Update \(x^{k+1}=x^k+d^k\).
@@ -2901,7 +2901,7 @@ und
 \begin{equation*}
 A_k = 
 \begin{bmatrix}
-\nabla g_i(x_k) 
+\nabla g_i(x_k)^T
 \end{bmatrix}_{i \in \mathcal I} \in \mathbb R^{|\mathcal I| \times n},
 \quad 
 b_k = -
@@ -2932,9 +2932,11 @@ Verifizieren sie die Aussage aus Lemma \ref{lem:not-para-not-min}.
 \hypertarget{hauptkomponente-aus-sqp-tp}{%
 \subsection{Hauptkomponente aus SQP (T+P)}\label{hauptkomponente-aus-sqp-tp}}
 
-Skizzieren einen SQP-Schritt des Optimierungsproblems, das die erste Hauptkomponentenrichtung definiert (wie in Abschnitt \ref{sec-PCA-maximierung} eingeführt).
+Skizzieren sie das Optimierungsproblems, das die \textbf{letzte} Hauptkomponentenrichtung definiert eines (zentrierten) Datensatzes definiert (analog dazu, wie in Abschnitt \ref{sec-PCA-maximierung} eingeführt).
 
-Implementieren sie die SQP Iteration zur Berechnung der ersten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie den Fehler zur \emph{exakten} (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt aus.
+Skizzieren einen SQP-Schritt zur Lösung dieses Problems.
+
+Implementieren sie die SQP Iteration zur Berechnung der letzten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie die Abweichung zur \emph{exakten} (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt beispielsweise den Winkel zwischen dem Iteranten und der exakten Loesung berechnen. \textbf{Hinweis}: Nur die Norm der Differenz könnte irritieren, weil das Vorzeichen der Richtungen nicht festgelegt ist.
 
 \hypertarget{referenzen}{%
 \chapter*{Referenzen}\label{referenzen}}

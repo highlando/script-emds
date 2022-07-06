@@ -11,6 +11,7 @@ def:unlabeled-div-2
 thm:unlabeled-div-3
 def:unlabeled-div-4
 fig:eqconstraint-opti
+eq:kkt-sc
 lem:not-para-not-min
 was-ist-data-science
 wie-passiert-die-datenanalyse
@@ -45,7 +46,7 @@ truncated-svd-pt
 hauptkomponentenanalyse
 variationskoeffizienten
 koordinatenwechsel
-sec-PCA-maximierung
+sec-pca-maximierung
 hauptkomponentenanalyse-ctd.
 der-penguins-datensatz
 darstellung

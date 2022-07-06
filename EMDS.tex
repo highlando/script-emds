@@ -1408,8 +1408,8 @@ x_c \\ y_c
 \|.
 \end{equation*}
 
-\hypertarget{sec-PCA-maximierung}{%
-\section{Maximierung der Varianz in (Haupt)-Achsenrichtung}\label{sec-PCA-maximierung}}
+\hypertarget{sec-pca-maximierung}{%
+\section{maximierung der varianz in (haupt)-achsenrichtung}\label{sec-pca-maximierung}}
 
 Wir wollen nun also \(b_1\in \mathbb R^{2}\), mit \(\|b_1\|=1\) so wählen, dass
 \begin{equation*}
@@ -2799,10 +2799,13 @@ Aus der schematischen Darstellung in Abbildung \ref{fig:eqconstraint-opti} könn
 \end{figure}
 
 Wir könnten also versuchen, eine Lösung \((x,y,\lambda)\) für das Gleichungssystem
-\begin{align*}
+\begin{equation}
+\begin{split}
 \nabla f(x, y) + \lambda \nabla g(x, y) &=0 \\
 g(x,y) &= c
-\end{align*}
+\end{split}
+\label{eq:kkt-sc}
+\end{equation}
 zu finden.
 
 \leavevmode\hypertarget{lagrange-KKT}{}%
@@ -2862,21 +2865,37 @@ sowie alle Zeilen von \(A\) linear unabhängig sind, dass dann das Optimierungsp
 \hypertarget{sequential-quadratic-programming}{%
 \section{Sequential Quadratic Programming}\label{sequential-quadratic-programming}}
 
-Aus der Beobachtung, dass wir LQP Probleme direkt mit \(Q\) symmetrisch positiv definit direkt lösen können und dass wir für kleine Abweichungen \(h=x^*-x \in \mathbb R^{n}\) multivariable Funktionen über quadratische (für unser \(f\)) und lineare Approximationen (für unsere \(g_i\)) gut annähern können:
+Aus der Beobachtung, dass wir LQP Probleme direkt mit \(Q\) symmetrisch positiv definit direkt lösen können und dass wir für kleine Abweichungen \(\xi\) von einem gebenen Punkt \(x\) multivariable Funktionen über quadratische (für unser \(f\)) und lineare Approximationen (für unsere \(g_i\)) gut annähern können:
 \begin{equation*}
-f(x^*) = f(x+h) = f(x) + \nabla f(x)^T h + h^TH_f(x) h + \mathcal o(\| h \| ^2 )
+f(x^*) = f(x+\xi) = f(x) + \nabla f(x)^T \xi + \xi^TH_f(x) \xi + \mathcal o(\| \xi \| ^2 )
 \end{equation*}
 und
 \begin{equation*}
-g_i(x^*) = g_i(x+h) = g_i(x) + \nabla g_i(x)^T h + \mathcal o(\| h \|), \quad i \in \mathcal I,
+g_i(x^*) = g_i(x+\xi) = g_i(\xi) + \nabla g_i(\xi)^T h + \mathcal o(\| \xi \|), \quad i \in \mathcal I,
 \end{equation*}
-ergibt sich das iterative Verfahren aus einer Näherungslösung \(x_k\) eine Verbesserung \(x_{k+1}\) als Lösung des LQP Problems
+ergibt sich das folgende iterative Verfahren genannt \emph{Sequential Linear Programming} (SQP):
+
+Beginnend von einem Näherungswert \(x^k\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Berechne \(d^k\) aus der Minimierung von\footnote{Die korrekte quadratische Approximation von \(f\) würde noch den Term \(f(x^k)\) enthalten. Dieser kann aber einfach weggelassen werden bei der Suche der Minimalstelle.}
+  \begin{align*}
+  \tilde f(x^k+d):= \nabla f(x^k)^T d + d^TH_f(x^k) d \to \min_{d\in \mathbb R^{n}}, \quad \intertext{unter der Nebenbedingung}g_i^k(d):=g_(x^k)+\nabla g_i(x^k)d = 0 \quad i \in \mathcal I
+    \end{align*}
+\item
+  ein Update \(x^{k+1}=x^k+d^k\).
+\end{enumerate}
+
+Es ist also in jeder Iteration ein linear quadratisches Optimierungsproblem
 \begin{equation*}
 x^T Q_k x + c_k^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }A_kx=b_k
 \end{equation*}
-zu berechnen, wobei
+zu lösen, wobei (in der obigen Notation mit \(Q\), \(c\), \(A\) und \(b\)) gilt dass
 \begin{equation*}
-Q_k=H_f(x_k), \quad c_k=\nabla f(x_k)
+Q_k=H_f(x^k), \quad c_k=\nabla f(x_k)
 \end{equation*}
 und
 \begin{equation*}
@@ -2893,7 +2912,7 @@ g_i(x_k)
 
 \leavevmode\hypertarget{rem-conv-hesse}{}%
 \begin{JHSAYS}
-Ist die Funktion \(f\) konvex und zweimal stetig differenzierbar (in einer Umgebung von \(x_k\)), dann ist \(H_f(x_k)\) positiv definit und das LQP hat eine eindeutitge Lösung \(x_{k+1}\).
+Ist die Funktion \(f\) konvex und zweimal stetig differenzierbar (in einer Umgebung von \(x_k\)), dann ist die Hesse-matrix \(H_f(x_k)\) positiv definit und das LQP hat eine eindeutige Lösung \(x_{k+1}\).
 
 \end{JHSAYS}
 
@@ -2903,7 +2922,7 @@ Ist die Funktion \(f\) konvex und zweimal stetig differenzierbar (in einer Umgeb
 \hypertarget{kkt-fuxfcr-lqp-t}{%
 \subsection{KKT für LQP (T)}\label{kkt-fuxfcr-lqp-t}}
 
-Verifizieren Sie, dass die notwendigen Optimalitätsbedingungen für das LQP Problem mit Gleichungsnebenbedingungen (mit \(m=1\)) genau der Optimalitäsbedingung ``\(\nabla f = \lambda \nabla g\)'' entspricht.
+Verifizieren Sie, dass die notwendigen Optimalitätsbedingungen für das LQP Problem mit Gleichungsnebenbedingungen (mit \(m=1\)) genau der Optimalitäsbedingung aus Gleichung \eqref{eq:kkt-sc} entspricht. \textbf{Hinweis}: Mit der Definition der \emph{totalen Ableitung} und der Relation zum Gradienten für reellwertige multivariable Funktionen (vgl. die Vorlesung \emph{Mathe für DS2} vom 6. Juli) ist eine Darstellung der Gradienten \(\nabla f(x)\) und \(\nabla g(x)\) direkt herleitbar.
 
 \hypertarget{nicht-parallele-gradienten-t}{%
 \subsection{Nicht parallele Gradienten (T)}\label{nicht-parallele-gradienten-t}}
@@ -2913,7 +2932,7 @@ Verifizieren sie die Aussage aus Lemma \ref{lem:not-para-not-min}.
 \hypertarget{hauptkomponente-aus-sqp-tp}{%
 \subsection{Hauptkomponente aus SQP (T+P)}\label{hauptkomponente-aus-sqp-tp}}
 
-Skizzieren einen SQP-Schritt des Optimierungsproblem, das die erste Hauptkomponentenrichtung definiert.
+Skizzieren einen SQP-Schritt des Optimierungsproblems, das die erste Hauptkomponentenrichtung definiert (wie in Abschnitt \ref{sec-PCA-maximierung} eingeführt).
 
 Implementieren sie die SQP Iteration zur Berechnung der ersten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie den Fehler zur \emph{exakten} (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt aus.
 

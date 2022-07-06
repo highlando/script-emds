@@ -156,7 +156,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
-<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-PCA-maximierung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
+<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-pca-maximierung"><i class="fa fa-check"></i><b>4.3</b> maximierung der varianz in (haupt)-achsenrichtung</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
 <li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der PENGUINS Datensatz</a></li>
@@ -295,10 +295,13 @@ Figure 8.1: Schematische Darstellung eines Optimierungsproblems mit Gleichungsne
 </p>
 </div>
 <p>Wir könnten also versuchen, eine Lösung <span class="math inline">\((x,y,\lambda)\)</span> für das Gleichungssystem
-<span class="math display">\[\begin{align*}
+<span class="math display" id="eq:kkt-sc">\[\begin{equation}
+\begin{split}
 \nabla f(x, y) + \lambda \nabla g(x, y) &amp;=0 \\
 g(x,y) &amp;= c
-\end{align*}\]</span>
+\end{split}
+\tag{8.1}
+\end{equation}\]</span>
 zu finden.</p>
 <div id="lagrange-KKT" class="JHSAYS">
 <p>Dieses Gleichungssystem ist ein Spezialfall der <em>Karush-Kuhn-Tucker</em> Bedingungen, die ein notwendiges Kriterium für einen optimalen Punkt darstellen. Das involvierte <span class="math inline">\(\lambda\)</span> wird <em>Lagrange Multiplikator</em> genannt.</p>
@@ -346,21 +349,30 @@ sowie alle Zeilen von <span class="math inline">\(A\)</span> linear unabhängig 
 </div>
 <div id="sequential-quadratic-programming" class="section level2 hasAnchor">
 <h2><span class="header-section-number">8.4</span> Sequential Quadratic Programming<a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Aus der Beobachtung, dass wir LQP Probleme direkt mit <span class="math inline">\(Q\)</span> symmetrisch positiv definit direkt lösen können und dass wir für kleine Abweichungen <span class="math inline">\(h=x^*-x \in \mathbb R^{n}\)</span> multivariable Funktionen über quadratische (für unser <span class="math inline">\(f\)</span>) und lineare Approximationen (für unsere <span class="math inline">\(g_i\)</span>) gut annähern können:
+<p>Aus der Beobachtung, dass wir LQP Probleme direkt mit <span class="math inline">\(Q\)</span> symmetrisch positiv definit direkt lösen können und dass wir für kleine Abweichungen <span class="math inline">\(\xi\)</span> von einem gebenen Punkt <span class="math inline">\(x\)</span> multivariable Funktionen über quadratische (für unser <span class="math inline">\(f\)</span>) und lineare Approximationen (für unsere <span class="math inline">\(g_i\)</span>) gut annähern können:
 <span class="math display">\[\begin{equation*}
-f(x^*) = f(x+h) = f(x) + \nabla f(x)^T h + h^TH_f(x) h + \mathcal o(\| h \| ^2 )
+f(x^*) = f(x+\xi) = f(x) + \nabla f(x)^T \xi + \xi^TH_f(x) \xi + \mathcal o(\| \xi \| ^2 )
 \end{equation*}\]</span>
 und
 <span class="math display">\[\begin{equation*}
-g_i(x^*) = g_i(x+h) = g_i(x) + \nabla g_i(x)^T h + \mathcal o(\| h \|), \quad i \in \mathcal I,
+g_i(x^*) = g_i(x+\xi) = g_i(\xi) + \nabla g_i(\xi)^T h + \mathcal o(\| \xi \|), \quad i \in \mathcal I,
 \end{equation*}\]</span>
-ergibt sich das iterative Verfahren aus einer Näherungslösung <span class="math inline">\(x_k\)</span> eine Verbesserung <span class="math inline">\(x_{k+1}\)</span> als Lösung des LQP Problems
+ergibt sich das folgende iterative Verfahren genannt <em>Sequential Linear Programming</em> (SQP):</p>
+<p>Beginnend von einem Näherungswert <span class="math inline">\(x^k\)</span></p>
+<ol style="list-style-type: decimal">
+<li>Berechne <span class="math inline">\(d^k\)</span> aus der Minimierung von<a href="referenzen.html#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>
+<span class="math display">\[\begin{align*}
+\tilde f(x^k+d):= \nabla f(x^k)^T d + d^TH_f(x^k) d \to \min_{d\in \mathbb R^{n}}, \quad \intertext{unter der Nebenbedingung}g_i^k(d):=g_(x^k)+\nabla g_i(x^k)d = 0 \quad i \in \mathcal I
+  \end{align*}\]</span></li>
+<li>ein Update <span class="math inline">\(x^{k+1}=x^k+d^k\)</span>.</li>
+</ol>
+<p>Es ist also in jeder Iteration ein linear quadratisches Optimierungsproblem
 <span class="math display">\[\begin{equation*}
 x^T Q_k x + c_k^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }A_kx=b_k
 \end{equation*}\]</span>
-zu berechnen, wobei
+zu lösen, wobei (in der obigen Notation mit <span class="math inline">\(Q\)</span>, <span class="math inline">\(c\)</span>, <span class="math inline">\(A\)</span> und <span class="math inline">\(b\)</span>) gilt dass
 <span class="math display">\[\begin{equation*}
-Q_k=H_f(x_k), \quad c_k=\nabla f(x_k)
+Q_k=H_f(x^k), \quad c_k=\nabla f(x_k)
 \end{equation*}\]</span>
 und
 <span class="math display">\[\begin{equation*}
@@ -375,14 +387,14 @@ g_i(x_k)
 \end{bmatrix}_{i \in \mathcal I}\in \mathbb R^{|\mathcal I|}.
 \end{equation*}\]</span></p>
 <div id="rem-conv-hesse" class="JHSAYS">
-<p>Ist die Funktion <span class="math inline">\(f\)</span> konvex und zweimal stetig differenzierbar (in einer Umgebung von <span class="math inline">\(x_k\)</span>), dann ist <span class="math inline">\(H_f(x_k)\)</span> positiv definit und das LQP hat eine eindeutitge Lösung <span class="math inline">\(x_{k+1}\)</span>.</p>
+<p>Ist die Funktion <span class="math inline">\(f\)</span> konvex und zweimal stetig differenzierbar (in einer Umgebung von <span class="math inline">\(x_k\)</span>), dann ist die Hesse-matrix <span class="math inline">\(H_f(x_k)\)</span> positiv definit und das LQP hat eine eindeutige Lösung <span class="math inline">\(x_{k+1}\)</span>.</p>
 </div>
 </div>
 <div id="aufgaben-5" class="section level2 hasAnchor">
 <h2><span class="header-section-number">8.5</span> Aufgaben<a href="optimierung-unter-nebenbedingungen.html#aufgaben-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="kkt-für-lqp-t" class="section level3 hasAnchor">
 <h3><span class="header-section-number">8.5.1</span> KKT für LQP (T)<a href="optimierung-unter-nebenbedingungen.html#kkt-für-lqp-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Verifizieren Sie, dass die notwendigen Optimalitätsbedingungen für das LQP Problem mit Gleichungsnebenbedingungen (mit <span class="math inline">\(m=1\)</span>) genau der Optimalitäsbedingung “<span class="math inline">\(\nabla f = \lambda \nabla g\)</span>” entspricht.</p>
+<p>Verifizieren Sie, dass die notwendigen Optimalitätsbedingungen für das LQP Problem mit Gleichungsnebenbedingungen (mit <span class="math inline">\(m=1\)</span>) genau der Optimalitäsbedingung aus Gleichung <a href="optimierung-unter-nebenbedingungen.html#eq:kkt-sc">(8.1)</a> entspricht. <strong>Hinweis</strong>: Mit der Definition der <em>totalen Ableitung</em> und der Relation zum Gradienten für reellwertige multivariable Funktionen (vgl. die Vorlesung <em>Mathe für DS2</em> vom 6. Juli) ist eine Darstellung der Gradienten <span class="math inline">\(\nabla f(x)\)</span> und <span class="math inline">\(\nabla g(x)\)</span> direkt herleitbar.</p>
 </div>
 <div id="nicht-parallele-gradienten-t" class="section level3 hasAnchor">
 <h3><span class="header-section-number">8.5.2</span> Nicht parallele Gradienten (T)<a href="optimierung-unter-nebenbedingungen.html#nicht-parallele-gradienten-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -390,7 +402,7 @@ g_i(x_k)
 </div>
 <div id="hauptkomponente-aus-sqp-tp" class="section level3 hasAnchor">
 <h3><span class="header-section-number">8.5.3</span> Hauptkomponente aus SQP (T+P)<a href="optimierung-unter-nebenbedingungen.html#hauptkomponente-aus-sqp-tp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Skizzieren einen SQP-Schritt des Optimierungsproblem, das die erste Hauptkomponentenrichtung definiert.</p>
+<p>Skizzieren einen SQP-Schritt des Optimierungsproblems, das die erste Hauptkomponentenrichtung definiert (wie in Abschnitt <a href="#sec-PCA-maximierung"><strong>??</strong></a> eingeführt).</p>
 <p>Implementieren sie die SQP Iteration zur Berechnung der ersten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie den Fehler zur <em>exakten</em> (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt aus.</p>
 
 </div>
@@ -400,6 +412,7 @@ g_i(x_k)
 <hr />
 <ol start="10">
 <li id="fn10"><p><em>gut</em> im Sinne von der Fehler <span class="math inline">\(f(x+h)-f(x)-f&#39;(x)h\)</span> geht schneller zur <span class="math inline">\(0\)</span> als <span class="math inline">\(h\)</span><a href="optimierung-unter-nebenbedingungen.html#fnref10" class="footnote-back">↩</a></p></li>
+<li id="fn11"><p>Die korrekte quadratische Approximation von <span class="math inline">\(f\)</span> würde noch den Term <span class="math inline">\(f(x^k)\)</span> enthalten. Dieser kann aber einfach weggelassen werden bei der Suche der Minimalstelle.<a href="optimierung-unter-nebenbedingungen.html#fnref11" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>

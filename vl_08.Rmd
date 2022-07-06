@@ -3,7 +3,7 @@
 Oftmals werden an die gesuchte L&ouml;sung $x^* \in \mathbb R^{n}$ eines Optimierungsproblems a-priori bestimmte Anforderungen gestellt, wie:
 
  * $x_1 + x_2 \geq 0$ (die L&ouml;sung soll in einem bestimmten Abschnitt liegen)
- * $x_1^2 + x_2*2 - c^2 = 0$ (die ersten beiden Komponenten der L&ouml;sung sollen auf einer Kreisbahn liegen)
+ * $x_1^2 + x_2^2 - c^2 = 0$ (die ersten beiden Komponenten der L&ouml;sung sollen auf einer Kreisbahn liegen)
 
 Allgemein l&auml;sst sich so ein Optimierungsproblem schreiben als
 
@@ -131,7 +131,7 @@ x^T Q x + c^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }Ax=b
 vor, dann sind die notwendigen Optimalit&auml;tsbedingungen durch
 \begin{equation*}
 \begin{bmatrix}
-Q & A^T \\
+Q+Q^T & A^T \\
 A & 0
 \end{bmatrix}
 =
@@ -193,7 +193,3 @@ Verifizieren sie die Aussage aus Lemma \@ref(lem:not-para-not-min).
 Skizzieren einen SQP-Schritt des Optimierungsproblem, das die erste Hauptkomponentenrichtung definiert.
 
 Implementieren sie die SQP Iteration zur Berechnung der ersten Hauptkomponentenrichtung f&uuml;r die Pinguin Daten. Berechnen Sie den Fehler zur *exakten* (mit der SVD berechneten) L&ouml;sung und geben sie ihn in jedem Schritt aus.
-
-
-
-

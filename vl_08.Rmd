@@ -162,7 +162,7 @@ Beginnend von einem N&auml;herungswert $x^k$
 
 1. Berechne $d^k$ aus der Minimierung von^[Die korrekte quadratische Approximation von $f$ w&uuml;rde noch den Term $f(x^k)$ enthalten. Dieser kann aber einfach weggelassen werden bei der Suche der Minimalstelle.]
   \begin{align*}
-   \tilde f(x^k+d):= \nabla f(x^k)^T d + d^TH_f(x^k) d \to \min_{d\in \mathbb R^{n}}, \quad \intertext{unter der Nebenbedingung}g_i^k(d):=g_(x^k)+\nabla g_i(x^k)d = 0 \quad i \in \mathcal I
+   \tilde f(x^k+d):= \nabla f(x^k)^T d + d^TH_f(x^k) d \to \min_{d\in \mathbb R^{n}}, \\\quad \text{unter der Nebenbedingung} \\ g_i^k(d):=g_(x^k)+\nabla g_i(x^k)d = 0 \quad i \in \mathcal I
   \end{align*}
 2. ein Update $x^{k+1}=x^k+d^k$.
 
@@ -178,7 +178,7 @@ und
 \begin{equation*}
 A_k = 
 \begin{bmatrix}
-\nabla g_i(x_k) 
+\nabla g_i(x_k)^T
 \end{bmatrix}_{i \in \mathcal I} \in \mathbb R^{|\mathcal I| \times n},
 \quad 
 b_k = -
@@ -203,6 +203,8 @@ Verifizieren sie die Aussage aus Lemma \@ref(lem:not-para-not-min).
 
 ### Hauptkomponente aus SQP (T+P)
 
-Skizzieren einen SQP-Schritt des Optimierungsproblems, das die erste Hauptkomponentenrichtung definiert (wie in Abschnitt \@ref(sec-PCA-maximierung) eingef&uuml;hrt).
+Skizzieren sie das Optimierungsproblems, das die **letzte** Hauptkomponentenrichtung definiert eines (zentrierten) Datensatzes definiert (analog dazu, wie in Abschnitt \@ref(sec-PCA-maximierung) eingef&uuml;hrt).
 
-Implementieren sie die SQP Iteration zur Berechnung der ersten Hauptkomponentenrichtung f&uuml;r die Pinguin Daten. Berechnen Sie den Fehler zur *exakten* (mit der SVD berechneten) L&ouml;sung und geben sie ihn in jedem Schritt aus.
+Skizzieren einen SQP-Schritt zur L&ouml;sung dieses Problems.
+
+Implementieren sie die SQP Iteration zur Berechnung der letzten Hauptkomponentenrichtung f&uuml;r die Pinguin Daten. Berechnen Sie die Abweichung zur *exakten* (mit der SVD berechneten) L&ouml;sung und geben sie ihn in jedem Schritt beispielsweise den Winkel zwischen dem Iteranten und der exakten Loesung berechnen. **Hinweis**: Nur die Norm der Differenz k&ouml;nnte irritieren, weil das Vorzeichen der Richtungen nicht festgelegt ist.

@@ -219,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Oftmals werden an die gesuchte Lösung <span class="math inline">\(x^* \in \mathbb R^{n}\)</span> eines Optimierungsproblems a-priori bestimmte Anforderungen gestellt, wie:</p>
 <ul>
 <li><span class="math inline">\(x_1 + x_2 \geq 0\)</span> (die Lösung soll in einem bestimmten Abschnitt liegen)</li>
-<li><span class="math inline">\(x_1^2 + x_2*2 - c^2 = 0\)</span> (die ersten beiden Komponenten der Lösung sollen auf einer Kreisbahn liegen)</li>
+<li><span class="math inline">\(x_1^2 + x_2^2 - c^2 = 0\)</span> (die ersten beiden Komponenten der Lösung sollen auf einer Kreisbahn liegen)</li>
 </ul>
 <p>Allgemein lässt sich so ein Optimierungsproblem schreiben als</p>
 <div class="definition">
@@ -333,7 +333,7 @@ x^T Q x + c^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }Ax=b
 vor, dann sind die notwendigen Optimalitätsbedingungen durch
 <span class="math display">\[\begin{equation*}
 \begin{bmatrix}
-Q &amp; A^T \\
+Q+Q^T &amp; A^T \\
 A &amp; 0
 \end{bmatrix}
 =

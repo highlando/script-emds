@@ -2675,7 +2675,7 @@ Oftmals werden an die gesuchte Lösung \(x^* \in \mathbb R^{n}\) eines Optimieru
 \item
   \(x_1 + x_2 \geq 0\) (die Lösung soll in einem bestimmten Abschnitt liegen)
 \item
-  \(x_1^2 + x_2*2 - c^2 = 0\) (die ersten beiden Komponenten der Lösung sollen auf einer Kreisbahn liegen)
+  \(x_1^2 + x_2^2 - c^2 = 0\) (die ersten beiden Komponenten der Lösung sollen auf einer Kreisbahn liegen)
 \end{itemize}
 
 Allgemein lässt sich so ein Optimierungsproblem schreiben als
@@ -2847,7 +2847,7 @@ x^T Q x + c^Tx  \to \min_{x\in \mathbb R^{n}} \quad \text{s.t. }Ax=b
 vor, dann sind die notwendigen Optimalitätsbedingungen durch
 \begin{equation*}
 \begin{bmatrix}
-Q & A^T \\
+Q+Q^T & A^T \\
 A & 0
 \end{bmatrix}
 =

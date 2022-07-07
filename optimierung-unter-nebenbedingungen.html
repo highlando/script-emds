@@ -156,7 +156,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
-<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-pca-maximierung"><i class="fa fa-check"></i><b>4.3</b> maximierung der varianz in (haupt)-achsenrichtung</a></li>
+<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-pca-maximierung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
 <li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der PENGUINS Datensatz</a></li>
@@ -402,9 +402,62 @@ g_i(x_k)
 </div>
 <div id="hauptkomponente-aus-sqp-tp" class="section level3 hasAnchor">
 <h3><span class="header-section-number">8.5.3</span> Hauptkomponente aus SQP (T+P)<a href="optimierung-unter-nebenbedingungen.html#hauptkomponente-aus-sqp-tp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Skizzieren sie das Optimierungsproblems, das die <strong>letzte</strong> Hauptkomponentenrichtung definiert eines (zentrierten) Datensatzes definiert (analog dazu, wie in Abschnitt <a href="#sec-PCA-maximierung"><strong>??</strong></a> eingeführt).</p>
-<p>Skizzieren einen SQP-Schritt zur Lösung dieses Problems.</p>
+<p>Skizzieren sie das Optimierungsproblems, das die <strong>letzte</strong> Hauptkomponentenrichtung definiert (also die Richtung mit minimaler Varianz) eines zentrierten Datensatzes definiert (analog dazu, wie in Abschnitt <a href="hauptkomponentenanalyse.html#sec-pca-maximierung">4.3</a> eingeführt). (T)</p>
+<p>Skizzieren einen SQP-Schritt zur Lösung dieses Problems. (T)</p>
 <p>Implementieren sie die SQP Iteration zur Berechnung der letzten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie die Abweichung zur <em>exakten</em> (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt beispielsweise den Winkel zwischen dem Iteranten und der exakten Loesung berechnen. <strong>Hinweis</strong>: Nur die Norm der Differenz könnte irritieren, weil das Vorzeichen der Richtungen nicht festgelegt ist.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb22-1" title="1"><span class="im">import</span> json</a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb22-3" title="3"></a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;penguin-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
+<a class="sourceLine" id="cb22-5" title="5">    datadict <span class="op">=</span> json.load(f)</a>
+<a class="sourceLine" id="cb22-6" title="6"></a>
+<a class="sourceLine" id="cb22-7" title="7">data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</a>
+<a class="sourceLine" id="cb22-8" title="8"></a>
+<a class="sourceLine" id="cb22-9" title="9"><span class="co"># center the data</span></a>
+<a class="sourceLine" id="cb22-10" title="10">X <span class="op">=</span> data <span class="op">-</span> data.mean(axis<span class="op">=</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb22-11" title="11">XtX <span class="op">=</span> X.T <span class="op">@</span> X  <span class="co"># for later use</span></a>
+<a class="sourceLine" id="cb22-12" title="12"></a>
+<a class="sourceLine" id="cb22-13" title="13">U, S, Vh <span class="op">=</span> np.linalg.svd(X)</a>
+<a class="sourceLine" id="cb22-14" title="14"></a>
+<a class="sourceLine" id="cb22-15" title="15">pcfour <span class="op">=</span> Vh[<span class="op">-</span><span class="dv">1</span>:, :].T  <span class="co"># die &quot;letzte&quot; Hauptrichtung</span></a>
+<a class="sourceLine" id="cb22-16" title="16">nrmpcf <span class="op">=</span> np.linalg.norm(pcfour)  <span class="co"># brauchen wir um den Winkel zu berechnen</span></a>
+<a class="sourceLine" id="cb22-17" title="17"></a>
+<a class="sourceLine" id="cb22-18" title="18">xk <span class="op">=</span> np.zeros((<span class="dv">4</span>, <span class="dv">1</span>))  <span class="co"># Startvektor</span></a>
+<a class="sourceLine" id="cb22-19" title="19">xk[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb22-20" title="20">arccosalpha <span class="op">=</span> xk.T <span class="op">@</span> pcfour <span class="op">/</span> (np.linalg.norm(xk)<span class="op">*</span>nrmpcf)</a>
+<a class="sourceLine" id="cb22-21" title="21"><span class="bu">print</span>(<span class="ss">f&#39;Iteration: </span><span class="sc">{</span><span class="dv">0</span><span class="sc">}</span><span class="ss"> -- `arccos(sol, xk)` </span><span class="sc">{</span>arccosalpha<span class="sc">}</span><span class="ss">&#39;</span>)</a>
+<a class="sourceLine" id="cb22-22" title="22"></a>
+<a class="sourceLine" id="cb22-23" title="23"></a>
+<a class="sourceLine" id="cb22-24" title="24"><span class="kw">def</span> solve_sadpoint_sys_x(Q<span class="op">=</span><span class="va">None</span>, A<span class="op">=</span><span class="va">None</span>, fone<span class="op">=</span><span class="va">None</span>, ftwo<span class="op">=</span><span class="va">None</span>):</a>
+<a class="sourceLine" id="cb22-25" title="25">    <span class="co">&#39;&#39;&#39; Loesung des Sattelpunktprobles</span></a>
+<a class="sourceLine" id="cb22-26" title="26"></a>
+<a class="sourceLine" id="cb22-27" title="27"><span class="co">    | Q  A.T | . | x |    | f1 |</span></a>
+<a class="sourceLine" id="cb22-28" title="28"><span class="co">    | A   0  |   | l |  = | f2 |</span></a>
+<a class="sourceLine" id="cb22-29" title="29"></a>
+<a class="sourceLine" id="cb22-30" title="30"><span class="co">    Notes:</span></a>
+<a class="sourceLine" id="cb22-31" title="31"><span class="co">    -----</span></a>
+<a class="sourceLine" id="cb22-32" title="32"></a>
+<a class="sourceLine" id="cb22-33" title="33"><span class="co">    Es wird nur `x` zurueckgegeben</span></a>
+<a class="sourceLine" id="cb22-34" title="34"></a>
+<a class="sourceLine" id="cb22-35" title="35"><span class="co">    &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb22-36" title="36">    m <span class="op">=</span> A.shape[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb22-37" title="37">    lineone <span class="op">=</span> [Q, A.T]</a>
+<a class="sourceLine" id="cb22-38" title="38">    linetwo <span class="op">=</span> [A, np.zeros((m, m))]</a>
+<a class="sourceLine" id="cb22-39" title="39">    sdptmat <span class="op">=</span> np.vstack([np.hstack(lineone),</a>
+<a class="sourceLine" id="cb22-40" title="40">                         np.hstack(linetwo)])</a>
+<a class="sourceLine" id="cb22-41" title="41">    rhs <span class="op">=</span> np.vstack([fone, ftwo])</a>
+<a class="sourceLine" id="cb22-42" title="42">    xl <span class="op">=</span> np.linalg.solve(sdptmat, rhs)</a>
+<a class="sourceLine" id="cb22-43" title="43">    <span class="cf">return</span> xl[:<span class="op">-</span>m]  <span class="co"># return only the `x-part`</span></a>
+<a class="sourceLine" id="cb22-44" title="44"></a>
+<a class="sourceLine" id="cb22-45" title="45"></a>
+<a class="sourceLine" id="cb22-46" title="46"><span class="cf">for</span> kkk <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>):</a>
+<a class="sourceLine" id="cb22-47" title="47">    <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb22-48" title="48">    <span class="co"># die SQP Iteration</span></a>
+<a class="sourceLine" id="cb22-49" title="49">    <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb22-50" title="50">    xk <span class="op">=</span> xk <span class="op">+</span> solve_sadpoint_sys_x()</a>
+<a class="sourceLine" id="cb22-51" title="51"></a>
+<a class="sourceLine" id="cb22-52" title="52">    arccosalpha <span class="op">=</span> xk.T <span class="op">@</span> pcfour <span class="op">/</span> (np.linalg.norm(xk)<span class="op">*</span>nrmpcf)</a>
+<a class="sourceLine" id="cb22-53" title="53">    <span class="bu">print</span>(<span class="ss">f&#39;Iteration: </span><span class="sc">{</span>kkk<span class="sc">}</span><span class="ss"> -- `arccos(sol, xk)` </span><span class="sc">{</span>arccosalpha<span class="sc">}</span><span class="ss">&#39;</span>)</a></code></pre></div>
 
 </div>
 </div>

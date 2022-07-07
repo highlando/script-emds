@@ -1409,7 +1409,7 @@ x_c \\ y_c
 \end{equation*}
 
 \hypertarget{sec-pca-maximierung}{%
-\section{maximierung der varianz in (haupt)-achsenrichtung}\label{sec-pca-maximierung}}
+\section{Maximierung der Varianz in (Haupt)-Achsenrichtung}\label{sec-pca-maximierung}}
 
 Wir wollen nun also \(b_1\in \mathbb R^{2}\), mit \(\|b_1\|=1\) so wählen, dass
 \begin{equation*}
@@ -2932,11 +2932,69 @@ Verifizieren sie die Aussage aus Lemma \ref{lem:not-para-not-min}.
 \hypertarget{hauptkomponente-aus-sqp-tp}{%
 \subsection{Hauptkomponente aus SQP (T+P)}\label{hauptkomponente-aus-sqp-tp}}
 
-Skizzieren sie das Optimierungsproblems, das die \textbf{letzte} Hauptkomponentenrichtung definiert eines (zentrierten) Datensatzes definiert (analog dazu, wie in Abschnitt \ref{sec-PCA-maximierung} eingeführt).
+Skizzieren sie das Optimierungsproblems, das die \textbf{letzte} Hauptkomponentenrichtung definiert (also die Richtung mit minimaler Varianz) eines zentrierten Datensatzes definiert (analog dazu, wie in Abschnitt \ref{sec-pca-maximierung} eingeführt). (T)
 
-Skizzieren einen SQP-Schritt zur Lösung dieses Problems.
+Skizzieren einen SQP-Schritt zur Lösung dieses Problems. (T)
 
 Implementieren sie die SQP Iteration zur Berechnung der letzten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie die Abweichung zur \emph{exakten} (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt beispielsweise den Winkel zwischen dem Iteranten und der exakten Loesung berechnen. \textbf{Hinweis}: Nur die Norm der Differenz könnte irritieren, weil das Vorzeichen der Richtungen nicht festgelegt ist.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ json}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'penguin-data.json'}\NormalTok{, }\StringTok{'r'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
+\NormalTok{    datadict }\OperatorTok{=}\NormalTok{ json.load(f)}
+
+\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'data'}\NormalTok{])}
+
+\CommentTok{# center the data}
+\NormalTok{X }\OperatorTok{=}\NormalTok{ data }\OperatorTok{-}\NormalTok{ data.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\NormalTok{XtX }\OperatorTok{=}\NormalTok{ X.T }\OperatorTok{@}\NormalTok{ X  }\CommentTok{# for later use}
+
+\NormalTok{U, S, Vh }\OperatorTok{=}\NormalTok{ np.linalg.svd(X)}
+
+\NormalTok{pcfour }\OperatorTok{=}\NormalTok{ Vh[}\OperatorTok{-}\DecValTok{1}\NormalTok{:, :].T  }\CommentTok{# die "letzte" Hauptrichtung}
+\NormalTok{nrmpcf }\OperatorTok{=}\NormalTok{ np.linalg.norm(pcfour)  }\CommentTok{# brauchen wir um den Winkel zu berechnen}
+
+\NormalTok{xk }\OperatorTok{=}\NormalTok{ np.zeros((}\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{))  }\CommentTok{# Startvektor}
+\NormalTok{xk[}\DecValTok{0}\NormalTok{] }\OperatorTok{=} \DecValTok{1}
+\NormalTok{arccosalpha }\OperatorTok{=}\NormalTok{ xk.T }\OperatorTok{@}\NormalTok{ pcfour }\OperatorTok{/}\NormalTok{ (np.linalg.norm(xk)}\OperatorTok{*}\NormalTok{nrmpcf)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'Iteration: }\SpecialCharTok{\{}\DecValTok{0}\SpecialCharTok{\}}\SpecialStringTok{ -- `arccos(sol, xk)` }\SpecialCharTok{\{}\NormalTok{arccosalpha}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
+
+
+\KeywordTok{def}\NormalTok{ solve_sadpoint_sys_x(Q}\OperatorTok{=}\VariableTok{None}\NormalTok{, A}\OperatorTok{=}\VariableTok{None}\NormalTok{, fone}\OperatorTok{=}\VariableTok{None}\NormalTok{, ftwo}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
+    \CommentTok{''' Loesung des Sattelpunktprobles}
+
+\CommentTok{    | Q  A.T | . | x |    | f1 |}
+\CommentTok{    | A   0  |   | l |  = | f2 |}
+
+\CommentTok{    Notes:}
+\CommentTok{    -----}
+
+\CommentTok{    Es wird nur `x` zurueckgegeben}
+
+\CommentTok{    '''}
+\NormalTok{    m }\OperatorTok{=}\NormalTok{ A.shape[}\DecValTok{0}\NormalTok{]}
+\NormalTok{    lineone }\OperatorTok{=}\NormalTok{ [Q, A.T]}
+\NormalTok{    linetwo }\OperatorTok{=}\NormalTok{ [A, np.zeros((m, m))]}
+\NormalTok{    sdptmat }\OperatorTok{=}\NormalTok{ np.vstack([np.hstack(lineone),}
+\NormalTok{                         np.hstack(linetwo)])}
+\NormalTok{    rhs }\OperatorTok{=}\NormalTok{ np.vstack([fone, ftwo])}
+\NormalTok{    xl }\OperatorTok{=}\NormalTok{ np.linalg.solve(sdptmat, rhs)}
+    \ControlFlowTok{return}\NormalTok{ xl[:}\OperatorTok{-}\NormalTok{m]  }\CommentTok{# return only the `x-part`}
+
+
+\ControlFlowTok{for}\NormalTok{ kkk }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{11}\NormalTok{):}
+    \CommentTok{# ...}
+    \CommentTok{# die SQP Iteration}
+    \CommentTok{# ...}
+\NormalTok{    xk }\OperatorTok{=}\NormalTok{ xk }\OperatorTok{+}\NormalTok{ solve_sadpoint_sys_x()}
+
+\NormalTok{    arccosalpha }\OperatorTok{=}\NormalTok{ xk.T }\OperatorTok{@}\NormalTok{ pcfour }\OperatorTok{/}\NormalTok{ (np.linalg.norm(xk)}\OperatorTok{*}\NormalTok{nrmpcf)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'Iteration: }\SpecialCharTok{\{}\NormalTok{kkk}\SpecialCharTok{\}}\SpecialStringTok{ -- `arccos(sol, xk)` }\SpecialCharTok{\{}\NormalTok{arccosalpha}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{referenzen}{%
 \chapter*{Referenzen}\label{referenzen}}

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 Stochastistic Gradient and Learning | Einführung in die mathematische Datenanalyse</title>
+  <title>9 Stochastisches Gradientenverfahren und Maschinelles Lernen | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Stochastistic Gradient and Learning | Einführung in die mathematische Datenanalyse" />
+  <meta property="og:title" content="9 Stochastisches Gradientenverfahren und Maschinelles Lernen | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   <meta name="github-repo" content="highlando/script-emds" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Stochastistic Gradient and Learning | Einführung in die mathematische Datenanalyse" />
+  <meta name="twitter:title" content="9 Stochastisches Gradientenverfahren und Maschinelles Lernen | Einführung in die mathematische Datenanalyse" />
   
   <meta name="twitter:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
   
@@ -193,10 +193,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming"><i class="fa fa-check"></i><b>8.4</b> Sequential Quadratic Programming</a></li>
 <li class="chapter" data-level="8.5" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#aufgaben-5"><i class="fa fa-check"></i><b>8.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html"><i class="fa fa-check"></i><b>9</b> Stochastistic Gradient and Learning</a><ul>
-<li class="chapter" data-level="9.1" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html#hintergrund"><i class="fa fa-check"></i><b>9.1</b> Hintergrund</a></li>
-<li class="chapter" data-level="9.2" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html#iterative_method"><i class="fa fa-check"></i><b>9.2</b> Iterative method</a></li>
-<li class="chapter" data-level="9.3" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html#aufgabe"><i class="fa fa-check"></i><b>9.3</b> Aufgabe</a></li>
+<li class="chapter" data-level="9" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><i class="fa fa-check"></i><b>9</b> Stochastisches Gradientenverfahren und Maschinelles Lernen</a><ul>
+<li class="chapter" data-level="9.1" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#hintergrund"><i class="fa fa-check"></i><b>9.1</b> Hintergrund</a></li>
+<li class="chapter" data-level="9.2" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#iterative_method"><i class="fa fa-check"></i><b>9.2</b> Stochastisches Abstiegsverfahren</a></li>
+<li class="chapter" data-level="9.3" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#aufgabe"><i class="fa fa-check"></i><b>9.3</b> Aufgabe</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
 <li class="divider"></li>
@@ -219,21 +219,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="stochastistic-gradient-and-learning" class="section level1 hasAnchor">
-<h1><span class="header-section-number">9</span> Stochastistic Gradient and Learning<a href="stochastistic-gradient-and-learning.html#stochastistic-gradient-and-learning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="stochastisches-gradientenverfahren-und-maschinelles-lernen" class="section level1 hasAnchor">
+<h1><span class="header-section-number">9</span> Stochastisches Gradientenverfahren und Maschinelles Lernen<a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#stochastisches-gradientenverfahren-und-maschinelles-lernen" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="sdg-just-wiki" class="JHSAYS">
 <p>Dieses Kapitel ist kopiert (und, teilweise von mir und teilweise automatisch, übersetzt) aus dem Wikipedia Artikel <span class="citation">(Stochastistic Gradient, Wikipedia contributors <a href="#ref-enwiki:1098148439">2022</a>)</span>. Dieses Kapitel steht unter der <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License"><em>WP:CC BY-SA</em> Lizenz</a>.</p>
 </div>
 <p>Der stochastische Gradientenabstieg (oft als SGD abgekürzt) ist ein iteratives Verfahren zur Optimierung einer Zielfunktion mit geeigneten Glattheitseigenschaften (z. B. differenzierbar oder subdifferenzierbar). Sie kann als stochastische Näherung der Gradientenabstiegsoptimierung angesehen werden, da sie die tatsächliche Steigung (berechnet aus dem gesamten Datensatz) durch eine Schätzung davon ersetzt (berechnet aus einer zufällig ausgewählten Teilmenge der Daten). Insbesondere bei hochdimensionalen Optimierungsproblemen reduziert dies den sehr hohen Rechenaufwand, wodurch schnellere Iterationen, allerdings im Ausgleich für eine niedrigere Konvergenzrate, erreicht werden.</p>
 <p>Während die Grundidee der stochastischen Approximation auf den Robbins-Monro-Algorithmus der 1950er Jahre zurückgeht, hat sich der stochastische Gradientenabstieg zu einer wichtigen Optimierungsmethode im maschinellen Lernen entwickelt.</p>
 <div id="hintergrund" class="section level2 hasAnchor">
-<h2><span class="header-section-number">9.1</span> Hintergrund<a href="stochastistic-gradient-and-learning.html#hintergrund" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">9.1</span> Hintergrund<a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#hintergrund" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sowohl in der Berechnung statistischer Schätzer als auch im <em>Maschinellen Lernen</em> spielt die Minimierung von Zielfunktionalen in Summenform
 <span class="math display">\[\begin{equation*}
 Q(w) = \frac{1}{N}\sum_{i=1}^N Q_i(w)
 \end{equation*}\]</span>
-eine Rolle, wobei der Parameter <span class="math inline">\(w\)</span> der
-<span class="math inline">\(Q\)</span> minimiert gefunden oder geschätzt werden soll.
+eine Rolle, wobei der Parameter <span class="math inline">\(w\in \mathbb R^n\)</span>, der
+<span class="math inline">\(Q\)</span> minimiert, gefunden oder geschätzt werden soll.
 Jede der Summandenfunktionen <span class="math inline">\(Q_i\)</span> ist typischerweise assoziiert mit einem <span class="math inline">\(i\)</span>-ten Datenpunkt (einer Beobachtung) beispielsweise aus einer Menge von Trainingsdaten.</p>
 <p>Um obige Funktion zu minimieren, würde ein sogenannter Gradientenabstiegsverfahren den folgenden Minimierungsschritt</p>
 <p><span class="math display">\[\begin{equation*}
@@ -252,7 +252,7 @@ dem Mittelwert der Gradienten aller <span class="math inline">\(Q_i\)</span>s am
 <p>wobei <span class="math inline">\(\mathcal J \subset \{1, \dotsc, N\}\)</span> eine Indexmenge ist, die den <em>batch</em> der zur Approximation gewählten <span class="math inline">\(Q_i\)</span>s beschreibt.</p>
 </div>
 <div id="iterative_method" class="section level2 hasAnchor">
-<h2><span class="header-section-number">9.2</span> Iterative method<a href="stochastistic-gradient-and-learning.html#iterative_method" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">9.2</span> Stochastisches Abstiegsverfahren<a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#iterative_method" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Beim stochastischen (oder “Online”) Gradientenabstieg wird der wahre Gradient von <span class="math inline">\(Q(w^k)\)</span> durch einen Gradienten bei einer einzelnen Probe angenähert:
 <span class="math display">\[\begin{equation*}
 w^{k+1} = w^k-\eta \nabla Q_j(w^k),
@@ -285,10 +285,10 @@ mit <span class="math inline">\(j\in \{1,\dotsc, N\}\)</span> zufällig gewählt
 \frac{1}{N} \sum_{i=1}^N \nabla Q_i(w^k) \approx \frac{1}{|\mathcal J|} \sum_{j\in \mathcal J} \nabla Q_j(w^k).
 \end{equation*}\]</span>
 Im Algorithmus wird dann anstelle der zufälligen Indices <span class="math inline">\(j \in \{1, \dotsc, N\}\)</span>, über zufällig zusammengestellte Indexmengen <span class="math inline">\(\mathcal J \subset \{1, \dotsc, N\}\)</span> iteriert.</p>
-<p>Da die einzelnen Gradienten <span class="math inline">\(\nabla Q_j(w^K)\)</span> unabhängig voneinander berechnet werden können, kann so ein <em>batch</em> Verfahren effizient auf Computern mit mehreren Prozessoren realisiert werden. Die Konvergenztheorie ist nicht wesentlich verschieden vom eigentlichen <em>stochastistischen Gradientenabstiegsverfahren</em>, allerdings erscheint die beobachte Konvergenz weniger erratisch, da der Mittelwert statistische Ausreißer ausmitteln kann.</p>
+<p>Da die einzelnen Gradienten <span class="math inline">\(\nabla Q_j(w^K)\)</span> unabhängig voneinander berechnet werden können, kann so ein <em>batch</em> Verfahren effizient auf Computern mit mehreren Prozessoren realisiert werden. Die Konvergenztheorie ist nicht wesentlich verschieden vom eigentlichen <em>stochastischen Gradientenabstiegsverfahren</em>, allerdings erscheint die beobachte Konvergenz weniger erratisch, da der Mittelwert statistische Ausreißer ausmitteln kann.</p>
 </div>
 <div id="aufgabe" class="section level2 hasAnchor">
-<h2><span class="header-section-number">9.3</span> Aufgabe<a href="stochastistic-gradient-and-learning.html#aufgabe" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">9.3</span> Aufgabe<a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#aufgabe" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Schreiben Sie ein Programm, dass mit Hilfe eines neuronalen Netzes (NN) mit einer <em>hidden layer</em>
 <span class="math display">\[\begin{equation*}
 \eta_i = NN(x_i):=\tanh \bigl (A_2 \tanh (A_1 x_i + b_1) + b_2\bigr )
@@ -363,7 +363,7 @@ mittels des <em>stochastischen (batch) Gradientenabstiegs</em> bestimmt werden.<
 <p>Damit fehlen zum Programm insbesondere noch</p>
 <ul>
 <li>die Zielfunktion der Optimierung in einem Datenpunkt <span class="math inline">\(x_i\)</span></li>
-<li>eine Funktion, die den stochastistischen Gradienten über einem kleinen <em>batch</em> von Daten ausrechnet</li>
+<li>eine Funktion, die den stochastischen Gradienten über einem kleinen <em>batch</em> von Daten ausrechnet</li>
 <li>eine Iteration, die das Gradientenabstiegsverfahren zusammen mit der <em>learning rate</em> durchführt</li>
 <li>ein Loop, der testet, wie das optimierte <span class="math inline">\(NN\)</span>, die verbliebenen Daten klassifiziert</li>
 </ul>

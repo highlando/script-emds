@@ -2996,8 +2996,8 @@ Implementieren sie die SQP Iteration zur Berechnung der letzten Hauptkomponenten
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{stochastistic-gradient-and-learning}{%
-\chapter{Stochastistic Gradient and Learning}\label{stochastistic-gradient-and-learning}}
+\hypertarget{stochastisches-gradientenverfahren-und-maschinelles-lernen}{%
+\chapter{Stochastisches Gradientenverfahren und Maschinelles Lernen}\label{stochastisches-gradientenverfahren-und-maschinelles-lernen}}
 
 \leavevmode\hypertarget{sdg-just-wiki}{}%
 \begin{JHSAYS}
@@ -3016,8 +3016,8 @@ Sowohl in der Berechnung statistischer Schätzer als auch im \emph{Maschinellen 
 \begin{equation*}
 Q(w) = \frac{1}{N}\sum_{i=1}^N Q_i(w)
 \end{equation*}
-eine Rolle, wobei der Parameter \(w\) der
-\(Q\) minimiert gefunden oder geschätzt werden soll.
+eine Rolle, wobei der Parameter \(w\in \mathbb R^n\), der
+\(Q\) minimiert, gefunden oder geschätzt werden soll.
 Jede der Summandenfunktionen \(Q_i\) ist typischerweise assoziiert mit einem \(i\)-ten Datenpunkt (einer Beobachtung) beispielsweise aus einer Menge von Trainingsdaten.
 
 Um obige Funktion zu minimieren, würde ein sogenannter Gradientenabstiegsverfahren den folgenden Minimierungsschritt
@@ -3042,7 +3042,7 @@ dem Mittelwert der Gradienten aller \(Q_i\)s am Punkt \(w_k\), der durch ein kle
 wobei \(\mathcal J \subset \{1, \dotsc, N\}\) eine Indexmenge ist, die den \emph{batch} der zur Approximation gewählten \(Q_i\)s beschreibt.
 
 \hypertarget{iterative_method}{%
-\section{Iterative method}\label{iterative_method}}
+\section{Stochastisches Abstiegsverfahren}\label{iterative_method}}
 
 Beim stochastischen (oder ``Online'') Gradientenabstieg wird der wahre Gradient von \(Q(w^k)\) durch einen Gradienten bei einer einzelnen Probe angenähert:
 \begin{equation*}
@@ -3086,7 +3086,7 @@ In der Praxis hat sich der Kompromiss etabliert, der anstelle des Gradienten ein
 \end{equation*}
 Im Algorithmus wird dann anstelle der zufälligen Indices \(j \in \{1, \dotsc, N\}\), über zufällig zusammengestellte Indexmengen \(\mathcal J \subset \{1, \dotsc, N\}\) iteriert.
 
-Da die einzelnen Gradienten \(\nabla Q_j(w^K)\) unabhängig voneinander berechnet werden können, kann so ein \emph{batch} Verfahren effizient auf Computern mit mehreren Prozessoren realisiert werden. Die Konvergenztheorie ist nicht wesentlich verschieden vom eigentlichen \emph{stochastistischen Gradientenabstiegsverfahren}, allerdings erscheint die beobachte Konvergenz weniger erratisch, da der Mittelwert statistische Ausreißer ausmitteln kann.
+Da die einzelnen Gradienten \(\nabla Q_j(w^K)\) unabhängig voneinander berechnet werden können, kann so ein \emph{batch} Verfahren effizient auf Computern mit mehreren Prozessoren realisiert werden. Die Konvergenztheorie ist nicht wesentlich verschieden vom eigentlichen \emph{stochastischen Gradientenabstiegsverfahren}, allerdings erscheint die beobachte Konvergenz weniger erratisch, da der Mittelwert statistische Ausreißer ausmitteln kann.
 
 \hypertarget{aufgabe}{%
 \section{Aufgabe}\label{aufgabe}}
@@ -3192,7 +3192,7 @@ Damit fehlen zum Programm insbesondere noch
 \item
   die Zielfunktion der Optimierung in einem Datenpunkt \(x_i\)
 \item
-  eine Funktion, die den stochastistischen Gradienten über einem kleinen \emph{batch} von Daten ausrechnet
+  eine Funktion, die den stochastischen Gradienten über einem kleinen \emph{batch} von Daten ausrechnet
 \item
   eine Iteration, die das Gradientenabstiegsverfahren zusammen mit der \emph{learning rate} durchführt
 \item

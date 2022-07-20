@@ -289,11 +289,11 @@ Im Algorithmus wird dann anstelle der zufälligen Indices <span class="math inli
 </div>
 <div id="aufgabe" class="section level2 hasAnchor">
 <h2><span class="header-section-number">9.3</span> Aufgabe<a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#aufgabe" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Schreiben Sie ein Programm, dass mit Hilfe eines neuronalen Netzes (NN) mit einer <em>hidden layer</em>
+<p>Schreiben Sie ein Programm, das mit Hilfe eines neuronalen Netzes (NN) mit einer <em>hidden layer</em>
 <span class="math display">\[\begin{equation*}
 \eta_i = NN(x_i):=\tanh \bigl (A_2 \tanh (A_1 x_i + b_1) + b_2\bigr )
 \end{equation*}\]</span></p>
-<p>für einen Datenpunkt <span class="math inline">\(x_i \in \mathbb R^{n_0}\)</span>, Gewichten <span class="math inline">\(A_1 \in \mathbb R^{n_1 \times n_0}\)</span>, <span class="math inline">\(b_1 \in \mathbb R^{n_1}\)</span>, <span class="math inline">\(A_2 \in \mathbb R^{1, n_1}\)</span>, <span class="math inline">\(b_2 \in \mathbb R^{1}\)</span> und dem Ergebnisvektor <span class="math inline">\(\eta_i\in \mathbb R^{1}\)</span>, anhand der gemessenen Daten <span class="math inline">\(x_i\)</span> die bekannte Pinguin Population in zwei Gruppen aufteilt, so dass in der ersten Gruppe eine Spezies enthalten ist und in der anderen die beiden anderen Spezies.</p>
+<p>für einen Datenpunkt <span class="math inline">\(x_i \in \mathbb R^{n_0}\)</span>, Gewichten <span class="math inline">\(A_1 \in \mathbb R^{n_1 \times n_0}\)</span>, <span class="math inline">\(b_1 \in \mathbb R^{n_1}\)</span>, <span class="math inline">\(A_2 \in \mathbb R^{1, n_1}\)</span>, <span class="math inline">\(b_2 \in \mathbb R^{1}\)</span> und dem Ergebnisvektor <span class="math inline">\(\eta_i\in \mathbb R^{1}\)</span>, anhand der gemessenen Daten <span class="math inline">\(x_i\)</span> die bekannte Pinguin Population <a href="bilder/penguin-data.json"><code>penguin-data.json</code></a> in zwei Gruppen aufteilt, so dass in der ersten Gruppe eine Spezies enthalten ist und in der anderen die beiden anderen Spezies.</p>
 <p>Dazu kann eine Funktion <span class="math inline">\(\ell \colon X \mapsto \{-1, 1\}\)</span> definiert werden, die die bekannten Pinguine <span class="math inline">\(x_i\)</span> aus dem Datensatz <span class="math inline">\(X\)</span> ihrer Gruppe zuordnet. Dann können die Koeffizienten des <span class="math inline">\(NN\)</span> über das Optimierungsproblem
 <span class="math display">\[\begin{equation*}
 \frac{1}{|X|}\sum_{x_i \in X} \|\ell(x_i)-NN(x_i)\|^2 \to \min_{A_1, b_1, A_2, b_2}

@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="optimierung.html"/>
-<link rel="next" href="referenzen.html"/>
+<link rel="next" href="stochastistic-gradient-and-learning.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -192,6 +192,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#linear-quadratische-probleme"><i class="fa fa-check"></i><b>8.3</b> Linear Quadratische Probleme</a></li>
 <li class="chapter" data-level="8.4" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming"><i class="fa fa-check"></i><b>8.4</b> Sequential Quadratic Programming</a></li>
 <li class="chapter" data-level="8.5" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#aufgaben-5"><i class="fa fa-check"></i><b>8.5</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html"><i class="fa fa-check"></i><b>9</b> Stochastistic Gradient and Learning</a><ul>
+<li class="chapter" data-level="9.1" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html#hintergrund"><i class="fa fa-check"></i><b>9.1</b> Hintergrund</a></li>
+<li class="chapter" data-level="9.2" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html#iterative_method"><i class="fa fa-check"></i><b>9.2</b> Iterative method</a></li>
+<li class="chapter" data-level="9.3" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html#aufgabe"><i class="fa fa-check"></i><b>9.3</b> Aufgabe</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
 <li class="divider"></li>
@@ -362,7 +367,7 @@ ergibt sich das folgende iterative Verfahren genannt <em>Sequential Linear Progr
 <ol style="list-style-type: decimal">
 <li>Berechne <span class="math inline">\(d^k\)</span> aus der Minimierung von<a href="referenzen.html#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>
 <span class="math display">\[\begin{align*}
-\tilde f(x^k+d):= \nabla f(x^k)^T d + d^TH_f(x^k) d \to \min_{d\in \mathbb R^{n}}, \\\quad \text{unter der Nebenbedingung} \\ g_i^k(d):=g_(x^k)+\nabla g_i(x^k)d = 0 \quad i \in \mathcal I
+\tilde f(x^k+d):= \nabla f(x^k)^T d + d^TH_f(x^k) d \to \min_{d\in \mathbb R^{n}}, \\\quad \text{unter der Nebenbedingung} \\ \tilde g_i(x^k+d):=g(x^k)+\nabla g_i(x^k)d = 0 \quad i \in \mathcal I
   \end{align*}\]</span></li>
 <li>ein Update <span class="math inline">\(x^{k+1}=x^k+d^k\)</span>.</li>
 </ol>
@@ -402,7 +407,7 @@ g_i(x_k)
 </div>
 <div id="hauptkomponente-aus-sqp-tp" class="section level3 hasAnchor">
 <h3><span class="header-section-number">8.5.3</span> Hauptkomponente aus SQP (T+P)<a href="optimierung-unter-nebenbedingungen.html#hauptkomponente-aus-sqp-tp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Skizzieren sie das Optimierungsproblems, das die <strong>letzte</strong> Hauptkomponentenrichtung definiert (also die Richtung mit minimaler Varianz) eines zentrierten Datensatzes definiert (analog dazu, wie in Abschnitt <a href="hauptkomponentenanalyse.html#sec-pca-maximierung">4.3</a> eingeführt). (T)</p>
+<p>Skizzieren sie das Optimierungsproblems, das die <strong>letzte</strong> Hauptkomponentenrichtung definiert (also die Richtung mit minimaler Varianz) eines zentrierten Datensatzes definiert (analog dazu, wie in Abschnitt <a href="hauptkomponentenanalyse.html#sec-pca-maximierung">4.3</a> eingeführt). <strong>Hinweis</strong>: Alles wird vielleicht etwas einfacher, wenn sie die Nebenbedingung <span class="math inline">\(\|x\|=1\)</span> durch <span class="math inline">\(\|x\|^2 = 1\)</span> bzw. $x^Tx = 1 $ ersetzen. (T)</p>
 <p>Skizzieren einen SQP-Schritt zur Lösung dieses Problems. (T)</p>
 <p>Implementieren sie die SQP Iteration zur Berechnung der letzten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie die Abweichung zur <em>exakten</em> (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt beispielsweise den Winkel zwischen dem Iteranten und der exakten Loesung berechnen. <strong>Hinweis</strong>: Nur die Norm der Differenz könnte irritieren, weil das Vorzeichen der Richtungen nicht festgelegt ist.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb22-1" title="1"><span class="im">import</span> json</a>
@@ -475,7 +480,7 @@ g_i(x_k)
         </div>
       </div>
 <a href="optimierung.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="referenzen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="stochastistic-gradient-and-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

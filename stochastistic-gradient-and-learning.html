@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Stochastistic Gradient and Learning | Einführung in die mathematische Datenanalyse</title>
+  <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 Stochastistic Gradient and Learning | Einführung in die mathematische Datenanalyse" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
+  <meta name="github-repo" content="highlando/script-emds" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 Stochastistic Gradient and Learning | Einführung in die mathematische Datenanalyse" />
+  
+  <meta name="twitter:description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
+  
+
+<meta name="author" content="Jan Heiland" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="optimierung-unter-nebenbedingungen.html"/>
+<link rel="next" href="referenzen.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">EMDS</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Vorwort</a></li>
+<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a><ul>
+<li class="chapter" data-level="1.1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#wie-passiert-die-datenanalyse"><i class="fa fa-check"></i><b>1.1</b> Wie passiert die Datenanalyse?</a></li>
+<li class="chapter" data-level="1.2" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#was-sind-daten"><i class="fa fa-check"></i><b>1.2</b> Was sind Daten?</a></li>
+<li class="chapter" data-level="1.3" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#beispiele"><i class="fa fa-check"></i><b>1.3</b> Beispiele</a></li>
+<li class="chapter" data-level="1.4" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#python"><i class="fa fa-check"></i><b>1.4</b> Python</a></li>
+<li class="chapter" data-level="1.5" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#aufgaben"><i class="fa fa-check"></i><b>1.5</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
+<li class="chapter" data-level="2.1" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
+<li class="chapter" data-level="2.2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
+<li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#sec-linreg-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
+<li class="chapter" data-level="2.4" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
+<li class="chapter" data-level="2.5" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a><ul>
+<li class="chapter" data-level="3.1" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#qr-zerlegung"><i class="fa fa-check"></i><b>3.1</b> QR Zerlegung</a></li>
+<li class="chapter" data-level="3.2" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#singulärwertzerlegung"><i class="fa fa-check"></i><b>3.2</b> Singulärwertzerlegung</a></li>
+<li class="chapter" data-level="3.3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#aufgaben-1"><i class="fa fa-check"></i><b>3.3</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
+<li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
+<li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-pca-maximierung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
+<li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der PENGUINS Datensatz</a></li>
+<li class="chapter" data-level="5.2" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#darstellung"><i class="fa fa-check"></i><b>5.2</b> Darstellung</a></li>
+<li class="chapter" data-level="5.3" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#korrelationen-und-die-kovarianzmatrix"><i class="fa fa-check"></i><b>5.3</b> Korrelationen und die Kovarianzmatrix</a></li>
+<li class="chapter" data-level="5.4" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#hauptachsentransformation"><i class="fa fa-check"></i><b>5.4</b> Hauptachsentransformation</a></li>
+<li class="chapter" data-level="5.5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#rekonstruktion"><i class="fa fa-check"></i><b>5.5</b> Rekonstruktion</a></li>
+<li class="chapter" data-level="5.6" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#reduktion-der-daten"><i class="fa fa-check"></i><b>5.6</b> Reduktion der Daten</a></li>
+<li class="chapter" data-level="5.7" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-pinguin-daten"><i class="fa fa-check"></i><b>5.7</b> Am Beispiel der Pinguin Daten</a></li>
+<li class="chapter" data-level="5.8" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.8</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="6.1" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-im-allgemeinen"><i class="fa fa-check"></i><b>6.1</b> Clustering im Allgemeinen</a></li>
+<li class="chapter" data-level="6.2" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#k-means-clustering"><i class="fa fa-check"></i><b>6.2</b> K-means Clustering</a></li>
+<li class="chapter" data-level="6.3" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse-1"><i class="fa fa-check"></i><b>6.3</b> Clustering und Hauptkomponentenanalyse</a></li>
+<li class="chapter" data-level="6.4" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#training-und-testing"><i class="fa fa-check"></i><b>6.4</b> Training und Testing</a></li>
+<li class="chapter" data-level="6.5" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine"><i class="fa fa-check"></i><b>6.5</b> Am Beispiel der Pinguine</a></li>
+<li class="chapter" data-level="6.6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#aufgaben-3"><i class="fa fa-check"></i><b>6.6</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a><ul>
+<li class="chapter" data-level="7.1" data-path="optimierung.html"><a href="optimierung.html#multivariable-funktionen"><i class="fa fa-check"></i><b>7.1</b> Multivariable Funktionen</a></li>
+<li class="chapter" data-level="7.2" data-path="optimierung.html"><a href="optimierung.html#partielle-ableitungen-und-der-gradient"><i class="fa fa-check"></i><b>7.2</b> Partielle Ableitungen und der Gradient</a></li>
+<li class="chapter" data-level="7.3" data-path="optimierung.html"><a href="optimierung.html#richtungs-ableitung"><i class="fa fa-check"></i><b>7.3</b> Richtungs-Ableitung</a></li>
+<li class="chapter" data-level="7.4" data-path="optimierung.html"><a href="optimierung.html#optimierung-1"><i class="fa fa-check"></i><b>7.4</b> Optimierung</a></li>
+<li class="chapter" data-level="7.5" data-path="optimierung.html"><a href="optimierung.html#gradientenabstiegsverfahren"><i class="fa fa-check"></i><b>7.5</b> Gradientenabstiegsverfahren</a></li>
+<li class="chapter" data-level="7.6" data-path="optimierung.html"><a href="optimierung.html#extra-nichtglatte-optimierung"><i class="fa fa-check"></i><b>7.6</b> Extra: Nichtglatte Optimierung</a></li>
+<li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#extra-automatisches-differenzieren"><i class="fa fa-check"></i><b>7.7</b> Extra: Automatisches Differenzieren</a></li>
+<li class="chapter" data-level="7.8" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.8</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a><ul>
+<li class="chapter" data-level="8.1" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#richtungen-und-nebenbedingungen"><i class="fa fa-check"></i><b>8.1</b> Richtungen und Nebenbedingungen</a></li>
+<li class="chapter" data-level="8.2" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#restringierte-optimierungsprobleme-und-der-gradient"><i class="fa fa-check"></i><b>8.2</b> Restringierte Optimierungsprobleme und der Gradient</a></li>
+<li class="chapter" data-level="8.3" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#linear-quadratische-probleme"><i class="fa fa-check"></i><b>8.3</b> Linear Quadratische Probleme</a></li>
+<li class="chapter" data-level="8.4" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming"><i class="fa fa-check"></i><b>8.4</b> Sequential Quadratic Programming</a></li>
+<li class="chapter" data-level="8.5" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#aufgaben-5"><i class="fa fa-check"></i><b>8.5</b> Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html"><i class="fa fa-check"></i><b>9</b> Stochastistic Gradient and Learning</a><ul>
+<li class="chapter" data-level="9.1" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html#hintergrund"><i class="fa fa-check"></i><b>9.1</b> Hintergrund</a></li>
+<li class="chapter" data-level="9.2" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html#iterative_method"><i class="fa fa-check"></i><b>9.2</b> Iterative method</a></li>
+<li class="chapter" data-level="9.3" data-path="stochastistic-gradient-and-learning.html"><a href="stochastistic-gradient-and-learning.html#aufgabe"><i class="fa fa-check"></i><b>9.3</b> Aufgabe</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referenzen.html"><a href="referenzen.html"><i class="fa fa-check"></i>Referenzen</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Einführung in die mathematische Datenanalyse</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="stochastistic-gradient-and-learning" class="section level1 hasAnchor">
+<h1><span class="header-section-number">9</span> Stochastistic Gradient and Learning<a href="stochastistic-gradient-and-learning.html#stochastistic-gradient-and-learning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="sdg-just-wiki" class="JHSAYS">
+<p>Dieses Kapitel ist kopiert (und, teilweise von mir und teilweise automatisch, übersetzt) aus dem Wikipedia Artikel <span class="citation">(Stochastistic Gradient, Wikipedia contributors <a href="#ref-enwiki:1098148439">2022</a>)</span>. Dieses Kapitel steht unter der <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License"><em>WP:CC BY-SA</em> Lizenz</a>.</p>
+</div>
+<p>Der stochastische Gradientenabstieg (oft als SGD abgekürzt) ist ein iteratives Verfahren zur Optimierung einer Zielfunktion mit geeigneten Glattheitseigenschaften (z. B. differenzierbar oder subdifferenzierbar). Sie kann als stochastische Näherung der Gradientenabstiegsoptimierung angesehen werden, da sie die tatsächliche Steigung (berechnet aus dem gesamten Datensatz) durch eine Schätzung davon ersetzt (berechnet aus einer zufällig ausgewählten Teilmenge der Daten). Insbesondere bei hochdimensionalen Optimierungsproblemen reduziert dies den sehr hohen Rechenaufwand, wodurch schnellere Iterationen, allerdings im Ausgleich für eine niedrigere Konvergenzrate, erreicht werden.</p>
+<p>Während die Grundidee der stochastischen Approximation auf den Robbins-Monro-Algorithmus der 1950er Jahre zurückgeht, hat sich der stochastische Gradientenabstieg zu einer wichtigen Optimierungsmethode im maschinellen Lernen entwickelt.</p>
+<div id="hintergrund" class="section level2 hasAnchor">
+<h2><span class="header-section-number">9.1</span> Hintergrund<a href="stochastistic-gradient-and-learning.html#hintergrund" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sowohl in der Berechnung statistischer Schätzer als auch im <em>Maschinellen Lernen</em> spielt die Minimierung von Zielfunktionalen in Summenform
+<span class="math display">\[\begin{equation*}
+Q(w) = \frac{1}{N}\sum_{i=1}^N Q_i(w)
+\end{equation*}\]</span>
+eine Rolle, wobei der Parameter <span class="math inline">\(w\)</span> der
+<span class="math inline">\(Q\)</span> minimiert gefunden oder geschätzt werden soll.
+Jede der Summandenfunktionen <span class="math inline">\(Q_i\)</span> ist typischerweise assoziiert mit einem <span class="math inline">\(i\)</span>-ten Datenpunkt (einer Beobachtung) beispielsweise aus einer Menge von Trainingsdaten.</p>
+<p>Um obige Funktion zu minimieren, würde ein sogenannter Gradientenabstiegsverfahren den folgenden Minimierungsschritt</p>
+<p><span class="math display">\[\begin{equation*}
+w^{k+1} := w^{k} - \eta \nabla Q(w^k) = w^k - \eta \frac{1}{N} \sum_{i=1}^N \nabla Q_i(w^k),
+\end{equation*}\]</span>
+iterativ anwenden, wobei <span class="math inline">\(\eta\)</span> die Schrittweite ist, die besonders in der <em>ML</em> community oft auch <em>learning rate</em> genannt wird.</p>
+<p>Die Berechnung der Abstiegsrichtung erfordert hier also in jedem Schritt die Bestimmung von <span class="math inline">\(N\)</span> Gradienten <span class="math inline">\(\nabla Q_i(w^k)\)</span> der Summandenfunktionen. Wenn <span class="math inline">\(N\)</span> groß ist, also beispielsweise viele Datenpunkte in einer Regression beachtet werden sollen, dann ist die Berechnung entsprechend aufwändig.</p>
+<p>Andererseits entspricht die Abstiegsrichtung
+<span class="math display">\[\begin{equation*}
+\frac{1}{N} \sum_{i=1}^N \nabla Q_i(w^k)
+\end{equation*}\]</span>
+dem Mittelwert der Gradienten aller <span class="math inline">\(Q_i\)</span>s am Punkt <span class="math inline">\(w_k\)</span>, der durch ein kleineres Sample</p>
+<p><span class="math display">\[\begin{equation*}
+\frac{1}{N} \sum_{i=1}^N \nabla Q_i(w^k) \approx \frac{1}{|\mathcal J|} \sum_{j\in \mathcal J} \nabla Q_j(w^k),
+\end{equation*}\]</span></p>
+<p>wobei <span class="math inline">\(\mathcal J \subset \{1, \dotsc, N\}\)</span> eine Indexmenge ist, die den <em>batch</em> der zur Approximation gewählten <span class="math inline">\(Q_i\)</span>s beschreibt.</p>
+</div>
+<div id="iterative_method" class="section level2 hasAnchor">
+<h2><span class="header-section-number">9.2</span> Iterative method<a href="stochastistic-gradient-and-learning.html#iterative_method" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Beim stochastischen (oder “Online”) Gradientenabstieg wird der wahre Gradient von <span class="math inline">\(Q(w^k)\)</span> durch einen Gradienten bei einer einzelnen Probe angenähert:
+<span class="math display">\[\begin{equation*}
+w^{k+1} = w^k-\eta \nabla Q_j(w^k),
+\end{equation*}\]</span>
+mit <span class="math inline">\(j\in \{1,\dotsc, N\}\)</span> zufällig gewählt (ohne zurücklegen).</p>
+<p>Während der Algorithmus den Trainingssatz durchläuft, führt er die obige Aktualisierung für jede Trainingsprobe durch. Es können mehrere Durchgänge über den Trainingssatz gemacht werden, bis der Algorithmus konvergiert. Wenn dies getan wird, können die Daten für jeden Durchlauf gemischt werden, um Zyklen zu vermeiden. Typische Implementierungen können eine adaptive Lernrate verwenden, damit der Algorithmus konvergiert.</p>
+<p>Die wesentlichen Schritte als Algorithmus sehen wie folgt aus:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb23-1" title="1"><span class="co">###################################################</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="co"># The basic steps of a stochastic gradient method #</span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="co">###################################################</span></a>
+<a class="sourceLine" id="cb23-4" title="4"></a>
+<a class="sourceLine" id="cb23-5" title="5">w <span class="op">=</span> ...  <span class="co"># initialize the weight vector</span></a>
+<a class="sourceLine" id="cb23-6" title="6">eta <span class="op">=</span> ... <span class="co"># choose the learning rate</span></a>
+<a class="sourceLine" id="cb23-7" title="7">I <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, ..., N]  <span class="co"># the full index set</span></a>
+<a class="sourceLine" id="cb23-8" title="8"></a>
+<a class="sourceLine" id="cb23-9" title="9"><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(maxiter):</a>
+<a class="sourceLine" id="cb23-10" title="10">    J <span class="op">=</span> shuffle(I)  <span class="co"># shuffle the indices</span></a>
+<a class="sourceLine" id="cb23-11" title="11">    <span class="cf">for</span> j <span class="kw">in</span> J:</a>
+<a class="sourceLine" id="cb23-12" title="12">        <span class="co"># compute the gradient of Qj at current w</span></a>
+<a class="sourceLine" id="cb23-13" title="13">        gradjk <span class="op">=</span> nabla(Q(j, w))  </a>
+<a class="sourceLine" id="cb23-14" title="14">        <span class="co"># update the w vector</span></a>
+<a class="sourceLine" id="cb23-15" title="15">        w <span class="op">=</span> w <span class="op">-</span> eta<span class="op">*</span>gradjk</a>
+<a class="sourceLine" id="cb23-16" title="16">    <span class="cf">if</span> convergence_criterion:</a>
+<a class="sourceLine" id="cb23-17" title="17">       <span class="cf">break</span></a>
+<a class="sourceLine" id="cb23-18" title="18"></a>
+<a class="sourceLine" id="cb23-19" title="19"><span class="co">###################################################</span></a></code></pre></div>
+<p>Die Konvergenz des <em>stochastischen Gradientenabstiegsverfahren</em> als Kombination von <em>stochastischer Approximation</em> und <em>numerischer Optimierung</em> ist gut verstanden. Allgemein und unter bestimmten Voraussetzung lässt sich sagen, dass das stochastische Verfahren ähnlich konvergiert wie das <em>exakte Verfahren</em> mit der Einschränkung, dass die Konvergenz <em>fast sicher</em> stattfindet.</p>
+<p>In der Praxis hat sich der Kompromiss etabliert, der anstelle des Gradienten eines einzelnen Punktes <span class="math inline">\(\nabla Q_j(w_k)\)</span>, den Abstieg aus dem Mittelwert über mehrere Samples berechnet, also (wie oben beschrieben)
+<span class="math display">\[\begin{equation*}
+\frac{1}{N} \sum_{i=1}^N \nabla Q_i(w^k) \approx \frac{1}{|\mathcal J|} \sum_{j\in \mathcal J} \nabla Q_j(w^k).
+\end{equation*}\]</span>
+Im Algorithmus wird dann anstelle der zufälligen Indices <span class="math inline">\(j \in \{1, \dotsc, N\}\)</span>, über zufällig zusammengestellte Indexmengen <span class="math inline">\(\mathcal J \subset \{1, \dotsc, N\}\)</span> iteriert.</p>
+<p>Da die einzelnen Gradienten <span class="math inline">\(\nabla Q_j(w^K)\)</span> unabhängig voneinander berechnet werden können, kann so ein <em>batch</em> Verfahren effizient auf Computern mit mehreren Prozessoren realisiert werden. Die Konvergenztheorie ist nicht wesentlich verschieden vom eigentlichen <em>stochastistischen Gradientenabstiegsverfahren</em>, allerdings erscheint die beobachte Konvergenz weniger erratisch, da der Mittelwert statistische Ausreißer ausmitteln kann.</p>
+</div>
+<div id="aufgabe" class="section level2 hasAnchor">
+<h2><span class="header-section-number">9.3</span> Aufgabe<a href="stochastistic-gradient-and-learning.html#aufgabe" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Schreiben Sie ein Programm, dass mit Hilfe eines neuronalen Netzes (NN) mit einer <em>hidden layer</em>
+<span class="math display">\[\begin{equation*}
+\eta_i = NN(x_i):=\tanh \bigl (A_2 \tanh (A_1 x_i + b_1) + b_2\bigr )
+\end{equation*}\]</span></p>
+<p>für einen Datenpunkt <span class="math inline">\(x_i \in \mathbb R^{n_0}\)</span>, Gewichten <span class="math inline">\(A_1 \in \mathbb R^{n_1 \times n_0}\)</span>, <span class="math inline">\(b_1 \in \mathbb R^{n_1}\)</span>, <span class="math inline">\(A_2 \in \mathbb R^{1, n_1}\)</span>, <span class="math inline">\(b_2 \in \mathbb R^{1}\)</span> und dem Ergebnisvektor <span class="math inline">\(\eta_i\in \mathbb R^{1}\)</span>, anhand der gemessenen Daten <span class="math inline">\(x_i\)</span> die bekannte Pinguin Population in zwei Gruppen aufteilt, so dass in der ersten Gruppe eine Spezies enthalten ist und in der anderen die beiden anderen Spezies.</p>
+<p>Dazu kann eine Funktion <span class="math inline">\(\ell \colon X \mapsto \{-1, 1\}\)</span> definiert werden, die die bekannten Pinguine <span class="math inline">\(x_i\)</span> aus dem Datensatz <span class="math inline">\(X\)</span> ihrer Gruppe zuordnet. Dann können die Koeffizienten des <span class="math inline">\(NN\)</span> über das Optimierungsproblem
+<span class="math display">\[\begin{equation*}
+\frac{1}{|X|}\sum_{x_i \in X} \|\ell(x_i)-NN(x_i)\|^2 \to \min_{A_1, b_1, A_2, b_2}
+\end{equation*}\]</span>
+mittels des <em>stochastischen (batch) Gradientenabstiegs</em> bestimmt werden.</p>
+<p><strong>Hinweis</strong>: Für eine Funktion <span class="math inline">\(f \colon w \mapsto f(w) \in \mathbb R\)</span>, können sie den Gradienten <span class="math inline">\(\nabla_w f(w^*)\)</span> an der Stelle <span class="math inline">\(w^*\)</span> numerisch mit der Funktion <code>scipy.optimize.approx_fprime</code> bestimmen lassen.</p>
+<p>Führen Sie die Optimierung auf einem Teil (z.B. 90%) der Pinguin Daten durch und testen sie wie gut ihr Netz funktioniert auf den verbleibenden Datenpunkten.</p>
+<p>Der Beginn könnte also wie folgt aussehen (wobei die Größe der <em>hidden layer</em> zu <span class="math inline">\(n_1=2\)</span> gesetzt ist).</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb24-1" title="1"><span class="im">import</span> json</a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="im">from</span> scipy.optimize <span class="im">import</span> approx_fprime</a>
+<a class="sourceLine" id="cb24-4" title="4"></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;penguin-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
+<a class="sourceLine" id="cb24-6" title="6">    datadict <span class="op">=</span> json.load(f)</a>
+<a class="sourceLine" id="cb24-7" title="7"></a>
+<a class="sourceLine" id="cb24-8" title="8">data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</a>
+<a class="sourceLine" id="cb24-9" title="9"><span class="co"># centering the data</span></a>
+<a class="sourceLine" id="cb24-10" title="10">data <span class="op">=</span> data <span class="op">-</span> data.mean(axis<span class="op">=</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb24-11" title="11">lbls <span class="op">=</span> np.array(datadict[<span class="st">&#39;target&#39;</span>])</a>
+<a class="sourceLine" id="cb24-12" title="12"></a>
+<a class="sourceLine" id="cb24-13" title="13"><span class="co"># a dictionary that maps the labels(=targets) of the data into labels {1, -1}</span></a>
+<a class="sourceLine" id="cb24-14" title="14"><span class="co"># that will use for distinction of two groups</span></a>
+<a class="sourceLine" id="cb24-15" title="15">mplbldict <span class="op">=</span> {<span class="dv">0</span>: np.array([<span class="op">-</span><span class="dv">1</span>]),</a>
+<a class="sourceLine" id="cb24-16" title="16">             <span class="dv">1</span>: np.array([<span class="op">-</span><span class="dv">1</span>]),</a>
+<a class="sourceLine" id="cb24-17" title="17">             <span class="dv">2</span>: np.array([<span class="dv">1</span>])}</a>
+<a class="sourceLine" id="cb24-18" title="18"></a>
+<a class="sourceLine" id="cb24-19" title="19"><span class="co"># sizes of the layers</span></a>
+<a class="sourceLine" id="cb24-20" title="20">sxz, sxo, sxt <span class="op">=</span> data.shape[<span class="dv">1</span>], <span class="dv">2</span>, mplbldict[<span class="dv">0</span>].size</a>
+<a class="sourceLine" id="cb24-21" title="21"><span class="co"># define also the sizes of the weightmatrices</span></a>
+<a class="sourceLine" id="cb24-22" title="22"></a>
+<a class="sourceLine" id="cb24-23" title="23"><span class="co"># parameters for the training -- these worked fine for me</span></a>
+<a class="sourceLine" id="cb24-24" title="24">batchsize <span class="op">=</span> <span class="dv">30</span>  <span class="co"># how many samples for the stochastic gradients</span></a>
+<a class="sourceLine" id="cb24-25" title="25">lr <span class="op">=</span> <span class="fl">0.25</span>  <span class="co"># learning rate</span></a>
+<a class="sourceLine" id="cb24-26" title="26">iterations <span class="op">=</span> <span class="dv">200</span>  <span class="co"># how many gradient steps</span></a>
+<a class="sourceLine" id="cb24-27" title="27"></a>
+<a class="sourceLine" id="cb24-28" title="28"><span class="co"># the data</span></a>
+<a class="sourceLine" id="cb24-29" title="29">traindataratio <span class="op">=</span> <span class="fl">.9</span>  <span class="co"># the ratio of training data vs. test data</span></a>
+<a class="sourceLine" id="cb24-30" title="30">ndata <span class="op">=</span> data.shape[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb24-31" title="31">trnds <span class="op">=</span> np.<span class="bu">int</span>(ndata<span class="op">*</span>traindataratio)</a>
+<a class="sourceLine" id="cb24-32" title="32">allidx <span class="op">=</span> np.arange(ndata)</a>
+<a class="sourceLine" id="cb24-33" title="33">trnidx <span class="op">=</span> np.random.choice(allidx, trnds, replace<span class="op">=</span><span class="va">False</span>)</a>
+<a class="sourceLine" id="cb24-34" title="34">tstidx <span class="op">=</span> np.setdiff1d(allidx, trnidx)</a></code></pre></div>
+<p>Und die Funktion, die das neuronale Netz realisiert, so:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">def</span> fwdnn(xzero, Aone<span class="op">=</span><span class="va">None</span>, bone<span class="op">=</span><span class="va">None</span>, Atwo<span class="op">=</span><span class="va">None</span>, btwo<span class="op">=</span><span class="va">None</span>):</a>
+<a class="sourceLine" id="cb25-2" title="2">    <span class="co">&#39;&#39;&#39; a neural networks of two layers</span></a>
+<a class="sourceLine" id="cb25-3" title="3"></a>
+<a class="sourceLine" id="cb25-4" title="4"><span class="co">    &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb25-5" title="5">    xone <span class="op">=</span> np.tanh(Aone <span class="op">@</span> xzero <span class="op">+</span> bone)</a>
+<a class="sourceLine" id="cb25-6" title="6">    xtwo <span class="op">=</span> np.tanh(Atwo <span class="op">@</span> xone <span class="op">+</span> btwo)</a>
+<a class="sourceLine" id="cb25-7" title="7">    <span class="cf">return</span> xtwo</a></code></pre></div>
+<p>Für die Umsetzung ist es hilfreich, alle Koeffizienten in einen Vektor <span class="math inline">\(w\)</span> vorzuhalten. Damit kann dann optimiert werden und bei Bedarf die Matrizen wieder hergestellt werden:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">def</span> wvec_to_wmats(wvec):</a>
+<a class="sourceLine" id="cb26-2" title="2">    <span class="co">&#39;&#39;&#39; helper to turn the vector of weights into the system matrices</span></a>
+<a class="sourceLine" id="cb26-3" title="3"></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="co">    &#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb26-5" title="5">    Aone <span class="op">=</span> wvec[:sxz<span class="op">*</span>sxo].reshape((sxo, sxz))</a>
+<a class="sourceLine" id="cb26-6" title="6">    cidx <span class="op">=</span> sxz<span class="op">*</span>sxo</a>
+<a class="sourceLine" id="cb26-7" title="7">    bone <span class="op">=</span> wvec[cidx:cidx<span class="op">+</span>sxo]</a>
+<a class="sourceLine" id="cb26-8" title="8">    cidx <span class="op">=</span> cidx <span class="op">+</span> sxo</a>
+<a class="sourceLine" id="cb26-9" title="9">    Atwo <span class="op">=</span> wvec[cidx:cidx<span class="op">+</span>sxo<span class="op">*</span>sxt].reshape((sxt, sxo))</a>
+<a class="sourceLine" id="cb26-10" title="10">    cidx <span class="op">=</span> cidx <span class="op">+</span> sxo<span class="op">*</span>sxt</a>
+<a class="sourceLine" id="cb26-11" title="11">    btwo <span class="op">=</span> wvec[cidx:]</a>
+<a class="sourceLine" id="cb26-12" title="12">    <span class="cf">if</span> Aone.size <span class="op">+</span> bone.size <span class="op">+</span> Atwo.size <span class="op">+</span> btwo.size <span class="op">==</span> wvec.size:</a>
+<a class="sourceLine" id="cb26-13" title="13">        <span class="cf">return</span> Aone, bone, Atwo, btwo</a>
+<a class="sourceLine" id="cb26-14" title="14">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb26-15" title="15">        <span class="cf">raise</span> <span class="pp">UserWarning</span>(<span class="st">&#39;mismatch weightsvector/matrices&#39;</span>)</a></code></pre></div>
+<p>Damit fehlen zum Programm insbesondere noch</p>
+<ul>
+<li>die Zielfunktion der Optimierung in einem Datenpunkt <span class="math inline">\(x_i\)</span></li>
+<li>eine Funktion, die den stochastistischen Gradienten über einem kleinen <em>batch</em> von Daten ausrechnet</li>
+<li>eine Iteration, die das Gradientenabstiegsverfahren zusammen mit der <em>learning rate</em> durchführt</li>
+<li>ein Loop, der testet, wie das optimierte <span class="math inline">\(NN\)</span>, die verbliebenen Daten klassifiziert</li>
+</ul>
+<p><strong>Hinweis</strong>: Auch hier ist wieder sehr viel Zufall involviert. Im Zweifel lieber zweimal testen.</p>
+<p><strong>Hinweis</strong>: Der letzte Testloop könnte so aussehen:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb27-1" title="1"><span class="bu">print</span>(<span class="st">&#39;***** testing the classification *****&#39;</span>)</a>
+<a class="sourceLine" id="cb27-2" title="2">faillst <span class="op">=</span> []  <span class="co"># list to collect the failures for later examination</span></a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="cf">for</span> cti <span class="kw">in</span> tstidx:  <span class="co"># iteration over the test data points</span></a>
+<a class="sourceLine" id="cb27-4" title="4">    itrgt <span class="op">=</span> data[cti, :]</a>
+<a class="sourceLine" id="cb27-5" title="5">    ilbl <span class="op">=</span> mplbldict[lbls[cti]]</a>
+<a class="sourceLine" id="cb27-6" title="6">    <span class="co"># the prediction of the neural network -- Aonex, ... are the optimized weights</span></a>
+<a class="sourceLine" id="cb27-7" title="7">    nnlbl <span class="op">=</span> fwdnn(itrgt, Aone<span class="op">=</span>Aonex, bone<span class="op">=</span>bonex, Atwo<span class="op">=</span>Atwox, btwo<span class="op">=</span>btwox)</a>
+<a class="sourceLine" id="cb27-8" title="8">    sccs <span class="op">=</span> np.sign(ilbl) <span class="op">==</span> np.sign(nnlbl)</a>
+<a class="sourceLine" id="cb27-9" title="9">    <span class="bu">print</span>(<span class="ss">f&#39;label: </span><span class="sc">{</span>ilbl<span class="sc">.</span>item()<span class="sc">}</span><span class="ss"> -- nn: </span><span class="sc">{</span>nnlbl<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss"> -- success: </span><span class="sc">{</span>sccs<span class="sc">}</span><span class="ss">&#39;</span>)</a>
+<a class="sourceLine" id="cb27-10" title="10">    <span class="cf">if</span> <span class="kw">not</span> sccs:</a>
+<a class="sourceLine" id="cb27-11" title="11">        faillst.append((cti, ilbl.item(), nnlbl.item(),</a>
+<a class="sourceLine" id="cb27-12" title="12">                        datadict[<span class="st">&#39;target_names&#39;</span>][lbls[cti]]))</a>
+<a class="sourceLine" id="cb27-13" title="13">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb27-14" title="14">        <span class="cf">pass</span></a>
+<a class="sourceLine" id="cb27-15" title="15"></a>
+<a class="sourceLine" id="cb27-16" title="16"><span class="bu">print</span>(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">***** Results *****&#39;</span>)</a>
+<a class="sourceLine" id="cb27-17" title="17"><span class="bu">print</span>(<span class="ss">f&#39;</span><span class="sc">{</span><span class="dv">100</span><span class="op">-</span><span class="bu">len</span>(faillst)<span class="op">/</span>tstidx<span class="sc">.</span>size<span class="op">*</span><span class="dv">100</span><span class="sc">:.0f}</span><span class="ss">% was classified correctly&#39;</span>)</a>
+<a class="sourceLine" id="cb27-18" title="18"><span class="bu">print</span>(<span class="st">&#39;***** Misses *****&#39;</span>)</a>
+<a class="sourceLine" id="cb27-19" title="19"><span class="cf">if</span> <span class="bu">len</span>(faillst) <span class="op">==</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb27-20" title="20">    <span class="bu">print</span>(<span class="st">&#39;None&#39;</span>)</a>
+<a class="sourceLine" id="cb27-21" title="21"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb27-22" title="22">    <span class="cf">for</span> cfl <span class="kw">in</span> faillst:</a>
+<a class="sourceLine" id="cb27-23" title="23">        cid, lbl, nnlbl, name <span class="op">=</span> cfl</a>
+<a class="sourceLine" id="cb27-24" title="24">        <span class="bu">print</span>(<span class="ss">f&#39;ID: </span><span class="sc">{</span>cid<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> pinguin) was missclassified &#39;</span> <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-25" title="25">              <span class="ss">f&#39;with score </span><span class="sc">{</span>nnlbl<span class="sc">:.4f}</span><span class="ss"> vs. </span><span class="sc">{</span>lbl<span class="sc">}</span><span class="ss">&#39;</span>)</a></code></pre></div>
+
+</div>
+</div>
+<h3>Referenzen<a href="referenzen.html#referenzen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references">
+<div id="ref-enwiki:1098148439">
+<p> Wikipedia contributors: Stochastic gradient descent — Wikipedia, the free encyclopedia, <a href="https://en.wikipedia.org/w/index.php?title=Stochastic_gradient_descent&amp;oldid=1098148439">https://en.wikipedia.org/w/index.php?title=Stochastic_gradient_descent&amp;oldid=1098148439</a>, (2022)</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="optimierung-unter-nebenbedingungen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="referenzen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["EMDS.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

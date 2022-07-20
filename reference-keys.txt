@@ -96,3 +96,7 @@ aufgaben-5
 kkt-für-lqp-t
 nicht-parallele-gradienten-t
 hauptkomponente-aus-sqp-tp
+stochastistic-gradient-and-learning
+hintergrund
+iterative_method
+aufgabe

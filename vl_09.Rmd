@@ -88,12 +88,12 @@ Da die einzelnen Gradienten $\nabla Q_j(w^K)$ unabh&auml;ngig voneinander berech
 
 ## Aufgabe
 
-Schreiben Sie ein Programm, dass mit Hilfe eines neuronalen Netzes (NN) mit einer *hidden layer* 
+Schreiben Sie ein Programm, das mit Hilfe eines neuronalen Netzes (NN) mit einer *hidden layer* 
 \begin{equation*}
 \eta_i = NN(x_i):=\tanh \bigl (A_2 \tanh (A_1 x_i + b_1) + b_2\bigr )
 \end{equation*}
 
-f&uuml;r einen Datenpunkt $x_i \in \mathbb R^{n_0}$, Gewichten $A_1 \in \mathbb R^{n_1 \times n_0}$, $b_1 \in \mathbb R^{n_1}$, $A_2 \in \mathbb R^{1, n_1}$, $b_2 \in \mathbb R^{1}$ und dem Ergebnisvektor $\eta_i\in \mathbb R^{1}$, anhand der gemessenen Daten $x_i$ die bekannte Pinguin Population in zwei Gruppen aufteilt, so dass in der ersten Gruppe eine Spezies enthalten ist und in der anderen die beiden anderen Spezies.
+f&uuml;r einen Datenpunkt $x_i \in \mathbb R^{n_0}$, Gewichten $A_1 \in \mathbb R^{n_1 \times n_0}$, $b_1 \in \mathbb R^{n_1}$, $A_2 \in \mathbb R^{1, n_1}$, $b_2 \in \mathbb R^{1}$ und dem Ergebnisvektor $\eta_i\in \mathbb R^{1}$, anhand der gemessenen Daten $x_i$ die bekannte Pinguin Population [`penguin-data.json`](bilder/penguin-data.json) in zwei Gruppen aufteilt, so dass in der ersten Gruppe eine Spezies enthalten ist und in der anderen die beiden anderen Spezies.
 
 Dazu kann eine Funktion $\ell \colon X \mapsto \{-1, 1\}$ definiert werden, die die bekannten Pinguine $x_i$ aus dem Datensatz $X$ ihrer Gruppe zuordnet. Dann k&ouml;nnen die Koeffizienten des $NN$ &uuml;ber das Optimierungsproblem
 \begin{equation*}

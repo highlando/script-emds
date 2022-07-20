@@ -11,6 +11,8 @@ rmd_files: ["index.Rmd",
             "vl_06.Rmd",
             "vl_07.Rmd",
             "vl_08.Rmd",
+            # "vl_099.Rmd",
+            "vl_1010.Rmd",
             "xxx_lastpage.Rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

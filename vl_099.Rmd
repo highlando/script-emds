@@ -1,0 +1,249 @@
+# Satz der Impliziten Funktion und der Umkehrfunktion
+
+Der **Satz von der impliziten Funktion** ist ein wichtiger Satz in der
+Analysis. Er beinhaltet ein relativ einfaches
+Kriterium, wann eine implizite [Gleichung](Gleichung "wikilink") oder
+ein [Gleichungssystem](Gleichungssystem "wikilink") (lokal) eindeutig
+aufgelöst werden kann.
+
+Der Satz gibt an, unter welcher Bedingung eine Gleichung oder ein
+Gleichungssystem $F(x,y)=0$ implizit eine
+[Funktion](Funktion_(Mathematik) "wikilink") $y = f(x)$ definiert, für
+die $F(x,f(x)) = 0$ gilt. Eine derartige Funktion kann im Allgemeinen
+nur lokal in einer Umgebung einer Stelle $x_0$ gefunden werden. Unter
+strengeren Annahmen existiert jedoch auch eine globale Version des
+Satzes.[^1]
+
+Ist die Bedingung des Satzes erfüllt, kann die Ableitung
+$\tfrac{\mathrm d f}{\mathrm d x}$ als Funktion von $x$ und $y$ ohne
+Kenntnis der expliziten Funktion $y = f(x)$ gewonnen werden; man nennt
+dies auch [ *implizites
+Differenzieren*](Implizite_Differentiation "wikilink").
+
+## Begriffsbestimmung
+
+Eine *implizit definierte Funktion* (kurz **implizite Funktion**) ist
+eine Funktion, die nicht durch eine explizite Zuordnungsvorschrift
+$y = f(x)$ gegeben ist, sondern deren Funktionswerte implizit durch eine
+Gleichung $F(x,y)=0$ definiert sind. Dabei ist $F$ eine vektorwertige
+Funktion, die genauso viele Einzelfunktionen enthält, wie $y$
+Komponenten hat. Wird $x$ fixiert, so ergibt sich ein Gleichungssystem
+in $y$ mit genauso vielen Gleichungen wie Unbekannten. Der *Satz über
+die implizite Funktion* beschreibt Voraussetzungen, unter denen die
+folgende Aussage gilt:
+
+:   *Wenn eine Lösung $y_0$ für einen Parametervektor $x_0$ bekannt ist,
+    dann kann auch für jeden Parametervektor $x\approx x_0$ aus einer
+    hinreichend kleinen Umgebung von $x_0$ eine eindeutig bestimmte
+    Lösung $y\approx y_0$ des Gleichungssystems $F(x,y)=0$ gefunden
+    werden, die in einer Umgebung der ursprünglichen Lösung $y_0$
+    liegt.*
+
+Diese Aussage ermöglicht es, eine Funktion $f$ zu definieren, die jedem
+Parametervektor $x\approx x_0$ gerade den Lösungsvektor
+$y=f(x)\approx y_0$ zuordnet, sodass diese Funktion auf ihrem
+Definitionsbereich die Gleichung $F(x,f(x))=0$ erfüllt. Der *Satz von
+der impliziten Funktion* stellt zudem sicher, dass diese Zuordnung
+$x\mapsto f(x)$ unter gewissen Bedingungen und Einschränkungen an $F$,
+$x$ und $y$ wohldefiniert ist -- insbesondere, dass sie eindeutig ist.
+
+### Beispiel
+
+![mini\|200px\|Der Einheitskreis wird als die Menge aller Punkte $(x,y)$
+beschrieben, welche die Gleichung $F(x,y)=0$ mit $F(x,y)=x^2+y^2-1$
+erfüllen. In einer Umgebung des Punktes A kann $y$ als Funktion von $x$
+ausgedrückt werden: $y=f(x)=\sqrt{1-x^2}$. Bei Punkt B geht das
+nicht.](Implicit_circle.png "mini|200px|Der Einheitskreis wird als die Menge aller Punkte (x,y) beschrieben, welche die Gleichung F(x,y)=0 mit F(x,y)=x^2+y^2-1 erfüllen. In einer Umgebung des Punktes A kann y als Funktion von x ausgedrückt werden: y=f(x)=\sqrt{1-x^2}. Bei Punkt B geht das nicht.")
+
+Setzt man $F(x,y)=x^2+y^2-1$, so beschreibt die Gleichung $F(x,y)=0$ den
+Einheitskreis in der Ebene. Der Einheitskreis kann nicht als Graph einer
+Funktion $y=f(x)$ geschrieben werden, denn zu jedem $x$ aus dem offenen
+Intervall $(-1,1)$ gibt es zwei Möglichkeiten für $y$, nämlich
+$y=\pm\sqrt{1-x^2}$.
+
+Es ist jedoch möglich, Teile des Kreises als Funktionsgraph
+darzustellen. Den oberen Halbkreis bekommt man als Graph der Funktion
+
+$$f_1\colon (-1,1) \to \mathbb R, f_1(x)=\sqrt{1-x^2}$$, den unteren als Graph
+von
+
+$$f_2\colon (-1,1) \to \mathbb R, f_2(x)=-\sqrt{1-x^2}$$. Der Satz von der
+impliziten Funktion gibt Kriterien für die Existenz von Funktionen wie
+$f_1$ oder $f_2$. Er garantiert auch, dass diese Funktionen
+differenzierbar sind.
+
+## Satz von der impliziten Funktion {#satz_von_der_impliziten_funktion}
+
+### Aussage
+
+Seien $U \subseteq \mathbb{R}^m$ und $V \subseteq \mathbb{R}^n$ offene
+Mengen und
+
+$$F\colon U \times\, V \to \mathbb{R}^n,\quad (x,y)=(x_1,\dots,x_m,y_1,\dots,y_n) \mapsto F(x,y)=(\,F_1(x,y), \dots,F_n(x,y)\,)$$
+eine stetig differenzierbare Abbildung. Die
+[Jacobi-Matrix](Jacobi-Matrix "wikilink")
+
+$$\mathrm D F = \frac{\partial F}{\partial (x, y)}
+  = \frac{\partial (F_1,\dots,F_n)}{\partial(x_1,\dots,x_m,y_1,\dots,y_n)}
+  = \begin{pmatrix}
+  \frac{\partial F_1}{\partial x_1} & \cdots & \frac{\partial F_1}{\partial x_m} &
+     \frac{\partial   F_1}{\partial y_1} & \cdots & \frac{\partial F_1}{\partial y_n} \\
+  \vdots & & \vdots &\vdots & & \vdots \\
+  \frac{\partial F_n}{\partial x_1} & \cdots & \frac{\partial F_n}{\partial x_m} &
+     \frac{\partial F_n}{\partial y_1} & \cdots & \frac{\partial F_n}{\partial y_n}
+  \end{pmatrix}$$ besteht dann aus zwei
+[Teilmatrizen](Untermatrix "wikilink")
+
+$$\frac{\partial F}{\partial x}
+  = \frac{\partial (F_1,\dots,F_n)}{\partial(x_1,\dots,x_m)}
+  = \begin{pmatrix}
+  \frac{\partial F_1}{\partial x_1} & \cdots & \frac{\partial F_1}{\partial x_m} \\
+  \vdots & & \vdots \\
+  \frac{\partial F_n}{\partial x_1} & \cdots & \frac{\partial F_n}{\partial x_m}
+  \end{pmatrix}$$ und
+
+$$\frac{\partial F}{\partial y}
+  = \frac{\partial (F_1,\dots,F_n)}{\partial(y_1,\dots,y_n)}
+  = \begin{pmatrix}
+  \frac{\partial F_1}{\partial y_1} & \cdots & \frac{\partial F_1}{\partial y_n} \\
+  \vdots & & \vdots \\
+  \frac{\partial F_n}{\partial y_1} & \cdots & \frac{\partial F_n}{\partial y_n}
+  \end{pmatrix},$$ wobei letztere quadratisch ist.
+
+Der Satz von der impliziten Funktion besagt nun:
+
+Erfüllt $(x_0, y_0) \in U \times\ V$ die Gleichung $F(x_0, y_0)=0$ und
+ist die zweite Teilmatrix $\tfrac{\partial F}{\partial y}$ im Punkt
+$(x_0,y_0)$ [invertierbar](Inverse_Matrix "wikilink"), so existieren
+offene [Umgebungen](Umgebung_(Mathematik) "wikilink") $U_0 \subseteq U$
+von $x_0$ und $V_0 \subseteq V$ von $y_0$ sowie eine eindeutige stetig
+differenzierbare Abbildung
+
+$$f\colon U_0 \to V_0$$ mit $f(x_0) = y_0$ so, dass für alle
+$x \in U_0$, $y \in V_0$ gilt:
+
+$$F(x,y) = 0 \;\Leftrightarrow\; y = f(x)$$.
+
+### Beispiel {#beispiel_1}
+
+Man wende nun diesen Satz auf das anfangs gegebene Beispiel der
+Kreisgleichung an: Dazu sind die partiellen Ableitungen nach den
+$y$-Variablen zu betrachten. (In diesem Fall ist $n=1$, daher ergibt das
+eine $1 \times 1$-Matrix, also einfach eine reelle Funktion): Die
+partielle Ableitung der Funktion $F(x,y) = x^2 + y^2 -1$ nach $y$ ergibt
+$\tfrac{\partial F(x,y)}{\partial y} = 2  y$. Der Kehrwert dieses Terms
+existiert genau dann, wenn $y \neq 0$ ist. Damit folgert man mit Hilfe
+des Satzes, dass diese Gleichung für $y \neq 0$ lokal nach $y$ auflösbar
+ist. Der Fall $y=0$ tritt nur an den Stellen $x = -1$ oder $x = 1$ auf.
+Dies sind also die Problempunkte. Tatsächlich sieht man, dass die Formel
+$y = \pm \sqrt{1 - x^2}$ sich genau in diesen Problempunkten in eine
+positive und negative Lösung verzweigt. In allen anderen Punkten ist die
+Auflösung lokal eindeutig.
+
+### Beweisansatz
+
+Der *klassische Ansatz* betrachtet zur Lösung der Gleichung $F(x,y)=0$
+das [Anfangswertproblem](Anfangswertproblem "wikilink") der gewöhnlichen
+Differentialgleichung
+
+$$\phi_v'(t)=-G(x_0+tv,\phi_v(t))\, v
+  \;\text{ mit }\;
+    G(x,y)=\left(\tfrac{\partial F}{\partial y}(x,y)\right)^{-1}\tfrac{\partial F}{\partial x}(x,y)
+  \;\text{ und }\;
+   \phi_v(0)=y_0$$. Da $\tfrac{\partial F}{\partial y}$ in $(x_0,y_0)$
+invertierbar ist, ist dies auch in einer kleinen Umgebung der Fall,
+d. h., für kleine Vektoren $v$ existiert die Differentialgleichung und
+ihre Lösung für alle $t\in [0,1]$. Die Lösung der impliziten Gleichung
+ist nun durch
+
+$$f(x)=\phi_{x-x_0}(1)$$ gegeben, die oben angegebenen Eigenschaften
+dieser Lösung ergeben sich aus den Eigenschaften der Lösungen
+parameterabhängiger Differentialgleichungen.
+
+Der *moderne Ansatz* formuliert das Gleichungssystem $F(x,y)=0$ mit
+Hilfe des vereinfachten
+[Newton-Verfahrens](Newton-Verfahren#Das_Newton-Verfahren_im_Mehrdimensionalen "wikilink")
+als Fixpunktproblem und wendet darauf den [Fixpunktsatz von
+Banach](Fixpunktsatz_von_Banach "wikilink") an. Für die dazugehörige
+Fixpunktabbildung wird die Inverse $A$ der Teilmatrix
+$\tfrac{\partial F}{\partial y}(x_0,y_0)$ der Jacobi-Matrix von $F$ im
+vorgegebenen Lösungspunkt $(x_0,y_0)$ gebildet. Zu der Abbildung
+
+$$T(y)=y-A\,F(x,y)$$ kann man nun zeigen, dass sie für Parametervektoren
+$x$ nahe $x_0$ auf einer Umgebung von $y_0$ kontraktiv ist. Dies folgt
+daraus, dass $T$ stetig differenzierbar ist und
+$\tfrac{\partial T}{\partial y}(x_0,y_0)=0$ gilt.
+
+### Zusammenfassung
+
+Der Vorteil des Satzes ist, dass man die Funktion $f$ gar nicht explizit
+kennen muss, um eine Aussage über deren Existenz und Eindeutigkeit
+machen zu können. Oft ist die Gleichung auch gar nicht durch [elementare
+Funktionen](elementare_Funktion "wikilink") nach $y$ auflösbar, sondern
+nur mit numerischen Verfahren. Interessant ist, dass die Konvergenz
+solcher Verfahren meist gleiche oder ähnliche Voraussetzungen wie der
+Satz von der impliziten Funktion (die Invertierbarkeit der Matrix der
+$y$-Ableitungen) erfordert.
+
+Eine weitere wertvolle Schlussfolgerung des Satzes ist, dass die
+Funktion $f$ differenzierbar ist, falls $F(x,y)$ es ist, was bei
+Anwendung des *Satzes über implizite Funktionen* vorausgesetzt wird. Die
+Ableitung kann sogar explizit angegeben werden, indem man die Gleichung
+$F(x,f(x)) = 0$ nach der [mehrdimensionalen
+Kettenregel](Mehrdimensionale_Kettenregel "wikilink") ableitet
+
+$$\frac{\partial F}{\partial x}(x,f(x)) + \frac{\partial F}{\partial y}(x,f(x)) \cdot \frac{\partial f}{\partial x}(x) = 0$$
+und dann nach $\frac{\partial f}{\partial x}(x)$ auflöst:
+
+$$\frac{\partial f }{\partial x}(x) = - \left( \frac{\partial F }{\partial y}(x,f(x))  \right)^{-1} \cdot \frac{\partial F }{\partial x}\big(x,f(x)\big)$$.
+
+Eine ähnliche Folgerung gilt für höhere Ableitungen. Ersetzt man die
+Voraussetzung „$F$ ist stetig differenzierbar" durch „$F$ ist $k$-mal
+stetig differenzierbar" (oder beliebig oft differenzierbar oder
+analytisch), kann man folgern, dass $f$ $k$-mal differenzierbar (bzw.
+beliebig oft differenzierbar bzw. analytisch) ist.
+
+## Satz von der Umkehrabbildung {#satz_von_der_umkehrabbildung}
+
+Ein nützliches [Korollar](Korollar "wikilink") zum Satz von der
+impliziten Funktion ist der **Satz von der Umkehrabbildung**. Er gibt
+eine Antwort auf die Frage, ob man eine (lokale)
+[Umkehrfunktion](Umkehrfunktion "wikilink") finden kann:
+
+Sei $U \subseteq \mathbb{R}^n$ offen und
+
+$$f \colon U \to \mathbb{R}^n$$ eine stetig differenzierbare Abbildung.
+Sei $a \in U$ und $b := f(a)$. Die
+[Jacobi-Matrix](Jacobi-Matrix "wikilink") $\mathrm{D}f(a)$ sei
+invertierbar. Dann gibt es eine offene Umgebung $U_a \subseteq U$ von
+$a$ und eine offene Umgebung $V_b$ von $b$, sodass $f$ die Menge $U_a$
+bijektiv auf $V_b$ abbildet und die Umkehrfunktion
+
+$$g = f^{-1} \colon V_b \to U_a$$ stetig differenzierbar ist, oder kurz:
+$f|_{U_a}$ ist ein [Diffeomorphismus](Diffeomorphismus "wikilink"). Es
+gilt:
+
+$$\mathrm{D} (f^{-1})(b) = \mathrm{D} g(b) = (\mathrm{D} f(a))^{-1} = (\mathrm{D} f(g(b)))^{-1}$$
+
+## Literatur
+
+-   Herbert Amann, Joachim Escher: *Analysis II.* Birkhäuser, Basel,
+    1999, ISBN 3-7643-6133-6, S. 230 ff.
+-   [Otto Forster](Otto_Forster "wikilink"): *Analysis 2.*
+    Differentialrechnung im R^n^, gewöhnliche Differentialgleichungen. 8
+    Auflage. Vieweg+Teubner Verlag, Wiesbaden 2008, ISBN 3-7643-6133-6,
+    S. 86--99
+    ([S. 90 ff.](https://link.springer.com/chapter/10.1007/978-3-8348-8103-8_8#page-1)).
+
+## Einzelnachweise
+
+```{=html}
+<references />
+```
+[Kategorie:Analysis](Kategorie:Analysis "wikilink") [Implizite
+Funktion](Kategorie:Satz_(Mathematik) "wikilink")
+
+[^1]: D. Gale, H. Nikaido:
+    *\[<https://gdz.sub.uni-goettingen.de/id/PPN235181684_0159?tify=%7B%22pages%22:%5B91%5D,%22panX%22:0.898,%22panY%22:0.823,%22view%22:%22toc%22,%22zoom%22:0.3>}
+    The Jacobian Matrix and Global Univalence of Mappings.\]*.
+    Mathematische Annalen 159 (1965), S. 81--93.

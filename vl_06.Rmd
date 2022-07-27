@@ -1,5 +1,6 @@
 # Clustering und Hauptkomponentenanalyse
 
+<!--
 Mit der Hauptkomponentenanalyse haben wir eine Methode kennengelernt, Daten gem&auml;&szlig; in Koordinaten darzustellen, die nach inhaltsschwere^[wenn wir Inhalt mit Varianz gleich setzen] absteigend sortiert sind. Die Konzentrierung der Varianz in den Hauptachsenrichtungen erm&ouml;glicht uns
 
 1. die Hauptkomponenten zu ermitteln, die den Datensatz optimal in niedrigerer Dimension darstellen (wobei optimal hier bedeutet dass die Varianz in der Differenz $\bX-\hat \bX$ minimal ist)
@@ -65,8 +66,6 @@ Aus der Definition und der Bewertung der Cluster ergibt sich ein einfacher aber 
 ```
 
 Ausgehend von zuf&auml;llig gew&auml;hlten centroids, wird die Zuordnung berechnent und dann der Mittelwert aus jedem Cluster als neuer centroid definiert. Dieses Verfahren wird solange wiederholt bis eine maximale Iterationszahl erreicht ist oder die centroids sich nur noch wenig oder gar nicht mehr ver&auml;ndern. In Abbildung \@ref(fig:k-means-evoexa) ist eine beispielhafte Ausf&uuml;hrung des Algorithmus auf Beispieldaten dargestellt.
-
-<!--![](bilder/06-plot1.png){width="30%"}-->
 
 ```{r k-means-evoexa, echo=FALSE, fig.show='hold', fig.cap='Entwicklung der Centroids im Verlauf des k-means clustering Algorithmus auf Beispieldaten', out.width='40%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics(c("bilder/06-plot1.png"
@@ -224,3 +223,4 @@ Achtung -- auch hier ist wieder Zufall involviert. Wenn das Ergebnis seltsam aus
 ### L-curve
 
 Bestimmen sie die L-Kurve fuer die Pinguindaten fuer `K=1,2,3,4,...,8` -- fuer das clustering auf dem gesamten Datensatz.
+-->

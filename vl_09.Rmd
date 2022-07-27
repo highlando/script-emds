@@ -1,5 +1,6 @@
 # Stochastisches Gradientenverfahren und Maschinelles Lernen
 
+<!--
 
 ::: {#sdg-just-wiki .JHSAYS data-latex=''}
 Dieses Kapitel ist kopiert (und, teilweise von mir und teilweise automatisch, &uuml;bersetzt) aus dem Wikipedia Artikel [Stochastistic Gradient, @enwiki:1098148439]. Dieses Kapitel steht unter der [*WP:CC BY-SA* Lizenz](https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License).
@@ -214,3 +215,5 @@ else:
         print(f'ID: {cid} ({name} pinguin) was missclassified ' +
               f'with score {nnlbl:.4f} vs. {lbl}')
 ```
+
+-->

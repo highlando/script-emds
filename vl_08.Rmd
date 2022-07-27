@@ -1,11 +1,12 @@
 # Optimierung unter Nebenbedingungen
-
+<!--
 Oftmals werden an die gesuchte L&ouml;sung $x^* \in \mathbb R^{n}$ eines Optimierungsproblems a-priori bestimmte Anforderungen gestellt, wie:
 
  * $x_1 + x_2 \geq 0$ (die L&ouml;sung soll in einem bestimmten Abschnitt liegen)
  * $x_1^2 + x_2^2 - c^2 = 0$ (die ersten beiden Komponenten der L&ouml;sung sollen auf einer Kreisbahn liegen)
 
 Allgemein l&auml;sst sich so ein Optimierungsproblem schreiben als
+-->
 
 ::: {.definition name="Optimierungsproblem mit Nebenbedingungen"}
 \begin{equation*}
@@ -28,6 +29,7 @@ Ein Optimierungsproblem ohne Nebenbedingungen hei&szlig;t auch *unrestringiertes
 
 :::
 
+<!--
 Jetzt stellt sich zur Frage ob ein $x^*$ *optimal* ist, noch die Frage, ob es auch *zul&auml;ssig* (engl.: *feasible*) ist. Dazu l&auml;sst sich formal der Zul&auml;ssigkeitsbereich (engl.: *feasible set*) definieren
 \begin{equation*}
 \Omega = \{x\in \mathbb R^{n} ~|~g_i(x)\geq 0, \quad h_j(x)=0, \quad i\in \mathcal I,\, j\in \mathcal J\}
@@ -264,3 +266,4 @@ for kkk in range(1, 11):
     arccosalpha = xk.T @ pcfour / (np.linalg.norm(xk)*nrmpcf)
     print(f'Iteration: {kkk} -- `arccos(sol, xk)` {arccosalpha}')
 ```
+-->

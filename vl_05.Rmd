@@ -6,6 +6,7 @@
 \newcommand{\bxj}{{\mathbf{x} _ j}}
 \newcommand{\bxixj}{{\mathbf{x} _ i \mathbf{x} _ j}}
 
+<!--
 Im vorherigen Kapitel hatten wir einen zweidimensionalen Datensatz betrachtet und daf&uuml;r die Richtung bestimmt, in der die Varianz maximal wird. 
 Da wir au&szlig;erdem ermittelt hatten, dass die Summe der Varianz unabh&uuml;ngig vom Koordinatensystem ist (es muss nur ein orthogonales sein) bedeutete das gleichzeitig, dass die verbleibende Richtung die Richtung der minimalen Varianz war.
 
@@ -43,7 +44,7 @@ s_{\bxixj} = \frac{1}{N-1} \sum_{k=1}^N (x_{ik}-\overline{\bxi})(x_{jk}-\overlin
 \end{equation*}
 <!-- \begin{equation*}
 \rho_{\bxixj} = \frac{s_{\bxixj}}{\sqrt{s_{\bxi\,\bxi}}\sqrt{s_{\bxj\,\bxj}}}
-\end{equation*} -->
+\end{equation*}
 die Kovarianzen sind, die wir auch schon in der ersten Vorlesung kennengelernt haben.
 
 Ist $\mathbf X\in \mathbb R^{N\times n}$ die Matrix mit den Datenvektoren $\bxi \in \mathbb R^{n}$ als Spalten **und ist der Datensatz zentriert** so erhalten wir die Kovarianzmatrix als
@@ -285,3 +286,4 @@ Zeigen sie, dass f&uuml;r zentrierte Datens&auml;tze $\bX\in \mathbb R^{N\times 
 ### Gesamtvarianz (T)
 
 Zeigen sie, dass auch f&uuml;r $n>2$ die Summe der Varianzen in orthogonalen Achsenrichtungen unabh&auml;ngig von der Wahl des Koordinatensystems sind. (Vergleiche Kapitel 4.2 Koordinatenwechsel)
+-->

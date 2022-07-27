@@ -1,5 +1,5 @@
 # Matrix-Zerlegungen
-
+<!--
 Die L&ouml;sung $w$ des Problems der *linearen Ausgleichsrechnung* war entweder als L&ouml;sung eines Optimierungsproblems
 \begin{equation*}
 \min_{w} \| Aw - y \|^2
@@ -18,7 +18,7 @@ gegeben. Hierbei steht nun $A\in \mathbb R^{N\times n}$ f&uuml;r die Matrix $\Ph
 Wir betrachten nochmal das Optimierungsproblem $\min_{w} \| Aw - y \|^2$. G&auml;be es eine L&ouml;sung des Systems $Aw=y$, w&auml;re das sofort eine L&ouml;sung des Optimierungsproblems. Da $A$ aber mehr Zeilen als Spalten hat, ist das System $Aw=y$ &uuml;berbestimmt und eine L&ouml;sung in der Regel nicht gegeben.
 
 Die &Uuml;berlegung ist nun, die Gleichung $Aw=y$ *so gut wie m&ouml;glich* zu erf&uuml;llen, indem wir die relevanten Gleichungen indentifizieren und wenigstens diese l&ouml;sen. Ein systematischer (und wie wir sp&auml;ter sehen werden auch zum Optimierungsproblem passender) Zugang bietet die QR Zerlegung.
-
+-->
 ::: {.theorem name="QR Zerlegung" #qr}
 Sei $A\in \mathbb R^{m\times n}$, $m>n$. Dann existiert eine orthonormale Matrix $Q\in \mathbb R^{m\times m}$ und eine obere Dreiecksmatrix $\hat R\in \mathbb R^{n\times n}$ derart dass
 \begin{equation*}
@@ -30,11 +30,11 @@ A = QR =: Q
 Hat $A$ vollen (Spalten)Rang, dann ist $\hat R$ invertierbar.
 :::
 
-Hier hei&szlig;t *orthonormale Matrix* $Q$, dass die Spalten von $Q$ paarweise orthogonal sind. Insbesondere gilt 
+Hier hei&szlig;t **orthonormale Matrix** $Q$, dass die Spalten von $Q$ paarweise orthogonal sind. Insbesondere gilt 
 \begin{equation*}
 Q^T Q = I.
 \end{equation*}
-
+<!--
 F&uuml;r unser zu l&ouml;sendes Problem ergibt sich dadurch die Umformung
 \begin{equation*}
 Aw = y \quad \Leftrightarrow \quad QRw=y \quad \Leftrightarrow \quad Q^TQRw=Q^T y 
@@ -71,6 +71,7 @@ Allerdings, wie Sie als &Uuml;bungsaufgabe nachweisen werden, l&ouml;st dieser A
 ## Singul&auml;rwertzerlegung 
 
 Eine weitere Matrix Zerlegung, die eng mit der L&ouml;sung von Optimierungsproblemen oder &uuml;berbestimmten Gleichungssystemen zusammenh&auml;ngt ist die *Singul&auml;rwertzerlegung* (SVD -- von english: *Singular Value Decomposition*).
+-->
 
 ::: {.theorem #SVD name="Singul&auml;rwertzerlegung"}
 Sei $A\in \mathbb C^{m\times n}$, $m\geq n$. Dann existieren orthogonale Matrizen $U \in \mathbb C^{m\times m}$ und $V\in \mathbb C^{n\times n}$ und eine Matrix $\Sigma \in \mathbb R^{m\times n}$ der Form
@@ -97,6 +98,7 @@ A = U \Sigma V^*
 wobei gilt $V^* = \overline{V^T}$ (transponiert und komplex konjugiert).
 :::
 
+<!--
 Ein paar Bemerkungen. 
 
  * Ist $A$ reell, k&ouml;nnen auch $U$ und $V$ reell gew&auml;hlt werden.
@@ -166,10 +168,11 @@ wobei
 aus $\Sigma \hat \Sigma^{-1}\hat \Sigma^{-1}$ herr&uuml;hrt.
 
 **Bemerkung**: $\Sigma^+$ kann auch definiert werden, wenn $\hat \Sigma$ nicht invertierbar ist (weil manche Diagonaleintr&auml;ge null sind). Dann wird $\hat \Sigma^+$ betrachtet, bei welcher nur die $\sigma_i>0$ invertiert werden und die anderen $\sigma_i=0$ belassen werden. Das definiert eine sogenannte *verallgemeinerte Inverse* und l&ouml;st auch das Optimierungsproblem falls $A$ keinen vollen Rang hat.
-
+-->
 
 ![Illustration der SVD. Bitte beachten der $*$ bedeutet hier transponiert und komplex konjugiert. By Cmglee - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=67853297](bilder/03-412px-Singular_value_decomposition_visualisation.svg.png){width=50% #fig-SVD}
 
+<!--
 ## Aufgaben
 
 Erkl&auml;rung: (T) hei&szlig;t theoretische Aufgabe, (P) hei&szlig;t programmieren.
@@ -372,3 +375,4 @@ plt.show()
  * Es gibt viele verschiedene Normen f&uuml;r Vektoren und Matrizen. Sie d&uuml;rfen einfach mit `np.linalg.norm` arbeiten. Gerne aber mal in die Dokumentation schauen *welche* Norm berechnet wird.
  * Die (T) Abschnitte hier bitte mit den anderen (T) Aufgaben oder als Bildschirmausgabe im Programm.
 
+-->

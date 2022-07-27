@@ -1,5 +1,5 @@
 # Lineare Regression {#sec-lineare-regression}
-
+<!--
 Auch bekannt als
 
  * *lineare Ausgleichsrechnung* oder
@@ -84,6 +84,7 @@ aussehen soll und versuchen dabei
 
 Jan bemerke, dass die ersten beiden Annahmen im Spannungsverhältnis zur
 dritten stehen.
+-->
 
 **Lineare Regression** besteht darin, dass die Funktion als Linearkombination
 
@@ -93,6 +94,7 @@ f_w(x) = \sum_{j=1}^n w_j b_j(x)
 
 von Basisfunktionen geschrieben wird und dann die *Koeffizienten* $w_i$ so bestimmt werden, dass $f$ die Daten bestmöglich ann&auml;hert. 
 
+<!--
 > Jan bemerke, dass *bestmöglich* wieder *overfitting* bedeuten kann aber auch, bei schlechter Wahl der Basis, wenig aussagekr&auml;ftig sein kann. Der gute Kompromiss liegt also jetzt in der Wahl der passenden Basisfunktionen und deren Anzahl. (Mehr Basisfunktionen bedeutet m&ouml;glicherweise bessere Approximation aber auch die Gefahr von *overfitting*.)
 
 Typische Wahlen f&uuml;r die Basis $\{b_1, b_2, \dotsc, b_n\}$ sind
@@ -119,7 +121,10 @@ Ein paar Bemerkungen
  * das optimale $w$ ist unabh&auml;ngig von einer Skalierung des Fehlerterms
  * des wegen schreiben wir gerne einfach $\frac 12 \sum_{i=1}^N (y_i - f_w(x_i))^2$ als das Zielfunktional, das es zu minimieren gilt.
 
+
 Wie finden wir jetzt die $w_i$'s? Zun&auml;chst gilt, dass 
+-->
+**Ansatz**:
 \begin{equation*}
 f_w(x_i) = \sum_{i=j}^n w_j b_j(x_i) = 
 \begin{bmatrix}
@@ -129,8 +134,9 @@ b_1(x_i) & b_2(x_i) & \dots & b_n(x_i)
 w_1 \\ w_2 \\ \vdots \\ w_n
 \end{bmatrix}
 \end{equation*}
-
+<!--
 und wenn wir alle $f_w(x_i)$, $i=1,\dotsc,N$ &uuml;bereinander in einen Vektor schreiben, dass
+-->
 
 \begin{equation*}
 f_w(\mathbf x) := 
@@ -148,12 +154,13 @@ w_1 \\ \vdots \\ w_n
 \end{bmatrix}
 =: \Phi(\mathbf x) w
 \end{equation*}
-
+<!--
 Damit, mit $\mathbf y$ als den Vektor aller $y_i$'s, und mit der Definition der Vektornorm, k&ouml;nnen wir unser Minimierungsproblem schreiben als
+-->
 \begin{equation*}
 \frac 12  \sum_{i=1}^N (y_i - f_w(x_i))^2 = \frac 12 \| \mathbf y - \Phi (\mathbf x) w\|^2 \to \min.
 \end{equation*}
-
+<!--
 Wir bemerken, dass
 
  * das Fehlerfunktional immer gr&ouml;&szlig;er und bestenfalls gleich 0 ist
@@ -176,9 +183,12 @@ wobei wir die Definition der Norm $\|v\|^2 = v^Tv$ und die Eigenschaft, dass f&u
 W&auml;ren $w$ und $\mathbf y$ keine Vektoren sondern einfach reelle Zahlen, w&auml;re das hier eine Parabelgleichung $aw^2 + bw + c$ mit $a>0$, die immer eine Minimalstelle hat.
 
 Tats&auml;chlich gilt hier alles ganz analog. Insbesondere ist $\Phi(\mathbf x)^T\Phi(\mathbf x)$ in der Regel "gr&ouml;&szlig;er 0" (was hei&szlig;t das wohl bei quadratischen Matrizen?). Und mittels "Nullsetzen" der ersten Ableitung k&ouml;nnen wir das Minimum bestimmen. In diesem Fall ist die erste Ableitung (nach $w$)
+-->
+
 \begin{equation*}
 \nabla_w (\frac 12 \|\mathbf y - \Phi(\mathbf x) \|^2) = \Phi(\mathbf x)^T\Phi(\mathbf x)w - \Phi(\mathbf x)^T\mathbf y,
 \end{equation*}
+<!--
 (den *Gradienten* $\nabla_w$ als Ableitung von Funktionen mit mehreren Ver&auml;nderlichen werden wir noch genauer behandeln)
 was uns als L&ouml;sung, die L&ouml;sung des linearen Gleichungssystems 
 \begin{equation*}
@@ -236,3 +246,4 @@ $$
 l&ouml;sen um die Approximation $f_w$ zu bestimmen.
 
 Und noch als letzte Bemerkung. Egal wie die Basisfunktionen $b_i$ gewählt werden, die Parameterabh&auml;ngigkeit von $w$ ist immer linear. Deswegen der Name **lineare Ausgleichsrechnung**.
+-->

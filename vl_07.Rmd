@@ -2,7 +2,7 @@
 
 \providecommand{\diva}[1]{\mathrm{d} #1}
 <!-- \DeclareMathOperator\diva{d} -->
-
+<!--
 Einige Optimierungsprobleme haben wir schon kennengelernt und zwar
 
    * bei der linearen Regression (vgl. besonders Kapitel \@ref(sec-linreg-minimierung)) bei der die Parameter der Ansatzfunktion **bestm&ouml;glich** an die Daten gefittet wurden
@@ -37,9 +37,13 @@ Hier werden wir uns erstmal mit glatter Optimierung ohne Nebenbedingungen besch&
 Um unsere Optimierungsprobleme in allgemeiner Form zu formulieren und auch um allgemeine L&ouml;sungsans&auml;tze herzuleiten, brauchen wir erstmal ein paar Begriffe aus der Analysis von multivariablen Funktionen.
 
 Es sei also eine Funktion
+
+-->
 \begin{equation*}
 f\colon \mathbb R^{n}\to \mathbb R^{}, \quad f \colon (x_1,x_2, \dots, x_n) \mapsto f(x_1, x_2, \dotsc, x_n)
 \end{equation*}
+
+<!--
 gegeben, die ein $n$-tupel von Variablen auf einen reellen Wert abbildet. Ein Beispiel w&auml;re
 \begin{equation*}
 g(x_1, x_2, x_3) = \sin(x_1) + x_3\cos(x_2) + x_1^2 x_2^2 x_3^2 - 2x_2.
@@ -66,6 +70,8 @@ als Funktion mit einer Ver&auml;nderlichen (und $n-1$ Parametern) betrachten und
 \frac{\partial f}{\partial x_i}
 \end{equation*}
 bezeichnet. Alle $n$ m&ouml;glichen partiellen Ableitungen in einen Vektor geschrieben ergeben den sogenannten *Gradienten*
+-->
+
 \begin{equation*}
 \nabla f = 
 \begin{bmatrix}
@@ -76,6 +82,8 @@ bezeichnet. Alle $n$ m&ouml;glichen partiellen Ableitungen in einen Vektor gesch
 \end{bmatrix}
 \colon \mathbb R^{n} \to \mathbb R^{n},
 \end{equation*}
+
+<!--
 der wiederum eine (vektorwertige) Funktion von $n$ Variablen ist.
 F&uuml;r unser obiges Beispiel bekommen wir
 \begin{equation*}
@@ -164,6 +172,7 @@ Nun erstmal ein hinreichendes Kriterium f&uuml;r ein Extremum
 ::: {.JHSAYS data-latex=''}
 Das k&ouml;nnen wir wie in der einfachen Kurvendiskussion verstehen: *Liegt in $x^*$ ein Extremum vor und $x^*$ liegt nicht auf dem Rand, so verschwindet die erste Ableitung.* Um festzustellen, ob ein Minimum, Maximum und vor allem nicht einfach ein Sattelpunkt vorliegt, wurde geschaut ob die zweite Ableitung positiv, negativ oder gleich 0 ist. Bei multivariablen Funktionen wird die zweite Ableitung durch eine Matrix repr&auml;sentiert. Und positiv, negativ oder indefinit wird wird &uuml;ber die Eigenwerte definiert.
 :::
+-->
 
 ::: {.definition name="Hesse-Matrix"}
  Sei $D(f) \subseteq \mathbb{R}^{n}$ offen, und sei $f\colon D(f) \rightarrow \mathbb{R}$ eine 2-mal stetig partiell differenzierbare Funktion. Für $\mathbf{x}^{\star} \in D$ heißt die symmetrische $(n \times n)$-Matrix
@@ -178,6 +187,7 @@ $$
 Hesse-Matrix von $f$ in $\mathbf{x}^{\star}$.
 :::
 
+<!--
 Hierbei ist $\frac{\partial^{2} f}{\partial x_{i} \partial x_{j}}:=\frac{\partial }{\partial x_{i}}(\frac{\partial f}{\partial x_{j}})$ die wiederholte partielle Differentiation in m&ouml;glicherweise verschiedene Koordinatenrichtungen. Die postulierte Symmetrie der Hesse-Matrix folgt aus der Gleichheit
 \begin{equation*}
 \frac{\partial }{\partial x_{i}}(\frac{\partial f}{\partial x_{j}})
@@ -420,3 +430,4 @@ print(f'with gradient: found minimum f(x) = {result.fun}')
 print('at x = ', result.x)
 print(f'in {runtime:.4f}s time')
 ```
+-->

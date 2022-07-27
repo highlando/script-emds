@@ -1,5 +1,5 @@
 # Hauptkomponentenanalyse
-
+<!--
 W&auml;hrend in den vorherigen Kapiteln der Versuch war, einen funktionalen Zusammenhang in Daten zu bekommen, geht es jetzt darum, statistische Eigenschaften aus Daten zu extrahieren. Wir werden sehen, dass das auch nur ein anderer Blickwinkel auf das gleiche Problem *Wie k&ouml;nnen wir die Daten verstehen?* ist und auch die SVD wieder treffen.
 
 Weil ich den Ansatz gerne *ad hoc* also am Problem entlang motivieren und einf&uuml;hren will, vorweg schon mal die bevorstehenden Schritte
@@ -45,7 +45,7 @@ s_y^2 \approx  0.57
 \operatorname {VarK}(x) = \frac{\sqrt{s_x^2} }{x_c} \approx 0.56
 \quad
 \operatorname {VarK}(y) = \frac{\sqrt{s_y^2} }{y_c} \approx 0.76
-\end{equation*}-->
+\end{equation*}
 und schlie&szlig;en daraus, dass in $y$ Richtung *viel passiert* und in $x$ Richtung *nicht ganz so viel*. Das ist jeder Hinsicht nicht befriedigend, wir k&ouml;nnen weder
 
  * Redundanzen ausmachen (eine Dimension der Daten vielleicht weniger wichtig?) noch
@@ -218,3 +218,4 @@ Im Hinblick auf die n&auml;chste Vorlesung, in der wir Anwendungen und Eigenscha
 
 ![Fallzahlen von Sars-CoV-2 in Bayern im Oktober
 2020 -- zentriert/skaliert/Hauptachse](bilder/04-covid-cntrd-HA.png){#fig:cases-cntrd-HA width="65%"}
+-->

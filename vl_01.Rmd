@@ -1,4 +1,5 @@
-# Was ist Data Science? 
+# Basics
+<!-- # Was ist Data Science? 
 
 Data Science umfasst unter anderem folgende Aufgaben:
 
@@ -85,6 +86,7 @@ dieser Spalte mit $x_i$, wobei $i=1,\ldots,N$ ($N$ Anzahl der Zeilen).
 
 Folgende *Schätzer*/*Metriken* können dabei helfen, diese Spalte besser
 zu verstehen:
+-->
 
 -   Mittelwert $\overline x= \frac1 N\sum_{i=1}^N x_i$
 
@@ -97,6 +99,7 @@ zu verstehen:
 
 -   Standardabweichung $s = \sqrt{s_x^2}$.
 
+<!--
 -   Median = $\frac{315 + 400}{2} = 357.5$.
 
 Datenexploration und -analyse für mehrere Variablen Wir betrachten zwei
@@ -109,6 +112,7 @@ Das Verteilung von zwei Variablen l&auml;&szlig;t sich im sogenannte **Scatter P
 
 Datenexploration und -analyse für mehrere Variablen Wir betrachten zwei
 Spalten $x = (x_1,\ldots,x_N)$ und $y = (y_1,\ldots, y_N)$.
+-->
 
 -   Kovarianz
     $s_{xy} = \frac{1}{N-1}\sum_{i=1}^N (x_i - \overline x)(y_i - \overline y)$
@@ -123,6 +127,7 @@ Spalten $x = (x_1,\ldots,x_N)$ und $y = (y_1,\ldots, y_N)$.
 
   * $\rho \approx 0$: Wenig/keine Korrelation.
 
+<!--
 ![Von Kiatdd - Eigenes Werk, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=37108966](bilder/Correlation_coefficient.png){width="65%"}
 
 ### COVID-19 Daten
@@ -229,3 +234,5 @@ Achtung:
    * `np.dot(A, B)` -- die klassische Methode
    * `A.dot(B)` -- das selbe (manchmal besser, wenn `A` etwas allgemeiner ist (zum Beispiel eine `scipy.sparse` matrix)
    * `A @ B` -- convenience Notation
+
+-->

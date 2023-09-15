@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
@@ -48,31 +48,33 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -81,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -116,6 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -134,31 +140,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Vorwort</a></li>
-<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a><ul>
+<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#wie-passiert-die-datenanalyse"><i class="fa fa-check"></i><b>1.1</b> Wie passiert die Datenanalyse?</a></li>
 <li class="chapter" data-level="1.2" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#was-sind-daten"><i class="fa fa-check"></i><b>1.2</b> Was sind Daten?</a></li>
 <li class="chapter" data-level="1.3" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#beispiele"><i class="fa fa-check"></i><b>1.3</b> Beispiele</a></li>
 <li class="chapter" data-level="1.4" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#python"><i class="fa fa-check"></i><b>1.4</b> Python</a></li>
 <li class="chapter" data-level="1.5" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#aufgaben"><i class="fa fa-check"></i><b>1.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
+<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
 <li class="chapter" data-level="2.2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
 <li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#sec-linreg-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
 <li class="chapter" data-level="2.4" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
 <li class="chapter" data-level="2.5" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a><ul>
+<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#qr-zerlegung"><i class="fa fa-check"></i><b>3.1</b> QR Zerlegung</a></li>
 <li class="chapter" data-level="3.2" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#singulärwertzerlegung"><i class="fa fa-check"></i><b>3.2</b> Singulärwertzerlegung</a></li>
 <li class="chapter" data-level="3.3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#aufgaben-1"><i class="fa fa-check"></i><b>3.3</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
 <li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-pca-maximierung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
+<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der PENGUINS Datensatz</a></li>
 <li class="chapter" data-level="5.2" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#darstellung"><i class="fa fa-check"></i><b>5.2</b> Darstellung</a></li>
 <li class="chapter" data-level="5.3" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#korrelationen-und-die-kovarianzmatrix"><i class="fa fa-check"></i><b>5.3</b> Korrelationen und die Kovarianzmatrix</a></li>
@@ -168,7 +179,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.7" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-pinguin-daten"><i class="fa fa-check"></i><b>5.7</b> Am Beispiel der Pinguin Daten</a></li>
 <li class="chapter" data-level="5.8" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.8</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-im-allgemeinen"><i class="fa fa-check"></i><b>6.1</b> Clustering im Allgemeinen</a></li>
 <li class="chapter" data-level="6.2" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#k-means-clustering"><i class="fa fa-check"></i><b>6.2</b> K-means Clustering</a></li>
 <li class="chapter" data-level="6.3" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse-1"><i class="fa fa-check"></i><b>6.3</b> Clustering und Hauptkomponentenanalyse</a></li>
@@ -176,7 +188,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine"><i class="fa fa-check"></i><b>6.5</b> Am Beispiel der Pinguine</a></li>
 <li class="chapter" data-level="6.6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#aufgaben-3"><i class="fa fa-check"></i><b>6.6</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a><ul>
+<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="optimierung.html"><a href="optimierung.html#multivariable-funktionen"><i class="fa fa-check"></i><b>7.1</b> Multivariable Funktionen</a></li>
 <li class="chapter" data-level="7.2" data-path="optimierung.html"><a href="optimierung.html#partielle-ableitungen-und-der-gradient"><i class="fa fa-check"></i><b>7.2</b> Partielle Ableitungen und der Gradient</a></li>
 <li class="chapter" data-level="7.3" data-path="optimierung.html"><a href="optimierung.html#richtungs-ableitung"><i class="fa fa-check"></i><b>7.3</b> Richtungs-Ableitung</a></li>
@@ -186,14 +199,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#extra-automatisches-differenzieren"><i class="fa fa-check"></i><b>7.7</b> Extra: Automatisches Differenzieren</a></li>
 <li class="chapter" data-level="7.8" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.8</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a><ul>
+<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#richtungen-und-nebenbedingungen"><i class="fa fa-check"></i><b>8.1</b> Richtungen und Nebenbedingungen</a></li>
 <li class="chapter" data-level="8.2" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#restringierte-optimierungsprobleme-und-der-gradient"><i class="fa fa-check"></i><b>8.2</b> Restringierte Optimierungsprobleme und der Gradient</a></li>
 <li class="chapter" data-level="8.3" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#linear-quadratische-probleme"><i class="fa fa-check"></i><b>8.3</b> Linear Quadratische Probleme</a></li>
 <li class="chapter" data-level="8.4" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming"><i class="fa fa-check"></i><b>8.4</b> Sequential Quadratic Programming</a></li>
 <li class="chapter" data-level="8.5" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#aufgaben-5"><i class="fa fa-check"></i><b>8.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><i class="fa fa-check"></i><b>9</b> Stochastisches Gradientenverfahren und Maschinelles Lernen</a><ul>
+<li class="chapter" data-level="9" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><i class="fa fa-check"></i><b>9</b> Stochastisches Gradientenverfahren und Maschinelles Lernen</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#hintergrund"><i class="fa fa-check"></i><b>9.1</b> Hintergrund</a></li>
 <li class="chapter" data-level="9.2" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#iterative_method"><i class="fa fa-check"></i><b>9.2</b> Stochastisches Abstiegsverfahren</a></li>
 <li class="chapter" data-level="9.3" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#aufgabe"><i class="fa fa-check"></i><b>9.3</b> Aufgabe</a></li>
@@ -219,14 +234,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="hauptkomponentenanalyse" class="section level1 hasAnchor">
+<div id="hauptkomponentenanalyse" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">4</span> Hauptkomponentenanalyse<a href="hauptkomponentenanalyse.html#hauptkomponentenanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Während in den vorherigen Kapiteln der Versuch war, einen funktionalen Zusammenhang in Daten zu bekommen, geht es jetzt darum, statistische Eigenschaften aus Daten zu extrahieren. Wir werden sehen, dass das auch nur ein anderer Blickwinkel auf das gleiche Problem <em>Wie können wir die Daten verstehen?</em> ist und auch die SVD wieder treffen.</p>
 <p>Weil ich den Ansatz gerne <em>ad hoc</em> also am Problem entlang motivieren und einführen will, vorweg schon mal die bevorstehenden Schritte</p>
 <ol style="list-style-type: decimal">
-<li>Zentrierung/Skalierung der Daten</li>
-<li>Berechnung der Varianzen im Standard Koordinatensystem</li>
-<li>Überlegung, dass Daten in einem anderen Koordinatensystem eventuell besser dargestellt werden im Sinne</li>
+<li>Zentrierung/Skalierung der Daten.</li>
+<li>Berechnung der Varianzen im Standard Koordinatensystem.</li>
+<li>Überlegung, dass Daten in einem anderen Koordinatensystem eventuell besser dargestellt werden.</li>
 <li>Berechnung eines optimalen Koordinatenvektors mittels SVD.</li>
 </ol>
 <p>Wir nehmen noch einmal die Covid-Daten her, vergessen kurz, dass es sich um eine Zeitreihe handelt und betrachten sie als Datenpunkte <span class="math inline">\((x_i, y_i)\)</span>, <span class="math inline">\(i=1,\dotsc,N\)</span>, im zweidimensionalen Raum mit Koordinaten <span class="math inline">\(x\)</span> und <span class="math inline">\(y\)</span>.</p>
@@ -239,11 +254,11 @@ y_c = \frac 1N \sum_{i=1}^N y_i.
 abgezogen wird und dann noch mit dem inversen des Mittelwerts skaliert.</p>
 <p>Also, die Daten werden durch <span class="math inline">\((\frac{x_i-\bar x}{\bar x},\, \frac{y_i-\bar y}{\bar y})\)</span> ersetzt.</p>
 <div class="figure">
-<img src="bilder/04-covid-cntrd.png" alt="Fallzahlen von Sars-CoV-2 in Bayern im Oktober 2020 – zentriert" id="fig:cases-cntrd" style="width:65.0%" />
+<img src="bilder/04-covid-cntrd.png" id="fig:cases-cntrd" style="width:65.0%" alt="" />
 <p class="caption">Fallzahlen von Sars-CoV-2 in Bayern im Oktober
 2020 – zentriert</p>
 </div>
-<div id="variationskoeffizienten" class="section level2 hasAnchor">
+<div id="variationskoeffizienten" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Variationskoeffizienten<a href="hauptkomponentenanalyse.html#variationskoeffizienten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Als nächstes kann Jan sich fragen, wie gut die Daten durch ihren Mittelwert beschrieben werden und die Varianzen berechnen, die für zentrierte Daten so aussehen</p>
 <p><span class="math display">\[\begin{equation*}
@@ -274,7 +289,7 @@ und schließen daraus, dass in <span class="math inline">\(y\)</span> Richtung <
 <p>Ein Koordinatensystem ist nichts anderes als eine Basis. Und die Koordinaten eines Datenpunktes sind die Komponenten des entsprechenden Vektors in dieser Basis. Typischerweise sind Koordinatensysteme orthogonal (das heißt eine Orthogonalbasis) und häufig noch orientiert (die Basisvektoren haben eine bestimmte Reihenfolge und eine bestimmte Richtung).</p>
 </div>
 </div>
-<div id="koordinatenwechsel" class="section level2 hasAnchor">
+<div id="koordinatenwechsel" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> Koordinatenwechsel<a href="hauptkomponentenanalyse.html#koordinatenwechsel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sei nun also <span class="math inline">\(\{b_1,b_2\}\subset \mathbb R^{2}\)</span> eine orthogonale Basis.</p>
 <div id="rem-ortho-bas" class="JHSAYS">
@@ -348,7 +363,7 @@ x_c \\ y_c
 \|.
 \end{equation*}\]</span></p>
 </div>
-<div id="sec-pca-maximierung" class="section level2 hasAnchor">
+<div id="sec-pca-maximierung" class="section level2 hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> Maximierung der Varianz in (Haupt)-Achsenrichtung<a href="hauptkomponentenanalyse.html#sec-pca-maximierung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Wir wollen nun also <span class="math inline">\(b_1\in \mathbb R^{2}\)</span>, mit <span class="math inline">\(\|b_1\|=1\)</span> so wählen, dass
 <span class="math display">\[\begin{equation*}
@@ -416,10 +431,10 @@ als neue Koordinatenrichtungen mit
 <span class="math display">\[\begin{equation*}
 s_1^2 \approx 0.85, \quad s_2^2 \approx 0.04,
 \end{equation*}\]</span>
-was bereits eine deutliche Dominanz der <span class="math inline">\(v_1\)</span>-Richtung – genannt  – zeigt.</p>
+was bereits eine deutliche Dominanz der <span class="math inline">\(v_1\)</span>-Richtung – genannt <em>Hauptachse</em> – zeigt.</p>
 <p>Im Hinblick auf die nächste Vorlesung, in der wir Anwendungen und Eigenschaften der PCA untersuchen werden, noch ein Plot der Daten mit der <span class="math inline">\(v_1\)</span>-Richtung als Linie eingezeichnet.</p>
 <div class="figure">
-<img src="bilder/04-covid-cntrd-HA.png" alt="Fallzahlen von Sars-CoV-2 in Bayern im Oktober 2020 – zentriert/skaliert/Hauptachse" id="fig:cases-cntrd-HA" style="width:65.0%" />
+<img src="bilder/04-covid-cntrd-HA.png" id="fig:cases-cntrd-HA" style="width:65.0%" alt="" />
 <p class="caption">Fallzahlen von Sars-CoV-2 in Bayern im Oktober
 2020 – zentriert/skaliert/Hauptachse</p>
 </div>
@@ -492,7 +507,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

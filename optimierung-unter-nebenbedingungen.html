@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8 Optimierung unter Nebenbedingungen | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8 Optimierung unter Nebenbedingungen | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
@@ -48,31 +48,33 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -81,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -116,6 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -134,31 +140,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Vorwort</a></li>
-<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a><ul>
+<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#wie-passiert-die-datenanalyse"><i class="fa fa-check"></i><b>1.1</b> Wie passiert die Datenanalyse?</a></li>
 <li class="chapter" data-level="1.2" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#was-sind-daten"><i class="fa fa-check"></i><b>1.2</b> Was sind Daten?</a></li>
 <li class="chapter" data-level="1.3" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#beispiele"><i class="fa fa-check"></i><b>1.3</b> Beispiele</a></li>
 <li class="chapter" data-level="1.4" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#python"><i class="fa fa-check"></i><b>1.4</b> Python</a></li>
 <li class="chapter" data-level="1.5" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#aufgaben"><i class="fa fa-check"></i><b>1.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
+<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
 <li class="chapter" data-level="2.2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
 <li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#sec-linreg-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
 <li class="chapter" data-level="2.4" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
 <li class="chapter" data-level="2.5" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a><ul>
+<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#qr-zerlegung"><i class="fa fa-check"></i><b>3.1</b> QR Zerlegung</a></li>
 <li class="chapter" data-level="3.2" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#singulärwertzerlegung"><i class="fa fa-check"></i><b>3.2</b> Singulärwertzerlegung</a></li>
 <li class="chapter" data-level="3.3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#aufgaben-1"><i class="fa fa-check"></i><b>3.3</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
 <li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-pca-maximierung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
+<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der PENGUINS Datensatz</a></li>
 <li class="chapter" data-level="5.2" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#darstellung"><i class="fa fa-check"></i><b>5.2</b> Darstellung</a></li>
 <li class="chapter" data-level="5.3" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#korrelationen-und-die-kovarianzmatrix"><i class="fa fa-check"></i><b>5.3</b> Korrelationen und die Kovarianzmatrix</a></li>
@@ -168,7 +179,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.7" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-pinguin-daten"><i class="fa fa-check"></i><b>5.7</b> Am Beispiel der Pinguin Daten</a></li>
 <li class="chapter" data-level="5.8" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.8</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-im-allgemeinen"><i class="fa fa-check"></i><b>6.1</b> Clustering im Allgemeinen</a></li>
 <li class="chapter" data-level="6.2" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#k-means-clustering"><i class="fa fa-check"></i><b>6.2</b> K-means Clustering</a></li>
 <li class="chapter" data-level="6.3" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse-1"><i class="fa fa-check"></i><b>6.3</b> Clustering und Hauptkomponentenanalyse</a></li>
@@ -176,7 +188,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine"><i class="fa fa-check"></i><b>6.5</b> Am Beispiel der Pinguine</a></li>
 <li class="chapter" data-level="6.6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#aufgaben-3"><i class="fa fa-check"></i><b>6.6</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a><ul>
+<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="optimierung.html"><a href="optimierung.html#multivariable-funktionen"><i class="fa fa-check"></i><b>7.1</b> Multivariable Funktionen</a></li>
 <li class="chapter" data-level="7.2" data-path="optimierung.html"><a href="optimierung.html#partielle-ableitungen-und-der-gradient"><i class="fa fa-check"></i><b>7.2</b> Partielle Ableitungen und der Gradient</a></li>
 <li class="chapter" data-level="7.3" data-path="optimierung.html"><a href="optimierung.html#richtungs-ableitung"><i class="fa fa-check"></i><b>7.3</b> Richtungs-Ableitung</a></li>
@@ -186,14 +199,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#extra-automatisches-differenzieren"><i class="fa fa-check"></i><b>7.7</b> Extra: Automatisches Differenzieren</a></li>
 <li class="chapter" data-level="7.8" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.8</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a><ul>
+<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#richtungen-und-nebenbedingungen"><i class="fa fa-check"></i><b>8.1</b> Richtungen und Nebenbedingungen</a></li>
 <li class="chapter" data-level="8.2" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#restringierte-optimierungsprobleme-und-der-gradient"><i class="fa fa-check"></i><b>8.2</b> Restringierte Optimierungsprobleme und der Gradient</a></li>
 <li class="chapter" data-level="8.3" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#linear-quadratische-probleme"><i class="fa fa-check"></i><b>8.3</b> Linear Quadratische Probleme</a></li>
 <li class="chapter" data-level="8.4" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming"><i class="fa fa-check"></i><b>8.4</b> Sequential Quadratic Programming</a></li>
 <li class="chapter" data-level="8.5" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#aufgaben-5"><i class="fa fa-check"></i><b>8.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><i class="fa fa-check"></i><b>9</b> Stochastisches Gradientenverfahren und Maschinelles Lernen</a><ul>
+<li class="chapter" data-level="9" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><i class="fa fa-check"></i><b>9</b> Stochastisches Gradientenverfahren und Maschinelles Lernen</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#hintergrund"><i class="fa fa-check"></i><b>9.1</b> Hintergrund</a></li>
 <li class="chapter" data-level="9.2" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#iterative_method"><i class="fa fa-check"></i><b>9.2</b> Stochastisches Abstiegsverfahren</a></li>
 <li class="chapter" data-level="9.3" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#aufgabe"><i class="fa fa-check"></i><b>9.3</b> Aufgabe</a></li>
@@ -219,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="optimierung-unter-nebenbedingungen" class="section level1 hasAnchor">
+<div id="optimierung-unter-nebenbedingungen" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">8</span> Optimierung unter Nebenbedingungen<a href="optimierung-unter-nebenbedingungen.html#optimierung-unter-nebenbedingungen" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Oftmals werden an die gesuchte Lösung <span class="math inline">\(x^* \in \mathbb R^{n}\)</span> eines Optimierungsproblems a-priori bestimmte Anforderungen gestellt, wie:</p>
 <ul>
@@ -232,7 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 f(x) \to \min_{x\in \mathbb R^{n}}, \quad \text{s.t.} \quad g_i(x)\geq 0, \quad h_j(x) = 0,
 \end{equation*}\]</span></p>
 <ul>
-<li>mit der <em>Zielfunktion</em> <span class="math inline">\(f\colon \mathbb R^{n} \to \mathbb R^{}\)</span></li>
+<li><p>mit der <em>Zielfunktion</em> <span class="math inline">\(f\colon \mathbb R^{n} \to \mathbb R^{}\)</span></p></li>
 <li><p>und zusätzlichen Nebenbedingungen (<em>s.t.</em> – <em>subject to</em>), die in</p>
 <ul>
 <li><em>Ungleichungsform</em> über Funktionen <span class="math inline">\(g_i\colon \mathbb R^{n} \to \mathbb R\)</span>, mit <span class="math inline">\(i\)</span> aus der Indexmenge <span class="math inline">\(\mathcal I \subset \mathbb N\)</span> oder</li>
@@ -268,7 +283,7 @@ schreiben.</p>
 <li>in der Theorie nicht mehr einfach differenziert werden kann (insbesondere bei Gleichheitsbedingungen oder wenn der kritische Punkt am Rand der Ungleichungsbedingungen liegt) und</li>
 <li>in der Umsetzung auf dem Computer darauf geachtet werden muss, dass der Zulässigkeitsbereich nicht verlassen wird.</li>
 </ul>
-<div id="richtungen-und-nebenbedingungen" class="section level2 hasAnchor">
+<div id="richtungen-und-nebenbedingungen" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> Richtungen und Nebenbedingungen<a href="optimierung-unter-nebenbedingungen.html#richtungen-und-nebenbedingungen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Bei <em>restringierten Optimierungsproblemen</em> ist die Richtung in der analysiert wird entscheidend. Hierbei geht es darum ob in einer Richtung <span class="math inline">\(v\)</span></p>
 <ol style="list-style-type: decimal">
@@ -282,7 +297,7 @@ schreiben.</p>
 <li><span class="math inline">\(0 \neq g(x^*+hv) \approx \nabla g(x^*)^Tv\)</span> oder <span class="math inline">\(0&gt;h(x^*+hv) \approx \nabla h(x^*)^Tv\)</span>.</li>
 </ol>
 </div>
-<div id="restringierte-optimierungsprobleme-und-der-gradient" class="section level2 hasAnchor">
+<div id="restringierte-optimierungsprobleme-und-der-gradient" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Restringierte Optimierungsprobleme und der Gradient<a href="optimierung-unter-nebenbedingungen.html#restringierte-optimierungsprobleme-und-der-gradient" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Zur Illustration und zur Einführung der Konzepte betrachten wir Probleme, die entweder nur Gleichungsnebenbedingungen oder nur Ungleichungsnebenbedingungen haben.</p>
 <p>Wir beginnen mit Gleichungsnebenbedingungen und das auch nur im zweidimensionalen Fall:
@@ -322,7 +337,7 @@ dass <span class="math inline">\(\nabla g(x^*)^Tv=0\)</span> und <span class="ma
 </div>
 <p>Lemma <a href="optimierung-unter-nebenbedingungen.html#lem:not-para-not-min">8.1</a> sagt, dass es im skizzierten Fall also eine Richtung gibt, in der (in erster Ableitung) die Funktion <span class="math inline">\(f\)</span> minimiert werden kann ohne den Zulässigkeitsbereich zu verlassen.</p>
 </div>
-<div id="linear-quadratische-probleme" class="section level2 hasAnchor">
+<div id="linear-quadratische-probleme" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> Linear Quadratische Probleme<a href="optimierung-unter-nebenbedingungen.html#linear-quadratische-probleme" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Ist die Zielfunktion als quadratische Funktion
 <span class="math display">\[\begin{equation*}
@@ -352,7 +367,7 @@ A &amp; 0
 <p>Aus der Betrachtung dieser Optimalitätsbedingungen können wir folgern, dass, wenn <span class="math inline">\(Q\)</span> symmetrisch ist und positiv definit,
 sowie alle Zeilen von <span class="math inline">\(A\)</span> linear unabhängig sind, dass dann das Optimierungsproblem eine eindeutige Lösung hat, die durch die Optimalitätsbedingungen eindeutig charakterisiert ist.</p>
 </div>
-<div id="sequential-quadratic-programming" class="section level2 hasAnchor">
+<div id="sequential-quadratic-programming" class="section level2 hasAnchor" number="8.4">
 <h2><span class="header-section-number">8.4</span> Sequential Quadratic Programming<a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Aus der Beobachtung, dass wir LQP Probleme direkt mit <span class="math inline">\(Q\)</span> symmetrisch positiv definit direkt lösen können und dass wir für kleine Abweichungen <span class="math inline">\(\xi\)</span> von einem gebenen Punkt <span class="math inline">\(x\)</span> multivariable Funktionen über quadratische (für unser <span class="math inline">\(f\)</span>) und lineare Approximationen (für unsere <span class="math inline">\(g_i\)</span>) gut annähern können:
 <span class="math display">\[\begin{equation*}
@@ -395,74 +410,74 @@ g_i(x_k)
 <p>Ist die Funktion <span class="math inline">\(f\)</span> konvex und zweimal stetig differenzierbar (in einer Umgebung von <span class="math inline">\(x_k\)</span>), dann ist die Hesse-matrix <span class="math inline">\(H_f(x_k)\)</span> positiv definit und das LQP hat eine eindeutige Lösung <span class="math inline">\(x_{k+1}\)</span>.</p>
 </div>
 </div>
-<div id="aufgaben-5" class="section level2 hasAnchor">
+<div id="aufgaben-5" class="section level2 hasAnchor" number="8.5">
 <h2><span class="header-section-number">8.5</span> Aufgaben<a href="optimierung-unter-nebenbedingungen.html#aufgaben-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="kkt-für-lqp-t" class="section level3 hasAnchor">
+<div id="kkt-für-lqp-t" class="section level3 hasAnchor" number="8.5.1">
 <h3><span class="header-section-number">8.5.1</span> KKT für LQP (T)<a href="optimierung-unter-nebenbedingungen.html#kkt-für-lqp-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Verifizieren Sie, dass die notwendigen Optimalitätsbedingungen für das LQP Problem mit Gleichungsnebenbedingungen (mit <span class="math inline">\(m=1\)</span>) genau der Optimalitäsbedingung aus Gleichung <a href="optimierung-unter-nebenbedingungen.html#eq:kkt-sc">(8.1)</a> entspricht. <strong>Hinweis</strong>: Mit der Definition der <em>totalen Ableitung</em> und der Relation zum Gradienten für reellwertige multivariable Funktionen (vgl. die Vorlesung <em>Mathe für DS2</em> vom 6. Juli) ist eine Darstellung der Gradienten <span class="math inline">\(\nabla f(x)\)</span> und <span class="math inline">\(\nabla g(x)\)</span> direkt herleitbar.</p>
 </div>
-<div id="nicht-parallele-gradienten-t" class="section level3 hasAnchor">
+<div id="nicht-parallele-gradienten-t" class="section level3 hasAnchor" number="8.5.2">
 <h3><span class="header-section-number">8.5.2</span> Nicht parallele Gradienten (T)<a href="optimierung-unter-nebenbedingungen.html#nicht-parallele-gradienten-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Verifizieren sie die Aussage aus Lemma <a href="optimierung-unter-nebenbedingungen.html#lem:not-para-not-min">8.1</a>.</p>
 </div>
-<div id="hauptkomponente-aus-sqp-tp" class="section level3 hasAnchor">
+<div id="hauptkomponente-aus-sqp-tp" class="section level3 hasAnchor" number="8.5.3">
 <h3><span class="header-section-number">8.5.3</span> Hauptkomponente aus SQP (T+P)<a href="optimierung-unter-nebenbedingungen.html#hauptkomponente-aus-sqp-tp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Skizzieren sie das Optimierungsproblems, das die <strong>letzte</strong> Hauptkomponentenrichtung definiert (also die Richtung mit minimaler Varianz) eines zentrierten Datensatzes definiert (analog dazu, wie in Abschnitt <a href="hauptkomponentenanalyse.html#sec-pca-maximierung">4.3</a> eingeführt). <strong>Hinweis</strong>: Alles wird vielleicht etwas einfacher, wenn sie die Nebenbedingung <span class="math inline">\(\|x\|=1\)</span> durch <span class="math inline">\(\|x\|^2 = 1\)</span> bzw. $x^Tx = 1 $ ersetzen. (T)</p>
 <p>Skizzieren einen SQP-Schritt zur Lösung dieses Problems. (T)</p>
 <p>Implementieren sie die SQP Iteration zur Berechnung der letzten Hauptkomponentenrichtung für die Pinguin Daten. Berechnen Sie die Abweichung zur <em>exakten</em> (mit der SVD berechneten) Lösung und geben sie ihn in jedem Schritt beispielsweise den Winkel zwischen dem Iteranten und der exakten Loesung berechnen. <strong>Hinweis</strong>: Nur die Norm der Differenz könnte irritieren, weil das Vorzeichen der Richtungen nicht festgelegt ist.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb22-1" title="1"><span class="im">import</span> json</a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb22-3" title="3"></a>
-<a class="sourceLine" id="cb22-4" title="4"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;penguin-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
-<a class="sourceLine" id="cb22-5" title="5">    datadict <span class="op">=</span> json.load(f)</a>
-<a class="sourceLine" id="cb22-6" title="6"></a>
-<a class="sourceLine" id="cb22-7" title="7">data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</a>
-<a class="sourceLine" id="cb22-8" title="8"></a>
-<a class="sourceLine" id="cb22-9" title="9"><span class="co"># center the data</span></a>
-<a class="sourceLine" id="cb22-10" title="10">X <span class="op">=</span> data <span class="op">-</span> data.mean(axis<span class="op">=</span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb22-11" title="11">XtX <span class="op">=</span> X.T <span class="op">@</span> X  <span class="co"># for later use</span></a>
-<a class="sourceLine" id="cb22-12" title="12"></a>
-<a class="sourceLine" id="cb22-13" title="13">U, S, Vh <span class="op">=</span> np.linalg.svd(X)</a>
-<a class="sourceLine" id="cb22-14" title="14"></a>
-<a class="sourceLine" id="cb22-15" title="15">pcfour <span class="op">=</span> Vh[<span class="op">-</span><span class="dv">1</span>:, :].T  <span class="co"># die &quot;letzte&quot; Hauptrichtung</span></a>
-<a class="sourceLine" id="cb22-16" title="16">nrmpcf <span class="op">=</span> np.linalg.norm(pcfour)  <span class="co"># brauchen wir um den Winkel zu berechnen</span></a>
-<a class="sourceLine" id="cb22-17" title="17"></a>
-<a class="sourceLine" id="cb22-18" title="18">xk <span class="op">=</span> np.zeros((<span class="dv">4</span>, <span class="dv">1</span>))  <span class="co"># Startvektor</span></a>
-<a class="sourceLine" id="cb22-19" title="19">xk[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb22-20" title="20">arccosalpha <span class="op">=</span> xk.T <span class="op">@</span> pcfour <span class="op">/</span> (np.linalg.norm(xk)<span class="op">*</span>nrmpcf)</a>
-<a class="sourceLine" id="cb22-21" title="21"><span class="bu">print</span>(<span class="ss">f&#39;Iteration: </span><span class="sc">{</span><span class="dv">0</span><span class="sc">}</span><span class="ss"> -- `arccos(sol, xk)` </span><span class="sc">{</span>arccosalpha<span class="sc">}</span><span class="ss">&#39;</span>)</a>
-<a class="sourceLine" id="cb22-22" title="22"></a>
-<a class="sourceLine" id="cb22-23" title="23"></a>
-<a class="sourceLine" id="cb22-24" title="24"><span class="kw">def</span> solve_sadpoint_sys_x(Q<span class="op">=</span><span class="va">None</span>, A<span class="op">=</span><span class="va">None</span>, fone<span class="op">=</span><span class="va">None</span>, ftwo<span class="op">=</span><span class="va">None</span>):</a>
-<a class="sourceLine" id="cb22-25" title="25">    <span class="co">&#39;&#39;&#39; Loesung des Sattelpunktprobles</span></a>
-<a class="sourceLine" id="cb22-26" title="26"></a>
-<a class="sourceLine" id="cb22-27" title="27"><span class="co">    | Q  A.T | . | x |    | f1 |</span></a>
-<a class="sourceLine" id="cb22-28" title="28"><span class="co">    | A   0  |   | l |  = | f2 |</span></a>
-<a class="sourceLine" id="cb22-29" title="29"></a>
-<a class="sourceLine" id="cb22-30" title="30"><span class="co">    Notes:</span></a>
-<a class="sourceLine" id="cb22-31" title="31"><span class="co">    -----</span></a>
-<a class="sourceLine" id="cb22-32" title="32"></a>
-<a class="sourceLine" id="cb22-33" title="33"><span class="co">    Es wird nur `x` zurueckgegeben</span></a>
-<a class="sourceLine" id="cb22-34" title="34"></a>
-<a class="sourceLine" id="cb22-35" title="35"><span class="co">    &#39;&#39;&#39;</span></a>
-<a class="sourceLine" id="cb22-36" title="36">    m <span class="op">=</span> A.shape[<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb22-37" title="37">    lineone <span class="op">=</span> [Q, A.T]</a>
-<a class="sourceLine" id="cb22-38" title="38">    linetwo <span class="op">=</span> [A, np.zeros((m, m))]</a>
-<a class="sourceLine" id="cb22-39" title="39">    sdptmat <span class="op">=</span> np.vstack([np.hstack(lineone),</a>
-<a class="sourceLine" id="cb22-40" title="40">                         np.hstack(linetwo)])</a>
-<a class="sourceLine" id="cb22-41" title="41">    rhs <span class="op">=</span> np.vstack([fone, ftwo])</a>
-<a class="sourceLine" id="cb22-42" title="42">    xl <span class="op">=</span> np.linalg.solve(sdptmat, rhs)</a>
-<a class="sourceLine" id="cb22-43" title="43">    <span class="cf">return</span> xl[:<span class="op">-</span>m]  <span class="co"># return only the `x-part`</span></a>
-<a class="sourceLine" id="cb22-44" title="44"></a>
-<a class="sourceLine" id="cb22-45" title="45"></a>
-<a class="sourceLine" id="cb22-46" title="46"><span class="cf">for</span> kkk <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>):</a>
-<a class="sourceLine" id="cb22-47" title="47">    <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb22-48" title="48">    <span class="co"># die SQP Iteration</span></a>
-<a class="sourceLine" id="cb22-49" title="49">    <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb22-50" title="50">    xk <span class="op">=</span> xk <span class="op">+</span> solve_sadpoint_sys_x()</a>
-<a class="sourceLine" id="cb22-51" title="51"></a>
-<a class="sourceLine" id="cb22-52" title="52">    arccosalpha <span class="op">=</span> xk.T <span class="op">@</span> pcfour <span class="op">/</span> (np.linalg.norm(xk)<span class="op">*</span>nrmpcf)</a>
-<a class="sourceLine" id="cb22-53" title="53">    <span class="bu">print</span>(<span class="ss">f&#39;Iteration: </span><span class="sc">{</span>kkk<span class="sc">}</span><span class="ss"> -- `arccos(sol, xk)` </span><span class="sc">{</span>arccosalpha<span class="sc">}</span><span class="ss">&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb22-1"><a href="optimierung-unter-nebenbedingungen.html#cb22-1" aria-hidden="true"></a><span class="im">import</span> json</span>
+<span id="cb22-2"><a href="optimierung-unter-nebenbedingungen.html#cb22-2" aria-hidden="true"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-3"><a href="optimierung-unter-nebenbedingungen.html#cb22-3" aria-hidden="true"></a></span>
+<span id="cb22-4"><a href="optimierung-unter-nebenbedingungen.html#cb22-4" aria-hidden="true"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;penguin-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb22-5"><a href="optimierung-unter-nebenbedingungen.html#cb22-5" aria-hidden="true"></a>    datadict <span class="op">=</span> json.load(f)</span>
+<span id="cb22-6"><a href="optimierung-unter-nebenbedingungen.html#cb22-6" aria-hidden="true"></a></span>
+<span id="cb22-7"><a href="optimierung-unter-nebenbedingungen.html#cb22-7" aria-hidden="true"></a>data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</span>
+<span id="cb22-8"><a href="optimierung-unter-nebenbedingungen.html#cb22-8" aria-hidden="true"></a></span>
+<span id="cb22-9"><a href="optimierung-unter-nebenbedingungen.html#cb22-9" aria-hidden="true"></a><span class="co"># center the data</span></span>
+<span id="cb22-10"><a href="optimierung-unter-nebenbedingungen.html#cb22-10" aria-hidden="true"></a>X <span class="op">=</span> data <span class="op">-</span> data.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb22-11"><a href="optimierung-unter-nebenbedingungen.html#cb22-11" aria-hidden="true"></a>XtX <span class="op">=</span> X.T <span class="op">@</span> X  <span class="co"># for later use</span></span>
+<span id="cb22-12"><a href="optimierung-unter-nebenbedingungen.html#cb22-12" aria-hidden="true"></a></span>
+<span id="cb22-13"><a href="optimierung-unter-nebenbedingungen.html#cb22-13" aria-hidden="true"></a>U, S, Vh <span class="op">=</span> np.linalg.svd(X)</span>
+<span id="cb22-14"><a href="optimierung-unter-nebenbedingungen.html#cb22-14" aria-hidden="true"></a></span>
+<span id="cb22-15"><a href="optimierung-unter-nebenbedingungen.html#cb22-15" aria-hidden="true"></a>pcfour <span class="op">=</span> Vh[<span class="op">-</span><span class="dv">1</span>:, :].T  <span class="co"># die &quot;letzte&quot; Hauptrichtung</span></span>
+<span id="cb22-16"><a href="optimierung-unter-nebenbedingungen.html#cb22-16" aria-hidden="true"></a>nrmpcf <span class="op">=</span> np.linalg.norm(pcfour)  <span class="co"># brauchen wir um den Winkel zu berechnen</span></span>
+<span id="cb22-17"><a href="optimierung-unter-nebenbedingungen.html#cb22-17" aria-hidden="true"></a></span>
+<span id="cb22-18"><a href="optimierung-unter-nebenbedingungen.html#cb22-18" aria-hidden="true"></a>xk <span class="op">=</span> np.zeros((<span class="dv">4</span>, <span class="dv">1</span>))  <span class="co"># Startvektor</span></span>
+<span id="cb22-19"><a href="optimierung-unter-nebenbedingungen.html#cb22-19" aria-hidden="true"></a>xk[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb22-20"><a href="optimierung-unter-nebenbedingungen.html#cb22-20" aria-hidden="true"></a>arccosalpha <span class="op">=</span> xk.T <span class="op">@</span> pcfour <span class="op">/</span> (np.linalg.norm(xk)<span class="op">*</span>nrmpcf)</span>
+<span id="cb22-21"><a href="optimierung-unter-nebenbedingungen.html#cb22-21" aria-hidden="true"></a><span class="bu">print</span>(<span class="ss">f&#39;Iteration: </span><span class="sc">{</span><span class="dv">0</span><span class="sc">}</span><span class="ss"> -- `arccos(sol, xk)` </span><span class="sc">{</span>arccosalpha<span class="sc">}</span><span class="ss">&#39;</span>)</span>
+<span id="cb22-22"><a href="optimierung-unter-nebenbedingungen.html#cb22-22" aria-hidden="true"></a></span>
+<span id="cb22-23"><a href="optimierung-unter-nebenbedingungen.html#cb22-23" aria-hidden="true"></a></span>
+<span id="cb22-24"><a href="optimierung-unter-nebenbedingungen.html#cb22-24" aria-hidden="true"></a><span class="kw">def</span> solve_sadpoint_sys_x(Q<span class="op">=</span><span class="va">None</span>, A<span class="op">=</span><span class="va">None</span>, fone<span class="op">=</span><span class="va">None</span>, ftwo<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb22-25"><a href="optimierung-unter-nebenbedingungen.html#cb22-25" aria-hidden="true"></a>    <span class="co">&#39;&#39;&#39; Loesung des Sattelpunktprobles</span></span>
+<span id="cb22-26"><a href="optimierung-unter-nebenbedingungen.html#cb22-26" aria-hidden="true"></a></span>
+<span id="cb22-27"><a href="optimierung-unter-nebenbedingungen.html#cb22-27" aria-hidden="true"></a><span class="co">    | Q  A.T | . | x |    | f1 |</span></span>
+<span id="cb22-28"><a href="optimierung-unter-nebenbedingungen.html#cb22-28" aria-hidden="true"></a><span class="co">    | A   0  |   | l |  = | f2 |</span></span>
+<span id="cb22-29"><a href="optimierung-unter-nebenbedingungen.html#cb22-29" aria-hidden="true"></a></span>
+<span id="cb22-30"><a href="optimierung-unter-nebenbedingungen.html#cb22-30" aria-hidden="true"></a><span class="co">    Notes:</span></span>
+<span id="cb22-31"><a href="optimierung-unter-nebenbedingungen.html#cb22-31" aria-hidden="true"></a><span class="co">    -----</span></span>
+<span id="cb22-32"><a href="optimierung-unter-nebenbedingungen.html#cb22-32" aria-hidden="true"></a></span>
+<span id="cb22-33"><a href="optimierung-unter-nebenbedingungen.html#cb22-33" aria-hidden="true"></a><span class="co">    Es wird nur `x` zurueckgegeben</span></span>
+<span id="cb22-34"><a href="optimierung-unter-nebenbedingungen.html#cb22-34" aria-hidden="true"></a></span>
+<span id="cb22-35"><a href="optimierung-unter-nebenbedingungen.html#cb22-35" aria-hidden="true"></a><span class="co">    &#39;&#39;&#39;</span></span>
+<span id="cb22-36"><a href="optimierung-unter-nebenbedingungen.html#cb22-36" aria-hidden="true"></a>    m <span class="op">=</span> A.shape[<span class="dv">0</span>]</span>
+<span id="cb22-37"><a href="optimierung-unter-nebenbedingungen.html#cb22-37" aria-hidden="true"></a>    lineone <span class="op">=</span> [Q, A.T]</span>
+<span id="cb22-38"><a href="optimierung-unter-nebenbedingungen.html#cb22-38" aria-hidden="true"></a>    linetwo <span class="op">=</span> [A, np.zeros((m, m))]</span>
+<span id="cb22-39"><a href="optimierung-unter-nebenbedingungen.html#cb22-39" aria-hidden="true"></a>    sdptmat <span class="op">=</span> np.vstack([np.hstack(lineone),</span>
+<span id="cb22-40"><a href="optimierung-unter-nebenbedingungen.html#cb22-40" aria-hidden="true"></a>                         np.hstack(linetwo)])</span>
+<span id="cb22-41"><a href="optimierung-unter-nebenbedingungen.html#cb22-41" aria-hidden="true"></a>    rhs <span class="op">=</span> np.vstack([fone, ftwo])</span>
+<span id="cb22-42"><a href="optimierung-unter-nebenbedingungen.html#cb22-42" aria-hidden="true"></a>    xl <span class="op">=</span> np.linalg.solve(sdptmat, rhs)</span>
+<span id="cb22-43"><a href="optimierung-unter-nebenbedingungen.html#cb22-43" aria-hidden="true"></a>    <span class="cf">return</span> xl[:<span class="op">-</span>m]  <span class="co"># return only the `x-part`</span></span>
+<span id="cb22-44"><a href="optimierung-unter-nebenbedingungen.html#cb22-44" aria-hidden="true"></a></span>
+<span id="cb22-45"><a href="optimierung-unter-nebenbedingungen.html#cb22-45" aria-hidden="true"></a></span>
+<span id="cb22-46"><a href="optimierung-unter-nebenbedingungen.html#cb22-46" aria-hidden="true"></a><span class="cf">for</span> kkk <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>):</span>
+<span id="cb22-47"><a href="optimierung-unter-nebenbedingungen.html#cb22-47" aria-hidden="true"></a>    <span class="co"># ...</span></span>
+<span id="cb22-48"><a href="optimierung-unter-nebenbedingungen.html#cb22-48" aria-hidden="true"></a>    <span class="co"># die SQP Iteration</span></span>
+<span id="cb22-49"><a href="optimierung-unter-nebenbedingungen.html#cb22-49" aria-hidden="true"></a>    <span class="co"># ...</span></span>
+<span id="cb22-50"><a href="optimierung-unter-nebenbedingungen.html#cb22-50" aria-hidden="true"></a>    xk <span class="op">=</span> xk <span class="op">+</span> solve_sadpoint_sys_x()</span>
+<span id="cb22-51"><a href="optimierung-unter-nebenbedingungen.html#cb22-51" aria-hidden="true"></a></span>
+<span id="cb22-52"><a href="optimierung-unter-nebenbedingungen.html#cb22-52" aria-hidden="true"></a>    arccosalpha <span class="op">=</span> xk.T <span class="op">@</span> pcfour <span class="op">/</span> (np.linalg.norm(xk)<span class="op">*</span>nrmpcf)</span>
+<span id="cb22-53"><a href="optimierung-unter-nebenbedingungen.html#cb22-53" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="ss">f&#39;Iteration: </span><span class="sc">{</span>kkk<span class="sc">}</span><span class="ss"> -- `arccos(sol, xk)` </span><span class="sc">{</span>arccosalpha<span class="sc">}</span><span class="ss">&#39;</span>)</span></code></pre></div>
 
 </div>
 </div>
@@ -470,8 +485,8 @@ g_i(x_k)
 <div class="footnotes">
 <hr />
 <ol start="10">
-<li id="fn10"><p><em>gut</em> im Sinne von der Fehler <span class="math inline">\(f(x+h)-f(x)-f&#39;(x)h\)</span> geht schneller zur <span class="math inline">\(0\)</span> als <span class="math inline">\(h\)</span><a href="optimierung-unter-nebenbedingungen.html#fnref10" class="footnote-back">↩</a></p></li>
-<li id="fn11"><p>Die korrekte quadratische Approximation von <span class="math inline">\(f\)</span> würde noch den Term <span class="math inline">\(f(x^k)\)</span> enthalten. Dieser kann aber einfach weggelassen werden bei der Suche der Minimalstelle.<a href="optimierung-unter-nebenbedingungen.html#fnref11" class="footnote-back">↩</a></p></li>
+<li id="fn10"><p><em>gut</em> im Sinne von der Fehler <span class="math inline">\(f(x+h)-f(x)-f&#39;(x)h\)</span> geht schneller zur <span class="math inline">\(0\)</span> als <span class="math inline">\(h\)</span><a href="optimierung-unter-nebenbedingungen.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Die korrekte quadratische Approximation von <span class="math inline">\(f\)</span> würde noch den Term <span class="math inline">\(f(x^k)\)</span> enthalten. Dieser kann aber einfach weggelassen werden bei der Suche der Minimalstelle.<a href="optimierung-unter-nebenbedingungen.html#fnref11" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -540,7 +555,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

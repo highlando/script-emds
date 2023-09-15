@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Matrix-Zerlegungen | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Matrix-Zerlegungen | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
@@ -48,31 +48,33 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -81,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -116,6 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -134,31 +140,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Vorwort</a></li>
-<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a><ul>
+<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#wie-passiert-die-datenanalyse"><i class="fa fa-check"></i><b>1.1</b> Wie passiert die Datenanalyse?</a></li>
 <li class="chapter" data-level="1.2" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#was-sind-daten"><i class="fa fa-check"></i><b>1.2</b> Was sind Daten?</a></li>
 <li class="chapter" data-level="1.3" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#beispiele"><i class="fa fa-check"></i><b>1.3</b> Beispiele</a></li>
 <li class="chapter" data-level="1.4" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#python"><i class="fa fa-check"></i><b>1.4</b> Python</a></li>
 <li class="chapter" data-level="1.5" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#aufgaben"><i class="fa fa-check"></i><b>1.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
+<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
 <li class="chapter" data-level="2.2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
 <li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#sec-linreg-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
 <li class="chapter" data-level="2.4" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
 <li class="chapter" data-level="2.5" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a><ul>
+<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#qr-zerlegung"><i class="fa fa-check"></i><b>3.1</b> QR Zerlegung</a></li>
 <li class="chapter" data-level="3.2" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#singulärwertzerlegung"><i class="fa fa-check"></i><b>3.2</b> Singulärwertzerlegung</a></li>
 <li class="chapter" data-level="3.3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#aufgaben-1"><i class="fa fa-check"></i><b>3.3</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
 <li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-pca-maximierung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
+<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der PENGUINS Datensatz</a></li>
 <li class="chapter" data-level="5.2" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#darstellung"><i class="fa fa-check"></i><b>5.2</b> Darstellung</a></li>
 <li class="chapter" data-level="5.3" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#korrelationen-und-die-kovarianzmatrix"><i class="fa fa-check"></i><b>5.3</b> Korrelationen und die Kovarianzmatrix</a></li>
@@ -168,7 +179,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.7" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-pinguin-daten"><i class="fa fa-check"></i><b>5.7</b> Am Beispiel der Pinguin Daten</a></li>
 <li class="chapter" data-level="5.8" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.8</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-im-allgemeinen"><i class="fa fa-check"></i><b>6.1</b> Clustering im Allgemeinen</a></li>
 <li class="chapter" data-level="6.2" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#k-means-clustering"><i class="fa fa-check"></i><b>6.2</b> K-means Clustering</a></li>
 <li class="chapter" data-level="6.3" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse-1"><i class="fa fa-check"></i><b>6.3</b> Clustering und Hauptkomponentenanalyse</a></li>
@@ -176,7 +188,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine"><i class="fa fa-check"></i><b>6.5</b> Am Beispiel der Pinguine</a></li>
 <li class="chapter" data-level="6.6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#aufgaben-3"><i class="fa fa-check"></i><b>6.6</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a><ul>
+<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="optimierung.html"><a href="optimierung.html#multivariable-funktionen"><i class="fa fa-check"></i><b>7.1</b> Multivariable Funktionen</a></li>
 <li class="chapter" data-level="7.2" data-path="optimierung.html"><a href="optimierung.html#partielle-ableitungen-und-der-gradient"><i class="fa fa-check"></i><b>7.2</b> Partielle Ableitungen und der Gradient</a></li>
 <li class="chapter" data-level="7.3" data-path="optimierung.html"><a href="optimierung.html#richtungs-ableitung"><i class="fa fa-check"></i><b>7.3</b> Richtungs-Ableitung</a></li>
@@ -186,14 +199,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#extra-automatisches-differenzieren"><i class="fa fa-check"></i><b>7.7</b> Extra: Automatisches Differenzieren</a></li>
 <li class="chapter" data-level="7.8" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.8</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a><ul>
+<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#richtungen-und-nebenbedingungen"><i class="fa fa-check"></i><b>8.1</b> Richtungen und Nebenbedingungen</a></li>
 <li class="chapter" data-level="8.2" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#restringierte-optimierungsprobleme-und-der-gradient"><i class="fa fa-check"></i><b>8.2</b> Restringierte Optimierungsprobleme und der Gradient</a></li>
 <li class="chapter" data-level="8.3" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#linear-quadratische-probleme"><i class="fa fa-check"></i><b>8.3</b> Linear Quadratische Probleme</a></li>
 <li class="chapter" data-level="8.4" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming"><i class="fa fa-check"></i><b>8.4</b> Sequential Quadratic Programming</a></li>
 <li class="chapter" data-level="8.5" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#aufgaben-5"><i class="fa fa-check"></i><b>8.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><i class="fa fa-check"></i><b>9</b> Stochastisches Gradientenverfahren und Maschinelles Lernen</a><ul>
+<li class="chapter" data-level="9" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><i class="fa fa-check"></i><b>9</b> Stochastisches Gradientenverfahren und Maschinelles Lernen</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#hintergrund"><i class="fa fa-check"></i><b>9.1</b> Hintergrund</a></li>
 <li class="chapter" data-level="9.2" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#iterative_method"><i class="fa fa-check"></i><b>9.2</b> Stochastisches Abstiegsverfahren</a></li>
 <li class="chapter" data-level="9.3" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#aufgabe"><i class="fa fa-check"></i><b>9.3</b> Aufgabe</a></li>
@@ -219,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="matrix-zerlegungen" class="section level1 hasAnchor">
+<div id="matrix-zerlegungen" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">3</span> Matrix-Zerlegungen<a href="matrix-zerlegungen.html#matrix-zerlegungen" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Die Lösung <span class="math inline">\(w\)</span> des Problems der <em>linearen Ausgleichsrechnung</em> war entweder als Lösung eines Optimierungsproblems
 <span class="math display">\[\begin{equation*}
@@ -234,7 +249,7 @@ gegeben. Hierbei steht nun <span class="math inline">\(A\in \mathbb R^{N\times n
 <li>die Matrix mehr Zeilen als Spalten hat (<span class="math inline">\(N&gt;n\)</span>) und</li>
 <li>die Spalten linear unabhängig sind.</li>
 </ul>
-<div id="qr-zerlegung" class="section level2 hasAnchor">
+<div id="qr-zerlegung" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> QR Zerlegung<a href="matrix-zerlegungen.html#qr-zerlegung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Wir betrachten nochmal das Optimierungsproblem <span class="math inline">\(\min_{w} \| Aw - y \|^2\)</span>. Gäbe es eine Lösung des Systems <span class="math inline">\(Aw=y\)</span>, wäre das sofort eine Lösung des Optimierungsproblems. Da <span class="math inline">\(A\)</span> aber mehr Zeilen als Spalten hat, ist das System <span class="math inline">\(Aw=y\)</span> überbestimmt und eine Lösung in der Regel nicht gegeben.</p>
 <p>Die Überlegung ist nun, die Gleichung <span class="math inline">\(Aw=y\)</span> <em>so gut wie möglich</em> zu erfüllen, indem wir die relevanten Gleichungen indentifizieren und wenigstens diese lösen. Ein systematischer (und wie wir später sehen werden auch zum Optimierungsproblem passender) Zugang bietet die QR Zerlegung.</p>
@@ -284,7 +299,7 @@ nach <span class="math inline">\(w\)</span> zu lösen und in Kauf zu nehmen, das
 </ul>
 <p>Allerdings, wie Sie als Übungsaufgabe nachweisen werden, löst dieser Ansatz tatsächlich das Optimierungsproblem.</p>
 </div>
-<div id="singulärwertzerlegung" class="section level2 hasAnchor">
+<div id="singulärwertzerlegung" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Singulärwertzerlegung<a href="matrix-zerlegungen.html#singulärwertzerlegung" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Eine weitere Matrix Zerlegung, die eng mit der Lösung von Optimierungsproblemen oder überbestimmten Gleichungssystemen zusammenhängt ist die <em>Singulärwertzerlegung</em> (SVD – von english: <em>Singular Value Decomposition</em>).</p>
 <div class="theorem">
@@ -358,7 +373,7 @@ wobei <span class="math inline">\(A_{\hat r}\)</span> aus der <em>truncated SVD<
 <span class="math display">\[\begin{equation*}
 \min_{B\in \mathbb C^{m\times n}, \operatorname{Rg}(B)=\hat r} \|A-B\|_2 = \|A-A_{\hat r}\|_2 = \sigma_{\hat r + 1};
 \end{equation*}\]</span>
-<span class="citation">(vgl. Satz 14.15, Bollhöfer and Mehrmann <a href="#ref-BolM04">2004</a>)</span>.</p>
+<span class="citation">(vgl. Satz 14.15, Bollhöfer and Mehrmann <a href="#ref-BolM04" role="doc-biblioref">2004</a>)</span>.</p>
 <p>Zum Abschluss noch der Zusammenhang zum Optimierungsproblem. Ist <span class="math inline">\(A=U\Sigma V^*\)</span> “SV-zerlegt”, dann gilt
 <span class="math display">\[\begin{equation*}
 A^*Aw = V\Sigma^*U^*U\Sigma V^*w = V\hat \Sigma^2 V^* 
@@ -376,14 +391,14 @@ wobei
 aus <span class="math inline">\(\Sigma \hat \Sigma^{-1}\hat \Sigma^{-1}\)</span> herrührt.</p>
 <p><strong>Bemerkung</strong>: <span class="math inline">\(\Sigma^+\)</span> kann auch definiert werden, wenn <span class="math inline">\(\hat \Sigma\)</span> nicht invertierbar ist (weil manche Diagonaleinträge null sind). Dann wird <span class="math inline">\(\hat \Sigma^+\)</span> betrachtet, bei welcher nur die <span class="math inline">\(\sigma_i&gt;0\)</span> invertiert werden und die anderen <span class="math inline">\(\sigma_i=0\)</span> belassen werden. Das definiert eine sogenannte <em>verallgemeinerte Inverse</em> und löst auch das Optimierungsproblem falls <span class="math inline">\(A\)</span> keinen vollen Rang hat.</p>
 <div class="figure">
-<img src="bilder/03-412px-Singular_value_decomposition_visualisation.svg.png" alt="Illustration der SVD. Bitte beachten der * bedeutet hier transponiert und komplex konjugiert. By Cmglee - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=67853297" id="fig-SVD" style="width:50.0%" />
+<img src="bilder/03-412px-Singular_value_decomposition_visualisation.svg.png" id="fig-SVD" style="width:50.0%" alt="" />
 <p class="caption">Illustration der SVD. Bitte beachten der <span class="math inline">\(*\)</span> bedeutet hier transponiert und komplex konjugiert. By Cmglee - Own work, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=67853297" class="uri">https://commons.wikimedia.org/w/index.php?curid=67853297</a></p>
 </div>
 </div>
-<div id="aufgaben-1" class="section level2 hasAnchor">
+<div id="aufgaben-1" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Aufgaben<a href="matrix-zerlegungen.html#aufgaben-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Erklärung: (T) heißt theoretische Aufgabe, (P) heißt programmieren.</p>
-<div id="norm-und-orthogonale-transformation-t" class="section level3 hasAnchor">
+<div id="norm-und-orthogonale-transformation-t" class="section level3 hasAnchor" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Norm und Orthogonale Transformation (T)<a href="matrix-zerlegungen.html#norm-und-orthogonale-transformation-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sei <span class="math inline">\(Q\in \mathbb R^{n\times n}\)</span> eine orthogonale Matrix und sei <span class="math inline">\(y\in \mathbb R^{n}\)</span>. Zeigen Sie, dass
 <span class="math display">\[\begin{equation*}
@@ -391,7 +406,7 @@ aus <span class="math inline">\(\Sigma \hat \Sigma^{-1}\hat \Sigma^{-1}\)</span>
 \end{equation*}\]</span>
 gilt. (2 Punkte)</p>
 </div>
-<div id="kleinste-quadrate-und-mittelwert" class="section level3 hasAnchor">
+<div id="kleinste-quadrate-und-mittelwert" class="section level3 hasAnchor" number="3.3.2">
 <h3><span class="header-section-number">3.3.2</span> Kleinste Quadrate und Mittelwert<a href="matrix-zerlegungen.html#kleinste-quadrate-und-mittelwert" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Zeigen sie, dass der <em>kleinste Quadrate</em> Ansatz zur Approximation einer Datenwolke
 <span class="math display">\[\begin{equation*}
@@ -399,7 +414,7 @@ gilt. (2 Punkte)</p>
 \end{equation*}\]</span>
 mittels einer konstanten Funktion <span class="math inline">\(f(x)=w_1\)</span> auf <span class="math inline">\(w_1\)</span> auf den Mittelwert der <span class="math inline">\(y_i\)</span> führt. (6 Punkte)</p>
 </div>
-<div id="qr-zerlegung-und-kleinstes-quadrate-problem-t" class="section level3 hasAnchor">
+<div id="qr-zerlegung-und-kleinstes-quadrate-problem-t" class="section level3 hasAnchor" number="3.3.3">
 <h3><span class="header-section-number">3.3.3</span> QR Zerlegung und Kleinstes Quadrate Problem (T)<a href="matrix-zerlegungen.html#qr-zerlegung-und-kleinstes-quadrate-problem-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sei <span class="math inline">\(A\in \mathbb R^{m,n}\)</span>, <span class="math inline">\(m&gt;n\)</span>, <span class="math inline">\(A\)</span> hat vollen Rank und sei
 <span class="math display">\[\begin{equation*}
@@ -420,43 +435,43 @@ w \mapsto \frac 12 \| Aw - y \|^2
 \end{equation*}\]</span>
 ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorlesung 02 hergeleitet. (6 Punkte)</p>
 </div>
-<div id="eigenwerte-symmetrischer-matrizen-t" class="section level3 hasAnchor">
+<div id="eigenwerte-symmetrischer-matrizen-t" class="section level3 hasAnchor" number="3.3.4">
 <h3><span class="header-section-number">3.3.4</span> Eigenwerte Symmetrischer Matrizen (T)<a href="matrix-zerlegungen.html#eigenwerte-symmetrischer-matrizen-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Zeigen Sie, dass Eigenwerte symmetrischer reeller Matrizen <span class="math inline">\(A\in \mathbb R^{n\times n}\)</span> immer reell sind. (3 Punkte)</p>
 </div>
-<div id="singulärwertzerlegung-und-eigenwerte-t" class="section level3 hasAnchor">
+<div id="singulärwertzerlegung-und-eigenwerte-t" class="section level3 hasAnchor" number="3.3.5">
 <h3><span class="header-section-number">3.3.5</span> Singulärwertzerlegung und Eigenwerte (T)<a href="matrix-zerlegungen.html#singulärwertzerlegung-und-eigenwerte-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Zeigen Sie, dass die quadrierten Singulärwerte einer Matrix <span class="math inline">\(A\in \mathbb R^{m\times n}\)</span>, <span class="math inline">\(m&gt;n\)</span>, genau die Eigenwerte der Matrix <span class="math inline">\(A^TA\)</span> sind und in welcher Beziehung sie mit den Eigenwerten von <span class="math inline">\(AA^T\)</span> stehen. <strong>Hinweis</strong>: hier ist “<span class="math inline">\(m&gt;n\)</span>” wichtig. (6 Punkte)</p>
 </div>
-<div id="python-laden-und-speichern-von-arrays" class="section level3 hasAnchor">
+<div id="python-laden-und-speichern-von-arrays" class="section level3 hasAnchor" number="3.3.6">
 <h3><span class="header-section-number">3.3.6</span> Python – Laden und Speichern von Arrays<a href="matrix-zerlegungen.html#python-laden-und-speichern-von-arrays" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Speichern sie die Covid-Daten aus obiger Tabelle zur späteren Verwendung als ein <code>numpy.array</code>. Beispielsweise so:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb5-3" title="3"></a>
-<a class="sourceLine" id="cb5-4" title="4">days <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>,</a>
-<a class="sourceLine" id="cb5-5" title="5">        <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">15</span>,  <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>,  <span class="dv">20</span>,   <span class="dv">21</span>,</a>
-<a class="sourceLine" id="cb5-6" title="6">        <span class="dv">22</span>,  <span class="dv">23</span>,  <span class="dv">24</span>,   <span class="dv">25</span>,    <span class="dv">26</span>, <span class="dv">27</span>,  <span class="dv">28</span>,   <span class="dv">29</span>,    <span class="dv">30</span>,     <span class="dv">31</span>]</a>
-<a class="sourceLine" id="cb5-7" title="7">case <span class="op">=</span> [<span class="dv">352</span>, <span class="dv">347</span>, <span class="dv">308</span>, <span class="dv">151</span>, <span class="dv">360</span>, <span class="dv">498</span>, <span class="dv">664</span>, <span class="dv">686</span>, <span class="dv">740</span>, <span class="dv">418</span>, <span class="dv">320</span>,</a>
-<a class="sourceLine" id="cb5-8" title="8">        <span class="dv">681</span>, <span class="dv">691</span>, <span class="dv">1154</span>, <span class="dv">1284</span>,  <span class="dv">127</span>, <span class="dv">984</span>, <span class="dv">573</span>, <span class="dv">1078</span>,  <span class="dv">1462</span>,   <span class="dv">2239</span>,</a>
-<a class="sourceLine" id="cb5-9" title="9">        <span class="dv">2236</span>,  <span class="dv">2119</span>,  <span class="dv">1663</span>,   <span class="dv">1413</span>,    <span class="dv">2283</span>,</a>
-<a class="sourceLine" id="cb5-10" title="10">        <span class="dv">2717</span>,  <span class="dv">3113</span>,   <span class="dv">2972</span>,    <span class="dv">3136</span>,    <span class="dv">2615</span>]</a>
-<a class="sourceLine" id="cb5-11" title="11"></a>
-<a class="sourceLine" id="cb5-12" title="12">data <span class="op">=</span> np.vstack([days, case])</a>
-<a class="sourceLine" id="cb5-13" title="13"><span class="bu">print</span>(<span class="st">&#39;Shape of data: &#39;</span>, data.shape)</a>
-<a class="sourceLine" id="cb5-14" title="14"></a>
-<a class="sourceLine" id="cb5-15" title="15">datafilestr <span class="op">=</span> <span class="st">&#39;coviddata.npy&#39;</span></a>
-<a class="sourceLine" id="cb5-16" title="16">np.save(datafilestr, data)</a>
-<a class="sourceLine" id="cb5-17" title="17"></a>
-<a class="sourceLine" id="cb5-18" title="18">lddata <span class="op">=</span> np.load(datafilestr)</a>
-<a class="sourceLine" id="cb5-19" title="19"></a>
-<a class="sourceLine" id="cb5-20" title="20">plt.figure(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb5-21" title="21">plt.plot(lddata[<span class="dv">0</span>, :], lddata[<span class="dv">1</span>, :], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;Cases/Day&#39;</span>)</a>
-<a class="sourceLine" id="cb5-22" title="22">plt.title(<span class="st">&#39;Covid Faelle in Bayern im Oktober 2020&#39;</span>)</a>
-<a class="sourceLine" id="cb5-23" title="23">plt.legend()</a>
-<a class="sourceLine" id="cb5-24" title="24">plt.show()</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb5-1"><a href="matrix-zerlegungen.html#cb5-1" aria-hidden="true"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="matrix-zerlegungen.html#cb5-2" aria-hidden="true"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="matrix-zerlegungen.html#cb5-3" aria-hidden="true"></a></span>
+<span id="cb5-4"><a href="matrix-zerlegungen.html#cb5-4" aria-hidden="true"></a>days <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>,</span>
+<span id="cb5-5"><a href="matrix-zerlegungen.html#cb5-5" aria-hidden="true"></a>        <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">15</span>,  <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>,  <span class="dv">20</span>,   <span class="dv">21</span>,</span>
+<span id="cb5-6"><a href="matrix-zerlegungen.html#cb5-6" aria-hidden="true"></a>        <span class="dv">22</span>,  <span class="dv">23</span>,  <span class="dv">24</span>,   <span class="dv">25</span>,    <span class="dv">26</span>, <span class="dv">27</span>,  <span class="dv">28</span>,   <span class="dv">29</span>,    <span class="dv">30</span>,     <span class="dv">31</span>]</span>
+<span id="cb5-7"><a href="matrix-zerlegungen.html#cb5-7" aria-hidden="true"></a>case <span class="op">=</span> [<span class="dv">352</span>, <span class="dv">347</span>, <span class="dv">308</span>, <span class="dv">151</span>, <span class="dv">360</span>, <span class="dv">498</span>, <span class="dv">664</span>, <span class="dv">686</span>, <span class="dv">740</span>, <span class="dv">418</span>, <span class="dv">320</span>,</span>
+<span id="cb5-8"><a href="matrix-zerlegungen.html#cb5-8" aria-hidden="true"></a>        <span class="dv">681</span>, <span class="dv">691</span>, <span class="dv">1154</span>, <span class="dv">1284</span>,  <span class="dv">127</span>, <span class="dv">984</span>, <span class="dv">573</span>, <span class="dv">1078</span>,  <span class="dv">1462</span>,   <span class="dv">2239</span>,</span>
+<span id="cb5-9"><a href="matrix-zerlegungen.html#cb5-9" aria-hidden="true"></a>        <span class="dv">2236</span>,  <span class="dv">2119</span>,  <span class="dv">1663</span>,   <span class="dv">1413</span>,    <span class="dv">2283</span>,</span>
+<span id="cb5-10"><a href="matrix-zerlegungen.html#cb5-10" aria-hidden="true"></a>        <span class="dv">2717</span>,  <span class="dv">3113</span>,   <span class="dv">2972</span>,    <span class="dv">3136</span>,    <span class="dv">2615</span>]</span>
+<span id="cb5-11"><a href="matrix-zerlegungen.html#cb5-11" aria-hidden="true"></a></span>
+<span id="cb5-12"><a href="matrix-zerlegungen.html#cb5-12" aria-hidden="true"></a>data <span class="op">=</span> np.vstack([days, case])</span>
+<span id="cb5-13"><a href="matrix-zerlegungen.html#cb5-13" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;Shape of data: &#39;</span>, data.shape)</span>
+<span id="cb5-14"><a href="matrix-zerlegungen.html#cb5-14" aria-hidden="true"></a></span>
+<span id="cb5-15"><a href="matrix-zerlegungen.html#cb5-15" aria-hidden="true"></a>datafilestr <span class="op">=</span> <span class="st">&#39;coviddata.npy&#39;</span></span>
+<span id="cb5-16"><a href="matrix-zerlegungen.html#cb5-16" aria-hidden="true"></a>np.save(datafilestr, data)</span>
+<span id="cb5-17"><a href="matrix-zerlegungen.html#cb5-17" aria-hidden="true"></a></span>
+<span id="cb5-18"><a href="matrix-zerlegungen.html#cb5-18" aria-hidden="true"></a>lddata <span class="op">=</span> np.load(datafilestr)</span>
+<span id="cb5-19"><a href="matrix-zerlegungen.html#cb5-19" aria-hidden="true"></a></span>
+<span id="cb5-20"><a href="matrix-zerlegungen.html#cb5-20" aria-hidden="true"></a>plt.figure(<span class="dv">1</span>)</span>
+<span id="cb5-21"><a href="matrix-zerlegungen.html#cb5-21" aria-hidden="true"></a>plt.plot(lddata[<span class="dv">0</span>, :], lddata[<span class="dv">1</span>, :], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;Cases/Day&#39;</span>)</span>
+<span id="cb5-22"><a href="matrix-zerlegungen.html#cb5-22" aria-hidden="true"></a>plt.title(<span class="st">&#39;Covid Faelle in Bayern im Oktober 2020&#39;</span>)</span>
+<span id="cb5-23"><a href="matrix-zerlegungen.html#cb5-23" aria-hidden="true"></a>plt.legend()</span>
+<span id="cb5-24"><a href="matrix-zerlegungen.html#cb5-24" aria-hidden="true"></a>plt.show()</span></code></pre></div>
 </div>
-<div id="lineare-regression-für-covid-daten-p" class="section level3 hasAnchor">
+<div id="lineare-regression-für-covid-daten-p" class="section level3 hasAnchor" number="3.3.7">
 <h3><span class="header-section-number">3.3.7</span> Lineare Regression für Covid Daten (P)<a href="matrix-zerlegungen.html#lineare-regression-für-covid-daten-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Führen sie auf den Covid-daten eine lineare Regression zum Fitten</p>
 <ul>
@@ -465,72 +480,72 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
 <li>einer quadratischen Funktion <span class="math inline">\(f(x) = w_1 + w_2 x + w_3x^2\)</span></li>
 </ul>
 <p>durch. Berechnen Sie die mittlere quadratische Abweichung <span class="math inline">\(\frac{1}{N}\sum_{i=1}^N\|y_i - f(x_i)\|^2\)</span> für alle drei Approximationen und plotten Sie die Covid-Daten zusammen mit der aus der Regression erhaltenen Funktion. Beispielsweise so:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb6-3" title="3"></a>
-<a class="sourceLine" id="cb6-4" title="4">datafilestr <span class="op">=</span> <span class="st">&#39;coviddata.npy&#39;</span></a>
-<a class="sourceLine" id="cb6-5" title="5">cvdata <span class="op">=</span> np.load(datafilestr)</a>
-<a class="sourceLine" id="cb6-6" title="6"></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co"># ## Definieren der Basis Funktion(en)</span></a>
-<a class="sourceLine" id="cb6-8" title="8"></a>
-<a class="sourceLine" id="cb6-9" title="9"></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="kw">def</span> b_zero(x):</a>
-<a class="sourceLine" id="cb6-11" title="11">    <span class="co">&#39;&#39;&#39; eine konstante Funktion &#39;&#39;&#39;</span></a>
-<a class="sourceLine" id="cb6-12" title="12">    <span class="cf">return</span> <span class="fl">1.</span></a>
-<a class="sourceLine" id="cb6-13" title="13"></a>
-<a class="sourceLine" id="cb6-14" title="14"></a>
-<a class="sourceLine" id="cb6-15" title="15">ybf <span class="op">=</span> cvdata[<span class="dv">1</span>, :]  <span class="co"># die y-werte</span></a>
-<a class="sourceLine" id="cb6-16" title="16">xbf <span class="op">=</span> cvdata[<span class="dv">0</span>, :]  <span class="co"># die x-werte</span></a>
-<a class="sourceLine" id="cb6-17" title="17"></a>
-<a class="sourceLine" id="cb6-18" title="18">N <span class="op">=</span> xbf.size   <span class="co"># Anzahl Datenpunkte</span></a>
-<a class="sourceLine" id="cb6-19" title="19">ybf <span class="op">=</span> ybf.reshape((N, <span class="dv">1</span>))  <span class="co"># reshape als Spaltenvektor</span></a>
-<a class="sourceLine" id="cb6-20" title="20"></a>
-<a class="sourceLine" id="cb6-21" title="21">bzx <span class="op">=</span> [b_zero(x) <span class="cf">for</span> x <span class="kw">in</span> xbf]  <span class="co"># eine Liste mit Funktionswerten</span></a>
-<a class="sourceLine" id="cb6-22" title="22">bzx <span class="op">=</span> np.array(bzx).reshape((N, <span class="dv">1</span>))  <span class="co"># ein Spalten Vektor</span></a>
-<a class="sourceLine" id="cb6-23" title="23"></a>
-<a class="sourceLine" id="cb6-24" title="24">Phix <span class="op">=</span> bzx  <span class="co"># hier nur eine Spalte</span></a>
-<a class="sourceLine" id="cb6-25" title="25"></a>
-<a class="sourceLine" id="cb6-26" title="26"><span class="co"># Das LGS AtA w = At y</span></a>
-<a class="sourceLine" id="cb6-27" title="27">rhs <span class="op">=</span> Phix.T <span class="op">@</span> ybf</a>
-<a class="sourceLine" id="cb6-28" title="28">AtA <span class="op">=</span> Phix.T <span class="op">@</span> Phix</a>
-<a class="sourceLine" id="cb6-29" title="29"></a>
-<a class="sourceLine" id="cb6-30" title="30"><span class="co"># ACHTUNG: das hier geht nur weil AtA keine Matrix ist in diesem Fall</span></a>
-<a class="sourceLine" id="cb6-31" title="31">w <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>AtA <span class="op">*</span> rhs</a>
-<a class="sourceLine" id="cb6-32" title="32"><span class="co"># ACHTUNG: das hier ging nur weil AtA keine Matrix ist in diesem Fall</span></a>
-<a class="sourceLine" id="cb6-33" title="33"></a>
-<a class="sourceLine" id="cb6-34" title="34"></a>
-<a class="sourceLine" id="cb6-35" title="35"><span class="kw">def</span> get_regfunc(weights, basfunlist<span class="op">=</span>[]):</a>
-<a class="sourceLine" id="cb6-36" title="36">    <span class="co">&#39;&#39;&#39; Eine Funktion, die eine Funktion erzeugt</span></a>
-<a class="sourceLine" id="cb6-37" title="37"></a>
-<a class="sourceLine" id="cb6-38" title="38"><span class="co">    Eingang: die Gewichte, eine Liste von Basisfunktionen</span></a>
-<a class="sourceLine" id="cb6-39" title="39"><span class="co">    Ausgang: die entsprechende Funktion `f = w_1b_1 + ... `</span></a>
-<a class="sourceLine" id="cb6-40" title="40"><span class="co">    &#39;&#39;&#39;</span></a>
-<a class="sourceLine" id="cb6-41" title="41">    <span class="kw">def</span> regfunc(x):</a>
-<a class="sourceLine" id="cb6-42" title="42">        fval <span class="op">=</span> <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-43" title="43">        <span class="cf">for</span> kkk, basfun <span class="kw">in</span> <span class="bu">enumerate</span>(basfunlist):</a>
-<a class="sourceLine" id="cb6-44" title="44">            fval <span class="op">=</span> fval <span class="op">+</span> weights[kkk]<span class="op">*</span>basfun(x)</a>
-<a class="sourceLine" id="cb6-45" title="45">        <span class="cf">return</span> fval</a>
-<a class="sourceLine" id="cb6-46" title="46"></a>
-<a class="sourceLine" id="cb6-47" title="47">    <span class="cf">return</span> regfunc</a>
-<a class="sourceLine" id="cb6-48" title="48"></a>
-<a class="sourceLine" id="cb6-49" title="49"></a>
-<a class="sourceLine" id="cb6-50" title="50">const_regfunc <span class="op">=</span> get_regfunc([w], [b_zero])</a>
-<a class="sourceLine" id="cb6-51" title="51"></a>
-<a class="sourceLine" id="cb6-52" title="52">const_approx <span class="op">=</span> [const_regfunc(x) <span class="cf">for</span> x <span class="kw">in</span> xbf]</a>
-<a class="sourceLine" id="cb6-53" title="53">const_approx <span class="op">=</span> np.array(const_approx).reshape((N, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb6-54" title="54"></a>
-<a class="sourceLine" id="cb6-55" title="55">plt.figure(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb6-56" title="56">plt.plot(cvdata[<span class="dv">0</span>, :], cvdata[<span class="dv">1</span>, :], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;Cases/Day&#39;</span>)</a>
-<a class="sourceLine" id="cb6-57" title="57">plt.plot(cvdata[<span class="dv">0</span>, :], const_approx, <span class="st">&#39;-&#39;</span>, label<span class="op">=</span><span class="st">&#39;constant fit&#39;</span>)</a>
-<a class="sourceLine" id="cb6-58" title="58">plt.legend()</a>
-<a class="sourceLine" id="cb6-59" title="59">plt.show()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb6-1"><a href="matrix-zerlegungen.html#cb6-1" aria-hidden="true"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="matrix-zerlegungen.html#cb6-2" aria-hidden="true"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-3"><a href="matrix-zerlegungen.html#cb6-3" aria-hidden="true"></a></span>
+<span id="cb6-4"><a href="matrix-zerlegungen.html#cb6-4" aria-hidden="true"></a>datafilestr <span class="op">=</span> <span class="st">&#39;coviddata.npy&#39;</span></span>
+<span id="cb6-5"><a href="matrix-zerlegungen.html#cb6-5" aria-hidden="true"></a>cvdata <span class="op">=</span> np.load(datafilestr)</span>
+<span id="cb6-6"><a href="matrix-zerlegungen.html#cb6-6" aria-hidden="true"></a></span>
+<span id="cb6-7"><a href="matrix-zerlegungen.html#cb6-7" aria-hidden="true"></a><span class="co"># ## Definieren der Basis Funktion(en)</span></span>
+<span id="cb6-8"><a href="matrix-zerlegungen.html#cb6-8" aria-hidden="true"></a></span>
+<span id="cb6-9"><a href="matrix-zerlegungen.html#cb6-9" aria-hidden="true"></a></span>
+<span id="cb6-10"><a href="matrix-zerlegungen.html#cb6-10" aria-hidden="true"></a><span class="kw">def</span> b_zero(x):</span>
+<span id="cb6-11"><a href="matrix-zerlegungen.html#cb6-11" aria-hidden="true"></a>    <span class="co">&#39;&#39;&#39; eine konstante Funktion &#39;&#39;&#39;</span></span>
+<span id="cb6-12"><a href="matrix-zerlegungen.html#cb6-12" aria-hidden="true"></a>    <span class="cf">return</span> <span class="fl">1.</span></span>
+<span id="cb6-13"><a href="matrix-zerlegungen.html#cb6-13" aria-hidden="true"></a></span>
+<span id="cb6-14"><a href="matrix-zerlegungen.html#cb6-14" aria-hidden="true"></a></span>
+<span id="cb6-15"><a href="matrix-zerlegungen.html#cb6-15" aria-hidden="true"></a>ybf <span class="op">=</span> cvdata[<span class="dv">1</span>, :]  <span class="co"># die y-werte</span></span>
+<span id="cb6-16"><a href="matrix-zerlegungen.html#cb6-16" aria-hidden="true"></a>xbf <span class="op">=</span> cvdata[<span class="dv">0</span>, :]  <span class="co"># die x-werte</span></span>
+<span id="cb6-17"><a href="matrix-zerlegungen.html#cb6-17" aria-hidden="true"></a></span>
+<span id="cb6-18"><a href="matrix-zerlegungen.html#cb6-18" aria-hidden="true"></a>N <span class="op">=</span> xbf.size   <span class="co"># Anzahl Datenpunkte</span></span>
+<span id="cb6-19"><a href="matrix-zerlegungen.html#cb6-19" aria-hidden="true"></a>ybf <span class="op">=</span> ybf.reshape((N, <span class="dv">1</span>))  <span class="co"># reshape als Spaltenvektor</span></span>
+<span id="cb6-20"><a href="matrix-zerlegungen.html#cb6-20" aria-hidden="true"></a></span>
+<span id="cb6-21"><a href="matrix-zerlegungen.html#cb6-21" aria-hidden="true"></a>bzx <span class="op">=</span> [b_zero(x) <span class="cf">for</span> x <span class="kw">in</span> xbf]  <span class="co"># eine Liste mit Funktionswerten</span></span>
+<span id="cb6-22"><a href="matrix-zerlegungen.html#cb6-22" aria-hidden="true"></a>bzx <span class="op">=</span> np.array(bzx).reshape((N, <span class="dv">1</span>))  <span class="co"># ein Spalten Vektor</span></span>
+<span id="cb6-23"><a href="matrix-zerlegungen.html#cb6-23" aria-hidden="true"></a></span>
+<span id="cb6-24"><a href="matrix-zerlegungen.html#cb6-24" aria-hidden="true"></a>Phix <span class="op">=</span> bzx  <span class="co"># hier nur eine Spalte</span></span>
+<span id="cb6-25"><a href="matrix-zerlegungen.html#cb6-25" aria-hidden="true"></a></span>
+<span id="cb6-26"><a href="matrix-zerlegungen.html#cb6-26" aria-hidden="true"></a><span class="co"># Das LGS AtA w = At y</span></span>
+<span id="cb6-27"><a href="matrix-zerlegungen.html#cb6-27" aria-hidden="true"></a>rhs <span class="op">=</span> Phix.T <span class="op">@</span> ybf</span>
+<span id="cb6-28"><a href="matrix-zerlegungen.html#cb6-28" aria-hidden="true"></a>AtA <span class="op">=</span> Phix.T <span class="op">@</span> Phix</span>
+<span id="cb6-29"><a href="matrix-zerlegungen.html#cb6-29" aria-hidden="true"></a></span>
+<span id="cb6-30"><a href="matrix-zerlegungen.html#cb6-30" aria-hidden="true"></a><span class="co"># ACHTUNG: das hier geht nur weil AtA keine Matrix ist in diesem Fall</span></span>
+<span id="cb6-31"><a href="matrix-zerlegungen.html#cb6-31" aria-hidden="true"></a>w <span class="op">=</span> <span class="fl">1.</span><span class="op">/</span>AtA <span class="op">*</span> rhs</span>
+<span id="cb6-32"><a href="matrix-zerlegungen.html#cb6-32" aria-hidden="true"></a><span class="co"># ACHTUNG: das hier ging nur weil AtA keine Matrix ist in diesem Fall</span></span>
+<span id="cb6-33"><a href="matrix-zerlegungen.html#cb6-33" aria-hidden="true"></a></span>
+<span id="cb6-34"><a href="matrix-zerlegungen.html#cb6-34" aria-hidden="true"></a></span>
+<span id="cb6-35"><a href="matrix-zerlegungen.html#cb6-35" aria-hidden="true"></a><span class="kw">def</span> get_regfunc(weights, basfunlist<span class="op">=</span>[]):</span>
+<span id="cb6-36"><a href="matrix-zerlegungen.html#cb6-36" aria-hidden="true"></a>    <span class="co">&#39;&#39;&#39; Eine Funktion, die eine Funktion erzeugt</span></span>
+<span id="cb6-37"><a href="matrix-zerlegungen.html#cb6-37" aria-hidden="true"></a></span>
+<span id="cb6-38"><a href="matrix-zerlegungen.html#cb6-38" aria-hidden="true"></a><span class="co">    Eingang: die Gewichte, eine Liste von Basisfunktionen</span></span>
+<span id="cb6-39"><a href="matrix-zerlegungen.html#cb6-39" aria-hidden="true"></a><span class="co">    Ausgang: die entsprechende Funktion `f = w_1b_1 + ... `</span></span>
+<span id="cb6-40"><a href="matrix-zerlegungen.html#cb6-40" aria-hidden="true"></a><span class="co">    &#39;&#39;&#39;</span></span>
+<span id="cb6-41"><a href="matrix-zerlegungen.html#cb6-41" aria-hidden="true"></a>    <span class="kw">def</span> regfunc(x):</span>
+<span id="cb6-42"><a href="matrix-zerlegungen.html#cb6-42" aria-hidden="true"></a>        fval <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-43"><a href="matrix-zerlegungen.html#cb6-43" aria-hidden="true"></a>        <span class="cf">for</span> kkk, basfun <span class="kw">in</span> <span class="bu">enumerate</span>(basfunlist):</span>
+<span id="cb6-44"><a href="matrix-zerlegungen.html#cb6-44" aria-hidden="true"></a>            fval <span class="op">=</span> fval <span class="op">+</span> weights[kkk]<span class="op">*</span>basfun(x)</span>
+<span id="cb6-45"><a href="matrix-zerlegungen.html#cb6-45" aria-hidden="true"></a>        <span class="cf">return</span> fval</span>
+<span id="cb6-46"><a href="matrix-zerlegungen.html#cb6-46" aria-hidden="true"></a></span>
+<span id="cb6-47"><a href="matrix-zerlegungen.html#cb6-47" aria-hidden="true"></a>    <span class="cf">return</span> regfunc</span>
+<span id="cb6-48"><a href="matrix-zerlegungen.html#cb6-48" aria-hidden="true"></a></span>
+<span id="cb6-49"><a href="matrix-zerlegungen.html#cb6-49" aria-hidden="true"></a></span>
+<span id="cb6-50"><a href="matrix-zerlegungen.html#cb6-50" aria-hidden="true"></a>const_regfunc <span class="op">=</span> get_regfunc([w], [b_zero])</span>
+<span id="cb6-51"><a href="matrix-zerlegungen.html#cb6-51" aria-hidden="true"></a></span>
+<span id="cb6-52"><a href="matrix-zerlegungen.html#cb6-52" aria-hidden="true"></a>const_approx <span class="op">=</span> [const_regfunc(x) <span class="cf">for</span> x <span class="kw">in</span> xbf]</span>
+<span id="cb6-53"><a href="matrix-zerlegungen.html#cb6-53" aria-hidden="true"></a>const_approx <span class="op">=</span> np.array(const_approx).reshape((N, <span class="dv">1</span>))</span>
+<span id="cb6-54"><a href="matrix-zerlegungen.html#cb6-54" aria-hidden="true"></a></span>
+<span id="cb6-55"><a href="matrix-zerlegungen.html#cb6-55" aria-hidden="true"></a>plt.figure(<span class="dv">1</span>)</span>
+<span id="cb6-56"><a href="matrix-zerlegungen.html#cb6-56" aria-hidden="true"></a>plt.plot(cvdata[<span class="dv">0</span>, :], cvdata[<span class="dv">1</span>, :], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;Cases/Day&#39;</span>)</span>
+<span id="cb6-57"><a href="matrix-zerlegungen.html#cb6-57" aria-hidden="true"></a>plt.plot(cvdata[<span class="dv">0</span>, :], const_approx, <span class="st">&#39;-&#39;</span>, label<span class="op">=</span><span class="st">&#39;constant fit&#39;</span>)</span>
+<span id="cb6-58"><a href="matrix-zerlegungen.html#cb6-58" aria-hidden="true"></a>plt.legend()</span>
+<span id="cb6-59"><a href="matrix-zerlegungen.html#cb6-59" aria-hidden="true"></a>plt.show()</span></code></pre></div>
 <p><strong>Hinweise</strong>:</p>
 <ul>
 <li><code>liste = [f(x) for x in iterable]</code> ist sehr bequem um Vektoren von Funktionswerten zu erzeugen aber nicht sehr <em>pythonesque</em> (und auch im Zweifel nicht effizient). Besser ist es Funktionen zu schreiben, die <em>vektorisiert</em> sind. Zum Beispiel können die meisten <em>built-in</em> Funktionen wie <code>np.exp</code> ein <code>array</code> als Eingang direkt in ein <code>array</code> der Funktionswerte umsetzen.</li>
 <li><em>Eine Funktion, die eine Funktion erzeugt</em> finde ich sehr hilfreich für viele Anwendungen (ist aber manchmal nicht so gut nachvollziehbar).</li>
 </ul>
 </div>
-<div id="truncated-svd-pt" class="section level3 hasAnchor">
+<div id="truncated-svd-pt" class="section level3 hasAnchor" number="3.3.8">
 <h3><span class="header-section-number">3.3.8</span> Truncated SVD (P+T)<a href="matrix-zerlegungen.html#truncated-svd-pt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><strong>(P)</strong> Berechnen und plotten sie die Singulärwerte einer <span class="math inline">\(4000\times 1000\)</span> Matrix mit zufälligen Einträgen und die einer Matrix mit “echten” Daten (hier Simulationsdaten einer Stroemungssimulation)<a href="referenzen.html#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Berechnen sie den Fehler der <em>truncated SVD</em> <span class="math inline">\(\|A-A_{\hat r}\|\)</span> für <span class="math inline">\(\hat r = 10, 20, 40\)</span> für beide Matrizen.</li>
@@ -538,36 +553,36 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
 <li><strong>(P+T)</strong> Für die “echten” Daten: Speichern sie die Faktoren der bei <span class="math inline">\(\hat r=40\)</span> abgeschnittenen SVD und vergleichen Sie den Speicherbedarf der Faktoren und der eigentlichen Matrix.</li>
 </ol>
 <p>Beispielcode:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="im">import</span> scipy.linalg <span class="im">as</span> spla</a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb7-4" title="4"></a>
-<a class="sourceLine" id="cb7-5" title="5">randmat <span class="op">=</span> np.random.randn(<span class="dv">4000</span>, <span class="dv">1000</span>)</a>
-<a class="sourceLine" id="cb7-6" title="6"></a>
-<a class="sourceLine" id="cb7-7" title="7">rndU, rndS, rndV <span class="op">=</span> spla.svd(randmat)</a>
-<a class="sourceLine" id="cb7-8" title="8"></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="bu">print</span>(<span class="st">&#39;U-dims: &#39;</span>, rndU.shape)</a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="bu">print</span>(<span class="st">&#39;V-dims: &#39;</span>, rndV.shape)</a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="bu">print</span>(<span class="st">&#39;S-dims: &#39;</span>, rndS.shape)</a>
-<a class="sourceLine" id="cb7-12" title="12"></a>
-<a class="sourceLine" id="cb7-13" title="13">plt.figure(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb7-14" title="14">plt.semilogy(rndS, <span class="st">&#39;.&#39;</span>, label<span class="op">=</span><span class="st">&#39;Singulaerwerte (random Matrix)&#39;</span>)</a>
-<a class="sourceLine" id="cb7-15" title="15"></a>
-<a class="sourceLine" id="cb7-16" title="16">realdatamat <span class="op">=</span> np.load(<span class="st">&#39;velfielddata.npy&#39;</span>)</a>
-<a class="sourceLine" id="cb7-17" title="17"></a>
-<a class="sourceLine" id="cb7-18" title="18"><span class="co"># # Das hier ist eine aufwaendige Operation</span></a>
-<a class="sourceLine" id="cb7-19" title="19">rlU, rlS, rlV <span class="op">=</span> spla.svd(realdatamat, full_matrices<span class="op">=</span><span class="va">False</span>)</a>
-<a class="sourceLine" id="cb7-20" title="20"><span class="co"># # auf keinen Fall `full_matrices=False` vergessen</span></a>
-<a class="sourceLine" id="cb7-21" title="21"></a>
-<a class="sourceLine" id="cb7-22" title="22"><span class="bu">print</span>(<span class="st">&#39;U-dims: &#39;</span>, rlU.shape)</a>
-<a class="sourceLine" id="cb7-23" title="23"><span class="bu">print</span>(<span class="st">&#39;V-dims: &#39;</span>, rlV.shape)</a>
-<a class="sourceLine" id="cb7-24" title="24"><span class="bu">print</span>(<span class="st">&#39;S-dims: &#39;</span>, rlS.shape)</a>
-<a class="sourceLine" id="cb7-25" title="25"></a>
-<a class="sourceLine" id="cb7-26" title="26">plt.figure(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb7-27" title="27">plt.semilogy(rlS, <span class="st">&#39;.&#39;</span>, label<span class="op">=</span><span class="st">&#39;Singulaerwerte (Daten Matrix)&#39;</span>)</a>
-<a class="sourceLine" id="cb7-28" title="28"></a>
-<a class="sourceLine" id="cb7-29" title="29">plt.legend()</a>
-<a class="sourceLine" id="cb7-30" title="30">plt.show()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb7-1"><a href="matrix-zerlegungen.html#cb7-1" aria-hidden="true"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href="matrix-zerlegungen.html#cb7-2" aria-hidden="true"></a><span class="im">import</span> scipy.linalg <span class="im">as</span> spla</span>
+<span id="cb7-3"><a href="matrix-zerlegungen.html#cb7-3" aria-hidden="true"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-4"><a href="matrix-zerlegungen.html#cb7-4" aria-hidden="true"></a></span>
+<span id="cb7-5"><a href="matrix-zerlegungen.html#cb7-5" aria-hidden="true"></a>randmat <span class="op">=</span> np.random.randn(<span class="dv">4000</span>, <span class="dv">1000</span>)</span>
+<span id="cb7-6"><a href="matrix-zerlegungen.html#cb7-6" aria-hidden="true"></a></span>
+<span id="cb7-7"><a href="matrix-zerlegungen.html#cb7-7" aria-hidden="true"></a>rndU, rndS, rndV <span class="op">=</span> spla.svd(randmat)</span>
+<span id="cb7-8"><a href="matrix-zerlegungen.html#cb7-8" aria-hidden="true"></a></span>
+<span id="cb7-9"><a href="matrix-zerlegungen.html#cb7-9" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;U-dims: &#39;</span>, rndU.shape)</span>
+<span id="cb7-10"><a href="matrix-zerlegungen.html#cb7-10" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;V-dims: &#39;</span>, rndV.shape)</span>
+<span id="cb7-11"><a href="matrix-zerlegungen.html#cb7-11" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;S-dims: &#39;</span>, rndS.shape)</span>
+<span id="cb7-12"><a href="matrix-zerlegungen.html#cb7-12" aria-hidden="true"></a></span>
+<span id="cb7-13"><a href="matrix-zerlegungen.html#cb7-13" aria-hidden="true"></a>plt.figure(<span class="dv">1</span>)</span>
+<span id="cb7-14"><a href="matrix-zerlegungen.html#cb7-14" aria-hidden="true"></a>plt.semilogy(rndS, <span class="st">&#39;.&#39;</span>, label<span class="op">=</span><span class="st">&#39;Singulaerwerte (random Matrix)&#39;</span>)</span>
+<span id="cb7-15"><a href="matrix-zerlegungen.html#cb7-15" aria-hidden="true"></a></span>
+<span id="cb7-16"><a href="matrix-zerlegungen.html#cb7-16" aria-hidden="true"></a>realdatamat <span class="op">=</span> np.load(<span class="st">&#39;velfielddata.npy&#39;</span>)</span>
+<span id="cb7-17"><a href="matrix-zerlegungen.html#cb7-17" aria-hidden="true"></a></span>
+<span id="cb7-18"><a href="matrix-zerlegungen.html#cb7-18" aria-hidden="true"></a><span class="co"># # Das hier ist eine aufwaendige Operation</span></span>
+<span id="cb7-19"><a href="matrix-zerlegungen.html#cb7-19" aria-hidden="true"></a>rlU, rlS, rlV <span class="op">=</span> spla.svd(realdatamat, full_matrices<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-20"><a href="matrix-zerlegungen.html#cb7-20" aria-hidden="true"></a><span class="co"># # auf keinen Fall `full_matrices=False` vergessen</span></span>
+<span id="cb7-21"><a href="matrix-zerlegungen.html#cb7-21" aria-hidden="true"></a></span>
+<span id="cb7-22"><a href="matrix-zerlegungen.html#cb7-22" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;U-dims: &#39;</span>, rlU.shape)</span>
+<span id="cb7-23"><a href="matrix-zerlegungen.html#cb7-23" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;V-dims: &#39;</span>, rlV.shape)</span>
+<span id="cb7-24"><a href="matrix-zerlegungen.html#cb7-24" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;S-dims: &#39;</span>, rlS.shape)</span>
+<span id="cb7-25"><a href="matrix-zerlegungen.html#cb7-25" aria-hidden="true"></a></span>
+<span id="cb7-26"><a href="matrix-zerlegungen.html#cb7-26" aria-hidden="true"></a>plt.figure(<span class="dv">1</span>)</span>
+<span id="cb7-27"><a href="matrix-zerlegungen.html#cb7-27" aria-hidden="true"></a>plt.semilogy(rlS, <span class="st">&#39;.&#39;</span>, label<span class="op">=</span><span class="st">&#39;Singulaerwerte (Daten Matrix)&#39;</span>)</span>
+<span id="cb7-28"><a href="matrix-zerlegungen.html#cb7-28" aria-hidden="true"></a></span>
+<span id="cb7-29"><a href="matrix-zerlegungen.html#cb7-29" aria-hidden="true"></a>plt.legend()</span>
+<span id="cb7-30"><a href="matrix-zerlegungen.html#cb7-30" aria-hidden="true"></a>plt.show()</span></code></pre></div>
 <p><strong>Hinweise</strong>:</p>
 <ul>
 <li>Es gibt viele verschiedene Normen für Vektoren und Matrizen. Sie dürfen einfach mit <code>np.linalg.norm</code> arbeiten. Gerne aber mal in die Dokumentation schauen <em>welche</em> Norm berechnet wird.</li>
@@ -586,8 +601,8 @@ ist. <strong>Hinweis</strong>: Die Formel für den Gradienten wurde in der Vorle
 <div class="footnotes">
 <hr />
 <ol start="1">
-<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>Auf Matrixnormen kommen wir noch in der Vorlesung zu sprechen.<a href="matrix-zerlegungen.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p> <a href="https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj">Download bitte hier</a> – Achtung das sind 370MB<a href="matrix-zerlegungen.html#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -656,7 +671,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

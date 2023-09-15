@@ -1,45 +1,51 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 %
-\documentclass[]{book}
+\documentclass[
+]{book}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
   \usepackage{unicode-math}
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
 \usepackage{xcolor}
-\usepackage{hyperref}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-            pdftitle={Einführung in die mathematische Datenanalyse},
-            pdfauthor={Jan Heiland},
-            colorlinks=true,
-            linkcolor=Maroon,
-            filecolor=Maroon,
-            citecolor=Blue,
-            urlcolor=purple,
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+  pdftitle={Einführung in die mathematische Datenanalyse},
+  pdfauthor={Jan Heiland},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=purple,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -81,9 +87,15 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
-% Fix footnotes in tables (requires footnote package)
-\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{longtable}}{}
-\usepackage{graphicx,grffile}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -92,33 +104,25 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{5}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
 \usepackage{xcolor}
 \definecolor{jhsc}{HTML}{1f57c7}
 \newenvironment {JHSAYS} [0] {\begin{quote}\color{jhsc}} {\end{quote}}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {}%
+  {\par}
 
 \title{Einführung in die mathematische Datenanalyse}
 \author{Jan Heiland}
-\providecommand{\institute}[1]{}
-\institute{FAU Erlangen-Nürnberg}
 \date{FAU Erlangen-Nürnberg -- Sommersemester 2022}
 
 \usepackage{amsthm}
@@ -401,10 +405,10 @@ Bringen sie ihr \texttt{python} zum Laufen, installieren sie \texttt{numpy}, \te
 \NormalTok{ydata }\OperatorTok{=}\NormalTok{ np.exp(xdata)}
 
 \NormalTok{plt.figure(}\DecValTok{1}\NormalTok{)}
-\NormalTok{plt.plot(xdata, ydata, }\StringTok{'.'}\NormalTok{)}
+\NormalTok{plt.plot(xdata, ydata, }\StringTok{\textquotesingle{}.\textquotesingle{}}\NormalTok{)}
 
 \NormalTok{plt.figure(}\DecValTok{2}\NormalTok{)}
-\NormalTok{plt.semilogy(xdata, ydata, }\StringTok{'.'}\NormalTok{)}
+\NormalTok{plt.semilogy(xdata, ydata, }\StringTok{\textquotesingle{}.\textquotesingle{}}\NormalTok{)}
 \NormalTok{plt.show()}
 \end{Highlighting}
 \end{Shaded}
@@ -435,11 +439,11 @@ Schreiben sie ein script, das die Übungsaufgabe aus der Vorlesung (potenzieren 
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{mone }\OperatorTok{=}\NormalTok{ np.array([[}\FloatTok{0.9}\NormalTok{, }\FloatTok{0.9}\NormalTok{], [}\FloatTok{0.9}\NormalTok{, }\FloatTok{0.9}\NormalTok{]])}
 
-\NormalTok{mone_ptwo }\OperatorTok{=}\NormalTok{ mone }\OperatorTok{@}\NormalTok{ mone}
-\BuiltInTok{print}\NormalTok{(mone_ptwo)}
+\NormalTok{mone\_ptwo }\OperatorTok{=}\NormalTok{ mone }\OperatorTok{@}\NormalTok{ mone}
+\BuiltInTok{print}\NormalTok{(mone\_ptwo)}
 
-\NormalTok{mone_pfour }\OperatorTok{=}\NormalTok{ mone_ptwo }\OperatorTok{@}\NormalTok{ mone_ptwo}
-\BuiltInTok{print}\NormalTok{(mone_pfour)}
+\NormalTok{mone\_pfour }\OperatorTok{=}\NormalTok{ mone\_ptwo }\OperatorTok{@}\NormalTok{ mone\_ptwo}
+\BuiltInTok{print}\NormalTok{(mone\_pfour)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -449,13 +453,13 @@ Oder so:
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \NormalTok{mone }\OperatorTok{=}\NormalTok{ np.array([[}\FloatTok{0.9}\NormalTok{, }\FloatTok{0.9}\NormalTok{], [}\FloatTok{0.9}\NormalTok{, }\FloatTok{0.9}\NormalTok{]])}
-\NormalTok{mone_p }\OperatorTok{=}\NormalTok{ np.eye(}\DecValTok{2}\NormalTok{)}
+\NormalTok{mone\_p }\OperatorTok{=}\NormalTok{ np.eye(}\DecValTok{2}\NormalTok{)}
 
 \ControlFlowTok{for}\NormalTok{ k }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{16}\NormalTok{):}
-\NormalTok{    mone_p }\OperatorTok{=}\NormalTok{ mone_p }\OperatorTok{@}\NormalTok{ mone}
+\NormalTok{    mone\_p }\OperatorTok{=}\NormalTok{ mone\_p }\OperatorTok{@}\NormalTok{ mone}
     \ControlFlowTok{if}\NormalTok{ k }\OperatorTok{==} \DecValTok{1} \KeywordTok{or}\NormalTok{ k }\OperatorTok{==} \DecValTok{3} \KeywordTok{or}\NormalTok{ k }\OperatorTok{==} \DecValTok{15}\NormalTok{:}
-        \BuiltInTok{print}\NormalTok{(}\StringTok{'k='}\NormalTok{, k}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
-        \BuiltInTok{print}\NormalTok{(mone_p)}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}k=\textquotesingle{}}\NormalTok{, k}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
+        \BuiltInTok{print}\NormalTok{(mone\_p)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -701,7 +705,7 @@ Wir bemerken, dass
 \item
   falls das lineare Gleichungssystem \(\Phi (\mathbf x)w = \mathbf y\) eine Lösung \(w\) hat, ist das auch eine Lösung unserer Minimierung
 \item
-  im typischen Falle aber ist allerdings \(N\gg n\) und das System überbestimmt (\(n=N\) würde ein overfitting bedeuten\ldots{}) sodass wir keine Lösung des linearen Gleichungssystems erwarten können.
+  im typischen Falle aber ist allerdings \(N\gg n\) und das System überbestimmt (\(n=N\) würde ein overfitting bedeuten\ldots) sodass wir keine Lösung des linearen Gleichungssystems erwarten können.
 \item
   Das Minimierungsproblems selbst hat allerdings immer eine Lösung.
 \end{itemize}
@@ -1079,16 +1083,16 @@ Speichern sie die Covid-Daten aus obiger Tabelle zur späteren Verwendung als ei
         \DecValTok{2717}\NormalTok{,  }\DecValTok{3113}\NormalTok{,   }\DecValTok{2972}\NormalTok{,    }\DecValTok{3136}\NormalTok{,    }\DecValTok{2615}\NormalTok{]}
 
 \NormalTok{data }\OperatorTok{=}\NormalTok{ np.vstack([days, case])}
-\BuiltInTok{print}\NormalTok{(}\StringTok{'Shape of data: '}\NormalTok{, data.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}Shape of data: \textquotesingle{}}\NormalTok{, data.shape)}
 
-\NormalTok{datafilestr }\OperatorTok{=} \StringTok{'coviddata.npy'}
+\NormalTok{datafilestr }\OperatorTok{=} \StringTok{\textquotesingle{}coviddata.npy\textquotesingle{}}
 \NormalTok{np.save(datafilestr, data)}
 
 \NormalTok{lddata }\OperatorTok{=}\NormalTok{ np.load(datafilestr)}
 
 \NormalTok{plt.figure(}\DecValTok{1}\NormalTok{)}
-\NormalTok{plt.plot(lddata[}\DecValTok{0}\NormalTok{, :], lddata[}\DecValTok{1}\NormalTok{, :], }\StringTok{'s'}\NormalTok{, label}\OperatorTok{=}\StringTok{'Cases/Day'}\NormalTok{)}
-\NormalTok{plt.title(}\StringTok{'Covid Faelle in Bayern im Oktober 2020'}\NormalTok{)}
+\NormalTok{plt.plot(lddata[}\DecValTok{0}\NormalTok{, :], lddata[}\DecValTok{1}\NormalTok{, :], }\StringTok{\textquotesingle{}s\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}Cases/Day\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}Covid Faelle in Bayern im Oktober 2020\textquotesingle{}}\NormalTok{)}
 \NormalTok{plt.legend()}
 \NormalTok{plt.show()}
 \end{Highlighting}
@@ -1116,43 +1120,43 @@ durch. Berechnen Sie die mittlere quadratische Abweichung \(\frac{1}{N}\sum_{i=1
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
 
-\NormalTok{datafilestr }\OperatorTok{=} \StringTok{'coviddata.npy'}
+\NormalTok{datafilestr }\OperatorTok{=} \StringTok{\textquotesingle{}coviddata.npy\textquotesingle{}}
 \NormalTok{cvdata }\OperatorTok{=}\NormalTok{ np.load(datafilestr)}
 
-\CommentTok{# ## Definieren der Basis Funktion(en)}
+\CommentTok{\# \#\# Definieren der Basis Funktion(en)}
 
 
-\KeywordTok{def}\NormalTok{ b_zero(x):}
-    \CommentTok{''' eine konstante Funktion '''}
+\KeywordTok{def}\NormalTok{ b\_zero(x):}
+    \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{} eine konstante Funktion \textquotesingle{}\textquotesingle{}\textquotesingle{}}
     \ControlFlowTok{return} \FloatTok{1.}
 
 
-\NormalTok{ybf }\OperatorTok{=}\NormalTok{ cvdata[}\DecValTok{1}\NormalTok{, :]  }\CommentTok{# die y-werte}
-\NormalTok{xbf }\OperatorTok{=}\NormalTok{ cvdata[}\DecValTok{0}\NormalTok{, :]  }\CommentTok{# die x-werte}
+\NormalTok{ybf }\OperatorTok{=}\NormalTok{ cvdata[}\DecValTok{1}\NormalTok{, :]  }\CommentTok{\# die y{-}werte}
+\NormalTok{xbf }\OperatorTok{=}\NormalTok{ cvdata[}\DecValTok{0}\NormalTok{, :]  }\CommentTok{\# die x{-}werte}
 
-\NormalTok{N }\OperatorTok{=}\NormalTok{ xbf.size   }\CommentTok{# Anzahl Datenpunkte}
-\NormalTok{ybf }\OperatorTok{=}\NormalTok{ ybf.reshape((N, }\DecValTok{1}\NormalTok{))  }\CommentTok{# reshape als Spaltenvektor}
+\NormalTok{N }\OperatorTok{=}\NormalTok{ xbf.size   }\CommentTok{\# Anzahl Datenpunkte}
+\NormalTok{ybf }\OperatorTok{=}\NormalTok{ ybf.reshape((N, }\DecValTok{1}\NormalTok{))  }\CommentTok{\# reshape als Spaltenvektor}
 
-\NormalTok{bzx }\OperatorTok{=}\NormalTok{ [b_zero(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ xbf]  }\CommentTok{# eine Liste mit Funktionswerten}
-\NormalTok{bzx }\OperatorTok{=}\NormalTok{ np.array(bzx).reshape((N, }\DecValTok{1}\NormalTok{))  }\CommentTok{# ein Spalten Vektor}
+\NormalTok{bzx }\OperatorTok{=}\NormalTok{ [b\_zero(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ xbf]  }\CommentTok{\# eine Liste mit Funktionswerten}
+\NormalTok{bzx }\OperatorTok{=}\NormalTok{ np.array(bzx).reshape((N, }\DecValTok{1}\NormalTok{))  }\CommentTok{\# ein Spalten Vektor}
 
-\NormalTok{Phix }\OperatorTok{=}\NormalTok{ bzx  }\CommentTok{# hier nur eine Spalte}
+\NormalTok{Phix }\OperatorTok{=}\NormalTok{ bzx  }\CommentTok{\# hier nur eine Spalte}
 
-\CommentTok{# Das LGS AtA w = At y}
+\CommentTok{\# Das LGS AtA w = At y}
 \NormalTok{rhs }\OperatorTok{=}\NormalTok{ Phix.T }\OperatorTok{@}\NormalTok{ ybf}
 \NormalTok{AtA }\OperatorTok{=}\NormalTok{ Phix.T }\OperatorTok{@}\NormalTok{ Phix}
 
-\CommentTok{# ACHTUNG: das hier geht nur weil AtA keine Matrix ist in diesem Fall}
+\CommentTok{\# ACHTUNG: das hier geht nur weil AtA keine Matrix ist in diesem Fall}
 \NormalTok{w }\OperatorTok{=} \FloatTok{1.}\OperatorTok{/}\NormalTok{AtA }\OperatorTok{*}\NormalTok{ rhs}
-\CommentTok{# ACHTUNG: das hier ging nur weil AtA keine Matrix ist in diesem Fall}
+\CommentTok{\# ACHTUNG: das hier ging nur weil AtA keine Matrix ist in diesem Fall}
 
 
-\KeywordTok{def}\NormalTok{ get_regfunc(weights, basfunlist}\OperatorTok{=}\NormalTok{[]):}
-    \CommentTok{''' Eine Funktion, die eine Funktion erzeugt}
+\KeywordTok{def}\NormalTok{ get\_regfunc(weights, basfunlist}\OperatorTok{=}\NormalTok{[]):}
+    \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{} Eine Funktion, die eine Funktion erzeugt}
 
 \CommentTok{    Eingang: die Gewichte, eine Liste von Basisfunktionen}
-\CommentTok{    Ausgang: die entsprechende Funktion `f = w_1b_1 + ... `}
-\CommentTok{    '''}
+\CommentTok{    Ausgang: die entsprechende Funktion \textasciigrave{}f = w\_1b\_1 + ... \textasciigrave{}}
+\CommentTok{    \textquotesingle{}\textquotesingle{}\textquotesingle{}}
     \KeywordTok{def}\NormalTok{ regfunc(x):}
 \NormalTok{        fval }\OperatorTok{=} \DecValTok{0}
         \ControlFlowTok{for}\NormalTok{ kkk, basfun }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(basfunlist):}
@@ -1162,14 +1166,14 @@ durch. Berechnen Sie die mittlere quadratische Abweichung \(\frac{1}{N}\sum_{i=1
     \ControlFlowTok{return}\NormalTok{ regfunc}
 
 
-\NormalTok{const_regfunc }\OperatorTok{=}\NormalTok{ get_regfunc([w], [b_zero])}
+\NormalTok{const\_regfunc }\OperatorTok{=}\NormalTok{ get\_regfunc([w], [b\_zero])}
 
-\NormalTok{const_approx }\OperatorTok{=}\NormalTok{ [const_regfunc(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ xbf]}
-\NormalTok{const_approx }\OperatorTok{=}\NormalTok{ np.array(const_approx).reshape((N, }\DecValTok{1}\NormalTok{))}
+\NormalTok{const\_approx }\OperatorTok{=}\NormalTok{ [const\_regfunc(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ xbf]}
+\NormalTok{const\_approx }\OperatorTok{=}\NormalTok{ np.array(const\_approx).reshape((N, }\DecValTok{1}\NormalTok{))}
 
 \NormalTok{plt.figure(}\DecValTok{1}\NormalTok{)}
-\NormalTok{plt.plot(cvdata[}\DecValTok{0}\NormalTok{, :], cvdata[}\DecValTok{1}\NormalTok{, :], }\StringTok{'s'}\NormalTok{, label}\OperatorTok{=}\StringTok{'Cases/Day'}\NormalTok{)}
-\NormalTok{plt.plot(cvdata[}\DecValTok{0}\NormalTok{, :], const_approx, }\StringTok{'-'}\NormalTok{, label}\OperatorTok{=}\StringTok{'constant fit'}\NormalTok{)}
+\NormalTok{plt.plot(cvdata[}\DecValTok{0}\NormalTok{, :], cvdata[}\DecValTok{1}\NormalTok{, :], }\StringTok{\textquotesingle{}s\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}Cases/Day\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.plot(cvdata[}\DecValTok{0}\NormalTok{, :], const\_approx, }\StringTok{\textquotesingle{}{-}\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}constant fit\textquotesingle{}}\NormalTok{)}
 \NormalTok{plt.legend()}
 \NormalTok{plt.show()}
 \end{Highlighting}
@@ -1192,7 +1196,7 @@ durch. Berechnen Sie die mittlere quadratische Abweichung \(\frac{1}{N}\sum_{i=1
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \textbf{(P)} Berechnen und plotten sie die Singulärwerte einer \(4000\times 1000\) Matrix mit zufälligen Einträgen und die einer Matrix mit ``echten'' Daten (hier Simulationsdaten einer Stroemungssimulation)\footnote{\href{https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj}{Download bitte hier} -- Achtung das sind 370MB}. Berechnen sie den Fehler der \emph{truncated SVD} \(\|A-A_{\hat r}\|\) für \(\hat r = 10, 20, 40\) für beide Matrizen.
+  \textbf{(P)} Berechnen und plotten sie die Singulärwerte einer \(4000\times 1000\) Matrix mit zufälligen Einträgen und die einer Matrix mit ``echten'' Daten (hier Simulationsdaten einer Stroemungssimulation)\footnote{ \href{https://owncloud.gwdg.de/index.php/s/sAjEy9B8kIbzoYj}{Download bitte hier} -- Achtung das sind 370MB}. Berechnen sie den Fehler der \emph{truncated SVD} \(\|A-A_{\hat r}\|\) für \(\hat r = 10, 20, 40\) für beide Matrizen.
 \item
   \textbf{(T)} Was lässt sich bezüglich einer Kompression der Daten mittels SVD für die beiden Matrizen sagen. (Vergleichen sie die plots der Singulärwerte und beziehen sie sich auf die gegebene Formel für die Differenz).
 \item
@@ -1211,25 +1215,25 @@ Beispielcode:
 
 \NormalTok{rndU, rndS, rndV }\OperatorTok{=}\NormalTok{ spla.svd(randmat)}
 
-\BuiltInTok{print}\NormalTok{(}\StringTok{'U-dims: '}\NormalTok{, rndU.shape)}
-\BuiltInTok{print}\NormalTok{(}\StringTok{'V-dims: '}\NormalTok{, rndV.shape)}
-\BuiltInTok{print}\NormalTok{(}\StringTok{'S-dims: '}\NormalTok{, rndS.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}U{-}dims: \textquotesingle{}}\NormalTok{, rndU.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}V{-}dims: \textquotesingle{}}\NormalTok{, rndV.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}S{-}dims: \textquotesingle{}}\NormalTok{, rndS.shape)}
 
 \NormalTok{plt.figure(}\DecValTok{1}\NormalTok{)}
-\NormalTok{plt.semilogy(rndS, }\StringTok{'.'}\NormalTok{, label}\OperatorTok{=}\StringTok{'Singulaerwerte (random Matrix)'}\NormalTok{)}
+\NormalTok{plt.semilogy(rndS, }\StringTok{\textquotesingle{}.\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}Singulaerwerte (random Matrix)\textquotesingle{}}\NormalTok{)}
 
-\NormalTok{realdatamat }\OperatorTok{=}\NormalTok{ np.load(}\StringTok{'velfielddata.npy'}\NormalTok{)}
+\NormalTok{realdatamat }\OperatorTok{=}\NormalTok{ np.load(}\StringTok{\textquotesingle{}velfielddata.npy\textquotesingle{}}\NormalTok{)}
 
-\CommentTok{# # Das hier ist eine aufwaendige Operation}
-\NormalTok{rlU, rlS, rlV }\OperatorTok{=}\NormalTok{ spla.svd(realdatamat, full_matrices}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
-\CommentTok{# # auf keinen Fall `full_matrices=False` vergessen}
+\CommentTok{\# \# Das hier ist eine aufwaendige Operation}
+\NormalTok{rlU, rlS, rlV }\OperatorTok{=}\NormalTok{ spla.svd(realdatamat, full\_matrices}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+\CommentTok{\# \# auf keinen Fall \textasciigrave{}full\_matrices=False\textasciigrave{} vergessen}
 
-\BuiltInTok{print}\NormalTok{(}\StringTok{'U-dims: '}\NormalTok{, rlU.shape)}
-\BuiltInTok{print}\NormalTok{(}\StringTok{'V-dims: '}\NormalTok{, rlV.shape)}
-\BuiltInTok{print}\NormalTok{(}\StringTok{'S-dims: '}\NormalTok{, rlS.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}U{-}dims: \textquotesingle{}}\NormalTok{, rlU.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}V{-}dims: \textquotesingle{}}\NormalTok{, rlV.shape)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}S{-}dims: \textquotesingle{}}\NormalTok{, rlS.shape)}
 
 \NormalTok{plt.figure(}\DecValTok{1}\NormalTok{)}
-\NormalTok{plt.semilogy(rlS, }\StringTok{'.'}\NormalTok{, label}\OperatorTok{=}\StringTok{'Singulaerwerte (Daten Matrix)'}\NormalTok{)}
+\NormalTok{plt.semilogy(rlS, }\StringTok{\textquotesingle{}.\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}Singulaerwerte (Daten Matrix)\textquotesingle{}}\NormalTok{)}
 
 \NormalTok{plt.legend()}
 \NormalTok{plt.show()}
@@ -1257,11 +1261,11 @@ Weil ich den Ansatz gerne \emph{ad hoc} also am Problem entlang motivieren und e
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Zentrierung/Skalierung der Daten
+  Zentrierung/Skalierung der Daten.
 \item
-  Berechnung der Varianzen im Standard Koordinatensystem
+  Berechnung der Varianzen im Standard Koordinatensystem.
 \item
-  Überlegung, dass Daten in einem anderen Koordinatensystem eventuell besser dargestellt werden im Sinne
+  Überlegung, dass Daten in einem anderen Koordinatensystem eventuell besser dargestellt werden.
 \item
   Berechnung eines optimalen Koordinatenvektors mittels SVD.
 \end{enumerate}
@@ -1508,7 +1512,7 @@ Jetzt wollen wir einen Datensatz mit mehr Merkmalen betrachten und sehen, wie di
 \hypertarget{der-penguins-datensatz}{%
 \section{Der PENGUINS Datensatz}\label{der-penguins-datensatz}}
 
-Die Grundlage ist der \href{https://allisonhorst.github.io/palmerpenguins/}{\emph{Pinguin Datensatz}}, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von \href{https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php}{Kristen Gorman} erhoben und beinhalten 4 verschiedene Merkmale (engl. \emph{features}) von einer Stichprobe von insgesamt 344\footnote{allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele}Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: \emph{targets}). Im Beispiel werden die Klassen mit \texttt{0,\ 1,\ 2} codiert und beschreiben die Unterarten \emph{Adele}, \emph{Gentoo} und \emph{Chinstrap} der Schwertlilien. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier \emph{bill}), die Länge der Flosse (\emph{flipper}) sowie das Köpergewicht\footnote{Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet}
+Die Grundlage ist der \href{https://allisonhorst.github.io/palmerpenguins/}{\emph{Pinguin Datensatz}}, der eine gern genommene Grundlage für die Illustration in der Datenanalyse ist. Die Daten wurden von \href{https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php}{Kristen Gorman} erhoben und beinhalten 4 verschiedene Merkmale (engl. \emph{features}) von einer Stichprobe von insgesamt 344\footnote{allerdings mit 2 unvollständigen Datenpunkten, die ich entfernt habe für unseere Beispiele}Pinguinen die 3 verschiedenen Spezies zugeordnet werden können oder sollen (Fachbegriff hier: \emph{targets}). Im Beispiel werden die Klassen mit \texttt{0,\ 1,\ 2} codiert und beschreiben die Unterarten \emph{Adele}, \emph{Gentoo} und \emph{Chinstrap} der Pinguine. Die Merkmale sind gemessene Länge und Höhe des Schnabels (hier \emph{bill}), die Länge der Flosse (\emph{flipper}) sowie das Köpergewicht\footnote{Im Originaldatensatz ist das Gewicht in Gramm angegeben, um die Daten innerhalb einer 10er Skala zu haben, habe ich das Gewicht auf in kg umgerechnet}
 (\emph{body mass}).
 
 Wir stellen uns 2-3 Fragen:
@@ -1654,10 +1658,10 @@ Für die Kovarianzmatrix der Pinguin Daten erhalten wir:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{Covariance matrix: }
-\NormalTok{[[ }\FloatTok{29.8071}  \FloatTok{-2.5342}  \FloatTok{50.3758}   \FloatTok{2.6056}\NormalTok{]}
-\NormalTok{ [ }\FloatTok{-2.5342}   \FloatTok{3.8998} \FloatTok{-16.213}   \FloatTok{-0.7474}\NormalTok{]}
-\NormalTok{ [ }\FloatTok{50.3758} \FloatTok{-16.213}  \FloatTok{197.7318}   \FloatTok{9.8244}\NormalTok{]}
-\NormalTok{ [  }\FloatTok{2.6056}  \FloatTok{-0.7474}   \FloatTok{9.8244}   \FloatTok{0.6431}\NormalTok{]]}
+\NormalTok{[[ }\FloatTok{29.8071}  \OperatorTok{{-}}\FloatTok{2.5342}  \FloatTok{50.3758}   \FloatTok{2.6056}\NormalTok{]}
+\NormalTok{ [ }\OperatorTok{{-}}\FloatTok{2.5342}   \FloatTok{3.8998} \OperatorTok{{-}}\FloatTok{16.213}   \OperatorTok{{-}}\FloatTok{0.7474}\NormalTok{]}
+\NormalTok{ [ }\FloatTok{50.3758} \OperatorTok{{-}}\FloatTok{16.213}  \FloatTok{197.7318}   \FloatTok{9.8244}\NormalTok{]}
+\NormalTok{ [  }\FloatTok{2.6056}  \OperatorTok{{-}}\FloatTok{0.7474}   \FloatTok{9.8244}   \FloatTok{0.6431}\NormalTok{]]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1665,7 +1669,7 @@ Für die Singulärwerte:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{In: U, S, Vh }\OperatorTok{=}\NormalTok{ np.linalg.svd(data, full_matrices}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
+\NormalTok{In: U, S, Vh }\OperatorTok{=}\NormalTok{ np.linalg.svd(data, full\_matrices}\OperatorTok{=}\VariableTok{False}\NormalTok{)}
 
 \NormalTok{In: }\BuiltInTok{print}\NormalTok{(S)}
 \NormalTok{Out: [}\FloatTok{269.7858}  \FloatTok{74.1334}  \FloatTok{28.4183}   \FloatTok{7.2219}\NormalTok{]}
@@ -1714,27 +1718,27 @@ wobei \(s_{i\,j}\) die Kovarianz der Daten \({\mathbf{x} _ i}\) und \({\mathbf{x
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 
-\CommentTok{# N = 10}
+\CommentTok{\# N = 10}
 
 \NormalTok{x }\OperatorTok{=}\NormalTok{ np.random.randn(}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{)}
 \NormalTok{y }\OperatorTok{=}\NormalTok{ np.random.randn(}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{)}
 
 \NormalTok{X }\OperatorTok{=}\NormalTok{ np.hstack([x, x, x}\OperatorTok{*}\NormalTok{y, y])}
 
-\NormalTok{Xcntrd }\OperatorTok{=}\NormalTok{ X }\OperatorTok{-}\NormalTok{ X.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
-\CommentTok{# zentrieren der Daten}
+\NormalTok{Xcntrd }\OperatorTok{=}\NormalTok{ X }\OperatorTok{{-}}\NormalTok{ X.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\CommentTok{\# zentrieren der Daten}
 
-\CommentTok{# Kovarianz Matrix ausrechnen}
-\NormalTok{covX }\OperatorTok{=} \DecValTok{1}\OperatorTok{/}\NormalTok{(}\DecValTok{10-1}\NormalTok{)}\OperatorTok{*}\NormalTok{Xcntrd.T }\OperatorTok{@}\NormalTok{ Xcntrd}
+\CommentTok{\# Kovarianz Matrix ausrechnen}
+\NormalTok{covX }\OperatorTok{=} \DecValTok{1}\OperatorTok{/}\NormalTok{(}\DecValTok{10}\OperatorTok{{-}}\DecValTok{1}\NormalTok{)}\OperatorTok{*}\NormalTok{Xcntrd.T }\OperatorTok{@}\NormalTok{ Xcntrd}
 
-\CommentTok{# Varianzen -- stehen auf der Diagonalen im Quadrat}
+\CommentTok{\# Varianzen {-}{-} stehen auf der Diagonalen im Quadrat}
 \NormalTok{varvec }\OperatorTok{=}\NormalTok{ np.sqrt(np.diagonal(covX)).reshape(}\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\CommentTok{# Matrix mit den Kombinationen aller Varianzen}
+\CommentTok{\# Matrix mit den Kombinationen aller Varianzen}
 \NormalTok{varmat }\OperatorTok{=}\NormalTok{ varvec }\OperatorTok{@}\NormalTok{ varvec.T}
 
 \NormalTok{matcc }\OperatorTok{=}\NormalTok{ covX }\OperatorTok{*} \DecValTok{1}\OperatorTok{/}\NormalTok{varmat}
 
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'N=}\SpecialCharTok{\{}\DecValTok{10}\SpecialCharTok{\}}\SpecialStringTok{ : Matrix of Correlation Coefficients='}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}N=}\SpecialCharTok{\{}\DecValTok{10}\SpecialCharTok{\}}\SpecialStringTok{ : Matrix of Correlation Coefficients=\textquotesingle{}}\NormalTok{)}
 \BuiltInTok{print}\NormalTok{(matcc)}
 \end{Highlighting}
 \end{Shaded}
@@ -1751,36 +1755,36 @@ Laden Sie die \href{bilder/penguin-data.json}{Pinguin Datensatz} (hier als \text
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
 
-\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'penguin-data.json'}\NormalTok{, }\StringTok{'r'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{\textquotesingle{}penguin{-}data.json\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}r\textquotesingle{}}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
 \NormalTok{    datadict }\OperatorTok{=}\NormalTok{ json.load(f)}
 
 \BuiltInTok{print}\NormalTok{(datadict.keys())}
 
-\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'data'}\NormalTok{])}
-\NormalTok{target }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'target'}\NormalTok{])}
-\NormalTok{feature_names }\OperatorTok{=}\NormalTok{ datadict[}\StringTok{'feature_names'}\NormalTok{]}
-\NormalTok{target_names }\OperatorTok{=}\NormalTok{ datadict[}\StringTok{'target_names'}\NormalTok{]}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{\textquotesingle{}data\textquotesingle{}}\NormalTok{])}
+\NormalTok{target }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{\textquotesingle{}target\textquotesingle{}}\NormalTok{])}
+\NormalTok{feature\_names }\OperatorTok{=}\NormalTok{ datadict[}\StringTok{\textquotesingle{}feature\_names\textquotesingle{}}\NormalTok{]}
+\NormalTok{target\_names }\OperatorTok{=}\NormalTok{ datadict[}\StringTok{\textquotesingle{}target\_names\textquotesingle{}}\NormalTok{]}
 
-\BuiltInTok{print}\NormalTok{(}\StringTok{'target names: '}\NormalTok{, target_names)}
-\BuiltInTok{print}\NormalTok{(}\StringTok{'feature names: '}\NormalTok{, feature_names)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}target names: \textquotesingle{}}\NormalTok{, target\_names)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}feature names: \textquotesingle{}}\NormalTok{, feature\_names)}
 
 \NormalTok{fig, axs }\OperatorTok{=}\NormalTok{ plt.subplots(nrows}\OperatorTok{=}\DecValTok{1}\NormalTok{, ncols}\OperatorTok{=}\DecValTok{3}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{3}\NormalTok{))}
 
-\CommentTok{# # Ein Vektor der aus dem Target Vektor das target 0 raussucht}
-\NormalTok{trgtidx_z }\OperatorTok{=}\NormalTok{ (target }\OperatorTok{==} \DecValTok{0}\NormalTok{)}
-\CommentTok{# # Wird gleich benutzt um die Daten nach diesem target zu filtern}
+\CommentTok{\# \# Ein Vektor der aus dem Target Vektor das target 0 raussucht}
+\NormalTok{trgtidx\_z }\OperatorTok{=}\NormalTok{ (target }\OperatorTok{==} \DecValTok{0}\NormalTok{)}
+\CommentTok{\# \# Wird gleich benutzt um die Daten nach diesem target zu filtern}
 
-\NormalTok{target_z_daten }\OperatorTok{=}\NormalTok{ data[trgtidx_z, :]}
+\NormalTok{target\_z\_daten }\OperatorTok{=}\NormalTok{ data[trgtidx\_z, :]}
 
-\NormalTok{axs[}\DecValTok{0}\NormalTok{].plot(target_z_daten[:, }\DecValTok{2}\NormalTok{], target_z_daten[:, }\DecValTok{0}\NormalTok{],}
-            \StringTok{'o'}\NormalTok{, label}\OperatorTok{=}\NormalTok{target_names[}\DecValTok{0}\NormalTok{])}
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].plot(target\_z\_daten[:, }\DecValTok{2}\NormalTok{], target\_z\_daten[:, }\DecValTok{0}\NormalTok{],}
+            \StringTok{\textquotesingle{}o\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\NormalTok{target\_names[}\DecValTok{0}\NormalTok{])}
 
 \NormalTok{axs[}\DecValTok{0}\NormalTok{].legend()}
-\NormalTok{axs[}\DecValTok{0}\NormalTok{].set_xlabel(feature_names[}\DecValTok{3}\NormalTok{])}
-\NormalTok{axs[}\DecValTok{0}\NormalTok{].set_ylabel(feature_names[}\DecValTok{0}\NormalTok{])}
-\NormalTok{axs[}\DecValTok{0}\NormalTok{].set_title(target_names[}\DecValTok{0}\NormalTok{])}
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].set\_xlabel(feature\_names[}\DecValTok{3}\NormalTok{])}
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].set\_ylabel(feature\_names[}\DecValTok{0}\NormalTok{])}
+\NormalTok{axs[}\DecValTok{0}\NormalTok{].set\_title(target\_names[}\DecValTok{0}\NormalTok{])}
 
-\NormalTok{plt.tight_layout()}
+\NormalTok{plt.tight\_layout()}
 \NormalTok{plt.show()}
 \end{Highlighting}
 \end{Shaded}
@@ -1824,7 +1828,7 @@ erzeugen, in das sie mittels
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{axs[zeile, spalte].plot(xdaten, ydaten, }\StringTok{'o'}\NormalTok{)}
+\NormalTok{axs[zeile, spalte].plot(xdaten, ydaten, }\StringTok{\textquotesingle{}o\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1939,11 +1943,11 @@ Aus der Definition und der Bewertung der Cluster ergibt sich ein einfacher aber 
 
 \begin{Shaded}
 \begin{Highlighting}[numbers=left,,]
-\CommentTok{# Initialisierung: K zufaellige centroids c_j}
-\CommentTok{#}
-\CommentTok{# Wiederholung bis zur Stagnation}
-\CommentTok{#   Berechnung der Zuordnung: k: x_i -> c_j}
-\CommentTok{#   Update der centroids: c_j <- mean\{ x_i | x_i aus cluster c_j \}}
+\CommentTok{\# Initialisierung: K zufaellige centroids c\_j}
+\CommentTok{\#}
+\CommentTok{\# Wiederholung bis zur Stagnation}
+\CommentTok{\#   Berechnung der Zuordnung: k: x\_i {-}\textgreater{} c\_j}
+\CommentTok{\#   Update der centroids: c\_j \textless{}{-} mean\{ x\_i | x\_i aus cluster c\_j \}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2037,27 +2041,27 @@ Führen sie händisch und nach Augenschein zwei Iterationen des K-means Algorith
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ default_rng}
+\ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ default\_rng}
 \ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
 
-\CommentTok{# Zufallszahlengenerator mit "seed=1"}
-\NormalTok{rng }\OperatorTok{=}\NormalTok{ default_rng(}\DecValTok{1}\NormalTok{)}
+\CommentTok{\# Zufallszahlengenerator mit "seed=1"}
+\NormalTok{rng }\OperatorTok{=}\NormalTok{ default\_rng(}\DecValTok{1}\NormalTok{)}
 
-\CommentTok{# Zufallsdaten mit etwas Korrelation fuer z}
+\CommentTok{\# Zufallsdaten mit etwas Korrelation fuer z}
 \NormalTok{x }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{)}
 \NormalTok{y }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{9}\NormalTok{)}
 \NormalTok{z }\OperatorTok{=}\NormalTok{ (x}\OperatorTok{*}\NormalTok{x}\OperatorTok{*}\NormalTok{y)}\OperatorTok{**}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{)}
 
-\CommentTok{# Zufallswahl der initialen centroids}
+\CommentTok{\# Zufallswahl der initialen centroids}
 \NormalTok{cntro }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
 \NormalTok{cntrt }\OperatorTok{=}\NormalTok{ rng.beta(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
 
 \NormalTok{plt.figure(}\DecValTok{1}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{3}\NormalTok{))}
-\NormalTok{plt.plot(x, z, }\StringTok{'.'}\NormalTok{, label}\OperatorTok{=}\StringTok{'data'}\NormalTok{)}
-\NormalTok{plt.plot(cntro[}\DecValTok{0}\NormalTok{], cntro[}\DecValTok{1}\NormalTok{], }\StringTok{'s'}\NormalTok{, label}\OperatorTok{=}\StringTok{'$c_1$'}\NormalTok{)}
-\NormalTok{plt.plot(cntrt[}\DecValTok{0}\NormalTok{], cntrt[}\DecValTok{1}\NormalTok{], }\StringTok{'s'}\NormalTok{, label}\OperatorTok{=}\StringTok{'$c_2$'}\NormalTok{)}
-\NormalTok{plt.legend(loc}\OperatorTok{=}\StringTok{'upper left'}\NormalTok{)}
-\NormalTok{plt.title(}\StringTok{'K-means: initialer Zustand'}\NormalTok{)}
+\NormalTok{plt.plot(x, z, }\StringTok{\textquotesingle{}.\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}data\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.plot(cntro[}\DecValTok{0}\NormalTok{], cntro[}\DecValTok{1}\NormalTok{], }\StringTok{\textquotesingle{}s\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}$c\_1$\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.plot(cntrt[}\DecValTok{0}\NormalTok{], cntrt[}\DecValTok{1}\NormalTok{], }\StringTok{\textquotesingle{}s\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}$c\_2$\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.legend(loc}\OperatorTok{=}\StringTok{\textquotesingle{}upper left\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}K{-}means: initialer Zustand\textquotesingle{}}\NormalTok{)}
 \NormalTok{plt.show()}
 \end{Highlighting}
 \end{Shaded}
@@ -2082,10 +2086,10 @@ Hier \href{bilder/kmeans_utils.py}{zum Download angehängt} eine Datei mit ein p
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ImportTok{from}\NormalTok{ kmeans_utils }\ImportTok{import}\NormalTok{ kmeans, plot_cluster_data}
-\CommentTok{# import routines from a module}
+\ImportTok{from}\NormalTok{ kmeans\_utils }\ImportTok{import}\NormalTok{ kmeans, plot\_cluster\_data}
+\CommentTok{\# import routines from a module}
 
-\CommentTok{# construct data as above}
+\CommentTok{\# construct data as above}
 \NormalTok{N }\OperatorTok{=} \DecValTok{9}
 \NormalTok{K }\OperatorTok{=} \DecValTok{2}
 
@@ -2099,14 +2103,14 @@ Hier \href{bilder/kmeans_utils.py}{zum Download angehängt} eine Datei mit ein p
 \NormalTok{cntrdlist }\OperatorTok{=}\NormalTok{ [cntro, cntrt]}
 \NormalTok{datamatrix }\OperatorTok{=}\NormalTok{ np.hstack([x.reshape((x.size, }\DecValTok{1}\NormalTok{)), z.reshape((z.size, }\DecValTok{1}\NormalTok{))])}
 
-\CommentTok{# run the kmeans algorithm}
+\CommentTok{\# run the kmeans algorithm}
 \NormalTok{cntrdlist, labels, cerror }\OperatorTok{=}\NormalTok{ kmeans(datamatrix, K}\OperatorTok{=}\DecValTok{2}\NormalTok{, cntrdlist}\OperatorTok{=}\NormalTok{cntrdlist)}
 
-\CommentTok{# plot the result}
-\NormalTok{plot_cluster_data(datamatrix, labels, cntrdlist,}
-\NormalTok{                  xlabel}\OperatorTok{=}\StringTok{'feature'}\NormalTok{, ylabel}\OperatorTok{=}\StringTok{'other feature'}\NormalTok{,}
+\CommentTok{\# plot the result}
+\NormalTok{plot\_cluster\_data(datamatrix, labels, cntrdlist,}
+\NormalTok{                  xlabel}\OperatorTok{=}\StringTok{\textquotesingle{}feature\textquotesingle{}}\NormalTok{, ylabel}\OperatorTok{=}\StringTok{\textquotesingle{}other feature\textquotesingle{}}\NormalTok{,}
 \NormalTok{                  fignum}\OperatorTok{=}\DecValTok{10101}\NormalTok{, figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{),}
-\NormalTok{                  titlestr}\OperatorTok{=}\StringTok{'K-means: finaler Zustand'}\NormalTok{)}
+\NormalTok{                  titlestr}\OperatorTok{=}\StringTok{\textquotesingle{}K{-}means: finaler Zustand\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2133,18 +2137,18 @@ Wenden sie den Algorithmus auf die (zentrierten und auf in jeder Richtung auf \(
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
 
-\ImportTok{from}\NormalTok{ kmeans_utils }\ImportTok{import}\NormalTok{ kmeans}
+\ImportTok{from}\NormalTok{ kmeans\_utils }\ImportTok{import}\NormalTok{ kmeans}
 
-\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'penguin-data.json'}\NormalTok{, }\StringTok{'r'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{\textquotesingle{}penguin{-}data.json\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}r\textquotesingle{}}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
 \NormalTok{    datadict }\OperatorTok{=}\NormalTok{ json.load(f)}
 
-\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'data'}\NormalTok{])}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{\textquotesingle{}data\textquotesingle{}}\NormalTok{])}
 
-\CommentTok{# center and scale}
-\NormalTok{data }\OperatorTok{=}\NormalTok{ data }\OperatorTok{-}\NormalTok{ data.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\CommentTok{\# center and scale}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ data }\OperatorTok{{-}}\NormalTok{ data.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
 \NormalTok{maxvals }\OperatorTok{=}\NormalTok{ np.}\BuiltInTok{max}\NormalTok{(np.}\BuiltInTok{abs}\NormalTok{(data), axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
 \NormalTok{data }\OperatorTok{=}\NormalTok{ data }\OperatorTok{*} \DecValTok{1}\OperatorTok{/}\NormalTok{maxvals}
-\CommentTok{# now the data has zero mean and is scaled to fit into [-1, 1]}
+\CommentTok{\# now the data has zero mean and is scaled to fit into [{-}1, 1]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2482,7 +2486,7 @@ macht sich \emph{Automatisches Differenzieren} zu Nutze und kann zu einem Progra
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ ffun(x):}
-    \CommentTok{# ..... alles was f machen soll}
+    \CommentTok{\# ..... alles was f machen soll}
     \ControlFlowTok{return}\NormalTok{ fx}
 \end{Highlighting}
 \end{Shaded}
@@ -2520,36 +2524,36 @@ für \(h\in\{10^{-3}, 10^{-6}, 10^{-9}, 10^{-12}\}\) berechnen. Berechnen sie au
  
 \KeywordTok{def}\NormalTok{ gfun(x):}
     \ControlFlowTok{return}\NormalTok{ np.sin(x[}\DecValTok{0}\NormalTok{]) }\OperatorTok{+}\NormalTok{ x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{np.cos(x[}\DecValTok{1}\NormalTok{]) }\OperatorTok{\textbackslash{}}
-        \OperatorTok{-} \DecValTok{2}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{] }\OperatorTok{+}\NormalTok{ x[}\DecValTok{0}\NormalTok{]}\OperatorTok{**}\DecValTok{2} \OperatorTok{+}\NormalTok{ x[}\DecValTok{1}\NormalTok{]}\OperatorTok{**}\DecValTok{2} \OperatorTok{\textbackslash{}}
+        \OperatorTok{{-}} \DecValTok{2}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{] }\OperatorTok{+}\NormalTok{ x[}\DecValTok{0}\NormalTok{]}\OperatorTok{**}\DecValTok{2} \OperatorTok{+}\NormalTok{ x[}\DecValTok{1}\NormalTok{]}\OperatorTok{**}\DecValTok{2} \OperatorTok{\textbackslash{}}
         \OperatorTok{+}\NormalTok{ x[}\DecValTok{2}\NormalTok{]}\OperatorTok{**}\DecValTok{2}
 
 \KeywordTok{def}\NormalTok{ gradg(x):}
     \ControlFlowTok{return}\NormalTok{ np.array([np.NaN,}
-                     \OperatorTok{-}\NormalTok{x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{np.sin(x[}\DecValTok{1}\NormalTok{]) }\OperatorTok{-} \DecValTok{2} \OperatorTok{+} \DecValTok{2}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{],}
+                     \OperatorTok{{-}}\NormalTok{x[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\NormalTok{np.sin(x[}\DecValTok{1}\NormalTok{]) }\OperatorTok{{-}} \DecValTok{2} \OperatorTok{+} \DecValTok{2}\OperatorTok{*}\NormalTok{x[}\DecValTok{1}\NormalTok{],}
 \NormalTok{                     np.NaN]).reshape((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
 
 
-\CommentTok{# Inkrement}
-\NormalTok{h }\OperatorTok{=} \FloatTok{1e-3}
+\CommentTok{\# Inkrement}
+\NormalTok{h }\OperatorTok{=} \FloatTok{1e{-}3}
 
-\CommentTok{# der x-wert und das h-Inkrement in der zweiten Komponente}
+\CommentTok{\# der x{-}wert und das h{-}Inkrement in der zweiten Komponente}
 \NormalTok{xzero }\OperatorTok{=}\NormalTok{ np.ones((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
 \NormalTok{xzeroh }\OperatorTok{=}\NormalTok{ xzero }\OperatorTok{+}\NormalTok{ np.array([}\DecValTok{0}\NormalTok{, h, }\DecValTok{0}\NormalTok{]).reshape((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
 
-\CommentTok{# partieller Differenzenquotient}
-\NormalTok{dgdxtwo }\OperatorTok{=} \DecValTok{1}\OperatorTok{/}\NormalTok{h}\OperatorTok{*}\NormalTok{(gfun(xzeroh) }\OperatorTok{-}\NormalTok{ gfun(xzero))}
-\CommentTok{# Alle partiellen Ableitungen ergeben den Gradienten}
+\CommentTok{\# partieller Differenzenquotient}
+\NormalTok{dgdxtwo }\OperatorTok{=} \DecValTok{1}\OperatorTok{/}\NormalTok{h}\OperatorTok{*}\NormalTok{(gfun(xzeroh) }\OperatorTok{{-}}\NormalTok{ gfun(xzero))}
+\CommentTok{\# Alle partiellen Ableitungen ergeben den Gradienten}
 \NormalTok{hgrad }\OperatorTok{=}\NormalTok{ np.array([np.NaN, dgdxtwo, np.NaN]).reshape((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
 
-\CommentTok{# Analytisch bestimmter Gradient}
+\CommentTok{\# Analytisch bestimmter Gradient}
 \NormalTok{gradx }\OperatorTok{=}\NormalTok{ gradg(xzero)}
 
-\CommentTok{# Die Differenz in der Norm}
-\NormalTok{hdiff }\OperatorTok{=}\NormalTok{ np.linalg.norm((hgrad}\OperatorTok{-}\NormalTok{gradx)[}\DecValTok{1}\NormalTok{])}
-\CommentTok{# bitte alle Kompenenten berechnen}
-\CommentTok{# und dann die Norm ueber den ganzen Vektor nehmen}
+\CommentTok{\# Die Differenz in der Norm}
+\NormalTok{hdiff }\OperatorTok{=}\NormalTok{ np.linalg.norm((hgrad}\OperatorTok{{-}}\NormalTok{gradx)[}\DecValTok{1}\NormalTok{])}
+\CommentTok{\# bitte alle Kompenenten berechnen}
+\CommentTok{\# und dann die Norm ueber den ganzen Vektor nehmen}
 
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'h=}\SpecialCharTok{\{h:.2e\}}\SpecialStringTok{: diff in gradient }\SpecialCharTok{\{}\NormalTok{hdiff}\SpecialCharTok{.}\NormalTok{flatten()[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{:.2e\}}\SpecialStringTok{'}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}h=}\SpecialCharTok{\{h:.2e\}}\SpecialStringTok{: diff in gradient }\SpecialCharTok{\{}\NormalTok{hdiff}\SpecialCharTok{.}\NormalTok{flatten()[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{:.2e\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2569,64 +2573,64 @@ Implementieren Sie ein Gradientenabstiegsverfahren mit \emph{line search} durch 
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 
-\ImportTok{from}\NormalTok{ loesung_5_1 }\ImportTok{import}\NormalTok{ gfun, gradg}
+\ImportTok{from}\NormalTok{ loesung\_5\_1 }\ImportTok{import}\NormalTok{ gfun, gradg}
 
 
-\KeywordTok{def}\NormalTok{ min_by_btls(func, v}\OperatorTok{=}\VariableTok{None}\NormalTok{, curx}\OperatorTok{=}\VariableTok{None}\NormalTok{,}
-\NormalTok{                azero}\OperatorTok{=}\FloatTok{10.}\NormalTok{, tau}\OperatorTok{=}\NormalTok{.}\DecValTok{8}\NormalTok{, c}\OperatorTok{=}\NormalTok{.}\DecValTok{9}\NormalTok{, maxiter}\OperatorTok{=}\DecValTok{200}\NormalTok{):}
-    \CommentTok{''' find a smaller value of f in the direction}
+\KeywordTok{def}\NormalTok{ min\_by\_btls(func, v}\OperatorTok{=}\VariableTok{None}\NormalTok{, curx}\OperatorTok{=}\VariableTok{None}\NormalTok{,}
+\NormalTok{                azero}\OperatorTok{=}\FloatTok{10.}\NormalTok{, tau}\OperatorTok{=}\FloatTok{.8}\NormalTok{, c}\OperatorTok{=}\FloatTok{.9}\NormalTok{, maxiter}\OperatorTok{=}\DecValTok{200}\NormalTok{):}
+    \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{} find a smaller value of f in the direction}
 
 \CommentTok{    f(x+s*v)}
 
 \CommentTok{    for s in [0, azero]}
 \CommentTok{    by backtracking linesearch}
 
-\CommentTok{    https://en.wikipedia.org/wiki/Backtracking_line_search}
-\CommentTok{    '''}
+\CommentTok{    https://en.wikipedia.org/wiki/Backtracking\_line\_search}
+\CommentTok{    \textquotesingle{}\textquotesingle{}\textquotesingle{}}
 
-\NormalTok{    m }\OperatorTok{=} \OperatorTok{-}\NormalTok{v.T.dot(v)}
+\NormalTok{    m }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{v.T.dot(v)}
 \NormalTok{    cstep }\OperatorTok{=}\NormalTok{ azero}
-\NormalTok{    t }\OperatorTok{=} \OperatorTok{-}\NormalTok{c}\OperatorTok{*}\NormalTok{m}
+\NormalTok{    t }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{c}\OperatorTok{*}\NormalTok{m}
 
 \NormalTok{    cval }\OperatorTok{=}\NormalTok{ func(curx)}
 
     \ControlFlowTok{for}\NormalTok{ kkk }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(maxiter):}
 \NormalTok{        newx }\OperatorTok{=}\NormalTok{ curx}\OperatorTok{+}\NormalTok{cstep}\OperatorTok{*}\NormalTok{v}
-        \ControlFlowTok{if}\NormalTok{ cval }\OperatorTok{-}\NormalTok{ func(newx) }\OperatorTok{>=}\NormalTok{ cstep}\OperatorTok{*}\NormalTok{t:}
+        \ControlFlowTok{if}\NormalTok{ cval }\OperatorTok{{-}}\NormalTok{ func(newx) }\OperatorTok{\textgreater{}=}\NormalTok{ cstep}\OperatorTok{*}\NormalTok{t:}
             \ControlFlowTok{return}\NormalTok{ newx}
         \ControlFlowTok{else}\NormalTok{:}
 \NormalTok{            cstep }\OperatorTok{=}\NormalTok{ tau}\OperatorTok{*}\NormalTok{cstep}
-    \ControlFlowTok{raise} \PreprocessorTok{UserWarning}\NormalTok{(}\StringTok{'no smaller value could be found'}\NormalTok{)}
+    \ControlFlowTok{raise} \PreprocessorTok{UserWarning}\NormalTok{(}\StringTok{\textquotesingle{}no smaller value could be found\textquotesingle{}}\NormalTok{)}
     \ControlFlowTok{return}
 
 
-\KeywordTok{def}\NormalTok{ gradienten_abstieg_linesearch(func}\OperatorTok{=}\VariableTok{None}\NormalTok{, grad}\OperatorTok{=}\VariableTok{None}\NormalTok{, inix}\OperatorTok{=}\VariableTok{None}\NormalTok{,}
-\NormalTok{                                  maxiter}\OperatorTok{=}\DecValTok{100}\NormalTok{, grad_tol}\OperatorTok{=}\FloatTok{1e-6}\NormalTok{):}
-    \CommentTok{'''sucht ein Minimum einer Funktion `func` durch}
-\CommentTok{     * Evaluieren des Gradienten `grad`}
-\CommentTok{     * und anpassen von `inix` in Richtung von `-grad`}
-\CommentTok{     * mit einem `line search Verfahren`}
-\CommentTok{    '''}
+\KeywordTok{def}\NormalTok{ gradienten\_abstieg\_linesearch(func}\OperatorTok{=}\VariableTok{None}\NormalTok{, grad}\OperatorTok{=}\VariableTok{None}\NormalTok{, inix}\OperatorTok{=}\VariableTok{None}\NormalTok{,}
+\NormalTok{                                  maxiter}\OperatorTok{=}\DecValTok{100}\NormalTok{, grad\_tol}\OperatorTok{=}\FloatTok{1e{-}6}\NormalTok{):}
+    \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{}sucht ein Minimum einer Funktion \textasciigrave{}func\textasciigrave{} durch}
+\CommentTok{     * Evaluieren des Gradienten \textasciigrave{}grad\textasciigrave{}}
+\CommentTok{     * und anpassen von \textasciigrave{}inix\textasciigrave{} in Richtung von \textasciigrave{}{-}grad\textasciigrave{}}
+\CommentTok{     * mit einem \textasciigrave{}line search Verfahren\textasciigrave{}}
+\CommentTok{    \textquotesingle{}\textquotesingle{}\textquotesingle{}}
 
-    \CommentTok{# initialisierung}
+    \CommentTok{\# initialisierung}
 \NormalTok{    curx }\OperatorTok{=}\NormalTok{ inix}
     \ControlFlowTok{for}\NormalTok{ kkk }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(maxiter):}
-        \CommentTok{# compute the current gradient}
-        \CommentTok{# finde ein neues `newx` in -Gradienten Richtung}
-        \CommentTok{# check ob der Gradient unter der Toleranz ist}
-        \CommentTok{# anderenfalls:}
-\NormalTok{        curx }\OperatorTok{=}\NormalTok{ newx  }\CommentTok{# naechster Iterationschritt}
+        \CommentTok{\# compute the current gradient}
+        \CommentTok{\# finde ein neues \textasciigrave{}newx\textasciigrave{} in {-}Gradienten Richtung}
+        \CommentTok{\# check ob der Gradient unter der Toleranz ist}
+        \CommentTok{\# anderenfalls:}
+\NormalTok{        curx }\OperatorTok{=}\NormalTok{ newx  }\CommentTok{\# naechster Iterationschritt}
 
-    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'max iter }\SpecialCharTok{\{}\NormalTok{maxiter}\SpecialCharTok{\}}\SpecialStringTok{ reached -- size of grad }\SpecialCharTok{\{}\NormalTok{nrmcgrd}\SpecialCharTok{:.2e\}}\SpecialStringTok{'}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}max iter }\SpecialCharTok{\{}\NormalTok{maxiter}\SpecialCharTok{\}}\SpecialStringTok{ reached {-}{-} size of grad }\SpecialCharTok{\{}\NormalTok{nrmcgrd}\SpecialCharTok{:.2e\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
     \ControlFlowTok{return}\NormalTok{ newx}
 
-\CommentTok{# Startwert}
+\CommentTok{\# Startwert}
 \NormalTok{xzero }\OperatorTok{=}\NormalTok{ np.ones((}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{))}
 
-\NormalTok{minx }\OperatorTok{=}\NormalTok{ gradienten_abstieg_linesearch(func}\OperatorTok{=}\NormalTok{gfun, grad}\OperatorTok{=}\NormalTok{gradg, inix}\OperatorTok{=}\NormalTok{xzero)}
+\NormalTok{minx }\OperatorTok{=}\NormalTok{ gradienten\_abstieg\_linesearch(func}\OperatorTok{=}\NormalTok{gfun, grad}\OperatorTok{=}\NormalTok{gradg, inix}\OperatorTok{=}\NormalTok{xzero)}
 
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'found minimum f(x) = }\SpecialCharTok{\{}\NormalTok{gfun(minx)}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
-\BuiltInTok{print}\NormalTok{(}\StringTok{'at x = '}\NormalTok{, minx)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}found minimum f(x) = }\SpecialCharTok{\{}\NormalTok{gfun(minx)}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}at x = \textquotesingle{}}\NormalTok{, minx)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2644,24 +2648,24 @@ Implementieren Sie ein Gradientenabstiegsverfahren mit \emph{line search} durch 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
-\ImportTok{from}\NormalTok{ timeit }\ImportTok{import}\NormalTok{ default_timer}
+\ImportTok{from}\NormalTok{ timeit }\ImportTok{import}\NormalTok{ default\_timer}
 
 \ImportTok{from}\NormalTok{ scipy.optimize }\ImportTok{import}\NormalTok{ minimize}
 
-\ImportTok{from}\NormalTok{ loesung_5_1 }\ImportTok{import}\NormalTok{ gfun, gradg}
+\ImportTok{from}\NormalTok{ loesung\_5\_1 }\ImportTok{import}\NormalTok{ gfun, gradg}
 
 
 \KeywordTok{def}\NormalTok{ gradforopt(x):}
     \ControlFlowTok{return}\NormalTok{ gradg(x).flatten()}
 
 
-\NormalTok{starttime }\OperatorTok{=}\NormalTok{ default_timer()}
+\NormalTok{starttime }\OperatorTok{=}\NormalTok{ default\_timer()}
 \NormalTok{result }\OperatorTok{=}\NormalTok{ minimize(...., jac}\OperatorTok{=}\NormalTok{gradforopt)}
-\NormalTok{runtime }\OperatorTok{=}\NormalTok{ default_timer() }\OperatorTok{-}\NormalTok{ starttime}
+\NormalTok{runtime }\OperatorTok{=}\NormalTok{ default\_timer() }\OperatorTok{{-}}\NormalTok{ starttime}
 
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'with gradient: found minimum f(x) = }\SpecialCharTok{\{}\NormalTok{result}\SpecialCharTok{.}\NormalTok{fun}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
-\BuiltInTok{print}\NormalTok{(}\StringTok{'at x = '}\NormalTok{, result.x)}
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'in }\SpecialCharTok{\{}\NormalTok{runtime}\SpecialCharTok{:.4f\}}\SpecialStringTok{s time'}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}with gradient: found minimum f(x) = }\SpecialCharTok{\{}\NormalTok{result}\SpecialCharTok{.}\NormalTok{fun}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}at x = \textquotesingle{}}\NormalTok{, result.x)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}in }\SpecialCharTok{\{}\NormalTok{runtime}\SpecialCharTok{:.4f\}}\SpecialStringTok{s time\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2943,38 +2947,38 @@ Implementieren sie die SQP Iteration zur Berechnung der letzten Hauptkomponenten
 \ImportTok{import}\NormalTok{ json}
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 
-\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'penguin-data.json'}\NormalTok{, }\StringTok{'r'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{\textquotesingle{}penguin{-}data.json\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}r\textquotesingle{}}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
 \NormalTok{    datadict }\OperatorTok{=}\NormalTok{ json.load(f)}
 
-\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'data'}\NormalTok{])}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{\textquotesingle{}data\textquotesingle{}}\NormalTok{])}
 
-\CommentTok{# center the data}
-\NormalTok{X }\OperatorTok{=}\NormalTok{ data }\OperatorTok{-}\NormalTok{ data.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
-\NormalTok{XtX }\OperatorTok{=}\NormalTok{ X.T }\OperatorTok{@}\NormalTok{ X  }\CommentTok{# for later use}
+\CommentTok{\# center the data}
+\NormalTok{X }\OperatorTok{=}\NormalTok{ data }\OperatorTok{{-}}\NormalTok{ data.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\NormalTok{XtX }\OperatorTok{=}\NormalTok{ X.T }\OperatorTok{@}\NormalTok{ X  }\CommentTok{\# for later use}
 
 \NormalTok{U, S, Vh }\OperatorTok{=}\NormalTok{ np.linalg.svd(X)}
 
-\NormalTok{pcfour }\OperatorTok{=}\NormalTok{ Vh[}\OperatorTok{-}\DecValTok{1}\NormalTok{:, :].T  }\CommentTok{# die "letzte" Hauptrichtung}
-\NormalTok{nrmpcf }\OperatorTok{=}\NormalTok{ np.linalg.norm(pcfour)  }\CommentTok{# brauchen wir um den Winkel zu berechnen}
+\NormalTok{pcfour }\OperatorTok{=}\NormalTok{ Vh[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{:, :].T  }\CommentTok{\# die "letzte" Hauptrichtung}
+\NormalTok{nrmpcf }\OperatorTok{=}\NormalTok{ np.linalg.norm(pcfour)  }\CommentTok{\# brauchen wir um den Winkel zu berechnen}
 
-\NormalTok{xk }\OperatorTok{=}\NormalTok{ np.zeros((}\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{))  }\CommentTok{# Startvektor}
+\NormalTok{xk }\OperatorTok{=}\NormalTok{ np.zeros((}\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{))  }\CommentTok{\# Startvektor}
 \NormalTok{xk[}\DecValTok{0}\NormalTok{] }\OperatorTok{=} \DecValTok{1}
 \NormalTok{arccosalpha }\OperatorTok{=}\NormalTok{ xk.T }\OperatorTok{@}\NormalTok{ pcfour }\OperatorTok{/}\NormalTok{ (np.linalg.norm(xk)}\OperatorTok{*}\NormalTok{nrmpcf)}
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'Iteration: }\SpecialCharTok{\{}\DecValTok{0}\SpecialCharTok{\}}\SpecialStringTok{ -- `arccos(sol, xk)` }\SpecialCharTok{\{}\NormalTok{arccosalpha}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Iteration: }\SpecialCharTok{\{}\DecValTok{0}\SpecialCharTok{\}}\SpecialStringTok{ {-}{-} \textasciigrave{}arccos(sol, xk)\textasciigrave{} }\SpecialCharTok{\{}\NormalTok{arccosalpha}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
 
 
-\KeywordTok{def}\NormalTok{ solve_sadpoint_sys_x(Q}\OperatorTok{=}\VariableTok{None}\NormalTok{, A}\OperatorTok{=}\VariableTok{None}\NormalTok{, fone}\OperatorTok{=}\VariableTok{None}\NormalTok{, ftwo}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
-    \CommentTok{''' Loesung des Sattelpunktprobles}
+\KeywordTok{def}\NormalTok{ solve\_sadpoint\_sys\_x(Q}\OperatorTok{=}\VariableTok{None}\NormalTok{, A}\OperatorTok{=}\VariableTok{None}\NormalTok{, fone}\OperatorTok{=}\VariableTok{None}\NormalTok{, ftwo}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
+    \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{} Loesung des Sattelpunktprobles}
 
 \CommentTok{    | Q  A.T | . | x |    | f1 |}
 \CommentTok{    | A   0  |   | l |  = | f2 |}
 
 \CommentTok{    Notes:}
-\CommentTok{    -----}
+\CommentTok{    {-}{-}{-}{-}{-}}
 
-\CommentTok{    Es wird nur `x` zurueckgegeben}
+\CommentTok{    Es wird nur \textasciigrave{}x\textasciigrave{} zurueckgegeben}
 
-\CommentTok{    '''}
+\CommentTok{    \textquotesingle{}\textquotesingle{}\textquotesingle{}}
 \NormalTok{    m }\OperatorTok{=}\NormalTok{ A.shape[}\DecValTok{0}\NormalTok{]}
 \NormalTok{    lineone }\OperatorTok{=}\NormalTok{ [Q, A.T]}
 \NormalTok{    linetwo }\OperatorTok{=}\NormalTok{ [A, np.zeros((m, m))]}
@@ -2982,17 +2986,17 @@ Implementieren sie die SQP Iteration zur Berechnung der letzten Hauptkomponenten
 \NormalTok{                         np.hstack(linetwo)])}
 \NormalTok{    rhs }\OperatorTok{=}\NormalTok{ np.vstack([fone, ftwo])}
 \NormalTok{    xl }\OperatorTok{=}\NormalTok{ np.linalg.solve(sdptmat, rhs)}
-    \ControlFlowTok{return}\NormalTok{ xl[:}\OperatorTok{-}\NormalTok{m]  }\CommentTok{# return only the `x-part`}
+    \ControlFlowTok{return}\NormalTok{ xl[:}\OperatorTok{{-}}\NormalTok{m]  }\CommentTok{\# return only the \textasciigrave{}x{-}part\textasciigrave{}}
 
 
 \ControlFlowTok{for}\NormalTok{ kkk }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{11}\NormalTok{):}
-    \CommentTok{# ...}
-    \CommentTok{# die SQP Iteration}
-    \CommentTok{# ...}
-\NormalTok{    xk }\OperatorTok{=}\NormalTok{ xk }\OperatorTok{+}\NormalTok{ solve_sadpoint_sys_x()}
+    \CommentTok{\# ...}
+    \CommentTok{\# die SQP Iteration}
+    \CommentTok{\# ...}
+\NormalTok{    xk }\OperatorTok{=}\NormalTok{ xk }\OperatorTok{+}\NormalTok{ solve\_sadpoint\_sys\_x()}
 
 \NormalTok{    arccosalpha }\OperatorTok{=}\NormalTok{ xk.T }\OperatorTok{@}\NormalTok{ pcfour }\OperatorTok{/}\NormalTok{ (np.linalg.norm(xk)}\OperatorTok{*}\NormalTok{nrmpcf)}
-    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'Iteration: }\SpecialCharTok{\{}\NormalTok{kkk}\SpecialCharTok{\}}\SpecialStringTok{ -- `arccos(sol, xk)` }\SpecialCharTok{\{}\NormalTok{arccosalpha}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Iteration: }\SpecialCharTok{\{}\NormalTok{kkk}\SpecialCharTok{\}}\SpecialStringTok{ {-}{-} \textasciigrave{}arccos(sol, xk)\textasciigrave{} }\SpecialCharTok{\{}\NormalTok{arccosalpha}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3056,25 +3060,25 @@ Die wesentlichen Schritte als Algorithmus sehen wie folgt aus:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{###################################################}
-\CommentTok{# The basic steps of a stochastic gradient method #}
-\CommentTok{###################################################}
+\CommentTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\CommentTok{\# The basic steps of a stochastic gradient method \#}
+\CommentTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
 
-\NormalTok{w }\OperatorTok{=}\NormalTok{ ...  }\CommentTok{# initialize the weight vector}
-\NormalTok{eta }\OperatorTok{=}\NormalTok{ ... }\CommentTok{# choose the learning rate}
-\NormalTok{I }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, ..., N]  }\CommentTok{# the full index set}
+\NormalTok{w }\OperatorTok{=}\NormalTok{ ...  }\CommentTok{\# initialize the weight vector}
+\NormalTok{eta }\OperatorTok{=}\NormalTok{ ... }\CommentTok{\# choose the learning rate}
+\NormalTok{I }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, ..., N]  }\CommentTok{\# the full index set}
 
 \ControlFlowTok{for}\NormalTok{ k }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(maxiter):}
-\NormalTok{    J }\OperatorTok{=}\NormalTok{ shuffle(I)  }\CommentTok{# shuffle the indices}
+\NormalTok{    J }\OperatorTok{=}\NormalTok{ shuffle(I)  }\CommentTok{\# shuffle the indices}
     \ControlFlowTok{for}\NormalTok{ j }\KeywordTok{in}\NormalTok{ J:}
-        \CommentTok{# compute the gradient of Qj at current w}
+        \CommentTok{\# compute the gradient of Qj at current w}
 \NormalTok{        gradjk }\OperatorTok{=}\NormalTok{ nabla(Q(j, w))  }
-        \CommentTok{# update the w vector}
-\NormalTok{        w }\OperatorTok{=}\NormalTok{ w }\OperatorTok{-}\NormalTok{ eta}\OperatorTok{*}\NormalTok{gradjk}
-    \ControlFlowTok{if}\NormalTok{ convergence_criterion:}
+        \CommentTok{\# update the w vector}
+\NormalTok{        w }\OperatorTok{=}\NormalTok{ w }\OperatorTok{{-}}\NormalTok{ eta}\OperatorTok{*}\NormalTok{gradjk}
+    \ControlFlowTok{if}\NormalTok{ convergence\_criterion:}
        \ControlFlowTok{break}
 
-\CommentTok{###################################################}
+\CommentTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3114,33 +3118,33 @@ Der Beginn könnte also wie folgt aussehen (wobei die Größe der \emph{hidden l
 \begin{Highlighting}[]
 \ImportTok{import}\NormalTok{ json}
 \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
-\ImportTok{from}\NormalTok{ scipy.optimize }\ImportTok{import}\NormalTok{ approx_fprime}
+\ImportTok{from}\NormalTok{ scipy.optimize }\ImportTok{import}\NormalTok{ approx\_fprime}
 
-\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{'penguin-data.json'}\NormalTok{, }\StringTok{'r'}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{\textquotesingle{}penguin{-}data.json\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}r\textquotesingle{}}\NormalTok{) }\ImportTok{as}\NormalTok{ f:}
 \NormalTok{    datadict }\OperatorTok{=}\NormalTok{ json.load(f)}
 
-\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'data'}\NormalTok{])}
-\CommentTok{# centering the data}
-\NormalTok{data }\OperatorTok{=}\NormalTok{ data }\OperatorTok{-}\NormalTok{ data.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
-\NormalTok{lbls }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{'target'}\NormalTok{])}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{\textquotesingle{}data\textquotesingle{}}\NormalTok{])}
+\CommentTok{\# centering the data}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ data }\OperatorTok{{-}}\NormalTok{ data.mean(axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\NormalTok{lbls }\OperatorTok{=}\NormalTok{ np.array(datadict[}\StringTok{\textquotesingle{}target\textquotesingle{}}\NormalTok{])}
 
-\CommentTok{# a dictionary that maps the labels(=targets) of the data into labels \{1, -1\}}
-\CommentTok{# that will use for distinction of two groups}
-\NormalTok{mplbldict }\OperatorTok{=}\NormalTok{ \{}\DecValTok{0}\NormalTok{: np.array([}\OperatorTok{-}\DecValTok{1}\NormalTok{]),}
-             \DecValTok{1}\NormalTok{: np.array([}\OperatorTok{-}\DecValTok{1}\NormalTok{]),}
+\CommentTok{\# a dictionary that maps the labels(=targets) of the data into labels \{1, {-}1\}}
+\CommentTok{\# that will use for distinction of two groups}
+\NormalTok{mplbldict }\OperatorTok{=}\NormalTok{ \{}\DecValTok{0}\NormalTok{: np.array([}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]),}
+             \DecValTok{1}\NormalTok{: np.array([}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]),}
              \DecValTok{2}\NormalTok{: np.array([}\DecValTok{1}\NormalTok{])\}}
 
-\CommentTok{# sizes of the layers}
+\CommentTok{\# sizes of the layers}
 \NormalTok{sxz, sxo, sxt }\OperatorTok{=}\NormalTok{ data.shape[}\DecValTok{1}\NormalTok{], }\DecValTok{2}\NormalTok{, mplbldict[}\DecValTok{0}\NormalTok{].size}
-\CommentTok{# define also the sizes of the weightmatrices}
+\CommentTok{\# define also the sizes of the weightmatrices}
 
-\CommentTok{# parameters for the training -- these worked fine for me}
-\NormalTok{batchsize }\OperatorTok{=} \DecValTok{30}  \CommentTok{# how many samples for the stochastic gradients}
-\NormalTok{lr }\OperatorTok{=} \FloatTok{0.25}  \CommentTok{# learning rate}
-\NormalTok{iterations }\OperatorTok{=} \DecValTok{200}  \CommentTok{# how many gradient steps}
+\CommentTok{\# parameters for the training {-}{-} these worked fine for me}
+\NormalTok{batchsize }\OperatorTok{=} \DecValTok{30}  \CommentTok{\# how many samples for the stochastic gradients}
+\NormalTok{lr }\OperatorTok{=} \FloatTok{0.25}  \CommentTok{\# learning rate}
+\NormalTok{iterations }\OperatorTok{=} \DecValTok{200}  \CommentTok{\# how many gradient steps}
 
-\CommentTok{# the data}
-\NormalTok{traindataratio }\OperatorTok{=} \FloatTok{.9}  \CommentTok{# the ratio of training data vs. test data}
+\CommentTok{\# the data}
+\NormalTok{traindataratio }\OperatorTok{=} \FloatTok{.9}  \CommentTok{\# the ratio of training data vs. test data}
 \NormalTok{ndata }\OperatorTok{=}\NormalTok{ data.shape[}\DecValTok{0}\NormalTok{]}
 \NormalTok{trnds }\OperatorTok{=}\NormalTok{ np.}\BuiltInTok{int}\NormalTok{(ndata}\OperatorTok{*}\NormalTok{traindataratio)}
 \NormalTok{allidx }\OperatorTok{=}\NormalTok{ np.arange(ndata)}
@@ -3154,9 +3158,9 @@ Und die Funktion, die das neuronale Netz realisiert, so:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ fwdnn(xzero, Aone}\OperatorTok{=}\VariableTok{None}\NormalTok{, bone}\OperatorTok{=}\VariableTok{None}\NormalTok{, Atwo}\OperatorTok{=}\VariableTok{None}\NormalTok{, btwo}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
-    \CommentTok{''' a neural networks of two layers}
+    \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{} a neural networks of two layers}
 
-\CommentTok{    '''}
+\CommentTok{    \textquotesingle{}\textquotesingle{}\textquotesingle{}}
 \NormalTok{    xone }\OperatorTok{=}\NormalTok{ np.tanh(Aone }\OperatorTok{@}\NormalTok{ xzero }\OperatorTok{+}\NormalTok{ bone)}
 \NormalTok{    xtwo }\OperatorTok{=}\NormalTok{ np.tanh(Atwo }\OperatorTok{@}\NormalTok{ xone }\OperatorTok{+}\NormalTok{ btwo)}
     \ControlFlowTok{return}\NormalTok{ xtwo}
@@ -3167,10 +3171,10 @@ Für die Umsetzung ist es hilfreich, alle Koeffizienten in einen Vektor \(w\) vo
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{def}\NormalTok{ wvec_to_wmats(wvec):}
-    \CommentTok{''' helper to turn the vector of weights into the system matrices}
+\KeywordTok{def}\NormalTok{ wvec\_to\_wmats(wvec):}
+    \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{} helper to turn the vector of weights into the system matrices}
 
-\CommentTok{    '''}
+\CommentTok{    \textquotesingle{}\textquotesingle{}\textquotesingle{}}
 \NormalTok{    Aone }\OperatorTok{=}\NormalTok{ wvec[:sxz}\OperatorTok{*}\NormalTok{sxo].reshape((sxo, sxz))}
 \NormalTok{    cidx }\OperatorTok{=}\NormalTok{ sxz}\OperatorTok{*}\NormalTok{sxo}
 \NormalTok{    bone }\OperatorTok{=}\NormalTok{ wvec[cidx:cidx}\OperatorTok{+}\NormalTok{sxo]}
@@ -3181,7 +3185,7 @@ Für die Umsetzung ist es hilfreich, alle Koeffizienten in einen Vektor \(w\) vo
     \ControlFlowTok{if}\NormalTok{ Aone.size }\OperatorTok{+}\NormalTok{ bone.size }\OperatorTok{+}\NormalTok{ Atwo.size }\OperatorTok{+}\NormalTok{ btwo.size }\OperatorTok{==}\NormalTok{ wvec.size:}
         \ControlFlowTok{return}\NormalTok{ Aone, bone, Atwo, btwo}
     \ControlFlowTok{else}\NormalTok{:}
-        \ControlFlowTok{raise} \PreprocessorTok{UserWarning}\NormalTok{(}\StringTok{'mismatch weightsvector/matrices'}\NormalTok{)}
+        \ControlFlowTok{raise} \PreprocessorTok{UserWarning}\NormalTok{(}\StringTok{\textquotesingle{}mismatch weightsvector/matrices\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3205,31 +3209,31 @@ Damit fehlen zum Programm insbesondere noch
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\BuiltInTok{print}\NormalTok{(}\StringTok{'***** testing the classification *****'}\NormalTok{)}
-\NormalTok{faillst }\OperatorTok{=}\NormalTok{ []  }\CommentTok{# list to collect the failures for later examination}
-\ControlFlowTok{for}\NormalTok{ cti }\KeywordTok{in}\NormalTok{ tstidx:  }\CommentTok{# iteration over the test data points}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}***** testing the classification *****\textquotesingle{}}\NormalTok{)}
+\NormalTok{faillst }\OperatorTok{=}\NormalTok{ []  }\CommentTok{\# list to collect the failures for later examination}
+\ControlFlowTok{for}\NormalTok{ cti }\KeywordTok{in}\NormalTok{ tstidx:  }\CommentTok{\# iteration over the test data points}
 \NormalTok{    itrgt }\OperatorTok{=}\NormalTok{ data[cti, :]}
 \NormalTok{    ilbl }\OperatorTok{=}\NormalTok{ mplbldict[lbls[cti]]}
-    \CommentTok{# the prediction of the neural network -- Aonex, ... are the optimized weights}
+    \CommentTok{\# the prediction of the neural network {-}{-} Aonex, ... are the optimized weights}
 \NormalTok{    nnlbl }\OperatorTok{=}\NormalTok{ fwdnn(itrgt, Aone}\OperatorTok{=}\NormalTok{Aonex, bone}\OperatorTok{=}\NormalTok{bonex, Atwo}\OperatorTok{=}\NormalTok{Atwox, btwo}\OperatorTok{=}\NormalTok{btwox)}
 \NormalTok{    sccs }\OperatorTok{=}\NormalTok{ np.sign(ilbl) }\OperatorTok{==}\NormalTok{ np.sign(nnlbl)}
-    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'label: }\SpecialCharTok{\{}\NormalTok{ilbl}\SpecialCharTok{.}\NormalTok{item()}\SpecialCharTok{\}}\SpecialStringTok{ -- nn: }\SpecialCharTok{\{}\NormalTok{nnlbl}\SpecialCharTok{.}\NormalTok{item()}\SpecialCharTok{:.4f\}}\SpecialStringTok{ -- success: }\SpecialCharTok{\{}\NormalTok{sccs}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}label: }\SpecialCharTok{\{}\NormalTok{ilbl}\SpecialCharTok{.}\NormalTok{item()}\SpecialCharTok{\}}\SpecialStringTok{ {-}{-} nn: }\SpecialCharTok{\{}\NormalTok{nnlbl}\SpecialCharTok{.}\NormalTok{item()}\SpecialCharTok{:.4f\}}\SpecialStringTok{ {-}{-} success: }\SpecialCharTok{\{}\NormalTok{sccs}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
     \ControlFlowTok{if} \KeywordTok{not}\NormalTok{ sccs:}
 \NormalTok{        faillst.append((cti, ilbl.item(), nnlbl.item(),}
-\NormalTok{                        datadict[}\StringTok{'target_names'}\NormalTok{][lbls[cti]]))}
+\NormalTok{                        datadict[}\StringTok{\textquotesingle{}target\_names\textquotesingle{}}\NormalTok{][lbls[cti]]))}
     \ControlFlowTok{else}\NormalTok{:}
         \ControlFlowTok{pass}
 
-\BuiltInTok{print}\NormalTok{(}\StringTok{'}\CharTok{\textbackslash{}n}\StringTok{***** Results *****'}\NormalTok{)}
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'}\SpecialCharTok{\{}\DecValTok{100}\OperatorTok{-}\BuiltInTok{len}\NormalTok{(faillst)}\OperatorTok{/}\NormalTok{tstidx}\SpecialCharTok{.}\NormalTok{size}\OperatorTok{*}\DecValTok{100}\SpecialCharTok{:.0f\}}\SpecialStringTok{% was classified correctly'}\NormalTok{)}
-\BuiltInTok{print}\NormalTok{(}\StringTok{'***** Misses *****'}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}}\CharTok{\textbackslash{}n}\StringTok{***** Results *****\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\DecValTok{100}\OperatorTok{{-}}\BuiltInTok{len}\NormalTok{(faillst)}\OperatorTok{/}\NormalTok{tstidx}\SpecialCharTok{.}\NormalTok{size}\OperatorTok{*}\DecValTok{100}\SpecialCharTok{:.0f\}}\SpecialStringTok{\% was classified correctly\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}***** Misses *****\textquotesingle{}}\NormalTok{)}
 \ControlFlowTok{if} \BuiltInTok{len}\NormalTok{(faillst) }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
-    \BuiltInTok{print}\NormalTok{(}\StringTok{'None'}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}None\textquotesingle{}}\NormalTok{)}
 \ControlFlowTok{else}\NormalTok{:}
     \ControlFlowTok{for}\NormalTok{ cfl }\KeywordTok{in}\NormalTok{ faillst:}
 \NormalTok{        cid, lbl, nnlbl, name }\OperatorTok{=}\NormalTok{ cfl}
-        \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f'ID: }\SpecialCharTok{\{}\NormalTok{cid}\SpecialCharTok{\}}\SpecialStringTok{ (}\SpecialCharTok{\{}\NormalTok{name}\SpecialCharTok{\}}\SpecialStringTok{ pinguin) was missclassified '} \OperatorTok{+}
-              \SpecialStringTok{f'with score }\SpecialCharTok{\{}\NormalTok{nnlbl}\SpecialCharTok{:.4f\}}\SpecialStringTok{ vs. }\SpecialCharTok{\{}\NormalTok{lbl}\SpecialCharTok{\}}\SpecialStringTok{'}\NormalTok{)}
+        \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}ID: }\SpecialCharTok{\{}\NormalTok{cid}\SpecialCharTok{\}}\SpecialStringTok{ (}\SpecialCharTok{\{}\NormalTok{name}\SpecialCharTok{\}}\SpecialStringTok{ pinguin) was missclassified \textquotesingle{}} \OperatorTok{+}
+              \SpecialStringTok{f\textquotesingle{}with score }\SpecialCharTok{\{}\NormalTok{nnlbl}\SpecialCharTok{:.4f\}}\SpecialStringTok{ vs. }\SpecialCharTok{\{}\NormalTok{lbl}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3238,6 +3242,7 @@ Damit fehlen zum Programm insbesondere noch
 \addcontentsline{toc}{chapter}{Referenzen}
 
 \hypertarget{refs}{}
+\begin{cslreferences}
 \leavevmode\hypertarget{ref-BolM04}{}%
 Bollhöfer, M., Mehrmann, V.: Numerische Mathematik. Eine projektorientierte Einführung für Ingenieure, Mathematiker und Naturwissenschaftler. Vieweg (2004)
 
@@ -3246,5 +3251,6 @@ Nocedal, J., Wright, S.J.: Numerical optimization. Springer (2006)
 
 \leavevmode\hypertarget{ref-enwiki:1098148439}{}%
 Wikipedia contributors: Stochastic gradient descent --- Wikipedia, the free encyclopedia, \url{https://en.wikipedia.org/w/index.php?title=Stochastic_gradient_descent\&oldid=1098148439}, (2022)
+\end{cslreferences}
 
 \end{document}

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Clustering und Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse</title>
   <meta name="description" content="Vorlesungsnotizen zu meiner integrierten Vorlesung im SoSe 2022" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Clustering und Hauptkomponentenanalyse | Einführung in die mathematische Datenanalyse" />
   <meta property="og:type" content="book" />
@@ -48,31 +48,33 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -81,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -116,6 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -134,31 +140,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Vorwort</a></li>
-<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a><ul>
+<li class="chapter" data-level="1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html"><i class="fa fa-check"></i><b>1</b> Was ist Data Science?</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#wie-passiert-die-datenanalyse"><i class="fa fa-check"></i><b>1.1</b> Wie passiert die Datenanalyse?</a></li>
 <li class="chapter" data-level="1.2" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#was-sind-daten"><i class="fa fa-check"></i><b>1.2</b> Was sind Daten?</a></li>
 <li class="chapter" data-level="1.3" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#beispiele"><i class="fa fa-check"></i><b>1.3</b> Beispiele</a></li>
 <li class="chapter" data-level="1.4" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#python"><i class="fa fa-check"></i><b>1.4</b> Python</a></li>
 <li class="chapter" data-level="1.5" data-path="was-ist-data-science.html"><a href="was-ist-data-science.html#aufgaben"><i class="fa fa-check"></i><b>1.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a><ul>
+<li class="chapter" data-level="2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html"><i class="fa fa-check"></i><b>2</b> Lineare Regression</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#rauschen-und-fitting"><i class="fa fa-check"></i><b>2.1</b> Rauschen und Fitting</a></li>
 <li class="chapter" data-level="2.2" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#ansätze-für-lineare-regression"><i class="fa fa-check"></i><b>2.2</b> Ansätze für lineare Regression</a></li>
 <li class="chapter" data-level="2.3" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#sec-linreg-minimierung"><i class="fa fa-check"></i><b>2.3</b> Fehlerfunktional und Minimierung</a></li>
 <li class="chapter" data-level="2.4" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#berechnung-der-bestlösung"><i class="fa fa-check"></i><b>2.4</b> Berechnung der Bestlösung</a></li>
 <li class="chapter" data-level="2.5" data-path="sec-lineare-regression.html"><a href="sec-lineare-regression.html#beispiel"><i class="fa fa-check"></i><b>2.5</b> Beispiel</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a><ul>
+<li class="chapter" data-level="3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html"><i class="fa fa-check"></i><b>3</b> Matrix-Zerlegungen</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#qr-zerlegung"><i class="fa fa-check"></i><b>3.1</b> QR Zerlegung</a></li>
 <li class="chapter" data-level="3.2" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#singulärwertzerlegung"><i class="fa fa-check"></i><b>3.2</b> Singulärwertzerlegung</a></li>
 <li class="chapter" data-level="3.3" data-path="matrix-zerlegungen.html"><a href="matrix-zerlegungen.html#aufgaben-1"><i class="fa fa-check"></i><b>3.3</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="4" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>4</b> Hauptkomponentenanalyse</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#variationskoeffizienten"><i class="fa fa-check"></i><b>4.1</b> Variationskoeffizienten</a></li>
 <li class="chapter" data-level="4.2" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#koordinatenwechsel"><i class="fa fa-check"></i><b>4.2</b> Koordinatenwechsel</a></li>
 <li class="chapter" data-level="4.3" data-path="hauptkomponentenanalyse.html"><a href="hauptkomponentenanalyse.html#sec-pca-maximierung"><i class="fa fa-check"></i><b>4.3</b> Maximierung der Varianz in (Haupt)-Achsenrichtung</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a><ul>
+<li class="chapter" data-level="5" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html"><i class="fa fa-check"></i><b>5</b> Hauptkomponentenanalyse Ctd.</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#der-penguins-datensatz"><i class="fa fa-check"></i><b>5.1</b> Der PENGUINS Datensatz</a></li>
 <li class="chapter" data-level="5.2" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#darstellung"><i class="fa fa-check"></i><b>5.2</b> Darstellung</a></li>
 <li class="chapter" data-level="5.3" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#korrelationen-und-die-kovarianzmatrix"><i class="fa fa-check"></i><b>5.3</b> Korrelationen und die Kovarianzmatrix</a></li>
@@ -168,7 +179,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.7" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#am-beispiel-der-pinguin-daten"><i class="fa fa-check"></i><b>5.7</b> Am Beispiel der Pinguin Daten</a></li>
 <li class="chapter" data-level="5.8" data-path="hauptkomponentenanalyse-ctd..html"><a href="hauptkomponentenanalyse-ctd..html#aufgaben-2"><i class="fa fa-check"></i><b>5.8</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a><ul>
+<li class="chapter" data-level="6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html"><i class="fa fa-check"></i><b>6</b> Clustering und Hauptkomponentenanalyse</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-im-allgemeinen"><i class="fa fa-check"></i><b>6.1</b> Clustering im Allgemeinen</a></li>
 <li class="chapter" data-level="6.2" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#k-means-clustering"><i class="fa fa-check"></i><b>6.2</b> K-means Clustering</a></li>
 <li class="chapter" data-level="6.3" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse-1"><i class="fa fa-check"></i><b>6.3</b> Clustering und Hauptkomponentenanalyse</a></li>
@@ -176,7 +188,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine"><i class="fa fa-check"></i><b>6.5</b> Am Beispiel der Pinguine</a></li>
 <li class="chapter" data-level="6.6" data-path="clustering-und-hauptkomponentenanalyse.html"><a href="clustering-und-hauptkomponentenanalyse.html#aufgaben-3"><i class="fa fa-check"></i><b>6.6</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a><ul>
+<li class="chapter" data-level="7" data-path="optimierung.html"><a href="optimierung.html"><i class="fa fa-check"></i><b>7</b> Optimierung</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="optimierung.html"><a href="optimierung.html#multivariable-funktionen"><i class="fa fa-check"></i><b>7.1</b> Multivariable Funktionen</a></li>
 <li class="chapter" data-level="7.2" data-path="optimierung.html"><a href="optimierung.html#partielle-ableitungen-und-der-gradient"><i class="fa fa-check"></i><b>7.2</b> Partielle Ableitungen und der Gradient</a></li>
 <li class="chapter" data-level="7.3" data-path="optimierung.html"><a href="optimierung.html#richtungs-ableitung"><i class="fa fa-check"></i><b>7.3</b> Richtungs-Ableitung</a></li>
@@ -186,14 +199,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7" data-path="optimierung.html"><a href="optimierung.html#extra-automatisches-differenzieren"><i class="fa fa-check"></i><b>7.7</b> Extra: Automatisches Differenzieren</a></li>
 <li class="chapter" data-level="7.8" data-path="optimierung.html"><a href="optimierung.html#aufgaben-4"><i class="fa fa-check"></i><b>7.8</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a><ul>
+<li class="chapter" data-level="8" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html"><i class="fa fa-check"></i><b>8</b> Optimierung unter Nebenbedingungen</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#richtungen-und-nebenbedingungen"><i class="fa fa-check"></i><b>8.1</b> Richtungen und Nebenbedingungen</a></li>
 <li class="chapter" data-level="8.2" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#restringierte-optimierungsprobleme-und-der-gradient"><i class="fa fa-check"></i><b>8.2</b> Restringierte Optimierungsprobleme und der Gradient</a></li>
 <li class="chapter" data-level="8.3" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#linear-quadratische-probleme"><i class="fa fa-check"></i><b>8.3</b> Linear Quadratische Probleme</a></li>
 <li class="chapter" data-level="8.4" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#sequential-quadratic-programming"><i class="fa fa-check"></i><b>8.4</b> Sequential Quadratic Programming</a></li>
 <li class="chapter" data-level="8.5" data-path="optimierung-unter-nebenbedingungen.html"><a href="optimierung-unter-nebenbedingungen.html#aufgaben-5"><i class="fa fa-check"></i><b>8.5</b> Aufgaben</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><i class="fa fa-check"></i><b>9</b> Stochastisches Gradientenverfahren und Maschinelles Lernen</a><ul>
+<li class="chapter" data-level="9" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><i class="fa fa-check"></i><b>9</b> Stochastisches Gradientenverfahren und Maschinelles Lernen</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#hintergrund"><i class="fa fa-check"></i><b>9.1</b> Hintergrund</a></li>
 <li class="chapter" data-level="9.2" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#iterative_method"><i class="fa fa-check"></i><b>9.2</b> Stochastisches Abstiegsverfahren</a></li>
 <li class="chapter" data-level="9.3" data-path="stochastisches-gradientenverfahren-und-maschinelles-lernen.html"><a href="stochastisches-gradientenverfahren-und-maschinelles-lernen.html#aufgabe"><i class="fa fa-check"></i><b>9.3</b> Aufgabe</a></li>
@@ -219,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clustering-und-hauptkomponentenanalyse" class="section level1 hasAnchor">
+<div id="clustering-und-hauptkomponentenanalyse" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">6</span> Clustering und Hauptkomponentenanalyse<a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Mit der Hauptkomponentenanalyse haben wir eine Methode kennengelernt, Daten gemäß in Koordinaten darzustellen, die nach inhaltsschwere<a href="referenzen.html#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> absteigend sortiert sind. Die Konzentrierung der Varianz in den Hauptachsenrichtungen ermöglicht uns</p>
 <ol style="list-style-type: decimal">
@@ -237,7 +252,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Im 2D Fall allerdings, würde Jan einen zusätzlich gefundenen Pinguin vermessen, den neuen Datenpunkt im Diagramm eintragen und dann schauen, in welchem Bereich er landet um daraus die Spezies abzuleiten. Alles mit reichlich Vorwissen (z.B. dass es 3 Spezies gibt und welche Merkmale die Unterscheidung am besten erlauben).</p>
 <p>Für allgemeine Fälle wird die Identifikation der Bereiche (manchmal ist es sogar gar nicht klar wieviele Bereiche nötig oder zielführend sind) und die Zuweisung der Datenpunkte von sogenannten <strong>clustering</strong> Algorithmen übernommen.</p>
-<div id="clustering-im-allgemeinen" class="section level2 hasAnchor">
+<div id="clustering-im-allgemeinen" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Clustering im Allgemeinen<a href="clustering-und-hauptkomponentenanalyse.html#clustering-im-allgemeinen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Das Ziel ist es in einer Datenwolke Bereiche (<strong>cluster</strong>) zu identifizieren, sodass die vorhandenen (oder auch neu hinzukommende) Datenpunkte anhand ihrer Merkmale den Bereichen zugeordnet (<em>klassifiziert</em>) werden können.</p>
 <p>Je nach Anwendungsfall und Vorwissen kann diese Aufgabe verschieden definiert werden</p>
@@ -264,14 +279,14 @@ bewertet.</p>
 </ul>
 <p>In der Praxis behilft Jan sich gerne mit einer <em>L-Kurve</em> (oder auch <em>ellbow plot</em>), die den Klassifikationsfehler gegenüber der Anzahl der zugelassenen cluster aufträgt: Diese Kurve <span class="math inline">\(e(K)\)</span> ist – in der Theorie – positiv, maximal für <span class="math inline">\(K=1\)</span> und fällt monoton mit der Anzahl <span class="math inline">\(K\)</span> der cluster. Zeigt diese Kurve einen merklichen Knick bei <span class="math inline">\(K^*\)</span> wird dieser Wert gerne als passender Kompromiss genommen.</p>
 </div>
-<div id="k-means-clustering" class="section level2 hasAnchor">
+<div id="k-means-clustering" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> K-means Clustering<a href="clustering-und-hauptkomponentenanalyse.html#k-means-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Aus der Definition und der Bewertung der Cluster ergibt sich ein einfacher aber sehr oft und erfolgreich genutzter Algorithmus zum clustering, der <em>k-means</em> Algorithmus. Er funktioniert wie folgt</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource py numberLines"><code class="sourceCode python"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># Initialisierung: K zufaellige centroids c_j</span></a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="co">#</span></a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="co"># Wiederholung bis zur Stagnation</span></a>
-<a class="sourceLine" id="cb14-4" title="4"><span class="co">#   Berechnung der Zuordnung: k: x_i -&gt; c_j</span></a>
-<a class="sourceLine" id="cb14-5" title="5"><span class="co">#   Update der centroids: c_j &lt;- mean{ x_i | x_i aus cluster c_j }</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource py numberLines"><code class="sourceCode python"><span id="cb14-1"><a href="clustering-und-hauptkomponentenanalyse.html#cb14-1"></a><span class="co"># Initialisierung: K zufaellige centroids c_j</span></span>
+<span id="cb14-2"><a href="clustering-und-hauptkomponentenanalyse.html#cb14-2"></a><span class="co">#</span></span>
+<span id="cb14-3"><a href="clustering-und-hauptkomponentenanalyse.html#cb14-3"></a><span class="co"># Wiederholung bis zur Stagnation</span></span>
+<span id="cb14-4"><a href="clustering-und-hauptkomponentenanalyse.html#cb14-4"></a><span class="co">#   Berechnung der Zuordnung: k: x_i -&gt; c_j</span></span>
+<span id="cb14-5"><a href="clustering-und-hauptkomponentenanalyse.html#cb14-5"></a><span class="co">#   Update der centroids: c_j &lt;- mean{ x_i | x_i aus cluster c_j }</span></span></code></pre></div>
 <p>Ausgehend von zufällig gewählten centroids, wird die Zuordnung berechnent und dann der Mittelwert aus jedem Cluster als neuer centroid definiert. Dieses Verfahren wird solange wiederholt bis eine maximale Iterationszahl erreicht ist oder die centroids sich nur noch wenig oder gar nicht mehr verändern. In Abbildung <a href="clustering-und-hauptkomponentenanalyse.html#fig:k-means-evoexa">6.1</a> ist eine beispielhafte Ausführung des Algorithmus auf Beispieldaten dargestellt.</p>
 <!--![](bilder/06-plot1.png){width="30%"}-->
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:k-means-evoexa"></span>
@@ -281,7 +296,7 @@ Figure 6.1: Entwicklung der Centroids im Verlauf des k-means clustering Algorith
 </p>
 </div>
 </div>
-<div id="clustering-und-hauptkomponentenanalyse-1" class="section level2 hasAnchor">
+<div id="clustering-und-hauptkomponentenanalyse-1" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> Clustering und Hauptkomponentenanalyse<a href="clustering-und-hauptkomponentenanalyse.html#clustering-und-hauptkomponentenanalyse-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Der k-means Algorithmus basiert allein auf der Bestimmung von Abständen und Mittelwerten – beides kann in beliebigen Dimensionen <span class="math inline">\(n\)</span> der Daten realisiert werden. Allerdings ist die Klassifizierung in höheren Datendimensionen ungleich schwieriger da</p>
 <ul>
@@ -295,7 +310,7 @@ Figure 6.1: Entwicklung der Centroids im Verlauf des k-means clustering Algorith
 <p>Auch wenn die Hauptrichtungen die Daten nicht unbedingt besser separieren, ermöglichen sie doch das ausschließen der (transformierten) Merkmale ohne Informationsgehalt und damit einen strukturierten und allgemeinen Ansatz zur Klassifizierung hochdimensionaler Daten mit reduzierten Merkmalen.</p>
 </div>
 </div>
-<div id="training-und-testing" class="section level2 hasAnchor">
+<div id="training-und-testing" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> Training und Testing<a href="clustering-und-hauptkomponentenanalyse.html#training-und-testing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Das Klassifizieren ist ein erstes konkretes Beispiel dafür, wie aus Daten ein Modell abgeleitet wird. Für die gemessenen Pinguine kennen wir die Spezies, das Ziel ist, ein Modell zu haben mit dem wir zukünftig angetroffene Pinguine anhand ihrer gemessenen Merkmale klassifizieren können.</p>
 <p>Allgemein wird für einen solchen neuen Datenpunkt wie folgt vorgegangen</p>
@@ -308,7 +323,7 @@ Figure 6.1: Entwicklung der Centroids im Verlauf des k-means clustering Algorith
 <p>Der Sprachgebrauch hier ist, dass das Modell mit bekannten Daten <em>trainiert</em> wird und dann für neue Daten <em>angewendet</em> wird<a href="referenzen.html#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>. Um zu evaluieren, ob das Modell “funktioniert” ist das folgende Vorgehen ebenso naheliegend wie standardmäßig angewandt.</p>
 <p>Die vorhandenen Daten werden aufgeteilt in <strong>Trainingsdaten</strong>, mit denen das Modell trainiert werden, und <strong>Testdaten</strong>, mit denen die Vorhersagekraft des Modells evaluiert wird. Wie die Aufteilung passiert, wird anhand von Erfahrungswerten und im Hinblick auf die vorliegende Aufgabe entschieden.</p>
 </div>
-<div id="am-beispiel-der-pinguine" class="section level2 hasAnchor">
+<div id="am-beispiel-der-pinguine" class="section level2 hasAnchor" number="6.5">
 <h2><span class="header-section-number">6.5</span> Am Beispiel der Pinguine<a href="clustering-und-hauptkomponentenanalyse.html#am-beispiel-der-pinguine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:k-means-pingexa"></span>
 <img src="bilder/06-Figure_10101.png" alt="Einige clustering Resultate fuer die Pinguin Daten" width="80%" /><img src="bilder/06-Figure_101.png" alt="Einige clustering Resultate fuer die Pinguin Daten" width="80%" /><img src="bilder/06-Figure_111.png" alt="Einige clustering Resultate fuer die Pinguin Daten" width="80%" /><img src="bilder/06-Figure_121.png" alt="Einige clustering Resultate fuer die Pinguin Daten" width="80%" />
@@ -323,33 +338,33 @@ Figure 6.3: Die L-Kurve fuer die Pinguin Daten
 </p>
 </div>
 </div>
-<div id="aufgaben-3" class="section level2 hasAnchor">
+<div id="aufgaben-3" class="section level2 hasAnchor" number="6.6">
 <h2><span class="header-section-number">6.6</span> Aufgaben<a href="clustering-und-hauptkomponentenanalyse.html#aufgaben-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="k-means-von-hand-t" class="section level3 hasAnchor">
+<div id="k-means-von-hand-t" class="section level3 hasAnchor" number="6.6.1">
 <h3><span class="header-section-number">6.6.1</span> K-means von Hand (T)<a href="clustering-und-hauptkomponentenanalyse.html#k-means-von-hand-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Führen sie händisch und nach Augenschein zwei Iterationen des K-means Algorithmus auf den vom folgenden Skript erzeugten <code>(x,z)</code> Daten durch. Dazu bitte, Beispielsweise in Abbildung <a href="clustering-und-hauptkomponentenanalyse.html#fig:k-means-evoexaexrcs">6.4</a>, in jedem Schritt die Clusterzugehörigkeiten markieren und die neuen (geschätzten) Mittelpunkte <span class="math inline">\(c_1\)</span> und <span class="math inline">\(c_2\)</span> eintragen.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" title="1"><span class="im">from</span> numpy.random <span class="im">import</span> default_rng</a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb15-3" title="3"></a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="co"># Zufallszahlengenerator mit &quot;seed=1&quot;</span></a>
-<a class="sourceLine" id="cb15-5" title="5">rng <span class="op">=</span> default_rng(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb15-6" title="6"></a>
-<a class="sourceLine" id="cb15-7" title="7"><span class="co"># Zufallsdaten mit etwas Korrelation fuer z</span></a>
-<a class="sourceLine" id="cb15-8" title="8">x <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb15-9" title="9">y <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb15-10" title="10">z <span class="op">=</span> (x<span class="op">*</span>x<span class="op">*</span>y)<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb15-11" title="11"></a>
-<a class="sourceLine" id="cb15-12" title="12"><span class="co"># Zufallswahl der initialen centroids</span></a>
-<a class="sourceLine" id="cb15-13" title="13">cntro <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb15-14" title="14">cntrt <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb15-15" title="15"></a>
-<a class="sourceLine" id="cb15-16" title="16">plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb15-17" title="17">plt.plot(x, z, <span class="st">&#39;.&#39;</span>, label<span class="op">=</span><span class="st">&#39;data&#39;</span>)</a>
-<a class="sourceLine" id="cb15-18" title="18">plt.plot(cntro[<span class="dv">0</span>], cntro[<span class="dv">1</span>], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;$c_1$&#39;</span>)</a>
-<a class="sourceLine" id="cb15-19" title="19">plt.plot(cntrt[<span class="dv">0</span>], cntrt[<span class="dv">1</span>], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;$c_2$&#39;</span>)</a>
-<a class="sourceLine" id="cb15-20" title="20">plt.legend(loc<span class="op">=</span><span class="st">&#39;upper left&#39;</span>)</a>
-<a class="sourceLine" id="cb15-21" title="21">plt.title(<span class="st">&#39;K-means: initialer Zustand&#39;</span>)</a>
-<a class="sourceLine" id="cb15-22" title="22">plt.show()</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb15-1"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-1" aria-hidden="true"></a><span class="im">from</span> numpy.random <span class="im">import</span> default_rng</span>
+<span id="cb15-2"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-2" aria-hidden="true"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-3"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-3" aria-hidden="true"></a></span>
+<span id="cb15-4"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-4" aria-hidden="true"></a><span class="co"># Zufallszahlengenerator mit &quot;seed=1&quot;</span></span>
+<span id="cb15-5"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-5" aria-hidden="true"></a>rng <span class="op">=</span> default_rng(<span class="dv">1</span>)</span>
+<span id="cb15-6"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-6" aria-hidden="true"></a></span>
+<span id="cb15-7"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-7" aria-hidden="true"></a><span class="co"># Zufallsdaten mit etwas Korrelation fuer z</span></span>
+<span id="cb15-8"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-8" aria-hidden="true"></a>x <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">9</span>)</span>
+<span id="cb15-9"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-9" aria-hidden="true"></a>y <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">9</span>)</span>
+<span id="cb15-10"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-10" aria-hidden="true"></a>z <span class="op">=</span> (x<span class="op">*</span>x<span class="op">*</span>y)<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</span>
+<span id="cb15-11"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-11" aria-hidden="true"></a></span>
+<span id="cb15-12"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-12" aria-hidden="true"></a><span class="co"># Zufallswahl der initialen centroids</span></span>
+<span id="cb15-13"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-13" aria-hidden="true"></a>cntro <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb15-14"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-14" aria-hidden="true"></a>cntrt <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb15-15"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-15" aria-hidden="true"></a></span>
+<span id="cb15-16"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-16" aria-hidden="true"></a>plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
+<span id="cb15-17"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-17" aria-hidden="true"></a>plt.plot(x, z, <span class="st">&#39;.&#39;</span>, label<span class="op">=</span><span class="st">&#39;data&#39;</span>)</span>
+<span id="cb15-18"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-18" aria-hidden="true"></a>plt.plot(cntro[<span class="dv">0</span>], cntro[<span class="dv">1</span>], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;$c_1$&#39;</span>)</span>
+<span id="cb15-19"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-19" aria-hidden="true"></a>plt.plot(cntrt[<span class="dv">0</span>], cntrt[<span class="dv">1</span>], <span class="st">&#39;s&#39;</span>, label<span class="op">=</span><span class="st">&#39;$c_2$&#39;</span>)</span>
+<span id="cb15-20"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-20" aria-hidden="true"></a>plt.legend(loc<span class="op">=</span><span class="st">&#39;upper left&#39;</span>)</span>
+<span id="cb15-21"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-21" aria-hidden="true"></a>plt.title(<span class="st">&#39;K-means: initialer Zustand&#39;</span>)</span>
+<span id="cb15-22"><a href="clustering-und-hauptkomponentenanalyse.html#cb15-22" aria-hidden="true"></a>plt.show()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:k-means-evoexaexrcs"></span>
 <img src="bilder/06-manual-kmeans-ini.png" alt="Bitte gerne hier die Evolution einzeichnen" width="80%" /><img src="bilder/06-manual-kmeans-x.png" alt="Bitte gerne hier die Evolution einzeichnen" width="80%" /><img src="bilder/06-manual-kmeans-x.png" alt="Bitte gerne hier die Evolution einzeichnen" width="80%" />
 <p class="caption">
@@ -357,38 +372,38 @@ Figure 6.4: Bitte gerne hier die Evolution einzeichnen
 </p>
 </div>
 </div>
-<div id="k-means-als-algorithmus-p" class="section level3 hasAnchor">
+<div id="k-means-als-algorithmus-p" class="section level3 hasAnchor" number="6.6.2">
 <h3><span class="header-section-number">6.6.2</span> K-means als Algorithmus (P)<a href="clustering-und-hauptkomponentenanalyse.html#k-means-als-algorithmus-p" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Schreiben sie eine Funktion, die mittels des k-means Algorithmus einen Datensatz in beliebiger Dimension in <code>K</code> vorgegebene cluster gruppiert und die labels der Daten sowie die Koordinaten der centroids zurueckgeben.</p>
 <p>Testen sie die Funktion am obigen theoretischen Beispiel.</p>
 <p>Hier <a href="bilder/kmeans_utils.py">zum Download angehängt</a> eine Datei mit ein paar hilfreichen Routinen und schon einer Vorgabe für die “Hauptroutine”. <strong>Bitte machen Sie sich damit vertraut, wie in Python Routinen aus einem <em>module</em> (d.h. einer anderen Datei mit Python Funktionen) importiert werden kann.</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" title="1"><span class="im">from</span> kmeans_utils <span class="im">import</span> kmeans, plot_cluster_data</a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="co"># import routines from a module</span></a>
-<a class="sourceLine" id="cb16-3" title="3"></a>
-<a class="sourceLine" id="cb16-4" title="4"><span class="co"># construct data as above</span></a>
-<a class="sourceLine" id="cb16-5" title="5">N <span class="op">=</span> <span class="dv">9</span></a>
-<a class="sourceLine" id="cb16-6" title="6">K <span class="op">=</span> <span class="dv">2</span></a>
-<a class="sourceLine" id="cb16-7" title="7"></a>
-<a class="sourceLine" id="cb16-8" title="8">x <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, N)</a>
-<a class="sourceLine" id="cb16-9" title="9">y <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, N)</a>
-<a class="sourceLine" id="cb16-10" title="10">z <span class="op">=</span> (x<span class="op">*</span>x<span class="op">*</span>y)<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb16-11" title="11"></a>
-<a class="sourceLine" id="cb16-12" title="12">cntro <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb16-13" title="13">cntrt <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb16-14" title="14"></a>
-<a class="sourceLine" id="cb16-15" title="15">cntrdlist <span class="op">=</span> [cntro, cntrt]</a>
-<a class="sourceLine" id="cb16-16" title="16">datamatrix <span class="op">=</span> np.hstack([x.reshape((x.size, <span class="dv">1</span>)), z.reshape((z.size, <span class="dv">1</span>))])</a>
-<a class="sourceLine" id="cb16-17" title="17"></a>
-<a class="sourceLine" id="cb16-18" title="18"><span class="co"># run the kmeans algorithm</span></a>
-<a class="sourceLine" id="cb16-19" title="19">cntrdlist, labels, cerror <span class="op">=</span> kmeans(datamatrix, K<span class="op">=</span><span class="dv">2</span>, cntrdlist<span class="op">=</span>cntrdlist)</a>
-<a class="sourceLine" id="cb16-20" title="20"></a>
-<a class="sourceLine" id="cb16-21" title="21"><span class="co"># plot the result</span></a>
-<a class="sourceLine" id="cb16-22" title="22">plot_cluster_data(datamatrix, labels, cntrdlist,</a>
-<a class="sourceLine" id="cb16-23" title="23">                  xlabel<span class="op">=</span><span class="st">&#39;feature&#39;</span>, ylabel<span class="op">=</span><span class="st">&#39;other feature&#39;</span>,</a>
-<a class="sourceLine" id="cb16-24" title="24">                  fignum<span class="op">=</span><span class="dv">10101</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb16-25" title="25">                  titlestr<span class="op">=</span><span class="st">&#39;K-means: finaler Zustand&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb16-1"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-1" aria-hidden="true"></a><span class="im">from</span> kmeans_utils <span class="im">import</span> kmeans, plot_cluster_data</span>
+<span id="cb16-2"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-2" aria-hidden="true"></a><span class="co"># import routines from a module</span></span>
+<span id="cb16-3"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-3" aria-hidden="true"></a></span>
+<span id="cb16-4"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-4" aria-hidden="true"></a><span class="co"># construct data as above</span></span>
+<span id="cb16-5"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-5" aria-hidden="true"></a>N <span class="op">=</span> <span class="dv">9</span></span>
+<span id="cb16-6"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-6" aria-hidden="true"></a>K <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb16-7"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-7" aria-hidden="true"></a></span>
+<span id="cb16-8"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-8" aria-hidden="true"></a>x <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, N)</span>
+<span id="cb16-9"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-9" aria-hidden="true"></a>y <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, N)</span>
+<span id="cb16-10"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-10" aria-hidden="true"></a>z <span class="op">=</span> (x<span class="op">*</span>x<span class="op">*</span>y)<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</span>
+<span id="cb16-11"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-11" aria-hidden="true"></a></span>
+<span id="cb16-12"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-12" aria-hidden="true"></a>cntro <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb16-13"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-13" aria-hidden="true"></a>cntrt <span class="op">=</span> rng.beta(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb16-14"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-14" aria-hidden="true"></a></span>
+<span id="cb16-15"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-15" aria-hidden="true"></a>cntrdlist <span class="op">=</span> [cntro, cntrt]</span>
+<span id="cb16-16"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-16" aria-hidden="true"></a>datamatrix <span class="op">=</span> np.hstack([x.reshape((x.size, <span class="dv">1</span>)), z.reshape((z.size, <span class="dv">1</span>))])</span>
+<span id="cb16-17"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-17" aria-hidden="true"></a></span>
+<span id="cb16-18"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-18" aria-hidden="true"></a><span class="co"># run the kmeans algorithm</span></span>
+<span id="cb16-19"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-19" aria-hidden="true"></a>cntrdlist, labels, cerror <span class="op">=</span> kmeans(datamatrix, K<span class="op">=</span><span class="dv">2</span>, cntrdlist<span class="op">=</span>cntrdlist)</span>
+<span id="cb16-20"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-20" aria-hidden="true"></a></span>
+<span id="cb16-21"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-21" aria-hidden="true"></a><span class="co"># plot the result</span></span>
+<span id="cb16-22"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-22" aria-hidden="true"></a>plot_cluster_data(datamatrix, labels, cntrdlist,</span>
+<span id="cb16-23"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-23" aria-hidden="true"></a>                  xlabel<span class="op">=</span><span class="st">&#39;feature&#39;</span>, ylabel<span class="op">=</span><span class="st">&#39;other feature&#39;</span>,</span>
+<span id="cb16-24"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-24" aria-hidden="true"></a>                  fignum<span class="op">=</span><span class="dv">10101</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">4</span>),</span>
+<span id="cb16-25"><a href="clustering-und-hauptkomponentenanalyse.html#cb16-25" aria-hidden="true"></a>                  titlestr<span class="op">=</span><span class="st">&#39;K-means: finaler Zustand&#39;</span>)</span></code></pre></div>
 </div>
-<div id="k-means-fuer-die-pinguine" class="section level3 hasAnchor">
+<div id="k-means-fuer-die-pinguine" class="section level3 hasAnchor" number="6.6.3">
 <h3><span class="header-section-number">6.6.3</span> K-means fuer die Pinguine<a href="clustering-und-hauptkomponentenanalyse.html#k-means-fuer-die-pinguine" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Wenden sie den Algorithmus auf die (zentrierten und auf in jeder Richtung auf <span class="math inline">\([-1, 1]\)</span> skalierten) Pinguindaten an. Und vergleichen sie mit den Bildern oben.</p>
 <ol style="list-style-type: decimal">
@@ -396,28 +411,28 @@ Figure 6.4: Bitte gerne hier die Evolution einzeichnen
 <li>Für zwei beliebig gewählte Merkmale</li>
 <li>Für die ersten drei Hauptkomponenten</li>
 </ol>
-<div class="sourceCode" id="cb17"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" title="1"><span class="im">import</span> json</a>
-<a class="sourceLine" id="cb17-2" title="2"></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb17-5" title="5"></a>
-<a class="sourceLine" id="cb17-6" title="6"><span class="im">from</span> kmeans_utils <span class="im">import</span> kmeans</a>
-<a class="sourceLine" id="cb17-7" title="7"></a>
-<a class="sourceLine" id="cb17-8" title="8"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;penguin-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
-<a class="sourceLine" id="cb17-9" title="9">    datadict <span class="op">=</span> json.load(f)</a>
-<a class="sourceLine" id="cb17-10" title="10"></a>
-<a class="sourceLine" id="cb17-11" title="11">data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</a>
-<a class="sourceLine" id="cb17-12" title="12"></a>
-<a class="sourceLine" id="cb17-13" title="13"><span class="co"># center and scale</span></a>
-<a class="sourceLine" id="cb17-14" title="14">data <span class="op">=</span> data <span class="op">-</span> data.mean(axis<span class="op">=</span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb17-15" title="15">maxvals <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(data), axis<span class="op">=</span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb17-16" title="16">data <span class="op">=</span> data <span class="op">*</span> <span class="dv">1</span><span class="op">/</span>maxvals</a>
-<a class="sourceLine" id="cb17-17" title="17"><span class="co"># now the data has zero mean and is scaled to fit into [-1, 1]</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb17-1"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-1" aria-hidden="true"></a><span class="im">import</span> json</span>
+<span id="cb17-2"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-2" aria-hidden="true"></a></span>
+<span id="cb17-3"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-3" aria-hidden="true"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-4"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-4" aria-hidden="true"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb17-5"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-5" aria-hidden="true"></a></span>
+<span id="cb17-6"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-6" aria-hidden="true"></a><span class="im">from</span> kmeans_utils <span class="im">import</span> kmeans</span>
+<span id="cb17-7"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-7" aria-hidden="true"></a></span>
+<span id="cb17-8"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-8" aria-hidden="true"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;penguin-data.json&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb17-9"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-9" aria-hidden="true"></a>    datadict <span class="op">=</span> json.load(f)</span>
+<span id="cb17-10"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-10" aria-hidden="true"></a></span>
+<span id="cb17-11"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-11" aria-hidden="true"></a>data <span class="op">=</span> np.array(datadict[<span class="st">&#39;data&#39;</span>])</span>
+<span id="cb17-12"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-12" aria-hidden="true"></a></span>
+<span id="cb17-13"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-13" aria-hidden="true"></a><span class="co"># center and scale</span></span>
+<span id="cb17-14"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-14" aria-hidden="true"></a>data <span class="op">=</span> data <span class="op">-</span> data.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb17-15"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-15" aria-hidden="true"></a>maxvals <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(data), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb17-16"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-16" aria-hidden="true"></a>data <span class="op">=</span> data <span class="op">*</span> <span class="dv">1</span><span class="op">/</span>maxvals</span>
+<span id="cb17-17"><a href="clustering-und-hauptkomponentenanalyse.html#cb17-17" aria-hidden="true"></a><span class="co"># now the data has zero mean and is scaled to fit into [-1, 1]</span></span></code></pre></div>
 <div id="clustering-random" class="JHSAYS">
 <p>Achtung – auch hier ist wieder Zufall involviert. Wenn das Ergebnis seltsam aussieht, gegebenfalls das Experiment mehrfach wiederholen um auszuschließen, dass es sich nur um einen statistischen Ausreißer handelt.</p>
 </div>
 </div>
-<div id="l-curve" class="section level3 hasAnchor">
+<div id="l-curve" class="section level3 hasAnchor" number="6.6.4">
 <h3><span class="header-section-number">6.6.4</span> L-curve<a href="clustering-und-hauptkomponentenanalyse.html#l-curve" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Bestimmen sie die L-Kurve fuer die Pinguindaten fuer <code>K=1,2,3,4,...,8</code> – fuer das clustering auf dem gesamten Datensatz.</p>
 
@@ -427,8 +442,8 @@ Figure 6.4: Bitte gerne hier die Evolution einzeichnen
 <div class="footnotes">
 <hr />
 <ol start="6">
-<li id="fn6"><p>wenn wir Inhalt mit Varianz gleich setzen<a href="clustering-und-hauptkomponentenanalyse.html#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p>Im <em>machine learning</em> wird gerne von <em>generalization</em> gesprochen<a href="clustering-und-hauptkomponentenanalyse.html#fnref7" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>wenn wir Inhalt mit Varianz gleich setzen<a href="clustering-und-hauptkomponentenanalyse.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Im <em>machine learning</em> wird gerne von <em>generalization</em> gesprochen<a href="clustering-und-hauptkomponentenanalyse.html#fnref7" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -497,7 +512,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
